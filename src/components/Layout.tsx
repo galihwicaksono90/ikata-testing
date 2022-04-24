@@ -9,7 +9,7 @@ interface Props {
 
 const Layout = ({ children }: Props) => {
   return (
-    <AppShell header={<Header />} footer={<Footer />}>
+    <AppShell header={<Header />} footer={<Footer />} padding={0}>
       {children}
     </AppShell>
   );
