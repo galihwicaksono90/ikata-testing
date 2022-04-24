@@ -1,10 +1,12 @@
 import { Title } from "@mantine/core";
 import Layout from "components/Layout";
 
-export default function Home() {
+const about = () => {
   return (
     <Layout>
-      <Title>Home</Title>
+      <Title>About</Title>
     </Layout>
   );
-}
+};
+
+export default about;
