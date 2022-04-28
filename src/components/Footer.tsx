@@ -61,13 +61,13 @@ export default function FooterComponent() {
   const { classes } = useStyles();
   return (
     <Footer height={416} className={classes.footer}>
-      <Container size={1400} className={classes.container}>
+      <Container size={1128} className={classes.container}>
         <Stack>
           <Group spacing={30} mr={32}>
             <Image src="/ikataLogo.png" width={99} height={99} />
             <Stack>
               <Text className={classes.title}>
-                Ikatan Alumni Tamrang <br />
+                Ikatan Alumni Tambang <br />
                 UPN "Veteran" Yogyakarta
               </Text>
             </Stack>

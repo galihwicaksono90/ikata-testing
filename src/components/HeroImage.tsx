@@ -5,10 +5,10 @@ import Image from "next/image";
 import { Pagination, Autoplay } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 
-import "swiper/css";
-import "swiper/css/pagination";
-/* import "./Hero.css"; */
-
+/* import "swiper/css";
+ * import "swiper/css/pagination";
+ * import "./Hero.css";
+ *  */
 const useStyles = createStyles((theme) => ({
   container: {
     height: "679px",

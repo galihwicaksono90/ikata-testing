@@ -3,5 +3,16 @@ import { MantineThemeOverride } from "@mantine/core";
 export const theme: MantineThemeOverride = {
   colorScheme: "dark",
   primaryColor: "orange",
-  defaultRadius: "6px",
+  defaultRadius: "md",
+  radius: { xs: 8, sm: 10, md: 12, lg: 14, xl: 16 },
+  headings: {
+    sizes: {
+      h1: { fontSize: "48px", lineHeight: "5.3rem" },
+      h2: { fontSize: "32px", lineHeight: "3.6rem" },
+      h3: { fontSize: "24px", lineHeight: "1.83rem" },
+      h4: { fontSize: "22px", lineHeight: "2.48rem" },
+      h5: { fontSize: "18px", lineHeight: "2.rem" },
+      h6: { fontSize: "16px", lineHeight: "1.8rem" },
+    },
+  },
 };

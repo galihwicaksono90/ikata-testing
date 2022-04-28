@@ -56,7 +56,7 @@ function HeaderTop() {
   return (
     <Container
       className={classes.container}
-      size={1440}
+      size={1128}
       style={{ height: "102px" }}
     >
       <Group spacing={45}>
@@ -105,7 +105,7 @@ function HeaderMenu() {
   return (
     <Container
       className={classes.container}
-      size={1440}
+      size={1128}
       style={{ height: "76px" }}
     >
       <Center style={{ width: "100%" }}>
