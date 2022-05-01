@@ -9,27 +9,15 @@ import {
 } from "@mantine/core";
 import { Pagination, Autoplay } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { useStyles } from "theme";
 
 import Image from "next/image";
-
-const useStyles = createStyles((theme) => ({
-  link: {
-    textDecoration: "none",
-    color: theme.colors.dark,
-    fontWeight: "bold",
-    transition: "ease-in-out 200ms color",
-    ":hover": {
-      color: theme.fn.lighten(theme.colors.dark[8], 0.2),
-      textDecoration: "underline",
-    },
-  },
-}));
 
 export default function MerchandiseCarousel() {
   const { classes } = useStyles();
   return (
-    <div style={{ width: "100%", background: "white" }}>
-      <Container size={1135} pt={80} pb={50}>
+    <Box sx={(theme) => ({ width: "100%", background: theme.white })}>
+      <Container size={1135} pt={80} pb={50} sx={{ height: 620 }}>
         <Swiper
           modules={[Pagination, Autoplay]}
           pagination={{ clickable: true }}
@@ -37,18 +25,18 @@ export default function MerchandiseCarousel() {
             delay: 5000,
             disableOnInteraction: false,
           }}
-          slidesPerView={5}
+          slidesPerView={4}
           loop={true}
-          style={{ background: "tomato" }}
+          className={classes.carousel}
         >
-          {mercs.map((merc) => (
-            <SwiperSlide>
+          {mercs.map((merc, index) => (
+            <SwiperSlide key={index}>
               <MerchandiseCard image={merc.image} />
             </SwiperSlide>
           ))}
         </Swiper>
       </Container>
-    </div>
+    </Box>
   );
 }
 
@@ -72,7 +60,14 @@ const mercs = [
 
 function MerchandiseCard({ image }: { image: string }) {
   return (
-    <Card sx={(theme) => ({ width: 264, background: theme.white })} withBorder>
+    <Card
+      sx={(theme) => ({
+        width: 264,
+        background: theme.white,
+        border: `1px solid #EAEAEA`,
+      })}
+      withBorder
+    >
       <Box
         sx={(theme) => ({
           position: "relative",
@@ -90,11 +85,13 @@ function MerchandiseCard({ image }: { image: string }) {
           objectPosition="center"
         />
       </Box>
-      <Title order={6} mb={40}>
+      <Title order={6} mb={40} sx={(theme) => ({ color: theme.colors.dark })}>
         Hello world
       </Title>
-      <Text mb={20}>Rp 135.000,-</Text>
-      <Button size="lg" fullWidth>
+      <Text mb={20} color="dark">
+        Rp 135.000,-
+      </Text>
+      <Button size="lg" fullWidth color="dark">
         Lihat Detail
       </Button>
     </Card>

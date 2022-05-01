@@ -40,9 +40,7 @@ export default function News() {
       <Grid className={classes.grid} gutter={24}>
         <Grid.Col span={8}>
           <Stack>
-            <div>
-              <NewsCarousel />
-            </div>
+            <NewsCarousel />
             <SectionTitleWithLink title="Berita Pengembangan Alumni" href="/" />
             <SimpleGrid cols={2}>
               <NewsCard
@@ -70,8 +68,16 @@ export default function News() {
         </Grid.Col>
         <Grid.Col span={4}>
           <Stack>
-            <AspectRatio ratio={1 / 1} className={classes.banner} mb={30}>
-              <div>Sponsor banner</div>
+            <AspectRatio
+              ratio={1 / 1}
+              mb={30}
+              sx={(theme) => ({
+                background: theme.white,
+                borderRadius: theme.radius.md,
+                boxShadow: theme.shadows.md,
+              })}
+            >
+              <Text color="gray">Sponsor banner</Text>
             </AspectRatio>
             <Title mb={25} order={5}>
               Harga Acuan Batubara Mineral

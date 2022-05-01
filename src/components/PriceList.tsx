@@ -1,38 +1,21 @@
 import { useMemo } from "react";
 import { getCurrentDate } from "utils/time";
-import {
-  Paper,
-  PaperProps,
-  Text,
-  createStyles,
-  Divider,
-  Group,
-  Stack,
-} from "@mantine/core";
+import { Paper, PaperProps, Text, Divider, Group, Stack } from "@mantine/core";
 import { ArrowUp, ArrowDown, Equal } from "tabler-icons-react";
 
-const useStyles = createStyles((theme) => ({
-  container: {
-    background: theme.colors.dark[6],
-    padding: 20,
-  },
-  item: {
-    marginBottom: 20,
-  },
-  text: {
-    fontSize: "14px",
-    lineHeight: "25px",
-    fontWeight: 600,
-  },
-}));
-
 export default function PriceList(props: PaperProps<"div">) {
-  const { classes } = useStyles();
-
   const date = useMemo(() => getCurrentDate(), []);
 
   return (
-    <Paper className={classes.container} radius="lg" {...props}>
+    <Paper
+      sx={(theme) => ({
+        padding: 20,
+        background: "rgba(255,255,255,0.15)",
+        boxShadow: theme.shadows.md,
+      })}
+      radius="lg"
+      {...props}
+    >
       <Text size="lg" mb={28} weight={600}>
         {date}
       </Text>

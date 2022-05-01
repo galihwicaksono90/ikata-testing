@@ -4,8 +4,10 @@ export const theme: MantineThemeOverride = {
   colorScheme: "dark",
   primaryColor: "orange",
   defaultRadius: "md",
-  radius: { xs: 8, sm: 10, md: 12, lg: 14, xl: 16 },
+  radius: { xs: 8, sm: 10, md: 12, lg: 14, xl: "50%" },
+  fontFamily: "Montserrat",
   headings: {
+    fontFamily: "Montserrat",
     sizes: {
       h1: { fontSize: "48px", lineHeight: "5.3rem" },
       h2: { fontSize: "32px", lineHeight: "3.6rem" },
@@ -15,4 +17,32 @@ export const theme: MantineThemeOverride = {
       h6: { fontSize: "16px", lineHeight: "1.8rem" },
     },
   },
+  colors: {
+    dark: [
+      "#fff",
+      "#fff",
+      "#f3f3f3",
+      "#ABAAAA",
+      "#ABAAAA",
+      "#1d1d1d",
+      "#1d1d1d",
+      "#1d1d1d",
+      "#1d1d1d",
+      "#000",
+    ],
+    orange: [
+      "#FEB240",
+      "#FEB240",
+      "#FEB240",
+      "#FEB240",
+      "#FEB240",
+      "#FEB240",
+      "#FEB240",
+      "#FEB240",
+      "#FEB240",
+      "#FEB240",
+    ],
+  },
 };
+
+export { useStyles } from "./styles";

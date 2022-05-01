@@ -13,14 +13,14 @@ import "swiper/css/pagination";
 export default function Home() {
   return (
     <Layout>
-      {/* <HeroImage />
+      <HeroImage />
       <Container size={1135} pt={60} pb={75}>
         <News />
         <AdBanner src="/banner1.png" />
         <Articles />
       </Container>
       <Alumni />
-      <AdBanner src="/banner2.png" /> */}
+      <AdBanner src="/banner2.png" />
       <MerchandiseCarousel />
     </Layout>
   );

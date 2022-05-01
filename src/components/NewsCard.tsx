@@ -1,15 +1,6 @@
 import Image from "next/image";
-import {
-  createStyles,
-  Text,
-  Badge,
-  Group,
-  Card,
-  Stack,
-  AspectRatio,
-} from "@mantine/core";
+import { Text, Badge, Group, Card, AspectRatio } from "@mantine/core";
 import { NextLink } from "@mantine/next";
-/* import Link from "next/link"; */
 
 interface Props {
   title: string;
@@ -24,11 +15,12 @@ export default function NewsCard({ title, image, tags, href }: Props) {
       radius="md"
       p={20}
       sx={(theme) => ({
-        backgroundColor: theme.colors.gray[9],
+        background: "rgba(255,255,255,0.15)",
         transition: "ease-in-out 500 background",
         cursor: "pointer",
+        boxShadow: theme.shadows.md,
         "&:hover": {
-          backgroundColor: theme.fn.lighten(theme.colors.gray[9], 0.1),
+          backgroundColor: theme.fn.lighten("rgba(255,255,255,0.15)", 0.2),
         },
       })}
       component={NextLink}
@@ -47,7 +39,7 @@ export default function NewsCard({ title, image, tags, href }: Props) {
       {tags ? (
         <Group mb={20}>
           {tags.map((tag, index) => (
-            <Badge key={index} size="lg">
+            <Badge key={index} size="lg" radius="md">
               {tag}
             </Badge>
           ))}

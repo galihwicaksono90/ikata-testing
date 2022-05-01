@@ -172,7 +172,7 @@ function ArticleItem({ image, title, description }: ArticleItem) {
         >
           {title}
         </Text>
-        <Text size="sm" weight={500}>
+        <Text size="sm" weight={500} color="dimmed">
           {date}
         </Text>
         <Text lineClamp={3} weight={500}>
@@ -189,7 +189,11 @@ function Info({ title, items, ...rest }: InfoItem) {
       withBorder
       radius="md"
       p={20}
-      sx={{ border: "solid white 1px" }}
+      sx={(theme) => ({
+        borderColor: theme.colors.dark[4],
+        borderWidth: "1px",
+        borderStyle: "solid",
+      })}
       {...rest}
     >
       <Title order={5} mb={30}>
@@ -197,7 +201,7 @@ function Info({ title, items, ...rest }: InfoItem) {
       </Title>
       <List
         center
-        spacing={30}
+        spacing={50}
         icon={
           <Box
             sx={(theme) => ({
@@ -210,22 +214,21 @@ function Info({ title, items, ...rest }: InfoItem) {
         }
         mb={30}
       >
-        {items.map((item) => {
+        {items.map((item, index) => {
           return (
-            <>
+            <Box key={index} sx={{ marginBottom: 20 }}>
               <List.Item
-                sx={{
-                  color: " white",
+                sx={() => ({
                   fontWeight: 600,
                   marginBottom: 8,
-                }}
+                })}
               >
                 <Text lineClamp={1}>{item.title}</Text>
               </List.Item>
-              <Text pl={20} lineClamp={1}>
+              <Text pl={20} lineClamp={1} color="dimmed">
                 {item.description}
               </Text>
-            </>
+            </Box>
           );
         })}
       </List>

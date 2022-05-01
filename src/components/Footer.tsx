@@ -76,7 +76,7 @@ export default function FooterComponent() {
             Jl. Kemang Raya No. 43, RT 9 / RW 1, Bangka Kecamatan Mampang Prpt,
             Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta 12730
           </Text>
-          <Button color="orange" variant="outline" className={classes.button}>
+          <Button variant="outline" className={classes.button}>
             Kontak Kami
           </Button>
         </Stack>

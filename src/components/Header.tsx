@@ -1,68 +1,43 @@
 import React from "react";
 import Image from "next/image";
 import {
+  Box,
+  Avatar,
   Divider,
   Center,
   Header,
   Text,
-  createStyles,
   Stack,
   Group,
   Input,
   Container,
   Menu,
-  Anchor,
 } from "@mantine/core";
-import { ChevronDown, Search, UserCircle } from "tabler-icons-react";
-import Link from "next/link";
+import { ChevronDown, Search } from "tabler-icons-react";
 import { NextLink } from "@mantine/next";
 import { useRouter } from "next/router";
-
-const useStyle = createStyles((theme) => ({
-  container: {
-    display: "flex",
-    justifyContent: "space-between",
-  },
-  headerTextTop: {
-    fontSize: "24px",
-    fontWeight: "bold",
-    lineHeight: "20px",
-  },
-  headerTextBottom: {
-    fontSize: "14px",
-    fontWeight: "bold",
-  },
-  menuItems: {
-    listStyle: "none",
-    display: "flex",
-    justifyContent: "space-between",
-    width: "100%",
-    padding: "0px",
-    color: theme.white,
-    cursor: "pointer",
-    fontWeight: 500,
-    "& .active a": {
-      color: theme.primaryColor,
-    },
-    "& a": {
-      color: theme.white,
-      textDecoration: "none",
-    },
-  },
-}));
+import { useStyles } from "theme";
 
 function HeaderTop() {
-  const { classes } = useStyle();
   return (
     <Container
-      className={classes.container}
       size={1128}
-      style={{ height: "102px" }}
+      style={{
+        height: "102px",
+        display: "flex",
+        justifyContent: "space-between",
+      }}
     >
       <Group spacing={45}>
         <Image src="/ikataLogo.png" width="72px" height="72px" />
         <Stack spacing={5}>
-          <Text className={classes.headerTextTop}>
+          <Text
+            sx={{
+              fontSize: "24px",
+              fontWeight: "bold",
+              lineHeight: "20px",
+            }}
+          >
             PORTAL IKATAN ALUMNI TAMBANG
           </Text>
           <Text>UPN "VETERAN" YOGYAKARTA</Text>
@@ -71,8 +46,10 @@ function HeaderTop() {
       <Group spacing={53}>
         <SearchInput />
         <Group spacing="sm">
-          <UserCircle />
-          <NextLink href="">Login</NextLink>
+          <Avatar radius="xl" />
+          <Text variant="link" component={NextLink} href="/login">
+            Login
+          </Text>
         </Group>
       </Group>
     </Container>
@@ -86,105 +63,145 @@ function SearchInput() {
       radius="xl"
       variant="unstyled"
       placeholder="Search"
-      styles={{
+      sx={(theme) => ({
         input: {
           height: "38px",
-          border: "solid 1px white",
+          border: `solid 1px ${theme.colors.dark[2]}`,
           borderRadius: "50px",
           width: "264px",
         },
-      }}
-      color="white"
+      })}
     />
   );
 }
 
-function HeaderMenu() {
-  const { classes } = useStyle();
+const MenuItem = ({
+  children,
+  title,
+  href,
+}: {
+  title: string;
+  href: string;
+  children?: React.ReactNode;
+}) => {
+  const { pathname } = useRouter();
+
+  if (!children) {
+    return (
+      <li>
+        <Box
+          sx={(theme) => ({
+            "& a": {
+              color:
+                pathname === href ? theme.primaryColor : theme.colors.white,
+            },
+          })}
+        >
+          <Text component={NextLink} href={href}>
+            {title}
+          </Text>
+        </Box>
+      </li>
+    );
+  }
+
+  return (
+    <li>
+      <Menu
+        control={
+          <Group
+            sx={(theme) => ({
+              color: pathname.startsWith(href)
+                ? theme.primaryColor
+                : theme.colors.white,
+            })}
+          >
+            <Text>{title}</Text>
+            <ChevronDown size={14} />
+          </Group>
+        }
+        styles={{
+          body: {
+            background: "rgba(0,0,0,0.45)",
+            border: "none",
+          },
+        }}
+      >
+        {children}
+      </Menu>
+    </li>
+  );
+};
+
+function MenuItemChild({
+  children,
+  href,
+}: {
+  children: React.ReactNode;
+  href: string;
+}) {
   const { pathname } = useRouter();
   return (
+    <Menu.Item component={NextLink} href={href}>
+      <Text color={pathname === href ? "orange" : "white"}>{children}</Text>
+    </Menu.Item>
+  );
+}
+
+function HeaderMenu() {
+  const { classes } = useStyles();
+  return (
     <Container
-      className={classes.container}
       size={1128}
-      style={{ height: "76px" }}
+      style={{
+        height: "76px",
+        display: "flex",
+        justifyContent: "space-between",
+      }}
     >
       <Center style={{ width: "100%" }}>
         <ul className={classes.menuItems}>
-          <li className={pathname === "/" ? "active" : ""}>
-            <NextLink href="/">Home</NextLink>
-          </li>
-          <li className={pathname === "/about" ? "active" : ""}>
-            <Link href="/about">Tentang kami</Link>
-          </li>
-          <li className={pathname === "/management" ? "active" : ""}>
-            <Menu
-              control={
-                <Group>
-                  <Text>Susunan Pengurus</Text>
-                  <ChevronDown size={14} />
-                </Group>
-              }
-            >
-              <Menu.Item component={NextLink} href="/management/item1">
-                Item 1
-              </Menu.Item>
-              <Menu.Item component={NextLink} href="/management/item2">
-                Item 2
-              </Menu.Item>
-              <Menu.Item component={NextLink} href="/management/item3">
-                Item 3
-              </Menu.Item>
-            </Menu>
-          </li>
-          <li className={pathname === "/jobs" ? "active" : ""}>
-            <Menu
-              control={
-                <Group>
-                  <Text>Lowongan</Text>
-                  <ChevronDown size={14} />
-                </Group>
-              }
-            >
-              <Menu.Item component={NextLink} href="/jobs/item1">
-                Item 1
-              </Menu.Item>
-              <Menu.Item component={NextLink} href="/jobs/item2">
-                Item 2
-              </Menu.Item>
-              <Menu.Item component={NextLink} href="/jobs/item3">
-                Item 3
-              </Menu.Item>
-            </Menu>
-          </li>
-          <li className={pathname === "/news" ? "active" : ""}>
-            <Menu
-              control={
-                <Group>
-                  <Text>Berita</Text>
-                  <ChevronDown size={14} />
-                </Group>
-              }
-            >
-              <Menu.Item component={NextLink} href="/news/item1">
-                Item 1
-              </Menu.Item>
-              <Menu.Item component={NextLink} href="/news/item2">
-                Item 2
-              </Menu.Item>
-              <Menu.Item component={NextLink} href="/news/item3">
-                Item 3
-              </Menu.Item>
-            </Menu>
-          </li>
-          <li className={pathname === "/articles" ? "active" : ""}>
-            <Link href="/articles">Artikel</Link>
-          </li>
-          <li className={pathname === "/merchandise" ? "active" : ""}>
-            <Link href="/merchandise">Merchandise</Link>
-          </li>
-          <li className={pathname === "/koperasi" ? "active" : ""}>
-            <Link href="/koperasi">Koperasi IKATA</Link>
-          </li>
+          <MenuItem title="Beranda" href="/" />
+          <MenuItem title="Tentang Kami" href="/about" />
+          <MenuItem title="Susunan Pengurus" href="/susunan-pengurus">
+            <MenuItemChild href="/susunan-pengurus/dewan-pengawas">
+              Dewan Pengurus
+            </MenuItemChild>
+            <MenuItemChild href="/susunan-pengurus/pengurus-pusat">
+              Pengurus Pusat
+            </MenuItemChild>
+            <MenuItemChild href="/susunan-pengurus/koordinator-wilayah">
+              Koordinator Wilayah
+            </MenuItemChild>
+            <MenuItemChild href="/susunan-pengurus/koordinator-angkatan">
+              Koordinator Angkatan
+            </MenuItemChild>
+          </MenuItem>
+          <MenuItem title="Lowongan" href="/lowongan">
+            <MenuItemChild href="/lowongan/pekerjaan">
+              Lowongan Pekerjaan
+            </MenuItemChild>
+            <MenuItemChild href="/lowongan/tugas-akhir">
+              Lowongan Tugas Akhir
+            </MenuItemChild>
+            <MenuItemChild href="/lowongan/beasiswa">
+              Lowongan Beasiswa
+            </MenuItemChild>
+          </MenuItem>
+          <MenuItem title="News" href="/news">
+            <MenuItemChild href="/news/pekerjaan">
+              Lowongan Pekerjaan
+            </MenuItemChild>
+            <MenuItemChild href="/news/tugas-akhir">
+              Lowongan Pekerjaan
+            </MenuItemChild>
+            <MenuItemChild href="/news/beasiswa">
+              Lowongan Pekerjaan
+            </MenuItemChild>
+          </MenuItem>
+          <MenuItem title="Articles" href="/articles" />
+          <MenuItem title="Merchansise" href="/merchandise" />
+          <MenuItem title="Koperasi IKATA" href="/koperasi" />
         </ul>
       </Center>
     </Container>
