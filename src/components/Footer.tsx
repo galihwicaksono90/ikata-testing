@@ -1,5 +1,7 @@
 import React from "react";
 import {
+  Box,
+  MediaQuery,
   Container,
   UnstyledButton,
   Footer,
@@ -13,84 +15,86 @@ import {
 } from "@mantine/core";
 import Image from "next/image";
 import { NextLink } from "@mantine/next";
-
-const useStyles = createStyles((theme) => ({
-  footer: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    flexDirection: "column",
-  },
-  container: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    width: "100%",
-    height: "inherit",
-  },
-  button: {
-    width: "215px",
-    height: "45px",
-  },
-  logoContainer: {
-    width: "80px",
-    height: "80px",
-    borderRadius: "50%",
-    background: "white",
-  },
-  address: {
-    width: "480px",
-  },
-  title: {
-    fontSize: "20px",
-    fontWeight: 500,
-  },
-  copyright: {
-    width: "100vw",
-    height: "46px",
-    background: "#272727",
-    textAlign: "center",
-    marginTop: "auto",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-}));
+import { useStyles } from "theme";
 
 export default function FooterComponent() {
   const { classes } = useStyles();
   return (
-    <Footer height={416} className={classes.footer}>
-      <Container size={1128} className={classes.container}>
-        <Stack>
-          <Group spacing={30} mr={32}>
-            <Image src="/ikataLogo.png" width={99} height={99} />
-            <Stack>
-              <Text className={classes.title}>
-                Ikatan Alumni Tambang <br />
-                UPN "Veteran" Yogyakarta
-              </Text>
-            </Stack>
+    <Footer height="auto" className={classes.footer}>
+      <Container size={1128} sx={{ width: "100%" }}>
+        <Box
+          className={classes.responsiveGroupSmall}
+          sx={{ width: "100%", marginBottom: 60 }}
+        >
+          <Stack>
+            <Box
+              sx={(theme) => ({
+                display: "flex",
+                alignItems: "flex-start",
+                justifyContent: "flex-start",
+
+                [`@media (max-width: ${theme.breakpoints.sm}px)`]: {
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "flex-start",
+                },
+              })}
+            >
+              <Box
+                sx={{
+                  width: 99,
+                  height: 99,
+                  marginRight: 20,
+                  marginBottom: 20,
+                  position: "relative",
+                }}
+              >
+                <Image src="/ikataLogo.png" layout="fill" />
+              </Box>
+              <Stack>
+                <Text
+                  size="xl"
+                  weight={500}
+                  sx={(theme) => ({
+                    [`@media (max-width: ${theme.breakpoints.sm}px)`]: {
+                      textAlign: "center",
+                    },
+                  })}
+                >
+                  Ikatan Alumni Tambang <br />
+                  UPN "Veteran" Yogyakarta
+                </Text>
+              </Stack>
+            </Box>
+            <Text
+              sx={(theme) => ({
+                marginRight: 20,
+                maxWidth: 480,
+                [`@media (max-width: ${theme.breakpoints.sm}px)`]: {
+                  textAlign: "center",
+                  marginRight: 0,
+                },
+              })}
+            >
+              Jl. Kemang Raya No. 43, RT 9 / RW 1, Bangka Kecamatan Mampang
+              Prpt, Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta 12730
+            </Text>
+            <Button variant="outline" size="lg">
+              Kontak Kami
+            </Button>
+          </Stack>
+          <Group my={30}>
+            <SocialMediaButton
+              href="https://youtube.com"
+              image="/youtube.png"
+              mr={30}
+            />
+            <SocialMediaButton
+              href="https://instagram.com"
+              image="/instagram.png"
+            />
           </Group>
-          <Text className={classes.address} mr={20}>
-            Jl. Kemang Raya No. 43, RT 9 / RW 1, Bangka Kecamatan Mampang Prpt,
-            Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta 12730
-          </Text>
-          <Button variant="outline" className={classes.button}>
-            Kontak Kami
-          </Button>
-        </Stack>
-        <Group>
-          <SocialMediaButton
-            href="https://youtube.com"
-            image="/youtube.png"
-            mr={30}
-          />
-          <SocialMediaButton
-            href="https://instagram.com"
-            image="/instagram.png"
-          />
-        </Group>
+        </Box>
       </Container>
       <Text className={classes.copyright}>&copy; 2022 Copyright</Text>
     </Footer>
@@ -105,7 +109,7 @@ function SocialMediaButton({ href, image, mr }: SocialMediaButtonProps) {
   const { classes } = useStyles();
   return (
     <UnstyledButton
-      className={classes.logoContainer}
+      className={classes.mediaSocialButton}
       component={NextLink}
       href={href}
       mr={mr}

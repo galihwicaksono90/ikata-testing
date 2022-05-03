@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Container,
   Text,
@@ -6,10 +7,13 @@ import {
   Card,
   AspectRatio,
   Group,
-  createStyles,
 } from "@mantine/core";
 import Image from "next/image";
 import { NextLink } from "@mantine/next";
+import { useStyles } from "theme";
+
+import { Pagination, Autoplay } from "swiper";
+import { Swiper, SwiperSlide } from "swiper/react";
 
 export const items = [
   {
@@ -26,25 +30,20 @@ export const items = [
   },
 ];
 
-const useStyles = createStyles((theme) => ({
-  link: {
-    textDecoration: "none",
-    color: theme.colors.dark,
-    fontWeight: "bold",
-    transition: "ease-in-out 200ms color",
-    ":hover": {
-      color: theme.fn.lighten(theme.colors.dark[8], 0.2),
-      textDecoration: "underline",
-    },
-  },
-}));
-
 export default function Alumni() {
   const { classes } = useStyles();
   return (
     <div style={{ width: "100%", background: "white" }}>
-      <Container size={1135} pt={80} pb={50}>
-        <Group position="apart" align="flex-start" mb={40}>
+      <Container size={1128} pt={80} pb={50}>
+        <Box
+          mb={30}
+          sx={(theme) => ({
+            display: "flex",
+            [`@media (max-width: ${theme.breakpoints.md}px)`]: {
+              flexDirection: "column",
+            },
+          })}
+        >
           <Title
             mt={30}
             order={2}
@@ -57,14 +56,46 @@ export default function Alumni() {
             <span>Bisnis</span> Alumni <br />
             Tambang
           </Title>
-          {items.map((item, index) => (
-            <AlumniCard key={index} title={item.title} image={item.image} />
-          ))}
-        </Group>
+          <Box sx={{ flexGrow: 1, height: 400 }}>
+            <Swiper
+              modules={[Pagination, Autoplay]}
+              pagination={{ clickable: true }}
+              autoplay={{
+                delay: 5000,
+              }}
+              slidesPerView={1}
+              className={classes.carousel}
+              breakpoints={{
+                600: {
+                  slidesPerView: 2,
+                },
+                850: {
+                  slidesPerView: 3,
+                },
+              }}
+            >
+              {items.map((item, index) => (
+                <SwiperSlide key={index}>
+                  <AlumniCard
+                    key={index}
+                    title={item.title}
+                    image={item.image}
+                  />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </Box>
+        </Box>
         <Group position="right">
-          <NextLink className={classes.link} href="/">
+          <Text
+            color="dark"
+            component={NextLink}
+            href="/"
+            variant="link"
+            weight="bold"
+          >
             Lihat Semua
-          </NextLink>
+          </Text>
         </Group>
       </Container>
     </div>
@@ -73,37 +104,36 @@ export default function Alumni() {
 
 function AlumniCard({ title, image }: { title: string; image: string }) {
   return (
-    <div style={{ width: 264 }}>
-      <Card
-        sx={(theme) => ({ backgroundColor: theme.white })}
-        p={15}
-        shadow="xl"
+    <Card
+      sx={(theme) => ({ backgroundColor: theme.white, width: 264 })}
+      p={15}
+      shadow="md"
+      radius="xs"
+      mx="auto"
+    >
+      <Card.Section mb={20}>
+        <AspectRatio ratio={264 / 196}>
+          <Image
+            src={image}
+            layout="fill"
+            objectFit="cover"
+            objectPosition="top"
+          />
+        </AspectRatio>
+      </Card.Section>
+      <Text color="dark" mb={30} size="md" weight="bold">
+        {title}
+      </Text>
+      <Button
+        fullWidth
+        color="dark"
         radius="xs"
+        size="lg"
+        component={NextLink}
+        href="/"
       >
-        <Card.Section mb={20}>
-          <AspectRatio ratio={264 / 196}>
-            <Image
-              src={image}
-              layout="fill"
-              objectFit="cover"
-              objectPosition="top"
-            />
-          </AspectRatio>
-        </Card.Section>
-        <Text color="dark" mb={30} size="md" weight="bold">
-          {title}
-        </Text>
-        <Button
-          fullWidth
-          color="dark"
-          radius="xs"
-          size="lg"
-          component={NextLink}
-          href="/"
-        >
-          Lihat Profil
-        </Button>
-      </Card>
-    </div>
+        Lihat Profil
+      </Button>
+    </Card>
   );
 }

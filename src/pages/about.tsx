@@ -11,7 +11,7 @@ import {
   SimpleGrid,
   Button,
 } from "@mantine/core";
-import Layout from "components/Layout";
+import { MainLayout } from "components/layouts";
 import Image from "next/image";
 import { Navigation } from "swiper";
 import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
@@ -21,7 +21,7 @@ import "swiper/css/navigation";
 
 export default function AboutPage() {
   return (
-    <Layout>
+    <MainLayout>
       <Box sx={(theme) => ({ width: "100%", background: theme.white })}>
         <Container size={1128} pt={80} pb={80}>
           <SimpleGrid cols={2}>
@@ -75,7 +75,7 @@ export default function AboutPage() {
         </Container>
       </Box>
       <AboutCarousel />
-    </Layout>
+    </MainLayout>
   );
 }
 

@@ -16,9 +16,7 @@ import PriceList from "./PriceList";
 import SectionTitleWithLink from "./SectionTitleWithLink";
 
 const useStyles = createStyles((theme) => ({
-  grid: {
-    width: "100%",
-  },
+  grid: {},
   banner: {
     background: theme.white,
     borderRadius: theme.radius.md,
@@ -35,14 +33,14 @@ const useStyles = createStyles((theme) => ({
 export default function News() {
   const { classes } = useStyles();
   return (
-    <Stack mb={56}>
+    <Stack mb={56} sx={{ maxWidth: 1128 }}>
       <SectionTitleWithLink title="Berita Usaha Alumni" />
       <Grid className={classes.grid} gutter={24}>
-        <Grid.Col span={8}>
+        <Grid.Col lg={8} md={12}>
           <Stack>
             <NewsCarousel />
             <SectionTitleWithLink title="Berita Pengembangan Alumni" href="/" />
-            <SimpleGrid cols={2}>
+            <SimpleGrid cols={2} breakpoints={[{ maxWidth: "sm", cols: 1 }]}>
               <NewsCard
                 title="25% Penjualan Batu Bara Wajib ke Domestik, Ini Kata..."
                 image="/news1.jpg"
@@ -66,7 +64,7 @@ export default function News() {
             </SimpleGrid>
           </Stack>
         </Grid.Col>
-        <Grid.Col span={4}>
+        <Grid.Col lg={4} md={12}>
           <Stack>
             <AspectRatio
               ratio={1 / 1}

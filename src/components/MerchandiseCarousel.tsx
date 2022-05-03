@@ -6,39 +6,15 @@ import {
   Title,
   Text,
   Button,
+  Group,
 } from "@mantine/core";
+import { NextLink } from "@mantine/next";
 import { Pagination, Autoplay } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useStyles } from "theme";
 
 import Image from "next/image";
-
-export default function MerchandiseCarousel() {
-  const { classes } = useStyles();
-  return (
-    <Box sx={(theme) => ({ width: "100%", background: theme.white })}>
-      <Container size={1135} pt={80} pb={50} sx={{ height: 620 }}>
-        <Swiper
-          modules={[Pagination, Autoplay]}
-          pagination={{ clickable: true }}
-          autoplay={{
-            delay: 5000,
-            disableOnInteraction: false,
-          }}
-          slidesPerView={4}
-          loop={true}
-          className={classes.carousel}
-        >
-          {mercs.map((merc, index) => (
-            <SwiperSlide key={index}>
-              <MerchandiseCard image={merc.image} />
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      </Container>
-    </Box>
-  );
-}
+import { useEffect, useState } from "react";
 
 const mercs = [
   {
@@ -58,9 +34,73 @@ const mercs = [
   },
 ];
 
+export default function MerchandiseCarousel() {
+  const { classes } = useStyles();
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    setData(mercs);
+  }, []);
+
+  return (
+    <Box sx={(theme) => ({ width: "100%", background: theme.white })}>
+      <Container size={1128} pt={80} pb={50}>
+        <Group position="apart" mb={58} align="baseline">
+          <Title order={2} sx={(theme) => ({ color: theme.colors.dark })}>
+            Merchandise
+          </Title>
+          <Text
+            component={NextLink}
+            variant="link"
+            href="/merchandise"
+            color="dark"
+            weight="bold"
+          >
+            Lihat Semua
+          </Text>
+        </Group>
+        <Box sx={{ height: "466px" }}>
+          <Swiper
+            modules={[Pagination, Autoplay]}
+            pagination={{ clickable: true }}
+            autoplay={{
+              delay: 5000,
+            }}
+            slidesPerView={1}
+            loop={true}
+            className={classes.carousel}
+            breakpoints={{
+              600: {
+                slidesPerView: 2,
+              },
+              850: {
+                slidesPerView: 3,
+              },
+              1128: {
+                slidesPerView: 4,
+              },
+            }}
+          >
+            {data?.map((merc, index) => (
+              <SwiperSlide key={index}>
+                <MerchandiseCard image={merc.image} />
+              </SwiperSlide>
+            ))}
+
+            <SwiperSlide>
+              <MerchandiseCard image="/mining1.jpg" />
+            </SwiperSlide>
+          </Swiper>
+        </Box>
+      </Container>
+    </Box>
+  );
+}
+
 function MerchandiseCard({ image }: { image: string }) {
   return (
     <Card
+      mx="auto"
       sx={(theme) => ({
         width: 264,
         background: theme.white,

@@ -1,18 +1,18 @@
 import { useMemo } from "react";
 import { NextLink } from "@mantine/next";
 import {
+  Group,
+  SimpleGrid,
   Box,
   List,
   Grid,
   Stack,
   Tabs,
-  Group,
-  Container,
   Title,
   Text,
-  AspectRatio,
   Paper,
   PaperProps,
+  useMantineTheme,
 } from "@mantine/core";
 import { getCurrentDate } from "utils/time";
 import Image from "next/image";
@@ -82,8 +82,8 @@ const articleData: ArticleItem[] = [
 
 export default function Articles() {
   return (
-    <Grid gutter={72}>
-      <Grid.Col span={8}>
+    <Grid gutter={10}>
+      <Grid.Col lg={8} md={12}>
         <Stack>
           <Tabs mb={40}>
             <Tabs.Tab
@@ -126,7 +126,7 @@ export default function Articles() {
           </Text>
         </Stack>
       </Grid.Col>
-      <Grid.Col span={4} pt={75}>
+      <Grid.Col lg={4} md={12} pt={75}>
         <Stack spacing={24}>
           <Info {...info} />
           <Info {...info} />
@@ -137,10 +137,20 @@ export default function Articles() {
 }
 
 function ArticleItem({ image, title, description }: ArticleItem) {
+  const theme = useMantineTheme();
   const date = useMemo(() => getCurrentDate(), []);
 
   return (
-    <Group align="flex-start" noWrap>
+    <Box
+      sx={{
+        display: "flex",
+        gap: 20,
+
+        [`@media (max-width: ${theme.breakpoints.sm}px)`]: {
+          flexDirection: "column",
+        },
+      }}
+    >
       <div
         style={{
           minWidth: "360px",
@@ -179,7 +189,7 @@ function ArticleItem({ image, title, description }: ArticleItem) {
           {description}
         </Text>
       </Stack>
-    </Group>
+    </Box>
   );
 }
 

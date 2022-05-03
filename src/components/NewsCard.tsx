@@ -27,7 +27,7 @@ export default function NewsCard({ title, image, tags, href }: Props) {
       href={href}
     >
       <Card.Section mb={20}>
-        <AspectRatio ratio={744 / 433}>
+        <AspectRatio ratio={744 / 433} sx={{ position: "relative" }}>
           <Image
             src={image}
             layout="fill"

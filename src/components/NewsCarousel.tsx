@@ -9,7 +9,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 export default function NewsCarousel() {
   const { classes } = useStyles();
   return (
-    <div style={{ height: 600 }}>
+    <div>
       <Swiper
         modules={[Pagination, Autoplay]}
         pagination={{ clickable: true }}

@@ -1,5 +1,5 @@
 import { Container } from "@mantine/core";
-import Layout from "components/Layout";
+import { MainLayout } from "components/layouts";
 import HeroImage from "components/HeroImage";
 import News from "components/News";
 import AdBanner from "components/AdBanner";
@@ -12,9 +12,9 @@ import "swiper/css/pagination";
 
 export default function Home() {
   return (
-    <Layout>
+    <MainLayout>
       <HeroImage />
-      <Container size={1135} pt={60} pb={75}>
+      <Container size={1128} pt={60} pb={75}>
         <News />
         <AdBanner src="/banner1.png" />
         <Articles />
@@ -22,6 +22,6 @@ export default function Home() {
       <Alumni />
       <AdBanner src="/banner2.png" />
       <MerchandiseCarousel />
-    </Layout>
+    </MainLayout>
   );
 }

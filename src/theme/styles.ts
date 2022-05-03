@@ -3,6 +3,9 @@ import { createStyles } from "@mantine/core";
 export const useStyles = createStyles((theme) => ({
   carousel: {
     height: "100%",
+    "& .swiper-pagination.swiper-pagination-bullets": {
+      bottom: 0,
+    },
     "& .swiper-pagination-bullet": {
       width: "16px",
       height: "7px",
@@ -33,6 +36,13 @@ export const useStyles = createStyles((theme) => ({
       textDecoration: "none",
     },
   },
+  menuItemsNavbar: {
+    listStyle: "none",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-start",
+    gap: 20,
+  },
   scrollbar: {
     backgroundColor: theme.colors.gray[2],
     "&:hover": {
@@ -41,5 +51,37 @@ export const useStyles = createStyles((theme) => ({
   },
   thumb: {
     backgroundColor: theme.colors.gray[3],
+  },
+  footer: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "column",
+    paddingTop: 60,
+  },
+  copyright: {
+    width: "100vw",
+    height: "46px",
+    background: "#272727",
+    textAlign: "center",
+    marginTop: "auto",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  mediaSocialButton: {
+    width: "80px",
+    height: "80px",
+    borderRadius: "50%",
+    background: "white",
+  },
+  responsiveGroupSmall: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+
+    [`@media (max-width: ${theme.breakpoints.sm}px)`]: {
+      flexDirection: "column",
+    },
   },
 }));

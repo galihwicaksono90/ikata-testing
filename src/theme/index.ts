@@ -17,6 +17,7 @@ export const theme: MantineThemeOverride = {
       h6: { fontSize: "16px", lineHeight: "1.8rem" },
     },
   },
+  breakpoints: { md: 1128 },
   colors: {
     dark: [
       "#fff",
