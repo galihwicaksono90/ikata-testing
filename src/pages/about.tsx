@@ -1,4 +1,6 @@
+import { useEffect, useState } from "react";
 import {
+  ActionIcon,
   Avatar,
   Paper,
   Title,
@@ -10,11 +12,13 @@ import {
   Grid,
   SimpleGrid,
   Button,
+  createStyles,
 } from "@mantine/core";
 import { MainLayout } from "components/layouts";
 import Image from "next/image";
-import { Navigation } from "swiper";
-import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
+import { Navigation, Swiper as SwiperProps } from "swiper";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { ArrowLeft, ArrowRight } from "tabler-icons-react";
 
 import "swiper/css";
 import "swiper/css/navigation";
@@ -22,14 +26,12 @@ import "swiper/css/navigation";
 export default function AboutPage() {
   return (
     <MainLayout>
-      <Box sx={(theme) => ({ width: "100%", background: theme.white })}>
+      <Box>
         <Container size={1128} pt={80} pb={80}>
-          <SimpleGrid cols={2}>
+          <SimpleGrid cols={2} spacing={103}>
             <Stack>
-              <Title order={1} sx={(theme) => ({ color: theme.colors.dark })}>
-                Tentang IKATA
-              </Title>
-              <Text color="dark" size="sm">
+              <Title order={1}>Tentang IKATA</Title>
+              <Text size="sm" sx={{ lineHeight: "1.5rem" }}>
                 But I must explain to you how all this mistaken idea of
                 denouncing pleasure and praising pain was born and I will give
                 you a complete account of the system, and expound the actual
@@ -80,38 +82,85 @@ export default function AboutPage() {
 }
 
 function AboutCarousel() {
+  const [swiper, setSwiper] = useState<SwiperProps>(null);
+
+  const prev = () => {
+    swiper.slidePrev();
+  };
+
+  const next = () => {
+    swiper.slideNext();
+  };
+
   return (
     <Box sx={(theme) => ({ width: "100%", background: theme.colors.dark[2] })}>
       <Container size={1128} pt={80} pb={80}>
         <Stack align="center">
-          <Title sx={(theme) => ({ color: theme.colors.dark })} mb={14}>
-            Ketua IKATA
-          </Title>
-          <Text color="dark" mb={40}>
-            Lorem Ipsum Dolor Sit Amet
+          <Title mb={14}>Ketua IKATA</Title>
+          <Text mb={40} size="sm" weight="bold">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor{" "}
           </Text>
-
-          <Box sx={{ width: "90%", margin: "auto" }}>
-            <Swiper spaceBetween={50} loop={true} modules={[Navigation]}>
-              <SwiperButtonPrev />
-              <div>
-                <SwiperSlide>
-                  <TestimonialCard />
-                </SwiperSlide>
-                <SwiperSlide>
-                  <TestimonialCard />
-                </SwiperSlide>
-              </div>
-              <SwiperButtonNext />
+          <Pagination
+            numberOfSlides={swiper?.slides?.length}
+            currentSlide={swiper?.realIndex}
+          />
+          <h1>{swiper?.realIndex}</h1>
+          <Box
+            sx={{
+              width: "100%",
+              margin: "auto",
+              display: "flex",
+              gap: 10,
+              alignItems: "center",
+            }}
+          >
+            <ActionIcon onClick={prev} radius="xl" variant="filled" size="xl">
+              <ArrowLeft />
+            </ActionIcon>
+            <Swiper
+              spaceBetween={50}
+              loop={true}
+              modules={[Navigation]}
+              onSwiper={(swiper) => setSwiper(swiper)}
+            >
+              <SwiperSlide>
+                <TestimonialCard name="Alino Budi Raharjo" year="0" />
+              </SwiperSlide>
+              <SwiperSlide>
+                <TestimonialCard name="Alino Budi Raharjo" year="1" />
+              </SwiperSlide>
+              <SwiperSlide>
+                <TestimonialCard name="Alino Budi Raharjo" year="2" />
+              </SwiperSlide>
+              <SwiperSlide>
+                <TestimonialCard name="Alino Budi Raharjo" year="3" />
+              </SwiperSlide>
+              <SwiperSlide>
+                <TestimonialCard name="Alino Budi Raharjo" year="4" />
+              </SwiperSlide>
             </Swiper>
+            <ActionIcon onClick={next} radius="xl" variant="filled" size="xl">
+              <ArrowRight />
+            </ActionIcon>
           </Box>
         </Stack>
+        <Button
+          onClick={() =>
+            console.log({
+              realIndex: swiper.realIndex,
+              activeIndex: swiper.activeIndex,
+            })
+          }
+        >
+          Active Index
+        </Button>
       </Container>
     </Box>
   );
 }
 
-function TestimonialCard() {
+function TestimonialCard({ name, year }: { name: string; year: string }) {
   return (
     <Paper
       sx={(theme) => ({
@@ -121,13 +170,11 @@ function TestimonialCard() {
     >
       <Group noWrap>
         <Stack>
-          <Text color="dark" sx={{ fontSize: "22px" }}>
-            Alino Budi Raharjo
+          <Text size="lg">{name}</Text>
+          <Text color="dimmed" mb={30} size="sm">
+            {year}
           </Text>
-          <Text color="#898989" mb={40}>
-            2015-2016
-          </Text>
-          <Text color="dark">
+          <Text size="sm">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
             ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
@@ -140,19 +187,45 @@ function TestimonialCard() {
           </Text>
         </Stack>
         <Avatar size={250} radius="xl">
-          ALB
+          ABR
         </Avatar>
       </Group>
     </Paper>
   );
 }
 
-const SwiperButtonNext = () => {
-  const swiper = useSwiper();
-  return <Button onClick={() => swiper.slideNext()}>Next</Button>;
-};
+const Pagination = ({
+  numberOfSlides,
+  currentSlide,
+}: {
+  numberOfSlides?: number;
+  currentSlide?: number;
+}) => {
+  const [testing, setTesting] = useState(0);
 
-const SwiperButtonPrev = () => {
-  const swiper = useSwiper();
-  return <Button onClick={() => swiper.slidePrev()}>Prev</Button>;
+  useEffect(() => {
+    if (currentSlide) {
+      setTesting(currentSlide);
+    }
+  }, [currentSlide]);
+
+  if (!numberOfSlides || numberOfSlides < 3) return null;
+
+  console.log({ numberOfSlides });
+  return (
+    <Group>
+      {testing}
+      {[...Array(numberOfSlides - 2)].fill(0).map((_, index: number) => (
+        <Box
+          sx={(theme) => ({
+            height: 5,
+            width: 5,
+            background:
+              index === testing ? theme.primaryColor : theme.colors.gray,
+          })}
+          key={index}
+        />
+      ))}
+    </Group>
+  );
 };

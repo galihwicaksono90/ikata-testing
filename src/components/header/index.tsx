@@ -1,4 +1,11 @@
-import { MediaQuery, Divider, Header, Container, Center } from "@mantine/core";
+import {
+  MediaQuery,
+  Divider,
+  Header,
+  Container,
+  Center,
+  Box,
+} from "@mantine/core";
 import HeaderTop from "./HeaderTop";
 import HeaderMenu from "./HeaderMenu";
 import { NavbarProps } from "components/layouts";
@@ -7,10 +14,16 @@ import { useStyles } from "theme";
 export default function HeaderComponent({ opened, setOpened }: NavbarProps) {
   const { classes } = useStyles();
   return (
-    <Header height="auto">
+    <Header height="auto" sx={{ border: "none" }}>
       <HeaderTop opened={opened} setOpened={setOpened} />
       <MediaQuery smallerThan="md" styles={{ display: "none" }}>
-        <div>
+        <Box
+          sx={(theme) => ({
+            width: "100%",
+            background: theme.colors.dark[8],
+            color: theme.white,
+          })}
+        >
           <Divider />
           <Container
             size={1128}
@@ -26,7 +39,7 @@ export default function HeaderComponent({ opened, setOpened }: NavbarProps) {
               </ul>
             </Center>
           </Container>
-        </div>
+        </Box>
       </MediaQuery>
     </Header>
   );

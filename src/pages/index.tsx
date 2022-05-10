@@ -1,4 +1,4 @@
-import { Container } from "@mantine/core";
+import { Container, Box } from "@mantine/core";
 import { MainLayout } from "components/layouts";
 import HeroImage from "components/HeroImage";
 import News from "components/News";
@@ -14,11 +14,9 @@ export default function Home() {
   return (
     <MainLayout>
       <HeroImage />
-      <Container size={1128} pt={60} pb={75}>
-        <News />
-        <AdBanner src="/banner1.png" />
-        <Articles />
-      </Container>
+      <News />
+      <AdBanner src="/banner1.png" />
+      <Articles />
       <Alumni />
       <AdBanner src="/banner2.png" />
       <MerchandiseCarousel />

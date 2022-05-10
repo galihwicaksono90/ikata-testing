@@ -12,6 +12,7 @@ export default function PriceList(props: PaperProps<"div">) {
         padding: 20,
         background: "rgba(255,255,255,0.15)",
         boxShadow: theme.shadows.md,
+        color: theme.white,
       })}
       radius="lg"
       {...props}

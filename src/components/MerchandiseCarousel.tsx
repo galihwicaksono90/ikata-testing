@@ -19,24 +19,29 @@ import { useEffect, useState } from "react";
 const mercs = [
   {
     image: "/merch1.png",
+    title: "Kaos ikata friendship",
   },
   {
     image: "/merch2.png",
+    title: "Kaos ikata adventure (kaos lengan panjang)",
   },
   {
     image: "/merch3.png",
+    title: "Ikata golf shirt",
   },
   {
     image: "/merch4.png",
+    title: "Mug Ikata",
   },
   {
     image: "/merch5.png",
+    title: "Payung ikata golf",
   },
 ];
 
 export default function MerchandiseCarousel() {
   const { classes } = useStyles();
-  const [data, setData] = useState(null);
+  const [data, setData] = useState<typeof mercs>(null);
 
   useEffect(() => {
     setData(mercs);
@@ -83,13 +88,9 @@ export default function MerchandiseCarousel() {
           >
             {data?.map((merc, index) => (
               <SwiperSlide key={index}>
-                <MerchandiseCard image={merc.image} />
+                <MerchandiseCard image={merc.image} title={merc.title} />
               </SwiperSlide>
             ))}
-
-            <SwiperSlide>
-              <MerchandiseCard image="/mining1.jpg" />
-            </SwiperSlide>
           </Swiper>
         </Box>
       </Container>
@@ -97,7 +98,7 @@ export default function MerchandiseCarousel() {
   );
 }
 
-function MerchandiseCard({ image }: { image: string }) {
+function MerchandiseCard({ image, title }: { image: string; title: string }) {
   return (
     <Card
       mx="auto"
@@ -105,6 +106,9 @@ function MerchandiseCard({ image }: { image: string }) {
         width: 264,
         background: theme.white,
         border: `1px solid #EAEAEA`,
+        height: 442,
+        display: "flex",
+        flexDirection: "column",
       })}
       withBorder
     >
@@ -125,15 +129,15 @@ function MerchandiseCard({ image }: { image: string }) {
           objectPosition="center"
         />
       </Box>
-      <Title order={6} mb={40} sx={(theme) => ({ color: theme.colors.dark })}>
-        Hello world
-      </Title>
-      <Text mb={20} color="dark">
-        Rp 135.000,-
-      </Text>
-      <Button size="lg" fullWidth color="dark">
-        Lihat Detail
-      </Button>
+      <Title order={6}>{title}</Title>
+      <Box sx={{ marginTop: "auto" }}>
+        <Text mb={20} color="dimmed" weight="bold">
+          Rp 135.000,-
+        </Text>
+        <Button size="lg" fullWidth>
+          Lihat Detail
+        </Button>
+      </Box>
     </Card>
   );
 }

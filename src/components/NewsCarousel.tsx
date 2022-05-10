@@ -1,5 +1,5 @@
 import React from "react";
-import { createStyles } from "@mantine/core";
+import { Box, AspectRatio } from "@mantine/core";
 import NewsCard from "./NewsCard";
 import { useStyles } from "theme";
 
@@ -9,7 +9,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 export default function NewsCarousel() {
   const { classes } = useStyles();
   return (
-    <div>
+    <AspectRatio ratio={744 / 596}>
       <Swiper
         modules={[Pagination, Autoplay]}
         pagination={{ clickable: true }}
@@ -26,6 +26,7 @@ export default function NewsCarousel() {
             tags={["Berita Umum"]}
             image="/news1.jpg"
             href="/about"
+            bold
           />
         </SwiperSlide>
         <SwiperSlide>
@@ -34,6 +35,7 @@ export default function NewsCarousel() {
             tags={["Berita Umum"]}
             image="/news2.jpg"
             href="/about"
+            bold
           />
         </SwiperSlide>
         <SwiperSlide>
@@ -42,9 +44,10 @@ export default function NewsCarousel() {
             tags={["Berita Umum"]}
             image="/news3.jpg"
             href="/about"
+            bold
           />
         </SwiperSlide>
       </Swiper>
-    </div>
+    </AspectRatio>
   );
 }

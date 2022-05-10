@@ -1,8 +1,6 @@
 import { useMemo } from "react";
 import { NextLink } from "@mantine/next";
 import {
-  Group,
-  SimpleGrid,
   Box,
   List,
   Grid,
@@ -16,6 +14,7 @@ import {
 } from "@mantine/core";
 import { getCurrentDate } from "utils/time";
 import Image from "next/image";
+import DarkContainer from "./DarkContainer";
 
 interface ArticleItem {
   title: string;
@@ -82,57 +81,59 @@ const articleData: ArticleItem[] = [
 
 export default function Articles() {
   return (
-    <Grid gutter={10}>
-      <Grid.Col lg={8} md={12}>
-        <Stack>
-          <Tabs mb={40}>
-            <Tabs.Tab
-              label="Artikel Ilmiah"
-              sx={{
-                fontSize: "24px",
-                fontWeight: 600,
-                color: "white",
-              }}
+    <DarkContainer>
+      <Grid gutter={10}>
+        <Grid.Col lg={8} md={12}>
+          <Stack>
+            <Tabs mb={40}>
+              <Tabs.Tab
+                label="Artikel Ilmiah"
+                sx={{
+                  color: "white",
+                  fontSize: "24px",
+                  fontWeight: "bold",
+                }}
+              >
+                <Stack spacing={20} mt={20}>
+                  {articleData.map((article, index) => (
+                    <ArticleItem {...article} key={index} />
+                  ))}
+                </Stack>
+              </Tabs.Tab>
+              <Tabs.Tab
+                label="Artikel Non-Ilmiah"
+                sx={{
+                  color: "white",
+                  fontSize: "24px",
+                  fontWeight: 600,
+                }}
+              >
+                <Stack spacing={20} mt={20}>
+                  <ArticleItem {...articleData[3]} />
+                  <ArticleItem {...articleData[2]} />
+                  <ArticleItem {...articleData[1]} />
+                  <ArticleItem {...articleData[0]} />
+                </Stack>
+              </Tabs.Tab>
+            </Tabs>
+            <Text
+              component={NextLink}
+              href="/articles"
+              variant="link"
+              weight="bold"
             >
-              <Stack spacing={20} mt={20}>
-                {articleData.map((article, index) => (
-                  <ArticleItem {...article} key={index} />
-                ))}
-              </Stack>
-            </Tabs.Tab>
-            <Tabs.Tab
-              label="Artikel Non-Ilmiah"
-              sx={{
-                fontSize: "24px",
-                fontWeight: 600,
-                color: "white",
-              }}
-            >
-              <Stack spacing={20} mt={20}>
-                <ArticleItem {...articleData[3]} />
-                <ArticleItem {...articleData[2]} />
-                <ArticleItem {...articleData[1]} />
-                <ArticleItem {...articleData[0]} />
-              </Stack>
-            </Tabs.Tab>
-          </Tabs>
-          <Text
-            component={NextLink}
-            href="/articles"
-            variant="link"
-            weight="bold"
-          >
-            Lihat Semua
-          </Text>
-        </Stack>
-      </Grid.Col>
-      <Grid.Col lg={4} md={12} pt={75}>
-        <Stack spacing={24}>
-          <Info {...info} />
-          <Info {...info} />
-        </Stack>
-      </Grid.Col>
-    </Grid>
+              Lihat Semua
+            </Text>
+          </Stack>
+        </Grid.Col>
+        <Grid.Col lg={4} md={12} pt={75}>
+          <Stack spacing={24}>
+            <Info {...info} />
+            <Info {...info} />
+          </Stack>
+        </Grid.Col>
+      </Grid>
+    </DarkContainer>
   );
 }
 
@@ -169,13 +170,8 @@ function ArticleItem({ image, title, description }: ArticleItem) {
       </div>
       <Stack spacing={6}>
         <Text
-          sx={(theme) => ({
-            fontSize: "22px",
-            fontWeight: 600,
-            ":hover": {
-              color: theme.fn.darken(theme.white, 0.1),
-            },
-          })}
+          weight="bold"
+          size="xl"
           lineClamp={2}
           component={NextLink}
           href="/about"
@@ -200,6 +196,8 @@ function Info({ title, items, ...rest }: InfoItem) {
       radius="md"
       p={20}
       sx={(theme) => ({
+        background: theme.colors.dark[8],
+        color: theme.white,
         borderColor: theme.colors.dark[4],
         borderWidth: "1px",
         borderStyle: "solid",
@@ -226,7 +224,10 @@ function Info({ title, items, ...rest }: InfoItem) {
       >
         {items.map((item, index) => {
           return (
-            <Box key={index} sx={{ marginBottom: 20 }}>
+            <Box
+              key={index}
+              sx={(theme) => ({ marginBottom: 20, color: theme.white })}
+            >
               <List.Item
                 sx={() => ({
                   fontWeight: 600,
@@ -235,7 +236,7 @@ function Info({ title, items, ...rest }: InfoItem) {
               >
                 <Text lineClamp={1}>{item.title}</Text>
               </List.Item>
-              <Text pl={20} lineClamp={1} color="dimmed">
+              <Text pl={20} lineClamp={1} color="dimmed" size="sm">
                 {item.description}
               </Text>
             </Box>

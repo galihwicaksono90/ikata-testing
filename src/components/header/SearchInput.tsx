@@ -6,14 +6,18 @@ export default function SearchInput() {
     <Input
       icon={<Search />}
       radius="xl"
-      variant="unstyled"
       placeholder="Search"
-      sx={(theme) => ({
+      styles={(theme) => ({
         input: {
+          color: theme.white,
           height: "38px",
           border: `solid 1px ${theme.colors.dark[2]}`,
+          background: theme.colors.dark[8],
           borderRadius: "50px",
           width: "264px",
+          "& span :hover": {
+            borderColor: theme.white,
+          },
         },
       })}
     />

@@ -48,12 +48,15 @@ export default function MenuItem({
             <ChevronDown size={14} />
           </Group>
         }
-        styles={{
+        styles={(theme) => ({
           body: {
-            background: "rgba(0,0,0,0.45)",
+            background: "rgba(0,0,0,0.65)",
             border: "none",
           },
-        }}
+          itemHovered: {
+            background: theme.colors.dark[5],
+          },
+        })}
       >
         {children}
       </Menu>

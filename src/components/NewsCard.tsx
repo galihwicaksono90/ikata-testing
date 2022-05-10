@@ -7,9 +7,18 @@ interface Props {
   image: string;
   tags?: string[];
   href?: string;
+  bold?: boolean;
+  align?: "left" | "right" | "center" | "justify";
 }
 
-export default function NewsCard({ title, image, tags, href }: Props) {
+export default function NewsCard({
+  title,
+  image,
+  tags,
+  href,
+  bold,
+  align,
+}: Props) {
   return (
     <Card
       radius="md"
@@ -22,6 +31,7 @@ export default function NewsCard({ title, image, tags, href }: Props) {
         "&:hover": {
           backgroundColor: theme.fn.lighten("rgba(255,255,255,0.15)", 0.2),
         },
+        color: theme.white,
       })}
       component={NextLink}
       href={href}
@@ -45,7 +55,11 @@ export default function NewsCard({ title, image, tags, href }: Props) {
           ))}
         </Group>
       ) : null}
-      <Text weight={600} size="lg" lineClamp={2}>
+      <Text
+        weight={bold ? "bold" : null}
+        size={bold ? "lg" : "md"}
+        align={align}
+      >
         {title}
       </Text>
     </Card>

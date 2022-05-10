@@ -49,6 +49,10 @@ const Layout = ({ children }: Props) => {
               width={{
                 base: 400,
               }}
+              sx={(theme) => ({
+                background: theme.colors.dark[7],
+                color: theme.white,
+              })}
             >
               <Stack>
                 <Group

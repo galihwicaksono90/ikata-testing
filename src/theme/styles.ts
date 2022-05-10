@@ -3,9 +3,7 @@ import { createStyles } from "@mantine/core";
 export const useStyles = createStyles((theme) => ({
   carousel: {
     height: "100%",
-    "& .swiper-pagination.swiper-pagination-bullets": {
-      bottom: 0,
-    },
+    "& .swiper-pagination.swiper-pagination-bullets": {},
     "& .swiper-pagination-bullet": {
       width: "16px",
       height: "7px",
@@ -58,6 +56,8 @@ export const useStyles = createStyles((theme) => ({
     alignItems: "center",
     flexDirection: "column",
     paddingTop: 60,
+    background: theme.colors.dark[8],
+    color: theme.white,
   },
   copyright: {
     width: "100vw",
