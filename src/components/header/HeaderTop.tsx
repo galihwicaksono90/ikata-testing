@@ -67,7 +67,11 @@ export default function HeaderTop({ opened, setOpened }: NavbarProps) {
             </Group>
           </MediaQuery>
           <MediaQuery largerThan="md" styles={{ display: "none" }}>
-            <Burger opened={opened} onClick={() => setOpened((o) => !o)} />
+            <Burger
+              opened={opened}
+              onClick={() => setOpened((o) => !o)}
+              color="white"
+            />
           </MediaQuery>
         </Group>
       </Container>

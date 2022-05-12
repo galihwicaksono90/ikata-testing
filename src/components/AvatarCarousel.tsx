@@ -1,6 +1,7 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import Avatar, { AvatarProps } from "./Avatar";
 import { createStyles, Box } from "@mantine/core";
+import Carousel from "components/Carousel";
 
 import { Pagination, Grid } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -12,7 +13,7 @@ import "swiper/css/grid";
 interface Props {
   data: AvatarProps[];
   rows?: number;
-  slidesPerView?: number;
+  slidesToShow?: number;
 }
 
 const useStyles = createStyles((theme) => ({
@@ -38,15 +39,30 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-const AvatarCarousel = ({ data, rows = 2, slidesPerView = 4 }: Props) => {
-  const { classes } = useStyles();
-  if (!data) {
+const AvatarCarousel = ({ data, rows = 2, slidesToShow = 4 }: Props) => {
+  const [avatars, setAvatars] = useState([]);
+
+  console.log({ avatars });
+  useEffect(() => {
+    if (data) {
+      setAvatars(data);
+      return;
+    }
+    setAvatars([]);
+  }, [data]);
+
+  if (!avatars) {
     return null;
   }
 
   return (
     <Box>
-      <Swiper
+      <Carousel dotType="numbers" rows={rows} slidesToShow={slidesToShow} dots>
+        {avatars.map((item, index) => (
+          <Avatar name={item.name} title={item.title} key={index} />
+        ))}
+      </Carousel>
+      {/* <Swiper
         modules={[Grid, Pagination]}
         pagination={{
           clickable: true,
@@ -66,7 +82,7 @@ const AvatarCarousel = ({ data, rows = 2, slidesPerView = 4 }: Props) => {
             <Avatar name={item.name} title={item.title} />
           </SwiperSlide>
         ))}
-      </Swiper>
+      </Swiper> */}
     </Box>
   );
 };

@@ -1,6 +1,51 @@
 import { createStyles } from "@mantine/core";
 
 export const useStyles = createStyles((theme) => ({
+  slickCarousel: {
+    "& ul": {},
+    "& .slick-dots": {
+      "&.outside": {
+        bottom: "-45px",
+      },
+      "&.inside": {
+        bottom: "8px",
+      },
+      "&.bullets": {
+        "& li div": {
+          width: 16,
+          height: 7,
+          borderRadius: theme.radius.md,
+        },
+      },
+      "&.numbers": {
+        "& li div": {
+          width: 27,
+          height: 27,
+          borderRadius: theme.radius.xl,
+        },
+      },
+      "& li div": {
+        backgroundColor: theme.colors.gray[3],
+        color: theme.colors.gray[5],
+        fontWeight: "bold",
+        lineHeight: "30px",
+      },
+      "& li.slick-active div": {
+        background: theme.primaryColor,
+        color: theme.white,
+      },
+    },
+    "& .carousel-arrow-next": {
+      position: "absolute",
+      top: "50%",
+      right: "-40px",
+    },
+    "& .carousel-arrow-prev": {
+      position: "absolute",
+      top: "50%",
+      left: "-40px",
+    },
+  },
   carousel: {
     height: "100%",
     "& .swiper-pagination.swiper-pagination-bullets": {},

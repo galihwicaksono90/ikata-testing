@@ -1,4 +1,5 @@
 import {
+  Box,
   Center,
   Text,
   Group,
@@ -22,7 +23,9 @@ export default function News() {
         <Grid gutter={24}>
           <Grid.Col lg={8} md={12}>
             <Stack>
-              <NewsCarousel />
+              <Box sx={{ marginBottom: 50 }}>
+                <NewsCarousel />
+              </Box>
               <SectionTitleWithLink
                 title="Berita Pengembangan Alumni"
                 href="/"

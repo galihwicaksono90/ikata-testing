@@ -11,7 +11,7 @@ import {
 import Image from "next/image";
 import { NextLink } from "@mantine/next";
 import { useStyles } from "theme";
-
+import Carousel from "components/Carousel";
 import { Pagination, Autoplay } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -57,7 +57,12 @@ export default function Alumni() {
             Tambang
           </Title>
           <Box sx={{ flexGrow: 1, height: 400 }}>
-            <Swiper
+            <Carousel slidesToShow={3} dots>
+              {items.map((item, index) => (
+                <AlumniCard key={index} title={item.title} image={item.image} />
+              ))}
+            </Carousel>
+            {/* <Swiper
               modules={[Pagination, Autoplay]}
               pagination={{ clickable: true }}
               autoplay={{
@@ -83,7 +88,7 @@ export default function Alumni() {
                   />
                 </SwiperSlide>
               ))}
-            </Swiper>
+            </Swiper> */}
           </Box>
         </Box>
         <Group position="right">

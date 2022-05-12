@@ -1,16 +1,23 @@
 import React from "react";
-import { Box, Center, createStyles, Overlay } from "@mantine/core";
+import { Box, Overlay } from "@mantine/core";
 import Image from "next/image";
 import { useStyles } from "theme";
 
 import { Pagination, Autoplay } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 
+import Carousel from "components/Carousel";
+
 export default function HeroImage() {
   const { classes } = useStyles();
   return (
-    <Center sx={{ height: "679px" }}>
-      <Swiper
+    <Box sx={{ height: "679px" }}>
+      <Carousel dotsPosition="inside" dots slidesToShow={1} autoplay>
+        <Content src={"/mining1.jpg"} />
+        <Content src={"/mining2.jpg"} />
+        <Content src={"/mining3.jpg"} />
+      </Carousel>
+      {/* <Swiper
         modules={[Pagination, Autoplay]}
         pagination={{ clickable: true }}
         autoplay={{
@@ -29,8 +36,8 @@ export default function HeroImage() {
         <SwiperSlide>
           <Content src={"/mining3.jpg"} />
         </SwiperSlide>
-      </Swiper>
-    </Center>
+      </Swiper> */}
+    </Box>
   );
 }
 

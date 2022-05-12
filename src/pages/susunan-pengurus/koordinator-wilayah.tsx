@@ -35,12 +35,8 @@ const areas = [
         title: "Sekretaris",
       },
       {
-        name: "Setyo Kurniawan",
-        title: "Bendahara",
-      },
-      {
-        name: "Rizki Amrullah",
-        title: "Ketua",
+        name: "Sri Lestari",
+        title: "Sekretaris",
       },
     ],
   },
@@ -68,11 +64,45 @@ const areas = [
         name: "Rizki Amrullah",
         title: "Ketua",
       },
+      {
+        name: "Rizki Amrullah",
+        title: "Ketua",
+      },
+      {
+        name: "Rizki Amrullah",
+        title: "Ketua",
+      },
+      {
+        name: "Rizki Amrullah",
+        title: "Ketua",
+      },
     ],
   },
   {
     id: 3,
     name: "banda aceh",
+    staff: [
+      {
+        name: "Rizki Amrullah",
+        title: "Ketua",
+      },
+      {
+        name: "Budi Gunawan",
+        title: "Wakil Ketua",
+      },
+      {
+        name: "Sri Lestari",
+        title: "Sekretaris",
+      },
+      {
+        name: "Setyo Kurniawan",
+        title: "Bendahara",
+      },
+      {
+        name: "Rizki Amrullah",
+        title: "Ketua",
+      },
+    ],
   },
   { id: 4, name: "bandar lampung" },
   { id: 5, name: "banjar" },
@@ -161,7 +191,7 @@ export default function koordinatorWilayah() {
           <AvatarCarousel
             data={areas.find((area) => area.id === currentAreaId)?.staff}
             rows={2}
-            slidesPerView={3}
+            slidesToShow={3}
           />
         </Grid.Col>
       </Grid>

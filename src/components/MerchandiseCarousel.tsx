@@ -12,6 +12,7 @@ import { NextLink } from "@mantine/next";
 import { Pagination, Autoplay } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useStyles } from "theme";
+import Carousel from "components/Carousel";
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -65,7 +66,16 @@ export default function MerchandiseCarousel() {
           </Text>
         </Group>
         <Box sx={{ height: "466px" }}>
-          <Swiper
+          <Carousel slidesToShow={4} autoplay>
+            {data?.map((merc, index) => (
+              <MerchandiseCard
+                image={merc.image}
+                title={merc.title}
+                key={index}
+              />
+            ))}
+          </Carousel>
+          {/* <Swiper
             modules={[Pagination, Autoplay]}
             pagination={{ clickable: true }}
             autoplay={{
@@ -91,7 +101,7 @@ export default function MerchandiseCarousel() {
                 <MerchandiseCard image={merc.image} title={merc.title} />
               </SwiperSlide>
             ))}
-          </Swiper>
+          </Swiper> */}
         </Box>
       </Container>
     </Box>

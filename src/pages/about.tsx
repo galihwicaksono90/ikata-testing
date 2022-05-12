@@ -16,6 +16,7 @@ import {
 } from "@mantine/core";
 import { MainLayout } from "components/layouts";
 import Image from "next/image";
+import Carousel from "components/Carousel";
 import { Navigation, Swiper as SwiperProps } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { ArrowLeft, ArrowRight } from "tabler-icons-react";
@@ -76,89 +77,105 @@ export default function AboutPage() {
           </SimpleGrid>
         </Container>
       </Box>
-      <AboutCarousel />
+      <Box
+        sx={(theme) => ({ width: "100%", background: theme.colors.gray[2] })}
+      >
+        <Container size={1128} pt={80} pb={80}>
+          <AboutCarousel />
+        </Container>
+      </Box>
     </MainLayout>
   );
 }
 
-function AboutCarousel() {
-  const [swiper, setSwiper] = useState<SwiperProps>(null);
-
-  const prev = () => {
-    swiper.slidePrev();
-  };
-
-  const next = () => {
-    swiper.slideNext();
-  };
-
+const AboutCarousel = () => {
   return (
-    <Box sx={(theme) => ({ width: "100%", background: theme.colors.dark[2] })}>
-      <Container size={1128} pt={80} pb={80}>
-        <Stack align="center">
-          <Title mb={14}>Ketua IKATA</Title>
-          <Text mb={40} size="sm" weight="bold">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor{" "}
-          </Text>
-          <Pagination
-            numberOfSlides={swiper?.slides?.length}
-            currentSlide={swiper?.realIndex}
-          />
-          <h1>{swiper?.realIndex}</h1>
-          <Box
-            sx={{
-              width: "100%",
-              margin: "auto",
-              display: "flex",
-              gap: 10,
-              alignItems: "center",
-            }}
-          >
-            <ActionIcon onClick={prev} radius="xl" variant="filled" size="xl">
-              <ArrowLeft />
-            </ActionIcon>
-            <Swiper
-              spaceBetween={50}
-              loop={true}
-              modules={[Navigation]}
-              onSwiper={(swiper) => setSwiper(swiper)}
-            >
-              <SwiperSlide>
-                <TestimonialCard name="Alino Budi Raharjo" year="0" />
-              </SwiperSlide>
-              <SwiperSlide>
-                <TestimonialCard name="Alino Budi Raharjo" year="1" />
-              </SwiperSlide>
-              <SwiperSlide>
-                <TestimonialCard name="Alino Budi Raharjo" year="2" />
-              </SwiperSlide>
-              <SwiperSlide>
-                <TestimonialCard name="Alino Budi Raharjo" year="3" />
-              </SwiperSlide>
-              <SwiperSlide>
-                <TestimonialCard name="Alino Budi Raharjo" year="4" />
-              </SwiperSlide>
-            </Swiper>
-            <ActionIcon onClick={next} radius="xl" variant="filled" size="xl">
-              <ArrowRight />
-            </ActionIcon>
-          </Box>
-        </Stack>
-        <Button
-          onClick={() =>
-            console.log({
-              realIndex: swiper.realIndex,
-              activeIndex: swiper.activeIndex,
-            })
-          }
-        >
-          Active Index
-        </Button>
-      </Container>
-    </Box>
+    <Carousel arrows dots={false}>
+      <TestimonialCard name="Alino Budi Raharjo" year="0" />
+      <TestimonialCard name="Alino Budi Raharjo" year="1" />
+      <TestimonialCard name="Alino Budi Raharjo" year="2" />
+      <TestimonialCard name="Alino Budi Raharjo" year="3" />
+      <TestimonialCard name="Alino Budi Raharjo" year="4" />
+    </Carousel>
   );
-}
+};
+
+/* function AboutCarousel() {
+ *   const [swiper, setSwiper] = useState<SwiperProps>(null);
+ *   const prev = () => {
+ *     swiper.slidePrev();
+ *   };
+ *   const next = () => {
+ *     swiper.slideNext();
+ *   };
+ *   return (
+ *     <Box sx={(theme) => ({ width: "100%", background: theme.colors.dark[2] })}>
+ *       <Container size={1128} pt={80} pb={80}>
+ *         <Stack align="center">
+ *           <Title mb={14}>Ketua IKATA</Title>
+ *           <Text mb={40} size="sm" weight="bold">
+ *             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+ *             eiusmod tempor{" "}
+ *           </Text>
+ *           <Pagination
+ *             numberOfSlides={swiper?.slides?.length}
+ *             currentSlide={swiper?.realIndex}
+ *           />
+ *           <h1>{swiper?.realIndex}</h1>
+ *           <Box
+ *             sx={{
+ *               width: "100%",
+ *               margin: "auto",
+ *               display: "flex",
+ *               gap: 10,
+ *               alignItems: "center",
+ *             }}
+ *           >
+ *             <ActionIcon onClick={prev} radius="xl" variant="filled" size="xl">
+ *               <ArrowLeft />
+ *             </ActionIcon>
+ *             <Swiper
+ *               spaceBetween={50}
+ *               loop={true}
+ *               modules={[Navigation]}
+ *               onSwiper={(swiper) => setSwiper(swiper)}
+ *             >
+ *               <SwiperSlide>
+ *                 <TestimonialCard name="Alino Budi Raharjo" year="0" />
+ *               </SwiperSlide>
+ *               <SwiperSlide>
+ *                 <TestimonialCard name="Alino Budi Raharjo" year="1" />
+ *               </SwiperSlide>
+ *               <SwiperSlide>
+ *                 <TestimonialCard name="Alino Budi Raharjo" year="2" />
+ *               </SwiperSlide>
+ *               <SwiperSlide>
+ *                 <TestimonialCard name="Alino Budi Raharjo" year="3" />
+ *               </SwiperSlide>
+ *               <SwiperSlide>
+ *                 <TestimonialCard name="Alino Budi Raharjo" year="4" />
+ *               </SwiperSlide>
+ *             </Swiper>
+ *             <ActionIcon onClick={next} radius="xl" variant="filled" size="xl">
+ *               <ArrowRight />
+ *             </ActionIcon>
+ *           </Box>
+ *         </Stack>
+ *         <Button
+ *           onClick={() =>
+ *             console.log({
+ *               realIndex: swiper.realIndex,
+ *               activeIndex: swiper.activeIndex,
+ *             })
+ *           }
+ *         >
+ *           Active Index
+ *         </Button>
+ *       </Container>
+ *     </Box>
+ *   );
+ * }
+ *  */
 
 function TestimonialCard({ name, year }: { name: string; year: string }) {
   return (

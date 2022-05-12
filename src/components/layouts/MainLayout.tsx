@@ -64,6 +64,7 @@ const Layout = ({ children }: Props) => {
                   <Burger
                     opened={opened}
                     onClick={() => setOpened((o) => !o)}
+                    color="white"
                   />
                 </Group>
                 <Box component="ul" className={classes.menuItemsNavbar}>

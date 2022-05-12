@@ -1,5 +1,4 @@
 import { useState } from "react";
-import Layout from "components/Layout";
 import { Grid, Text, Title, Box, Container, Paper, Group } from "@mantine/core";
 import AvatarCarousel from "components/AvatarCarousel";
 import { ManagementLayout } from "components/layouts";
@@ -73,6 +72,26 @@ const data = [
         name: "Sri Lestari",
         title: "Sekretaris",
       },
+      {
+        name: "Sri Lestari",
+        title: "Sekretaris",
+      },
+      {
+        name: "Sri Lestari",
+        title: "Sekretaris",
+      },
+      {
+        name: "Sri Lestari",
+        title: "Sekretaris",
+      },
+      {
+        name: "Sri Lestari",
+        title: "Sekretaris",
+      },
+      {
+        name: "Sri Lestari",
+        title: "Sekretaris",
+      },
     ],
   },
   { name: "Biro Kerjasama" },
@@ -110,7 +129,7 @@ export default function PengurusPusat() {
             <AvatarCarousel
               data={data[currentPageIndex].staff}
               rows={2}
-              slidesPerView={3}
+              slidesToShow={3}
             />
           ) : null}
         </Grid.Col>
