@@ -2,8 +2,9 @@ import { AppProps } from "next/app";
 import Head from "next/head";
 import { MantineProvider } from "@mantine/core";
 import { theme } from "theme";
+import { wrapper } from "redux/store";
 
-export default function App(props: AppProps) {
+function App(props: AppProps) {
   const { Component, pageProps } = props;
 
   return (
@@ -22,3 +23,5 @@ export default function App(props: AppProps) {
     </>
   );
 }
+
+export default wrapper.withRedux(App);

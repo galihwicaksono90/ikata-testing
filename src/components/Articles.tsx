@@ -15,6 +15,9 @@ import {
 import { getCurrentDate } from "utils/time";
 import Image from "next/image";
 import DarkContainer from "./DarkContainer";
+import { useGetArticlesQuery, ArticleType } from "generated/graphql";
+import { useAppSelector, useAppDispatch } from "redux/hooks";
+import { setArticleMenuPosition } from "redux/general/generalSlice";
 
 interface ArticleItem {
   title: string;
@@ -52,40 +55,32 @@ export const info: InfoItem = {
   ],
 };
 
-const articleData: ArticleItem[] = [
-  {
-    title: "Pembukaan Lahan Tambang Batubara",
-    description:
-      "Aliquam erat volutpat.  Nunc eleifend leo vitae magna.  In id erat non orci commodo lobortis.  Proin neque massa, cursus ut, gravida ut, lobortis eget, lacus.  Sed diam.  Praesent fermentum tempor tellus.  Nullam tempus.  Mauris ac felis vel velit tristique imperdiet.  Donec at pede.  Etiam vel neque nec dui dignissim bibendum.  Vivamus id enim.  Phasellus neque orci, porta a, aliquet quis, semper a, massa.  Phasellus purus.  Pellentesque tristique imperdiet tortor.  Nam euismod tellus id erat. ",
-    image: "/article1.jpg",
-  },
-  {
-    title: "Tata Cara Pengoperasian Alat Berat",
-    description:
-      "Aliquam erat volutpat.  Nunc eleifend leo vitae magna.  In id erat non orci commodo lobortis.  Proin neque massa, cursus ut, gravida ut, lobortis eget, lacus.  Sed diam.  Praesent fermentum tempor tellus.  Nullam tempus.  Mauris ac felis vel velit tristique imperdiet.  Donec at pede.  Etiam vel neque nec dui dignissim bibendum.  Vivamus id enim.  Phasellus neque orci, porta a, aliquet quis, semper a, massa.  Phasellus purus.  Pellentesque tristique imperdiet tortor.  Nam euismod tellus id erat. ",
-    image: "/article2.jpg",
-  },
-  {
-    title: "Pemulihan Lahan Bekas Tambang Secara Efektif",
-    description:
-      "Aliquam erat volutpat.  Nunc eleifend leo vitae magna.  In id erat non orci commodo lobortis.  Proin neque massa, cursus ut, gravida ut, lobortis eget, lacus.  Sed diam.  Praesent fermentum tempor tellus.  Nullam tempus.  Mauris ac felis vel velit tristique imperdiet.  Donec at pede.  Etiam vel neque nec dui dignissim bibendum.  Vivamus id enim.  Phasellus neque orci, porta a, aliquet quis, semper a, massa.  Phasellus purus.  Pellentesque tristique imperdiet tortor.  Nam euismod tellus id erat. ",
-    image: "/article3.jpg",
-  },
-  {
-    title: "Pengoperasian Terowongan Bawah Tanah",
-    description:
-      "Aliquam erat volutpat.  Nunc eleifend leo vitae magna.  In id erat non orci commodo lobortis.  Proin neque massa, cursus ut, gravida ut, lobortis eget, lacus.  Sed diam.  Praesent fermentum tempor tellus.  Nullam tempus.  Mauris ac felis vel velit tristique imperdiet.  Donec at pede.  Etiam vel neque nec dui dignissim bibendum.  Vivamus id enim.  Phasellus neque orci, porta a, aliquet quis, semper a, massa.  Phasellus purus.  Pellentesque tristique imperdiet tortor.  Nam euismod tellus id erat. ",
-    image: "/article4.jpg",
-  },
-];
-
 export default function Articles() {
+  const { data: scientificArticles, isLoading: scientificIsLoading } =
+    useGetArticlesQuery({
+      limit: 4,
+      type: ArticleType.Scientific,
+    });
+  const { data: nonScientificArticles, isLoading: nonScientificIsLoading } =
+    useGetArticlesQuery({
+      limit: 4,
+      type: ArticleType.NonScientific,
+    });
+  const activeTab = useAppSelector(
+    (state) => state.general.articleMenuPosition
+  );
+  const dispatch = useAppDispatch();
+
   return (
     <DarkContainer>
       <Grid gutter={10}>
         <Grid.Col lg={8} md={12}>
           <Stack>
-            <Tabs mb={40}>
+            <Tabs
+              mb={40}
+              active={activeTab}
+              onTabChange={(index) => dispatch(setArticleMenuPosition(index))}
+            >
               <Tabs.Tab
                 label="Artikel Ilmiah"
                 sx={{
@@ -95,9 +90,11 @@ export default function Articles() {
                 }}
               >
                 <Stack spacing={20} mt={20}>
-                  {articleData.map((article, index) => (
-                    <ArticleItem {...article} key={index} />
-                  ))}
+                  {scientificIsLoading
+                    ? null
+                    : scientificArticles.getArticles.map((article, index) => (
+                        <ArticleItem {...article} key={index} />
+                      ))}
                 </Stack>
               </Tabs.Tab>
               <Tabs.Tab
@@ -109,10 +106,13 @@ export default function Articles() {
                 }}
               >
                 <Stack spacing={20} mt={20}>
-                  <ArticleItem {...articleData[3]} />
-                  <ArticleItem {...articleData[2]} />
-                  <ArticleItem {...articleData[1]} />
-                  <ArticleItem {...articleData[0]} />
+                  {nonScientificIsLoading
+                    ? null
+                    : nonScientificArticles.getArticles.map(
+                        (article, index) => (
+                          <ArticleItem {...article} key={index} />
+                        )
+                      )}
                 </Stack>
               </Tabs.Tab>
             </Tabs>
