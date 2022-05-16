@@ -17,11 +17,18 @@ import { Container } from "components/common";
 
 export default function HeaderTop({ opened, setOpened }: NavbarProps) {
   return (
-    <Box sx={{ width: "100%" }}>
+    <Box
+      sx={(theme) => ({
+        width: "100%",
+        background: theme.colors.dark[8],
+        color: theme.white,
+      })}
+    >
       <Container
         style={{
           height: "102px",
         }}
+        noPadding
       >
         <Group position="apart" align="center" style={{ height: "100%" }}>
           <Group spacing={45} align="center">

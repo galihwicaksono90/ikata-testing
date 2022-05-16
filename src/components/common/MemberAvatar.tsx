@@ -2,22 +2,25 @@ import { Avatar, Stack, Text, Box } from "@mantine/core";
 import { Mail } from "tabler-icons-react";
 
 export interface MemberAvatarProps {
+  id: number;
   name: string;
   title: string;
+  image?: string;
 }
 
-export function MemberAvatar({ name, title }: MemberAvatarProps) {
+export function MemberAvatar({ name, image, title }: MemberAvatarProps) {
   return (
     <Stack align="center" mb={35}>
       <Avatar
         radius="xl"
         sx={{ height: 170, width: 170, marginBottom: 20 }}
+        src={image}
       ></Avatar>
-      <Text color="dark" size="lg" weight={600}>
+      <Text size="lg" weight={600}>
         {name}
       </Text>
 
-      <Text color="gray" size="sm" weight={500}>
+      <Text color="dimmed" size="sm" weight={500}>
         {title}
       </Text>
       <Box component={Mail} sx={(theme) => ({ color: theme.colors.dark[3] })} />

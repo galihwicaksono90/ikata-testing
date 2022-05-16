@@ -1,18 +1,28 @@
 import React from "react";
-import { Box, Container, ContainerProps } from "@mantine/core";
-
-const CONTAINER_SIZE = 1128;
+import { Box, Container, ContainerProps, useMantineTheme } from "@mantine/core";
 
 interface Props extends ContainerProps {
   light?: boolean;
   children: React.ReactNode;
+  noPadding?: boolean;
 }
 
 export default function ContainerComponent({
   children,
   light = false,
+  noPadding = false,
   ...rest
 }: Props) {
+  const theme = useMantineTheme();
+  const padding = () => {
+    if (noPadding) return {};
+
+    return {
+      pt: 50,
+      pb: 75,
+    };
+  };
+
   if (light) {
     return (
       <Box
@@ -22,7 +32,7 @@ export default function ContainerComponent({
           color: theme.colors.dark,
         })}
       >
-        <Container size={CONTAINER_SIZE} pt={60} pb={75} {...rest}>
+        <Container size={theme.other.containerSize} {...padding()} {...rest}>
           {children}
         </Container>
       </Box>
@@ -30,7 +40,7 @@ export default function ContainerComponent({
   }
 
   return (
-    <Container size={CONTAINER_SIZE} pt={60} pb={75} {...rest}>
+    <Container size={theme.other.containerSize} {...padding()} {...rest}>
       {children}
     </Container>
   );

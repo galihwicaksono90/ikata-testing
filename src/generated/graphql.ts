@@ -48,6 +48,14 @@ export type HeroImage = {
   image: Scalars['String'];
 };
 
+export type Member = {
+  __typename?: 'Member';
+  id: Scalars['Int'];
+  image: Scalars['String'];
+  name: Scalars['String'];
+  title: Scalars['String'];
+};
+
 export type Merch = {
   __typename?: 'Merch';
   id: Scalars['Int'];
@@ -112,6 +120,7 @@ export type Query = {
   getArticle?: Maybe<Article>;
   getArticles: Array<Article>;
   getHeroImages: Array<Maybe<HeroImage>>;
+  getMembers: Array<Member>;
   getMerchList: Array<Merch>;
   getNewsItems: Array<News>;
   getPostById: Post;
@@ -135,6 +144,11 @@ export type QueryGetArticlesArgs = {
 
 
 export type QueryGetHeroImagesArgs = {
+  limit: Scalars['Int'];
+};
+
+
+export type QueryGetMembersArgs = {
   limit: Scalars['Int'];
 };
 
@@ -203,6 +217,13 @@ export type GetHeroImagesQueryVariables = Exact<{
 
 export type GetHeroImagesQuery = { __typename?: 'Query', getHeroImages: Array<{ __typename?: 'HeroImage', id: number, image: string } | null> };
 
+export type GetMembersQueryVariables = Exact<{
+  limit: Scalars['Int'];
+}>;
+
+
+export type GetMembersQuery = { __typename?: 'Query', getMembers: Array<{ __typename?: 'Member', id: number, name: string, title: string, image: string }> };
+
 export type GetMerchListQueryVariables = Exact<{
   limit: Scalars['Int'];
 }>;
@@ -260,6 +281,16 @@ export const GetHeroImagesDocument = `
   }
 }
     `;
+export const GetMembersDocument = `
+    query GetMembers($limit: Int!) {
+  getMembers(limit: $limit) {
+    id
+    name
+    title
+    image
+  }
+}
+    `;
 export const GetMerchListDocument = `
     query GetMerchList($limit: Int!) {
   getMerchList(limit: $limit) {
@@ -311,6 +342,9 @@ const injectedRtkApi = api.injectEndpoints({
     GetHeroImages: build.query<GetHeroImagesQuery, GetHeroImagesQueryVariables>({
       query: (variables) => ({ document: GetHeroImagesDocument, variables })
     }),
+    GetMembers: build.query<GetMembersQuery, GetMembersQueryVariables>({
+      query: (variables) => ({ document: GetMembersDocument, variables })
+    }),
     GetMerchList: build.query<GetMerchListQuery, GetMerchListQueryVariables>({
       query: (variables) => ({ document: GetMerchListDocument, variables })
     }),
@@ -327,5 +361,5 @@ const injectedRtkApi = api.injectEndpoints({
 });
 
 export { injectedRtkApi as api };
-export const { useGetArticleQuery, useLazyGetArticleQuery, useGetArticlesQuery, useLazyGetArticlesQuery, useGetHeroImagesQuery, useLazyGetHeroImagesQuery, useGetMerchListQuery, useLazyGetMerchListQuery, useGetNewsItemsQuery, useLazyGetNewsItemsQuery, useUsersQuery, useLazyUsersQuery, useGetVacanciesQuery, useLazyGetVacanciesQuery } = injectedRtkApi;
+export const { useGetArticleQuery, useLazyGetArticleQuery, useGetArticlesQuery, useLazyGetArticlesQuery, useGetHeroImagesQuery, useLazyGetHeroImagesQuery, useGetMembersQuery, useLazyGetMembersQuery, useGetMerchListQuery, useLazyGetMerchListQuery, useGetNewsItemsQuery, useLazyGetNewsItemsQuery, useUsersQuery, useLazyUsersQuery, useGetVacanciesQuery, useLazyGetVacanciesQuery } = injectedRtkApi;
 

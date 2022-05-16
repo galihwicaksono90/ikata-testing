@@ -2,6 +2,7 @@ import { createStyles } from "@mantine/core";
 
 export const useStyles = createStyles((theme) => ({
   slickCarousel: {
+    width: "100%",
     "& ul": {},
     "& .slick-dots": {
       "&.outside": {

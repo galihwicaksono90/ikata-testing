@@ -36,12 +36,18 @@ export default function AlumniCard({
         {title}
       </Text>
       <Button
+        variant="gradient"
         fullWidth
         color="dark"
         radius="xs"
         size="lg"
         component={NextLink}
         href="/"
+        gradient={{
+          from: "#feb240",
+          to: "#fe9040",
+          deg: 94,
+        }}
       >
         Lihat Profil
       </Button>

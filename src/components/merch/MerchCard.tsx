@@ -49,7 +49,16 @@ export default function MerchandiseCard({
         <Text mb={20} color="gray" weight="bold">
           {price}
         </Text>
-        <Button size="lg" fullWidth>
+        <Button
+          size="lg"
+          fullWidth
+          variant="gradient"
+          gradient={{
+            from: "#feb240",
+            to: "#fe9040",
+            deg: 94,
+          }}
+        >
           Lihat Detail
         </Button>
       </Box>

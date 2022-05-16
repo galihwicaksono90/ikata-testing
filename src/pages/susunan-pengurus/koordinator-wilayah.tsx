@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Text, Grid, Group, Input, Button } from "@mantine/core";
 import { useDebouncedValue } from "@mantine/hooks";
 import { Search } from "tabler-icons-react";
-import AvatarCarousel from "components/AvatarCarousel";
+import { AvatarCarousel } from "components/common";
 import { ManagementLayout } from "components/layouts";
 
 const areas = [
@@ -137,9 +137,7 @@ export default function koordinatorWilayah() {
               borderRadius: theme.radius.md,
             })}
           >
-            <Text color="dark" weight="bold">
-              List Wilayah
-            </Text>
+            <Text weight="bold">List Wilayah</Text>
             <Input
               placeholder="Cari Wilayah"
               icon={<Search />}

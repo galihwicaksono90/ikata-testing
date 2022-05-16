@@ -1,0 +1,8 @@
+query GetMembers($limit: Int!) {
+  getMembers(limit: $limit) {
+    id
+    name
+    title
+    image
+  }
+}

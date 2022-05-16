@@ -1,5 +1,7 @@
 import { MantineThemeOverride } from "@mantine/core";
 
+const CONTAINER_SIZE = 1128;
+
 export const theme: MantineThemeOverride = {
   colorScheme: "dark",
   primaryColor: "orange",
@@ -18,19 +20,19 @@ export const theme: MantineThemeOverride = {
       h6: { fontSize: "1rem", lineHeight: "1.8rem" },
     },
   },
-  breakpoints: { md: 1128 },
+  breakpoints: { md: CONTAINER_SIZE },
   colors: {
     dark: [
       "#fff",
       "#fff",
-      "#f3f3f3",
+      "#898989",
       "#ABAAAA",
       "#ABAAAA",
+      "#2f2f2f",
+      "#1d1d1d",
+      "#272727",
       "#1d1d1d",
       "#1d1d1d",
-      "#1d1d1d",
-      "#27272",
-      "#000",
     ],
     orange: [
       "#FEB240",
@@ -44,6 +46,9 @@ export const theme: MantineThemeOverride = {
       "#FEB240",
       "#FEB240",
     ],
+  },
+  other: {
+    containerSize: CONTAINER_SIZE,
   },
 };
 

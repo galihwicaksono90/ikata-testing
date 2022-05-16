@@ -1,57 +1,11 @@
-import Layout from "components/Layout";
-import { Title, Box, Container, Text } from "@mantine/core";
-import AvatarCarousel from "components/AvatarCarousel";
+import { AvatarCarousel } from "components/common";
 import { ManagementLayout } from "components/layouts";
-
-interface Props {
-  name: string;
-  title: string;
-}
-
-const data: Props[] = [
-  {
-    name: "Rizki Amrullah",
-    title: "Ketua",
-  },
-  {
-    name: "Budi Gunawan",
-    title: "Wakil Ketua",
-  },
-  {
-    name: "Sri Lestari",
-    title: "Sekretaris",
-  },
-  {
-    name: "Setyo Kurniawan",
-    title: "Bendahara",
-  },
-  {
-    name: "Rizki Amrullah",
-    title: "Ketua",
-  },
-  {
-    name: "Budi Gunawan",
-    title: "Wakil Ketua",
-  },
-  {
-    name: "Sri Lestari",
-    title: "Sekretaris",
-  },
-  {
-    name: "Setyo Kurniawan",
-    title: "Bendahara",
-  },
-  {
-    name: "Sri Lestari",
-    title: "Sekretaris",
-  },
-  {
-    name: "Setyo Kurniawan",
-    title: "Bendahara",
-  },
-];
+import { api, ArticleType, useGetMembersQuery } from "generated/graphql";
+import { GetServerSideProps } from "next";
+import { wrapper } from "redux/store";
 
 export default function DewanPengawas() {
+  const { data: members, isLoading } = useGetMembersQuery({ limit: 5 });
   return (
     <ManagementLayout
       title="Dewan Pengawas"
@@ -59,7 +13,24 @@ export default function DewanPengawas() {
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
             ad minim veniam, quis "
     >
-      <AvatarCarousel data={data} />
+      {isLoading ? (
+        <div>Loading...</div>
+      ) : (
+        <AvatarCarousel data={members.getMembers} />
+      )}
     </ManagementLayout>
   );
 }
+
+export const getServerSideProps: GetServerSideProps =
+  wrapper.getServerSideProps((store) => async () => {
+    await store.dispatch(
+      api.endpoints.GetMembers.initiate({
+        limit: 8,
+      })
+    );
+    Promise.all(api.util.getRunningOperationPromises());
+    return {
+      props: {},
+    };
+  });

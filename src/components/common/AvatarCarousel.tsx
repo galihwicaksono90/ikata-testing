@@ -30,9 +30,15 @@ const AvatarCarousel = ({ data, rows = 2, slidesToShow = 4 }: Props) => {
 
   return (
     <Box>
-      <Carousel dotType="numbers" rows={rows} slidesToShow={slidesToShow} dots>
-        {avatars.map((item, index) => (
-          <MemberAvatar name={item.name} title={item.title} key={index} />
+      <Carousel
+        dotType="numbers"
+        rows={rows}
+        slidesToShow={slidesToShow}
+        dots
+        infinite={false}
+      >
+        {data.map((item) => (
+          <MemberAvatar {...item} key={item.id} />
         ))}
       </Carousel>
     </Box>
