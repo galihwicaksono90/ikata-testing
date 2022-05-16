@@ -1,15 +1,10 @@
-import { Container, Box } from "@mantine/core";
+import { AlumniLandingPage } from "components/alumni";
+import { ArticleLandingPage } from "components/article";
+import { AdBanner, HeroImage } from "components/common";
 import { MainLayout } from "components/layouts";
-import HeroImage from "components/HeroImage";
-import News from "components/News";
-import AdBanner from "components/AdBanner";
-import Articles from "components/Articles";
-import Alumni from "components/Alumni";
-import MerchandiseCarousel from "components/MerchandiseCarousel";
+import { MerchCarousel } from "components/merch";
+import { NewsLandingPage } from "components/news";
 import { api, ArticleType } from "generated/graphql";
-
-import "swiper/css";
-import "swiper/css/pagination";
 import { GetServerSideProps } from "next";
 import { wrapper } from "redux/store";
 
@@ -17,18 +12,31 @@ export default function Home() {
   return (
     <MainLayout>
       <HeroImage />
-      <News />
+      <NewsLandingPage />
       <AdBanner src="/banner1.png" />
-      <Articles />
-      <Alumni />
+      <ArticleLandingPage />
+      <AlumniLandingPage />
       <AdBanner src="/banner2.png" />
-      <MerchandiseCarousel />
+      <MerchCarousel />
     </MainLayout>
   );
 }
 
 export const getServerSideProps: GetServerSideProps =
   wrapper.getServerSideProps((store) => async () => {
+    // hero image data
+    await store.dispatch(
+      api.endpoints.GetHeroImages.initiate({
+        limit: 4,
+      })
+    );
+    // news  data
+    await store.dispatch(
+      api.endpoints.GetNewsItems.initiate({
+        limit: 4,
+      })
+    );
+    // articles data
     await store.dispatch(
       api.endpoints.GetArticles.initiate({
         limit: 4,
@@ -41,6 +49,7 @@ export const getServerSideProps: GetServerSideProps =
         type: ArticleType.NonScientific,
       })
     );
+
     Promise.all(api.util.getRunningOperationPromises());
     return {
       props: {},

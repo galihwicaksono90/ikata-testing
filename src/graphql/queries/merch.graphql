@@ -1,0 +1,8 @@
+query GetMerchList($limit: Int!) {
+  getMerchList(limit: $limit) {
+    id
+    name
+    price
+    image
+  }
+}

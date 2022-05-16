@@ -1,12 +1,12 @@
 import { Avatar, Stack, Text, Box } from "@mantine/core";
 import { Mail } from "tabler-icons-react";
 
-export interface AvatarProps {
+export interface MemberAvatarProps {
   name: string;
   title: string;
 }
 
-export default function AvatarComponent({ name, title }: AvatarProps) {
+export function MemberAvatar({ name, title }: MemberAvatarProps) {
   return (
     <Stack align="center" mb={35}>
       <Avatar

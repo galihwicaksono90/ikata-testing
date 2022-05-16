@@ -1,6 +1,6 @@
 import { AppProps } from "next/app";
 import Head from "next/head";
-import { MantineProvider } from "@mantine/core";
+import { MantineProvider, Global } from "@mantine/core";
 import { theme } from "theme";
 import { wrapper } from "redux/store";
 
@@ -17,6 +17,20 @@ function App(props: AppProps) {
         />
       </Head>
 
+      <Global
+        styles={(theme) => ({
+          [`@media (max-width: ${theme.breakpoints.md}px)`]: {
+            html: {
+              fontSize: "14px",
+            },
+          },
+          [`@media (max-width: ${theme.breakpoints.sm}px)`]: {
+            html: {
+              fontSize: "12px",
+            },
+          },
+        })}
+      />
       <MantineProvider withGlobalStyles withNormalizeCSS theme={theme}>
         <Component {...pageProps} />
       </MantineProvider>

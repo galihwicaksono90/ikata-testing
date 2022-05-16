@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  Container,
   Box,
   Group,
   Stack,
@@ -14,18 +13,12 @@ import Image from "next/image";
 import SearchInput from "./SearchInput";
 import { NavbarProps } from "components/layouts";
 import { UserCircle } from "tabler-icons-react";
+import { Container } from "components/common";
 
 export default function HeaderTop({ opened, setOpened }: NavbarProps) {
   return (
-    <Box
-      sx={(theme) => ({
-        width: "100%",
-        background: theme.colors.dark[8],
-        color: theme.white,
-      })}
-    >
+    <Box sx={{ width: "100%" }}>
       <Container
-        size={1128}
         style={{
           height: "102px",
         }}
@@ -36,11 +29,11 @@ export default function HeaderTop({ opened, setOpened }: NavbarProps) {
             <MediaQuery smallerThan="sm" styles={{ display: "none" }}>
               <Stack spacing={5}>
                 <Text
-                  sx={{
-                    fontSize: "24px",
+                  sx={(theme) => ({
+                    fontSize: theme.fontSizes.xl,
                     fontWeight: "bold",
                     lineHeight: "20px",
-                  }}
+                  })}
                 >
                   PORTAL IKATAN ALUMNI TAMBANG
                 </Text>

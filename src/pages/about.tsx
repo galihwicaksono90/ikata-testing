@@ -16,7 +16,7 @@ import {
 } from "@mantine/core";
 import { MainLayout } from "components/layouts";
 import Image from "next/image";
-import Carousel from "components/Carousel";
+import { Carousel } from "components/common";
 import { Navigation, Swiper as SwiperProps } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { ArrowLeft, ArrowRight } from "tabler-icons-react";

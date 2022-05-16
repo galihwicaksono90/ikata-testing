@@ -1,76 +1,56 @@
 import {
   Box,
   Center,
-  Text,
-  Group,
-  Stack,
-  Title,
   Grid,
+  Group,
   SimpleGrid,
+  Stack,
+  Text,
+  Title,
 } from "@mantine/core";
-import NewsCarousel from "./NewsCarousel";
-import NewsCard from "./NewsCard";
+import { PriceList, SectionTitleWithLink, Container } from "components/common";
+import { useGetNewsItemsQuery } from "generated/graphql";
 import Image from "next/image";
-import PriceList from "./PriceList";
-import SectionTitleWithLink from "./SectionTitleWithLink";
-import DarkContainer from "components/DarkContainer";
+import NewsCard from "./NewsCard";
+import NewsCarousel from "./NewsCarousel";
 
 export default function News() {
+  const { data: news, isLoading } = useGetNewsItemsQuery({ limit: 4 });
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
   return (
-    <DarkContainer>
+    <Container>
       <Stack mb={56} sx={{ maxWidth: 1128 }}>
-        <SectionTitleWithLink title="Berita Usaha Alumni" />
         <Grid gutter={24}>
           <Grid.Col lg={8} md={12}>
+            <Title mb={25} order={5}>
+              Harga Acuan Batubara Mineral
+            </Title>
             <Stack>
               <Box sx={{ marginBottom: 50 }}>
-                <NewsCarousel />
+                <NewsCarousel limit={4} />
               </Box>
               <SectionTitleWithLink
                 title="Berita Pengembangan Alumni"
                 href="/"
               />
               <SimpleGrid cols={2} breakpoints={[{ maxWidth: "sm", cols: 1 }]}>
-                <NewsCard
-                  title="25% Penjualan Batu Bara Wajib ke Domestik, Ini Kata..."
-                  image="/news1.jpg"
-                  href="/"
-                  align="center"
-                />
-                <NewsCard
-                  title="25% Penjualan Batu Bara Wajib ke Domestik, Ini Kata..."
-                  image="/news2.jpg"
-                  href="/"
-                  align="center"
-                />
-                <NewsCard
-                  title="25% Penjualan Batu Bara Wajib ke Domestik, Ini Kata..."
-                  image="/news3.jpg"
-                  href="/"
-                  align="center"
-                />
-                <NewsCard
-                  title="25% Penjualan Batu Bara Wajib ke Domestik, Ini Kata..."
-                  image="/news4.jpg"
-                  href="/"
-                  align="center"
-                />
+                {news.getNewsItems.map((item) => {
+                  return (
+                    <NewsCard
+                      title={item.title}
+                      image={item.image}
+                      href="/"
+                      align="center"
+                    />
+                  );
+                })}
               </SimpleGrid>
             </Stack>
           </Grid.Col>
           <Grid.Col lg={4} md={12}>
-            <Stack>
-              {/* <AspectRatio
-                ratio={1 / 1}
-                mb={30}
-                sx={(theme) => ({
-                  background: theme.white,
-                  borderRadius: theme.radius.md,
-                  boxShadow: theme.shadows.md,
-                })}
-              >
-                <Text color="gray">Sponsor banner</Text>
-              </AspectRatio> */}
+            <Stack spacing={0}>
               <Title mb={25} order={5}>
                 Harga Acuan Batubara Mineral
               </Title>
@@ -93,7 +73,7 @@ export default function News() {
           </Grid.Col>
         </Grid>
       </Stack>
-    </DarkContainer>
+    </Container>
   );
 }
 

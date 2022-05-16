@@ -129,4 +129,15 @@ export const useStyles = createStyles((theme) => ({
       flexDirection: "column",
     },
   },
+  tabLabel: {
+    color: "white",
+    fontSize: "24px",
+    fontWeight: "bold",
+    [`@media (max-width: ${theme.breakpoints.sm}px)`]: {
+      fontSize: theme.fontSizes.md,
+    },
+    [`@media (max-width: ${theme.breakpoints.xs}px)`]: {
+      fontSize: theme.fontSizes.sm,
+    },
+  },
 }));

@@ -5,7 +5,7 @@ import { HYDRATE } from "next-redux-wrapper";
 import { DocumentNode } from "graphql";
 import { ClientError } from "graphql-request";
 
-const client = new GraphQLClient(process.env.GRAPHQL_SERVER, {
+const client = new GraphQLClient(process.env.NEXT_PUBLIC_GRAPHQL_SERVER, {
   credentials: "include",
 });
 

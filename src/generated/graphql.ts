@@ -42,6 +42,20 @@ export type FieldErrors = {
   errors?: Maybe<Array<Maybe<FieldError>>>;
 };
 
+export type HeroImage = {
+  __typename?: 'HeroImage';
+  id: Scalars['Int'];
+  image: Scalars['String'];
+};
+
+export type Merch = {
+  __typename?: 'Merch';
+  id: Scalars['Int'];
+  image: Scalars['String'];
+  name: Scalars['String'];
+  price: Scalars['String'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   createPost: PostPayload;
@@ -74,6 +88,14 @@ export type MutationRegisterArgs = {
   password: Scalars['String'];
 };
 
+export type News = {
+  __typename?: 'News';
+  description: Scalars['String'];
+  id: Scalars['Int'];
+  image: Scalars['String'];
+  title: Scalars['String'];
+};
+
 export type Post = {
   __typename?: 'Post';
   createdAt: Scalars['DateTime'];
@@ -89,8 +111,12 @@ export type Query = {
   __typename?: 'Query';
   getArticle?: Maybe<Article>;
   getArticles: Array<Article>;
+  getHeroImages: Array<Maybe<HeroImage>>;
+  getMerchList: Array<Merch>;
+  getNewsItems: Array<News>;
   getPostById: Post;
   getUserPosts: Array<Maybe<Post>>;
+  getVacancies: Array<Maybe<Vacancy>>;
   me?: Maybe<User>;
   posts: Array<Post>;
   users: Array<User>;
@@ -103,13 +129,34 @@ export type QueryGetArticleArgs = {
 
 
 export type QueryGetArticlesArgs = {
-  limit: Scalars['Int'];
+  limit?: InputMaybe<Scalars['Int']>;
   type: ArticleType;
+};
+
+
+export type QueryGetHeroImagesArgs = {
+  limit: Scalars['Int'];
+};
+
+
+export type QueryGetMerchListArgs = {
+  limit: Scalars['Int'];
+};
+
+
+export type QueryGetNewsItemsArgs = {
+  limit: Scalars['Int'];
 };
 
 
 export type QueryGetPostByIdArgs = {
   id: Scalars['Int'];
+};
+
+
+export type QueryGetVacanciesArgs = {
+  limit?: InputMaybe<Scalars['Int']>;
+  type: VacancyType;
 };
 
 export type User = {
@@ -121,6 +168,19 @@ export type User = {
   updatedAt: Scalars['DateTime'];
 };
 
+export type Vacancy = {
+  __typename?: 'Vacancy';
+  company: Scalars['String'];
+  id: Scalars['Int'];
+  title: Scalars['String'];
+  type: Scalars['String'];
+};
+
+export enum VacancyType {
+  Job = 'job',
+  Scholarship = 'scholarship'
+}
+
 export type GetArticleQueryVariables = Exact<{
   id?: InputMaybe<Scalars['Int']>;
 }>;
@@ -129,17 +189,46 @@ export type GetArticleQueryVariables = Exact<{
 export type GetArticleQuery = { __typename?: 'Query', getArticle?: { __typename?: 'Article', id: number, title: string, description: string, postedAt: any } | null };
 
 export type GetArticlesQueryVariables = Exact<{
-  limit: Scalars['Int'];
+  limit?: InputMaybe<Scalars['Int']>;
   type: ArticleType;
 }>;
 
 
 export type GetArticlesQuery = { __typename?: 'Query', getArticles: Array<{ __typename?: 'Article', id: number, title: string, description: string, postedAt: any, image: string }> };
 
+export type GetHeroImagesQueryVariables = Exact<{
+  limit: Scalars['Int'];
+}>;
+
+
+export type GetHeroImagesQuery = { __typename?: 'Query', getHeroImages: Array<{ __typename?: 'HeroImage', id: number, image: string } | null> };
+
+export type GetMerchListQueryVariables = Exact<{
+  limit: Scalars['Int'];
+}>;
+
+
+export type GetMerchListQuery = { __typename?: 'Query', getMerchList: Array<{ __typename?: 'Merch', id: number, name: string, price: string, image: string }> };
+
+export type GetNewsItemsQueryVariables = Exact<{
+  limit: Scalars['Int'];
+}>;
+
+
+export type GetNewsItemsQuery = { __typename?: 'Query', getNewsItems: Array<{ __typename?: 'News', id: number, title: string, description: string, image: string }> };
+
 export type UsersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type UsersQuery = { __typename?: 'Query', users: Array<{ __typename?: 'User', id: number, name: string, email: string }> };
+
+export type GetVacanciesQueryVariables = Exact<{
+  limit?: InputMaybe<Scalars['Int']>;
+  type: VacancyType;
+}>;
+
+
+export type GetVacanciesQuery = { __typename?: 'Query', getVacancies: Array<{ __typename?: 'Vacancy', id: number, title: string, company: string, type: string } | null> };
 
 
 export const GetArticleDocument = `
@@ -153,12 +242,40 @@ export const GetArticleDocument = `
 }
     `;
 export const GetArticlesDocument = `
-    query GetArticles($limit: Int!, $type: ArticleType!) {
+    query GetArticles($limit: Int, $type: ArticleType!) {
   getArticles(limit: $limit, type: $type) {
     id
     title
     description
     postedAt
+    image
+  }
+}
+    `;
+export const GetHeroImagesDocument = `
+    query GetHeroImages($limit: Int!) {
+  getHeroImages(limit: $limit) {
+    id
+    image
+  }
+}
+    `;
+export const GetMerchListDocument = `
+    query GetMerchList($limit: Int!) {
+  getMerchList(limit: $limit) {
+    id
+    name
+    price
+    image
+  }
+}
+    `;
+export const GetNewsItemsDocument = `
+    query GetNewsItems($limit: Int!) {
+  getNewsItems(limit: $limit) {
+    id
+    title
+    description
     image
   }
 }
@@ -172,6 +289,16 @@ export const UsersDocument = `
   }
 }
     `;
+export const GetVacanciesDocument = `
+    query GetVacancies($limit: Int, $type: VacancyType!) {
+  getVacancies(type: $type, limit: $limit) {
+    id
+    title
+    company
+    type
+  }
+}
+    `;
 
 const injectedRtkApi = api.injectEndpoints({
   endpoints: (build) => ({
@@ -181,12 +308,24 @@ const injectedRtkApi = api.injectEndpoints({
     GetArticles: build.query<GetArticlesQuery, GetArticlesQueryVariables>({
       query: (variables) => ({ document: GetArticlesDocument, variables })
     }),
+    GetHeroImages: build.query<GetHeroImagesQuery, GetHeroImagesQueryVariables>({
+      query: (variables) => ({ document: GetHeroImagesDocument, variables })
+    }),
+    GetMerchList: build.query<GetMerchListQuery, GetMerchListQueryVariables>({
+      query: (variables) => ({ document: GetMerchListDocument, variables })
+    }),
+    GetNewsItems: build.query<GetNewsItemsQuery, GetNewsItemsQueryVariables>({
+      query: (variables) => ({ document: GetNewsItemsDocument, variables })
+    }),
     Users: build.query<UsersQuery, UsersQueryVariables | void>({
       query: (variables) => ({ document: UsersDocument, variables })
+    }),
+    GetVacancies: build.query<GetVacanciesQuery, GetVacanciesQueryVariables>({
+      query: (variables) => ({ document: GetVacanciesDocument, variables })
     }),
   }),
 });
 
 export { injectedRtkApi as api };
-export const { useGetArticleQuery, useLazyGetArticleQuery, useGetArticlesQuery, useLazyGetArticlesQuery, useUsersQuery, useLazyUsersQuery } = injectedRtkApi;
+export const { useGetArticleQuery, useLazyGetArticleQuery, useGetArticlesQuery, useLazyGetArticlesQuery, useGetHeroImagesQuery, useLazyGetHeroImagesQuery, useGetMerchListQuery, useLazyGetMerchListQuery, useGetNewsItemsQuery, useLazyGetNewsItemsQuery, useUsersQuery, useLazyUsersQuery, useGetVacanciesQuery, useLazyGetVacanciesQuery } = injectedRtkApi;
 

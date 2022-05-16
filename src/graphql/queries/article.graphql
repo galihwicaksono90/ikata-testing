@@ -7,7 +7,7 @@ query GetArticle($id: Int) {
   }
 }
 
-query GetArticles($limit: Int!, $type: ArticleType!) {
+query GetArticles($limit: Int, $type: ArticleType!) {
   getArticles(limit: $limit, type: $type) {
     id
     title

@@ -59,6 +59,7 @@ export default function NewsCard({
         weight={bold ? "bold" : null}
         size={bold ? "lg" : "md"}
         align={align}
+        lineClamp={2}
       >
         {title}
       </Text>
