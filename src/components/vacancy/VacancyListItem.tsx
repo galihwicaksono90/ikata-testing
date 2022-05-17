@@ -30,6 +30,7 @@ export default function VacancyListItem({
             backgroundColor: theme.colors.gray[2],
           },
         })}
+        noWrap
       >
         <Avatar
           sx={{ height: 76, width: 76 }}
