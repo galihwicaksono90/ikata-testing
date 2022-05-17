@@ -6,3 +6,16 @@ query GetNewsItems($limit: Int!) {
     image
   }
 }
+
+query GetNews($id: Int!) {
+  getNews(id: $id) {
+    id
+    title
+    description
+    content
+    image
+    author
+    createdAt
+    tags
+  }
+}

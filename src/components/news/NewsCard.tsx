@@ -49,7 +49,17 @@ export default function NewsCard({
       {tags ? (
         <Group mb={20}>
           {tags.map((tag, index) => (
-            <Badge key={index} size="lg" radius="md">
+            <Badge
+              key={index}
+              size="lg"
+              radius="md"
+              variant="gradient"
+              gradient={{
+                from: "#feb240",
+                to: "#fe9040",
+                deg: 94,
+              }}
+            >
               {tag}
             </Badge>
           ))}

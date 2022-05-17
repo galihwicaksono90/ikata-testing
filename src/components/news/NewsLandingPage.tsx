@@ -8,11 +8,35 @@ import {
   Text,
   Title,
 } from "@mantine/core";
-import { PriceList, SectionTitleWithLink, Container } from "components/common";
+import {
+  PriceList,
+  SectionTitleWithLink,
+  Container,
+  ActivityItemList,
+} from "components/common";
 import { useGetNewsItemsQuery } from "generated/graphql";
 import Image from "next/image";
 import NewsCard from "./NewsCard";
 import NewsCarousel from "./NewsCarousel";
+
+const data = [
+  {
+    image: "/news1.jpg",
+    title: "Bakti Sosial",
+  },
+  {
+    image: "/news2.jpg",
+    title: "Ikata Golf",
+  },
+  {
+    image: "/news3.jpg",
+    title: "Munas Ikata",
+  },
+  {
+    image: "/news5.jpg",
+    title: "Ikata Games",
+  },
+];
 
 export default function News() {
   const { data: news, isLoading } = useGetNewsItemsQuery({ limit: 4 });
@@ -55,45 +79,12 @@ export default function News() {
                 Harga Acuan Batubara Mineral
               </Title>
               <PriceList mb={30} />
-              <SectionTitleWithLink title="Kegiatan IKATA" href="/" />
-              <Stack mb={30}>
-                <ActivityItem title="Bakti Sosial" image="/news1.jpg" />
-                <ActivityItem title="IKATA Golf" image="/news2.jpg" />
-                <ActivityItem title="Munas Ikata" image="/news3.jpg" />
-                <ActivityItem title="IKATA Games" image="/news4.jpg" />
-              </Stack>
-              <SectionTitleWithLink title="Berita Alumni" href="/" />
-              <Stack>
-                <ActivityItem title="Bakti Sosial" image="/news1.jpg" />
-                <ActivityItem title="IKATA Golf" image="/news2.jpg" />
-                <ActivityItem title="Munas Ikata" image="/news3.jpg" />
-                <ActivityItem title="IKATA Games" image="/news4.jpg" />
-              </Stack>
+              <ActivityItemList data={data} title="Berita Alumni" />
+              <ActivityItemList data={data} title="Kegiatan IKATA" />
             </Stack>
           </Grid.Col>
         </Grid>
       </Stack>
     </Container>
-  );
-}
-
-function ActivityItem({ title, image }: { title: string; image: string }) {
-  return (
-    <Group align="center" spacing={30}>
-      <Center
-        sx={{
-          width: 72,
-          height: 72,
-          borderRadius: "12px",
-          position: "relative",
-          overflow: "hidden",
-        }}
-      >
-        <Image src={image} layout="fill" objectFit="cover" />
-      </Center>
-      <Text weight="bold" size="lg">
-        {title}
-      </Text>
-    </Group>
   );
 }

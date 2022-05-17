@@ -120,9 +120,13 @@ export type MutationRegisterArgs = {
 
 export type News = {
   __typename?: 'News';
+  author: Scalars['String'];
+  content: Scalars['String'];
+  createdAt: Scalars['DateTime'];
   description: Scalars['String'];
   id: Scalars['Int'];
   image: Scalars['String'];
+  tags: Array<Scalars['String']>;
   title: Scalars['String'];
 };
 
@@ -145,6 +149,7 @@ export type Query = {
   getHeroImages: Array<Maybe<HeroImage>>;
   getMembers: Array<Member>;
   getMerchList: Array<Merch>;
+  getNews?: Maybe<News>;
   getNewsItems: Array<News>;
   getPostById: Post;
   getUserPosts: Array<Maybe<Post>>;
@@ -178,6 +183,11 @@ export type QueryGetMembersArgs = {
 
 export type QueryGetMerchListArgs = {
   limit: Scalars['Int'];
+};
+
+
+export type QueryGetNewsArgs = {
+  id: Scalars['Int'];
 };
 
 
@@ -273,6 +283,13 @@ export type GetNewsItemsQueryVariables = Exact<{
 
 
 export type GetNewsItemsQuery = { __typename?: 'Query', getNewsItems: Array<{ __typename?: 'News', id: number, title: string, description: string, image: string }> };
+
+export type GetNewsQueryVariables = Exact<{
+  id: Scalars['Int'];
+}>;
+
+
+export type GetNewsQuery = { __typename?: 'Query', getNews?: { __typename?: 'News', id: number, title: string, description: string, content: string, image: string, author: string, createdAt: any, tags: Array<string> } | null };
 
 export type UsersQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -386,6 +403,20 @@ export const GetNewsItemsDocument = `
   }
 }
     `;
+export const GetNewsDocument = `
+    query GetNews($id: Int!) {
+  getNews(id: $id) {
+    id
+    title
+    description
+    content
+    image
+    author
+    createdAt
+    tags
+  }
+}
+    `;
 export const UsersDocument = `
     query Users {
   users {
@@ -432,6 +463,9 @@ const injectedRtkApi = api.injectEndpoints({
     GetNewsItems: build.query<GetNewsItemsQuery, GetNewsItemsQueryVariables>({
       query: (variables) => ({ document: GetNewsItemsDocument, variables })
     }),
+    GetNews: build.query<GetNewsQuery, GetNewsQueryVariables>({
+      query: (variables) => ({ document: GetNewsDocument, variables })
+    }),
     Users: build.query<UsersQuery, UsersQueryVariables | void>({
       query: (variables) => ({ document: UsersDocument, variables })
     }),
@@ -442,5 +476,5 @@ const injectedRtkApi = api.injectEndpoints({
 });
 
 export { injectedRtkApi as api };
-export const { useLoginMutation, useGetArticleQuery, useLazyGetArticleQuery, useGetArticlesQuery, useLazyGetArticlesQuery, useGetCompanyJobsQuery, useLazyGetCompanyJobsQuery, useGetHeroImagesQuery, useLazyGetHeroImagesQuery, useGetMembersQuery, useLazyGetMembersQuery, useGetMerchListQuery, useLazyGetMerchListQuery, useGetNewsItemsQuery, useLazyGetNewsItemsQuery, useUsersQuery, useLazyUsersQuery, useGetVacanciesQuery, useLazyGetVacanciesQuery } = injectedRtkApi;
+export const { useLoginMutation, useGetArticleQuery, useLazyGetArticleQuery, useGetArticlesQuery, useLazyGetArticlesQuery, useGetCompanyJobsQuery, useLazyGetCompanyJobsQuery, useGetHeroImagesQuery, useLazyGetHeroImagesQuery, useGetMembersQuery, useLazyGetMembersQuery, useGetMerchListQuery, useLazyGetMerchListQuery, useGetNewsItemsQuery, useLazyGetNewsItemsQuery, useGetNewsQuery, useLazyGetNewsQuery, useUsersQuery, useLazyUsersQuery, useGetVacanciesQuery, useLazyGetVacanciesQuery } = injectedRtkApi;
 
