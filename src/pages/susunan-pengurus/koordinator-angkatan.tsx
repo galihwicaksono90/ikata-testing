@@ -1,6 +1,6 @@
 import React from "react";
 import { ManagementLayout } from "components/layouts";
-import AvatarCarousel from "components/AvatarCarousel";
+import { AvatarCarousel } from "components/common";
 
 const data = [
   {

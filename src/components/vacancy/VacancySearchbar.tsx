@@ -1,0 +1,37 @@
+import { Group, Container, Text, Input } from "@mantine/core";
+import { Search } from "tabler-icons-react";
+
+interface VacancySearchbarProps {
+  title: string;
+  placeholder?: string;
+}
+
+const VacancySearchbar = ({ title, placeholder }: VacancySearchbarProps) => {
+  return (
+    <Container size={1128} sx={{ height: 90 }}>
+      <Group position="apart" align="center" sx={{ height: "100%" }}>
+        <Text color="dark" weight="bold" sx={{ fontSize: 22 }}>
+          {title}
+        </Text>
+        <Input
+          placeholder={placeholder}
+          icon={<Search />}
+          size="md"
+          variant="unstyled"
+          sx={(theme) => ({
+            backgroundColor: theme.white,
+            border: `1px solid`,
+            borderColor: theme.colors.gray[2],
+            borderRadius: theme.radius.md,
+            input: {
+              width: 420,
+              color: theme.colors.dark,
+            },
+          })}
+        />
+      </Group>
+    </Container>
+  );
+};
+
+export default VacancySearchbar;

@@ -1,0 +1,19 @@
+query GetCompanyJobs {
+  getCompanyJobs {
+    id
+    name
+    postedAt
+    expiredAt
+    jobs {
+      id
+      title
+      qualifications
+      description
+    }
+    city
+    description
+    address
+    email
+    image
+  }
+}

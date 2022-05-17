@@ -141,4 +141,16 @@ export const useStyles = createStyles((theme) => ({
       fontSize: theme.fontSizes.sm,
     },
   },
+  form: {
+    "& > * + *": {
+      marginTop: 25,
+    },
+    "& input": {
+      background: "rgba(255,255,255,0.25)",
+      color: theme.colors.white,
+    },
+    "& .mantine-PasswordInput-visibilityToggle": {
+      background: "tomato",
+    },
+  },
 }));

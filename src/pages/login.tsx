@@ -1,16 +1,6 @@
-import {
-  Overlay,
-  Text,
-  Button,
-  Container,
-  Box,
-  Paper,
-  Stack,
-  Title,
-  TextInput,
-  PasswordInput,
-} from "@mantine/core";
+import { Overlay, Container, Box, Paper, Stack } from "@mantine/core";
 import { NextLink } from "@mantine/next";
+import { LoginForm } from "components/form";
 import Image from "next/image";
 
 export default function Login() {
@@ -48,53 +38,7 @@ export default function Login() {
               width: 408,
             }}
           >
-            <Stack align="center">
-              <Title order={3} mb={40}>
-                Login Anggota
-              </Title>
-              <TextInput
-                placeholder="username"
-                label="Username"
-                required
-                size="md"
-                sx={{
-                  width: "100%",
-                  input: {
-                    background: "rgba(255,255,255,0.25)",
-                  },
-                }}
-              />
-              <TextInput
-                placeholder="password"
-                label="password"
-                required
-                type="password"
-                size="md"
-                sx={{
-                  width: "100%",
-                  input: {
-                    background: "rgba(255,255,255,0.25)",
-                  },
-                }}
-              />
-              <Text
-                variant="link"
-                component={NextLink}
-                href="/forgot-password"
-                sx={{ width: "100%" }}
-                mb={40}
-                align="right"
-              >
-                Lupa password?
-              </Text>
-              <Button
-                fullWidth
-                size="md"
-                sx={(theme) => ({ color: theme.colors.dark })}
-              >
-                Login
-              </Button>
-            </Stack>
+            <LoginForm />
           </Paper>
         </Stack>
       </Container>

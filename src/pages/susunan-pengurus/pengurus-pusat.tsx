@@ -9,6 +9,16 @@ import { setDewanPengawasTabPosition } from "redux/general/generalSlice";
 import { useAppDispatch, useAppSelector } from "redux/hooks";
 import { useDispatch } from "react-redux";
 
+const data = [
+  "Pengurus Inti",
+  "Biro Organisasi",
+  "Biro Kerjasama",
+  "Biro Dana & Pengembangan Kewirausahaan",
+  "Biro Penelitian & Pengembangan",
+  "Biro Sosial Budaya",
+  "Biro Human & Publikasi",
+];
+
 export default function PengurusPusat() {
   const tabPosition = useAppSelector(
     (state) => state.general.dewanPengawasTabPosition
@@ -96,112 +106,3 @@ const MenuItem = ({
     </Paper>
   );
 };
-
-const data = [
-  "Pengurus Inti",
-  "Biro Organisasi",
-  "Biro Kerjasama",
-  "Biro Dana & Pengembangan Kewirausahaan",
-  "Biro Penelitian & Pengembangan",
-  "Biro Sosial Budaya",
-  "Biro Human & Publikasi",
-];
-
-/* const data = [
- *   {
- *     name: "Pengurus Inti",
- *     staff: [
- *       {
- *         name: "Rizki Amrullah",
- *         title: "Ketua",
- *       },
- *       {
- *         name: "Budi Gunawan",
- *         title: "Wakil Ketua",
- *       },
- *       {
- *         name: "Sri Lestari",
- *         title: "Sekretaris",
- *       },
- *       {
- *         name: "Setyo Kurniawan",
- *         title: "Bendahara",
- *       },
- *       {
- *         name: "Rizki Amrullah",
- *         title: "Ketua",
- *       },
- *       {
- *         name: "Budi Gunawan",
- *         title: "Wakil Ketua",
- *       },
- *       {
- *         name: "Setyo Kurniawan",
- *         title: "Bendahara",
- *       },
- *       {
- *         name: "Rizki Amrullah",
- *         title: "Ketua",
- *       },
- *       {
- *         name: "Budi Gunawan",
- *         title: "Wakil Ketua",
- *       },
- *     ],
- *   },
- *   {
- *     name: "Biro Organisasi",
- *     staff: [
- *       {
- *         name: "Setyo Kurniawan",
- *         title: "Bendahara",
- *       },
- *       {
- *         name: "Rizki Amrullah",
- *         title: "Ketua",
- *       },
- *       {
- *         name: "Budi Gunawan",
- *         title: "Wakil Ketua",
- *       },
- *       {
- *         name: "Rizki Amrullah",
- *         title: "Ketua",
- *       },
- *       {
- *         name: "Budi Gunawan",
- *         title: "Wakil Ketua",
- *       },
- *       {
- *         name: "Sri Lestari",
- *         title: "Sekretaris",
- *       },
- *       {
- *         name: "Sri Lestari",
- *         title: "Sekretaris",
- *       },
- *       {
- *         name: "Sri Lestari",
- *         title: "Sekretaris",
- *       },
- *       {
- *         name: "Sri Lestari",
- *         title: "Sekretaris",
- *       },
- *       {
- *         name: "Sri Lestari",
- *         title: "Sekretaris",
- *       },
- *       {
- *         name: "Sri Lestari",
- *         title: "Sekretaris",
- *       },
- *     ],
- *   },
- *   { name: "Biro Kerjasama" },
- *   { name: "Biro Dana & Pengembangan Kewirausahaan" },
- *   { name: "Biro Penelitian & Pengembangan" },
- *   { name: "Biro Sosial Budaya" },
- *   { name: "Biro Human & Publikasi" },
- * ];
- *  */

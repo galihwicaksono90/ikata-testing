@@ -1,8 +1,9 @@
+import { Global, MantineProvider } from "@mantine/core";
+import { NotificationsProvider } from "@mantine/notifications";
 import { AppProps } from "next/app";
 import Head from "next/head";
-import { MantineProvider, Global } from "@mantine/core";
-import { theme } from "theme";
 import { wrapper } from "redux/store";
+import { theme } from "theme";
 
 function App(props: AppProps) {
   const { Component, pageProps } = props;
@@ -32,7 +33,9 @@ function App(props: AppProps) {
         })}
       />
       <MantineProvider withGlobalStyles withNormalizeCSS theme={theme}>
-        <Component {...pageProps} />
+        <NotificationsProvider position="bottom-center">
+          <Component {...pageProps} />
+        </NotificationsProvider>
       </MantineProvider>
     </>
   );

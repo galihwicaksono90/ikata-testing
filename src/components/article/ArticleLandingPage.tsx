@@ -2,7 +2,7 @@ import { Grid, Stack, Tabs, Text } from "@mantine/core";
 import { NextLink } from "@mantine/next";
 import { ArticleList } from "components/article";
 import { Container } from "components/common";
-import { VacancyList } from "components/vacancy";
+import { VacancyListLandingPage } from "components/vacancy";
 import { ArticleType, VacancyType } from "generated/graphql";
 import { setArticleMenuPosition } from "redux/general/generalSlice";
 import { useAppDispatch, useAppSelector } from "redux/hooks";
@@ -44,8 +44,16 @@ export default function ArticlesLandingPage() {
         </Grid.Col>
         <Grid.Col lg={4} md={12} pt={75}>
           <Stack spacing={24}>
-            <VacancyList type={VacancyType.Job} title="Lowongan" />
-            <VacancyList type={VacancyType.Scholarship} title="Beasiswa" />
+            <VacancyListLandingPage
+              type={VacancyType.Job}
+              title="Lowongan"
+              href="/lowongan/pekerjaan"
+            />
+            <VacancyListLandingPage
+              type={VacancyType.Scholarship}
+              title="Beasiswa"
+              href="/lowongan/beasiswa"
+            />
           </Stack>
         </Grid.Col>
       </Grid>

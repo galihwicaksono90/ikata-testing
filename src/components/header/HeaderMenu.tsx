@@ -39,7 +39,7 @@ export default function HeaderMenu() {
         <MenuItemChild href="/news/beasiswa">Lowongan Pekerjaan</MenuItemChild>
       </MenuItem>
       <MenuItem title="Articles" href="/articles" />
-      <MenuItem title="Merchansise" href="/merchandise" />
+      <MenuItem title="Merchandise" href="/merchandise" />
       <MenuItem title="Koperasi IKATA" href="/koperasi" />
     </>
   );

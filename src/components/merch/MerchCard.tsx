@@ -50,7 +50,6 @@ export default function MerchandiseCard({
           {price}
         </Text>
         <Button
-          size="lg"
           fullWidth
           variant="gradient"
           gradient={{

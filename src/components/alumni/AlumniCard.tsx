@@ -18,7 +18,7 @@ export default function AlumniCard({
     <Card
       sx={(theme) => ({ backgroundColor: theme.white, width: 264 })}
       p={15}
-      shadow="md"
+      shadow="lg"
       radius="xs"
       mx="auto"
     >
