@@ -1,8 +1,14 @@
 import { Container, Box, Title, Text, Group } from "@mantine/core";
 import { NextLink } from "@mantine/next";
-import { Carousel } from "components/common";
+import { Carousel, CarouselBreakpoint } from "components/common";
 import { MerchCard } from "components/merch";
 import { useGetMerchListQuery } from "generated/graphql";
+
+const breakpoints: CarouselBreakpoint[] = [
+  { breakpoint: 1111, settings: { slidesToShow: 3 } },
+  { breakpoint: 840, settings: { slidesToShow: 2 } },
+  { breakpoint: 575, settings: { slidesToShow: 1 } },
+];
 
 export default function MerchCarousel() {
   const { data: merchList, isLoading } = useGetMerchListQuery({ limit: 5 });
@@ -29,7 +35,7 @@ export default function MerchCarousel() {
           </Text>
         </Group>
         <Box sx={{ height: "466px" }}>
-          <Carousel slidesToShow={4} autoplay>
+          <Carousel slidesToShow={4} autoplay responsive={breakpoints}>
             {merchList.getMerchList.map((merch) => (
               <MerchCard
                 image={merch.image}

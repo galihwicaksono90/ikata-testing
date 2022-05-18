@@ -31,22 +31,20 @@ export default function HeaderTop({ opened, setOpened }: NavbarProps) {
         noPadding
       >
         <Group position="apart" align="center" style={{ height: "100%" }}>
-          <Group spacing={45} align="center">
+          <Group spacing="xl" align="center">
             <Image src="/ikataLogo.png" width="72px" height="72px" />
-            <MediaQuery smallerThan="sm" styles={{ display: "none" }}>
-              <Stack spacing={5}>
-                <Text
-                  sx={(theme) => ({
-                    fontSize: theme.fontSizes.xl,
-                    fontWeight: "bold",
-                    lineHeight: "20px",
-                  })}
-                >
-                  PORTAL IKATAN ALUMNI TAMBANG
-                </Text>
-                <Text>UPN "VETERAN" YOGYAKARTA</Text>
-              </Stack>
-            </MediaQuery>
+            <Stack spacing={5}>
+              <Text
+                size="xl"
+                weight="bold"
+                sx={{
+                  lineHeight: "20px",
+                }}
+              >
+                PORTAL IKATAN ALUMNI TAMBANG
+              </Text>
+              <Text>UPN "VETERAN" YOGYAKARTA</Text>
+            </Stack>
           </Group>
           <MediaQuery smallerThan="md" styles={{ display: "none" }}>
             <Group spacing={53}>

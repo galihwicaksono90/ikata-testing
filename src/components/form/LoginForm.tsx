@@ -1,7 +1,8 @@
+import { useState } from "react";
 import { Button, Group, Input, InputWrapper, Text } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
 import { NextLink } from "@mantine/next";
-import { useLoginMutation } from "generated/graphql";
+/* import { useLoginMutation } from "generated/graphql"; */
 import { useForm } from "react-hook-form";
 import { useStyles } from "theme";
 import { X } from "tabler-icons-react";
@@ -14,7 +15,9 @@ interface LoginFormProps {
 
 export default function LoginForm() {
   const { classes } = useStyles();
-  const [login, { error, isLoading, data: loginData }] = useLoginMutation();
+  const [isLoading, setIsLoading] = useState(false);
+
+  /* const [login, { error, isLoading, data: loginData }] = useLoginMutation(); */
   const router = useRouter();
   const {
     register,
@@ -22,25 +25,47 @@ export default function LoginForm() {
     formState: { errors, isValid },
   } = useForm<LoginFormProps>({ mode: "onChange" });
 
-  const onSubmit = async (data: LoginFormProps) => {
-    try {
-      const response = await login(data).unwrap();
+  /* const onSubmit = async (data: LoginFormProps) => {
+   *   try {
+   *     const response = await login(data).unwrap();
+   *     showNotification({
+   *       title: `Hi!`,
+   *       message: `Selamat datang kembali ${response.login.username}!`,
+   *     });
+   *     router.push("/");
+   *   } catch (e) {
+   *     showNotification({
+   *       title: "Login Error",
+   *       message: "Invalid credentials provided",
+   *       id: "login-error",
+   *       icon: <X />,
+   *       color: "red",
+   *     });
+   *     return;
+   *   }
+   * };
+   */
 
+  const onSubmit = (values: LoginFormProps) => {
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+      if (values.password !== "password" || values.username !== "user") {
+        showNotification({
+          title: "Login Error",
+          message: "Invalid credentials provided",
+          id: "login-error",
+          icon: <X />,
+          color: "red",
+        });
+        return;
+      }
       showNotification({
         title: `Hi!`,
-        message: `Selamat datang kembali ${response.login.username}!`,
+        message: `Selamat datang kembali!`,
       });
       router.push("/");
-    } catch (e) {
-      showNotification({
-        title: "Login Error",
-        message: "Invalid credentials provided",
-        id: "login-error",
-        icon: <X />,
-        color: "red",
-      });
-      return;
-    }
+    }, 3000);
   };
 
   return (
@@ -48,12 +73,14 @@ export default function LoginForm() {
       <InputWrapper label="Username" error={errors?.username?.message}>
         <Input
           {...register("username", { required: "Please enter your username" })}
+          size="lg"
         />
       </InputWrapper>
       <InputWrapper label="Password" error={errors?.password?.message}>
         <Input
           type="password"
           {...register("password", { required: "Please enter your password" })}
+          size="lg"
         />
       </InputWrapper>
       <Group position="right" mb={40}>
@@ -64,7 +91,7 @@ export default function LoginForm() {
       <Button
         type="submit"
         disabled={!isValid}
-        size="md"
+        size="lg"
         fullWidth
         variant={isValid ? "gradient" : "default"}
         gradient={{

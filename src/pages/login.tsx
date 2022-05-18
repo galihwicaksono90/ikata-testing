@@ -1,4 +1,4 @@
-import { Overlay, Container, Box, Paper, Stack } from "@mantine/core";
+import { Overlay, Container, Box, Paper, Stack, Title } from "@mantine/core";
 import { NextLink } from "@mantine/next";
 import { LoginForm } from "components/form";
 import Image from "next/image";
@@ -38,6 +38,9 @@ export default function Login() {
               width: 408,
             }}
           >
+            <Title order={3} align="center" mb={40}>
+              Login Anggota
+            </Title>
             <LoginForm />
           </Paper>
         </Stack>

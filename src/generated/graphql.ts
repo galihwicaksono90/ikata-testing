@@ -29,20 +29,18 @@ export enum ArticleType {
   Scientific = 'scientific'
 }
 
-export type Auth = FieldErrors | User;
-
 export type Company = {
   __typename?: 'Company';
   address: Scalars['String'];
   city: Scalars['String'];
   description: Scalars['String'];
   email: Scalars['String'];
-  expiredAt: Scalars['DateTime'];
+  expiredAt: Scalars['String'];
   id: Scalars['Int'];
   image: Scalars['String'];
   jobs: Array<Job>;
   name: Scalars['String'];
-  postedAt: Scalars['DateTime'];
+  postedAt: Scalars['String'];
 };
 
 export type FieldError = {
@@ -86,38 +84,6 @@ export type Merch = {
   price: Scalars['String'];
 };
 
-export type Mutation = {
-  __typename?: 'Mutation';
-  createPost: PostPayload;
-  deletePost: Post;
-  login?: Maybe<Auth>;
-  logout?: Maybe<Scalars['Boolean']>;
-  register: Auth;
-};
-
-
-export type MutationCreatePostArgs = {
-  title: Scalars['String'];
-};
-
-
-export type MutationDeletePostArgs = {
-  id: Scalars['Int'];
-};
-
-
-export type MutationLoginArgs = {
-  password: Scalars['String'];
-  username: Scalars['String'];
-};
-
-
-export type MutationRegisterArgs = {
-  name: Scalars['String'];
-  password: Scalars['String'];
-  username: Scalars['String'];
-};
-
 export type News = {
   __typename?: 'News';
   author: Scalars['String'];
@@ -130,17 +96,6 @@ export type News = {
   title: Scalars['String'];
 };
 
-export type Post = {
-  __typename?: 'Post';
-  createdAt: Scalars['DateTime'];
-  createdBy?: Maybe<User>;
-  id: Scalars['Int'];
-  title: Scalars['String'];
-  updatedAt: Scalars['DateTime'];
-};
-
-export type PostPayload = FieldErrors | Post;
-
 export type Query = {
   __typename?: 'Query';
   getArticle?: Maybe<Article>;
@@ -151,22 +106,17 @@ export type Query = {
   getMerchList: Array<Merch>;
   getNews?: Maybe<News>;
   getNewsItems: Array<News>;
-  getPostById: Post;
-  getUserPosts: Array<Maybe<Post>>;
   getVacancies: Array<Maybe<Vacancy>>;
-  me?: Maybe<User>;
-  posts: Array<Post>;
-  users: Array<User>;
 };
 
 
 export type QueryGetArticleArgs = {
-  id?: InputMaybe<Scalars['Int']>;
+  id: Scalars['Int'];
 };
 
 
 export type QueryGetArticlesArgs = {
-  limit?: InputMaybe<Scalars['Int']>;
+  limit: Scalars['Int'];
   type: ArticleType;
 };
 
@@ -196,23 +146,9 @@ export type QueryGetNewsItemsArgs = {
 };
 
 
-export type QueryGetPostByIdArgs = {
-  id: Scalars['Int'];
-};
-
-
 export type QueryGetVacanciesArgs = {
   limit?: InputMaybe<Scalars['Int']>;
   type: VacancyType;
-};
-
-export type User = {
-  __typename?: 'User';
-  createdAt: Scalars['DateTime'];
-  id: Scalars['Int'];
-  name: Scalars['String'];
-  updatedAt: Scalars['DateTime'];
-  username: Scalars['String'];
 };
 
 export type Vacancy = {
@@ -228,23 +164,15 @@ export enum VacancyType {
   Scholarship = 'scholarship'
 }
 
-export type LoginMutationVariables = Exact<{
-  username: Scalars['String'];
-  password: Scalars['String'];
-}>;
-
-
-export type LoginMutation = { __typename?: 'Mutation', login?: { __typename: 'FieldErrors', errors?: Array<{ __typename?: 'FieldError', message?: string | null, field?: string | null } | null> | null } | { __typename: 'User', id: number, name: string, username: string } | null };
-
 export type GetArticleQueryVariables = Exact<{
-  id?: InputMaybe<Scalars['Int']>;
+  id: Scalars['Int'];
 }>;
 
 
 export type GetArticleQuery = { __typename?: 'Query', getArticle?: { __typename?: 'Article', id: number, title: string, description: string, postedAt: any } | null };
 
 export type GetArticlesQueryVariables = Exact<{
-  limit?: InputMaybe<Scalars['Int']>;
+  limit: Scalars['Int'];
   type: ArticleType;
 }>;
 
@@ -254,7 +182,7 @@ export type GetArticlesQuery = { __typename?: 'Query', getArticles: Array<{ __ty
 export type GetCompanyJobsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetCompanyJobsQuery = { __typename?: 'Query', getCompanyJobs: Array<{ __typename?: 'Company', id: number, name: string, postedAt: any, expiredAt: any, city: string, description: string, address: string, email: string, image: string, jobs: Array<{ __typename?: 'Job', id: number, title: string, qualifications: Array<string>, description: string }> }> };
+export type GetCompanyJobsQuery = { __typename?: 'Query', getCompanyJobs: Array<{ __typename?: 'Company', id: number, name: string, postedAt: string, expiredAt: string, city: string, description: string, address: string, email: string, image: string, jobs: Array<{ __typename?: 'Job', id: number, title: string, qualifications: Array<string>, description: string }> }> };
 
 export type GetHeroImagesQueryVariables = Exact<{
   limit: Scalars['Int'];
@@ -291,11 +219,6 @@ export type GetNewsQueryVariables = Exact<{
 
 export type GetNewsQuery = { __typename?: 'Query', getNews?: { __typename?: 'News', id: number, title: string, description: string, content: string, image: string, author: string, createdAt: any, tags: Array<string> } | null };
 
-export type UsersQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type UsersQuery = { __typename?: 'Query', users: Array<{ __typename?: 'User', id: number, name: string, username: string }> };
-
 export type GetVacanciesQueryVariables = Exact<{
   limit?: InputMaybe<Scalars['Int']>;
   type: VacancyType;
@@ -305,26 +228,8 @@ export type GetVacanciesQueryVariables = Exact<{
 export type GetVacanciesQuery = { __typename?: 'Query', getVacancies: Array<{ __typename?: 'Vacancy', id: number, title: string, company: string, type: string } | null> };
 
 
-export const LoginDocument = `
-    mutation Login($username: String!, $password: String!) {
-  login(username: $username, password: $password) {
-    __typename
-    ... on User {
-      id
-      name
-      username
-    }
-    ... on FieldErrors {
-      errors {
-        message
-        field
-      }
-    }
-  }
-}
-    `;
 export const GetArticleDocument = `
-    query GetArticle($id: Int) {
+    query GetArticle($id: Int!) {
   getArticle(id: $id) {
     id
     title
@@ -334,7 +239,7 @@ export const GetArticleDocument = `
 }
     `;
 export const GetArticlesDocument = `
-    query GetArticles($limit: Int, $type: ArticleType!) {
+    query GetArticles($limit: Int!, $type: ArticleType!) {
   getArticles(limit: $limit, type: $type) {
     id
     title
@@ -417,15 +322,6 @@ export const GetNewsDocument = `
   }
 }
     `;
-export const UsersDocument = `
-    query Users {
-  users {
-    id
-    name
-    username
-  }
-}
-    `;
 export const GetVacanciesDocument = `
     query GetVacancies($limit: Int, $type: VacancyType!) {
   getVacancies(type: $type, limit: $limit) {
@@ -439,10 +335,7 @@ export const GetVacanciesDocument = `
 
 const injectedRtkApi = api.injectEndpoints({
   endpoints: (build) => ({
-    Login: build.mutation<LoginMutation, LoginMutationVariables>({
-      query: (variables) => ({ document: LoginDocument, variables })
-    }),
-    GetArticle: build.query<GetArticleQuery, GetArticleQueryVariables | void>({
+    GetArticle: build.query<GetArticleQuery, GetArticleQueryVariables>({
       query: (variables) => ({ document: GetArticleDocument, variables })
     }),
     GetArticles: build.query<GetArticlesQuery, GetArticlesQueryVariables>({
@@ -466,9 +359,6 @@ const injectedRtkApi = api.injectEndpoints({
     GetNews: build.query<GetNewsQuery, GetNewsQueryVariables>({
       query: (variables) => ({ document: GetNewsDocument, variables })
     }),
-    Users: build.query<UsersQuery, UsersQueryVariables | void>({
-      query: (variables) => ({ document: UsersDocument, variables })
-    }),
     GetVacancies: build.query<GetVacanciesQuery, GetVacanciesQueryVariables>({
       query: (variables) => ({ document: GetVacanciesDocument, variables })
     }),
@@ -476,5 +366,5 @@ const injectedRtkApi = api.injectEndpoints({
 });
 
 export { injectedRtkApi as api };
-export const { useLoginMutation, useGetArticleQuery, useLazyGetArticleQuery, useGetArticlesQuery, useLazyGetArticlesQuery, useGetCompanyJobsQuery, useLazyGetCompanyJobsQuery, useGetHeroImagesQuery, useLazyGetHeroImagesQuery, useGetMembersQuery, useLazyGetMembersQuery, useGetMerchListQuery, useLazyGetMerchListQuery, useGetNewsItemsQuery, useLazyGetNewsItemsQuery, useGetNewsQuery, useLazyGetNewsQuery, useUsersQuery, useLazyUsersQuery, useGetVacanciesQuery, useLazyGetVacanciesQuery } = injectedRtkApi;
+export const { useGetArticleQuery, useLazyGetArticleQuery, useGetArticlesQuery, useLazyGetArticlesQuery, useGetCompanyJobsQuery, useLazyGetCompanyJobsQuery, useGetHeroImagesQuery, useLazyGetHeroImagesQuery, useGetMembersQuery, useLazyGetMembersQuery, useGetMerchListQuery, useLazyGetMerchListQuery, useGetNewsItemsQuery, useLazyGetNewsItemsQuery, useGetNewsQuery, useLazyGetNewsQuery, useGetVacanciesQuery, useLazyGetVacanciesQuery } = injectedRtkApi;
 

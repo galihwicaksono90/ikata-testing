@@ -1,4 +1,4 @@
-export { default as Carousel } from "./Carousel";
+export * from "./Carousel";
 export { default as AvatarCarousel } from "./AvatarCarousel";
 export { default as Container } from "./Container";
 export { default as AdBanner } from "./AdBanner";
