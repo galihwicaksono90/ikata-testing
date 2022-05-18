@@ -18,20 +18,22 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-export default function SectionTitleWithLink({ title, href, ...rest }: Props) {
+export default function SectionTitleWithLink({
+  title,
+  href,
+  mb = 25,
+  ...rest
+}: Props) {
   const { classes } = useStyles();
   return (
     <Group
       position="apart"
       align="baseline"
+      mb={mb}
       {...rest}
       style={{ width: "100%" }}
     >
-      {title ? (
-        <Title mb={25} order={5}>
-          {title}
-        </Title>
-      ) : null}
+      {title ? <Title order={5}>{title}</Title> : null}
       {href ? (
         <Text
           href={href}

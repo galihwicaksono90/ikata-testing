@@ -7,13 +7,13 @@ import { ArrowLeft, ArrowRight } from "tabler-icons-react";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-interface Breakpoint {
+export interface CarouselBreakpoint {
   breakpoint: number;
   settings: {
     slidesToShow: number;
-    slidesToScroll: number;
-    infinite: boolean;
-    dots: boolean;
+    slidesToScroll?: number;
+    infinite?: boolean;
+    dots?: boolean;
   };
 }
 
@@ -36,18 +36,21 @@ interface Props extends CarouselProps {
   dots?: boolean;
   centerMode?: boolean;
   centerPadding?: string;
-  responsive?: Breakpoint[];
+  responsive?: CarouselBreakpoint[];
   rows?: number;
   children: React.ReactNode;
   autoplay?: boolean;
+  autoplaySpeed?: number;
 }
 
-export default function Carousel({
+export function Carousel({
   dots = true,
   dotType = "bullets",
   arrows = false,
   dotsPosition = "outside",
   children,
+  speed = 1000,
+  autoplaySpeed = 5000,
   ...rest
 }: Props) {
   const settings = {
@@ -75,6 +78,8 @@ export default function Carousel({
         className={classes.slickCarousel}
         style={{ width: "100%" }}
         dotsClass={`slick-dots ${dotType} ${dotsPosition}`}
+        speed={speed}
+        autoplaySpeed={autoplaySpeed}
         {...settings}
       >
         {children}

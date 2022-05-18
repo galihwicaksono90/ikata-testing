@@ -19,6 +19,7 @@ export default function NewsCarousel({ limit }: NewsCarousel) {
       {news.getNewsItems.map((item) => {
         return (
           <NewsCard
+            key={item.id}
             title={item.title}
             tags={["Berita Umum"]}
             image={item.image}

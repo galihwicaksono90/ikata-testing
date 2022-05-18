@@ -7,18 +7,20 @@ interface ActivityItemProps {
   image: string;
 }
 
-interface Props extends ActivityItemProps {
+interface Props {
   title: string;
   data: ActivityItemProps[];
 }
 
 export default function ActivityItemList({ title, data }: Props) {
   return (
-    <Stack>
+    <Stack spacing={20}>
       <SectionTitleWithLink title={title} href="/" />
-      {data.map((item, index) => (
-        <ActivityItem title={item.title} image={item.image} key={index} />
-      ))}
+      <Stack>
+        {data.map((item, index) => (
+          <ActivityItem title={item.title} image={item.image} key={index} />
+        ))}
+      </Stack>
     </Stack>
   );
 }

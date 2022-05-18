@@ -4,7 +4,7 @@ import { AdBanner, HeroImage } from "components/common";
 import { MainLayout } from "components/layouts";
 import { MerchCarousel } from "components/merch";
 import { NewsLandingPage } from "components/news";
-import { api, ArticleType } from "generated/graphql";
+import { api, ArticleType, VacancyType } from "generated/graphql";
 import { GetServerSideProps } from "next";
 import { wrapper } from "redux/store";
 
@@ -39,14 +39,29 @@ export const getServerSideProps: GetServerSideProps =
     // articles data
     await store.dispatch(
       api.endpoints.GetArticles.initiate({
-        limit: 4,
+        limit: 5,
         type: ArticleType.Scientific,
       })
     );
     await store.dispatch(
       api.endpoints.GetArticles.initiate({
-        limit: 4,
+        limit: 5,
         type: ArticleType.NonScientific,
+      })
+    );
+    await store.dispatch(
+      api.endpoints.GetMerchList.initiate({
+        limit: 5,
+      })
+    );
+    await store.dispatch(
+      api.endpoints.GetVacancies.initiate({
+        type: VacancyType.Job,
+      })
+    );
+    await store.dispatch(
+      api.endpoints.GetVacancies.initiate({
+        type: VacancyType.Scholarship,
       })
     );
 

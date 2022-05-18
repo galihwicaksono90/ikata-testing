@@ -9,7 +9,7 @@ export interface VacancyListProps extends PaperProps<"div"> {
   href: string;
 }
 
-export default function VacancyList({
+export default function VacancyListInLandingPaget({
   type,
   limit,
   title,
@@ -33,6 +33,7 @@ export default function VacancyList({
         borderColor: theme.colors.dark[4],
         borderWidth: "1px",
         borderStyle: "solid",
+        width: "100%",
       })}
       {...rest}
     >
