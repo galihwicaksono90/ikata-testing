@@ -10,6 +10,7 @@ export default function HeroImage() {
   if (isLoading) {
     return <span>Loading...</span>;
   }
+
   return (
     <Box sx={{ height: "679px" }}>
       <Carousel dotsPosition="inside" dots slidesToShow={1}>

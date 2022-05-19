@@ -16,7 +16,7 @@ export default function NewsCarousel({ limit }: NewsCarousel) {
 
   return (
     <Carousel>
-      {news.getNewsItems.map((item) => {
+      {news?.getNewsItems.map((item) => {
         return (
           <NewsCard
             key={item.id}

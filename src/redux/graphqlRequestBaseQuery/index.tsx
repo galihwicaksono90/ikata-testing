@@ -7,6 +7,8 @@ import type {
   PrepareHeaders,
   RequestHeaders,
 } from "./GraphqlBaseQueryTypes";
+import { showNotification } from "@mantine/notifications";
+import { AlertOctagon } from "tabler-icons-react";
 
 export const graphqlRequestBaseQuery = (
   options: GraphqlRequestBaseQueryArgs
@@ -49,9 +51,20 @@ export const graphqlRequestBaseQuery = (
         meta: {},
       };
     } catch (error) {
+      if (typeof window !== "undefined") {
+        showNotification({
+          title: "Error occured",
+          message: `${error.message}. ${process.env.NEXT_PUBLIC_GRAPHQL_SERVER}`,
+          icon: <AlertOctagon />,
+          id: "general-error",
+          color: "red",
+          autoClose: 1,
+        });
+      }
+
       if (error instanceof ClientError) {
         const { name, message, stack, request, response } = error;
-        // console.log({ error });
+
         return { error: { name, message, stack }, meta: { request, response } };
       }
 
