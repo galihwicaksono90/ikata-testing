@@ -44,7 +44,7 @@ export default function News() {
             </Box>
             <SectionTitleWithLink title="Berita Pengembangan Alumni" href="/" />
             <SimpleGrid cols={2} breakpoints={[{ maxWidth: "sm", cols: 1 }]}>
-              {news.getNewsItems.map((item) => {
+              {news?.getNewsItems.map((item) => {
                 return (
                   <NewsCard
                     key={item.id}

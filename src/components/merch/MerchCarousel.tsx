@@ -36,7 +36,7 @@ export default function MerchCarousel() {
         </Group>
         <Box sx={{ height: "466px" }}>
           <Carousel slidesToShow={4} autoplay responsive={breakpoints}>
-            {merchList.getMerchList.map((merch) => (
+            {merchList?.getMerchList.map((merch) => (
               <MerchCard
                 image={merch.image}
                 title={merch.name}

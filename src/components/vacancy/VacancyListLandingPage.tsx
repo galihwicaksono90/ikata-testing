@@ -55,7 +55,7 @@ export default function VacancyListInLandingPaget({
         }
         mb={30}
       >
-        {vacancies.getVacancies.map((vacancy) => {
+        {vacancies?.getVacancies.map((vacancy) => {
           return (
             <Box
               key={vacancy.id}
