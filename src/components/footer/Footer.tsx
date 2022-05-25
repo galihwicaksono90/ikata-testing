@@ -49,7 +49,7 @@ export default function FooterComponent() {
                   position: "relative",
                 }}
               >
-                <Image src="/ikataLogo.png" layout="fill" />
+                <Image alt="" src="/ikataLogo.png" layout="fill" />
               </Box>
               <Stack>
                 <Text
@@ -62,7 +62,7 @@ export default function FooterComponent() {
                   })}
                 >
                   Ikatan Alumni Tambang <br />
-                  UPN "Veteran" Yogyakarta
+                  UPN &quot;Veteran&quot; Yogyakarta
                 </Text>
               </Stack>
             </Box>
@@ -88,10 +88,12 @@ export default function FooterComponent() {
               href="https://youtube.com"
               image="/youtube.png"
               mr={30}
+              alt=""
             />
             <SocialMediaButton
               href="https://instagram.com"
               image="/instagram.png"
+              alt=""
             />
           </Group>
         </Box>
@@ -103,9 +105,10 @@ export default function FooterComponent() {
 
 interface SocialMediaButtonProps extends UnstyledButtonProps<"a"> {
   image: string;
+  alt?: string;
 }
 
-function SocialMediaButton({ href, image, mr }: SocialMediaButtonProps) {
+function SocialMediaButton({ href, image, mr, alt }: SocialMediaButtonProps) {
   const { classes } = useStyles();
   return (
     <UnstyledButton
@@ -116,6 +119,7 @@ function SocialMediaButton({ href, image, mr }: SocialMediaButtonProps) {
     >
       <Center style={{ height: "100%" }}>
         <Image
+          alt={alt}
           src={image}
           layout="fixed"
           objectFit="contain"

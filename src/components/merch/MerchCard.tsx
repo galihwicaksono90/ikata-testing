@@ -36,6 +36,7 @@ export default function MerchandiseCard({
         })}
       >
         <Image
+          alt=""
           src={image}
           layout="fill"
           objectFit="cover"

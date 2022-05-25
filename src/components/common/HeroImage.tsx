@@ -31,7 +31,7 @@ function Content({ src }: { src: string }) {
         position: "relative",
       }}
     >
-      <Image src={src} layout="fill" objectFit="cover" priority />
+      <Image alt="" src={src} layout="fill" objectFit="cover" priority />
       <Box
         sx={{
           position: "absolute",

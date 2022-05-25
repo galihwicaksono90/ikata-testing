@@ -39,6 +39,7 @@ export default function NewsCard({
       <Card.Section mb={20}>
         <AspectRatio ratio={744 / 433} sx={{ position: "relative" }}>
           <Image
+            alt=""
             src={image}
             layout="fill"
             objectFit="cover"

@@ -16,7 +16,7 @@ export default function DewanPengawas() {
       {isLoading ? (
         <div>Loading...</div>
       ) : (
-        <AvatarCarousel data={members.getMembers} />
+        <AvatarCarousel data={members?.getMembers} />
       )}
     </ManagementLayout>
   );
