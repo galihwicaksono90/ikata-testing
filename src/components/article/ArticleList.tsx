@@ -93,7 +93,7 @@ export default function ArticleList({ type, limit }: ArticleItemsProps) {
               position: "relative",
             }}
           >
-            <Image src={article.image} layout="fill" objectFit="cover" />
+            <Image alt="" src={article.image} layout="fill" objectFit="cover" />
           </Box>
           <Stack spacing={6} sx={{ width: "100%" }}>
             <Text

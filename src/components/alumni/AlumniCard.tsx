@@ -25,6 +25,7 @@ export default function AlumniCard({
       <Card.Section mb={20}>
         <AspectRatio ratio={264 / 196}>
           <Image
+            alt=""
             src={image}
             layout="fill"
             objectFit="cover"

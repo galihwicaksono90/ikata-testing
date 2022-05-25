@@ -17,8 +17,8 @@ export default function ArticlesLandingPage() {
 
   return (
     <Container>
-      <Grid columns={24}>
-        <Grid.Col lg={17} md={24} pr={40}>
+      <Grid columns={24} gutter={40}>
+        <Grid.Col lg={17} md={24}>
           <Stack>
             <Tabs
               mb={40}

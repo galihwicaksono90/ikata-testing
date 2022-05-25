@@ -37,7 +37,7 @@ function ActivityItem({ title, image }: ActivityItemProps) {
           overflow: "hidden",
         }}
       >
-        <Image src={image} layout="fill" objectFit="cover" />
+        <Image alt="" src={image} layout="fill" objectFit="cover" />
       </Center>
       <Text weight="bold" size="lg">
         {title}

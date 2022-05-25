@@ -7,8 +7,10 @@ export const theme: MantineThemeOverride = {
   primaryColor: "orange",
   defaultRadius: "md",
   loader: "dots",
+  //@ts-ignore
   radius: { xs: 8, sm: 10, md: 12, lg: 14, xl: "50%" },
   fontFamily: "Montserrat",
+  //@ts-ignore
   fontSizes: { sm: "0.875rem", md: "1rem", lg: "1.125rem", xl: "1.374rem" },
   headings: {
     fontFamily: "Montserrat",
@@ -21,7 +23,7 @@ export const theme: MantineThemeOverride = {
       h6: { fontSize: "1rem", lineHeight: "1.8rem" },
     },
   },
-  breakpoints: { md: CONTAINER_SIZE },
+  breakpoints: { md: CONTAINER_SIZE, xs: 414 },
   colors: {
     dark: [
       "#fff",
