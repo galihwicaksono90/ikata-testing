@@ -10,7 +10,7 @@ export function PriceList(props: PaperProps<"div">) {
     <Paper
       sx={(theme) => ({
         padding: 20,
-        background: "rgba(255,255,255,0.15)",
+        background: theme.colors.dark[5],
         boxShadow: theme.shadows.md,
         color: theme.white,
       })}

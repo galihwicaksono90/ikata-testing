@@ -15,7 +15,6 @@ export function ArticleList({ type, limit }: ArticleItemsProps) {
     type,
   });
 
-  // show loading skeleton if loading
   if (isLoading) {
     return (
       <Stack spacing={20} mt={20}>
@@ -78,13 +77,15 @@ export function ArticleList({ type, limit }: ArticleItemsProps) {
           sx={(theme) => ({
             display: "flex",
             gap: 20,
-
+            "& a": { color: theme.white },
             [`@media (max-width: ${theme.breakpoints.sm}px)`]: {
               flexDirection: "column",
             },
           })}
         >
           <Box
+            component={NextLink}
+            href={`/article/${article.id}`}
             sx={{
               width: "100%",
               overflow: "hidden",
@@ -101,7 +102,8 @@ export function ArticleList({ type, limit }: ArticleItemsProps) {
               size="xl"
               lineClamp={2}
               component={NextLink}
-              href="/about"
+              href={`/article/${article.id}`}
+              variant="link"
             >
               {article.title}
             </Text>
