@@ -8,3 +8,4 @@ export * from "./MemberAvatar";
 export * from "./PriceList";
 export * from "./SearchInput";
 export * from "./SectionTitleWithLink";
+export * from "./GradientButton";
