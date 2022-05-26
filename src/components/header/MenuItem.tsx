@@ -3,20 +3,33 @@ import { useRouter } from "next/router";
 import { NextLink } from "@mantine/next";
 import { ChevronDown } from "tabler-icons-react";
 
+interface MenuItemProps {
+  children?: React.ReactNode;
+  title?: string;
+  href?: string;
+  withPadding?: boolean;
+}
+
 export default function MenuItem({
   children,
   title,
   href,
-}: {
-  title: string;
-  href: string;
-  children?: React.ReactNode;
-}) {
+  withPadding,
+}: MenuItemProps) {
   const { pathname } = useRouter();
 
   if (!children) {
     return (
-      <li>
+      <Box
+        component="li"
+        py={withPadding ? 16 : 0}
+        sx={(theme) => ({
+          width: withPadding ? "100%" : "initial",
+          "&:hover": {
+            backgroundColor: withPadding ? theme.colors.dark[5] : null,
+          },
+        })}
+      >
         <Box
           sx={(theme) => ({
             "& a": {
@@ -25,11 +38,11 @@ export default function MenuItem({
             },
           })}
         >
-          <Text component={NextLink} href={href}>
+          <Text component={NextLink} href={href} size="md">
             {title}
           </Text>
         </Box>
-      </li>
+      </Box>
     );
   }
 

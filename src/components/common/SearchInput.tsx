@@ -1,7 +1,11 @@
 import { Input } from "@mantine/core";
 import { Search } from "tabler-icons-react";
 
-export default function SearchInput() {
+interface SearchInputProps {
+  width?: string | number;
+}
+
+export function SearchInput({ width }: SearchInputProps) {
   return (
     <Input
       icon={<Search />}
@@ -14,7 +18,7 @@ export default function SearchInput() {
           border: `solid 1px ${theme.colors.dark[2]}`,
           background: theme.colors.dark[8],
           borderRadius: "50px",
-          width: "264px",
+          width: width ?? "264px",
           "& span :hover": {
             borderColor: theme.white,
           },

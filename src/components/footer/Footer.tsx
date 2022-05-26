@@ -2,7 +2,6 @@ import React from "react";
 import {
   Box,
   MediaQuery,
-  Container,
   UnstyledButton,
   Footer,
   Center,
@@ -16,15 +15,24 @@ import {
 import Image from "next/image";
 import { NextLink } from "@mantine/next";
 import { useStyles } from "theme";
+import { Container } from "components/common";
 
 export default function FooterComponent() {
   const { classes } = useStyles();
   return (
     <Footer height="auto" className={classes.footer}>
-      <Container size={1128} sx={{ width: "100%" }}>
-        <Box
-          className={classes.responsiveGroupSmall}
-          sx={{ width: "100%", marginBottom: 60 }}
+      <Container sx={{ width: "100%" }}>
+        <Group
+          sx={(theme) => ({
+            marginBottom: 60,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+
+            [`@media (max-width: ${theme.breakpoints.sm}px)`]: {
+              flexDirection: "column",
+            },
+          })}
         >
           <Stack>
             <Box
@@ -96,7 +104,7 @@ export default function FooterComponent() {
               alt=""
             />
           </Group>
-        </Box>
+        </Group>
       </Container>
       <Text className={classes.copyright}>&copy; 2022 Copyright</Text>
     </Footer>

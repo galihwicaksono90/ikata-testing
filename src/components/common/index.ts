@@ -7,3 +7,4 @@ export { default as PriceList } from "./PriceList";
 export { default as ActivityItemList } from "./ActivityItemList";
 export { default as SectionTitleWithLink } from "./SectionTitleWithLink";
 export * from "./MemberAvatar";
+export * from "./SearchInput";

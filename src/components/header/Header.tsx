@@ -16,6 +16,7 @@ export default function HeaderComponent({ opened, setOpened }: NavbarProps) {
             width: "100%",
             background: theme.colors.dark[8],
             color: theme.white,
+            zIndex: 1000,
           })}
         >
           <Divider />
