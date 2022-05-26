@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  AspectRatio,
   Box,
   Group,
   Stack,
@@ -10,10 +11,9 @@ import {
 } from "@mantine/core";
 import { NextLink } from "@mantine/next";
 import Image from "next/image";
-import SearchInput from "./SearchInput";
 import { NavbarProps } from "components/layouts";
 import { UserCircle } from "tabler-icons-react";
-import { Container } from "components/common";
+import { Container, SearchInput } from "components/common";
 
 export default function HeaderTop({ opened, setOpened }: NavbarProps) {
   return (
@@ -32,19 +32,44 @@ export default function HeaderTop({ opened, setOpened }: NavbarProps) {
       >
         <Group position="apart" align="center" style={{ height: "100%" }}>
           <Group spacing="xl" align="center">
-            <Image src="/ikataLogo.png" width="72px" height="72px" />
-            <Stack spacing={5}>
-              <Text
-                size="xl"
-                weight="bold"
-                sx={{
-                  lineHeight: "20px",
-                }}
-              >
-                PORTAL IKATAN ALUMNI TAMBANG
-              </Text>
-              <Text>UPN "VETERAN" YOGYAKARTA</Text>
-            </Stack>
+            <AspectRatio
+              ratio={1}
+              sx={(theme) => ({
+                maxWidth: 72,
+                position: "relative",
+                width: 72,
+                [`@media (max-width: ${theme.breakpoints.sm}px)`]: {
+                  width: 50,
+                },
+              })}
+            >
+              <Image alt="" src="/ikataLogo.png" layout="fill" />
+            </AspectRatio>
+            <MediaQuery smallerThan="xs" styles={{ display: "none" }}>
+              <Stack spacing={5}>
+                <Text
+                  size="xl"
+                  weight="bold"
+                  sx={(theme) => ({
+                    lineHeight: "20px",
+                    [`@media (max-width: ${theme.breakpoints.sm}px)`]: {
+                      fontSize: 12,
+                    },
+                  })}
+                >
+                  PORTAL IKATAN ALUMNI TAMBANG
+                </Text>
+                <Text
+                  sx={(theme) => ({
+                    [`@media (max-width: ${theme.breakpoints.sm}px)`]: {
+                      fontSize: 10,
+                    },
+                  })}
+                >
+                  UPN &quot;VETERAN&quot; YOGYAKARTA
+                </Text>
+              </Stack>
+            </MediaQuery>
           </Group>
           <MediaQuery smallerThan="md" styles={{ display: "none" }}>
             <Group spacing={53}>
