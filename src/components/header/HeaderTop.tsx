@@ -15,7 +15,7 @@ import { NavbarProps } from "components/layouts";
 import { UserCircle } from "tabler-icons-react";
 import { Container, SearchInput } from "components/common";
 
-export default function HeaderTop({ opened, setOpened }: NavbarProps) {
+export function HeaderTop({ opened, setOpened }: NavbarProps) {
   return (
     <Box
       sx={(theme) => ({

@@ -1,4 +1,4 @@
-import { Grid, Stack, Tabs, Text, Group } from "@mantine/core";
+import { Grid, Stack, Tabs, Text } from "@mantine/core";
 import { NextLink } from "@mantine/next";
 import { ArticleList } from "components/article";
 import { Container } from "components/common";
@@ -8,7 +8,7 @@ import { setArticleMenuPosition } from "redux/general/generalSlice";
 import { useAppDispatch, useAppSelector } from "redux/hooks";
 import { useStyles } from "theme";
 
-export default function ArticlesLandingPage() {
+export function ArticleLandingPage() {
   const { classes } = useStyles();
   const activeTab = useAppSelector(
     (state) => state.general.articleMenuPosition

@@ -2,7 +2,7 @@ import { Accordion } from "@mantine/core";
 import { MenuItem } from "components/header";
 import { useRouter } from "next/router";
 
-const NavbarMenu = () => {
+export const NavbarMenu = () => {
   const { pathname } = useRouter();
   return (
     <>
@@ -107,5 +107,3 @@ const NavbarMenu = () => {
     </>
   );
 };
-
-export default NavbarMenu;

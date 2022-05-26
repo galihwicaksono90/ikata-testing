@@ -1,7 +1,6 @@
-import MenuItem from "./MenuItem";
-import MenuItemChild from "./MenuItemChild";
+import { MenuItem, MenuItemChild } from "components/header";
 
-export default function HeaderMenu() {
+export function HeaderMenu() {
   return (
     <>
       <MenuItem title="Beranda" href="/" />

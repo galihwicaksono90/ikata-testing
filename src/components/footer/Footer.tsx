@@ -1,26 +1,24 @@
-import React from "react";
 import {
   Box,
-  MediaQuery,
-  UnstyledButton,
-  Footer,
+  Button,
   Center,
-  Text,
+  Footer as BaseFooter,
   Group,
   Stack,
-  Button,
-  createStyles,
+  Text,
+  UnstyledButton,
   UnstyledButtonProps,
 } from "@mantine/core";
-import Image from "next/image";
 import { NextLink } from "@mantine/next";
-import { useStyles } from "theme";
 import { Container } from "components/common";
+import Image from "next/image";
+import React from "react";
+import { useStyles } from "theme";
 
-export default function FooterComponent() {
+export function Footer() {
   const { classes } = useStyles();
   return (
-    <Footer height="auto" className={classes.footer}>
+    <BaseFooter height="auto" className={classes.footer}>
       <Container sx={{ width: "100%" }}>
         <Group
           sx={(theme) => ({
@@ -107,7 +105,7 @@ export default function FooterComponent() {
         </Group>
       </Container>
       <Text className={classes.copyright}>&copy; 2022 Copyright</Text>
-    </Footer>
+    </BaseFooter>
   );
 }
 

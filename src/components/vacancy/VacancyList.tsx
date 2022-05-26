@@ -1,13 +1,7 @@
 import { Stack, Text, List } from "@mantine/core";
 import { Job } from "generated/graphql";
 
-export default function VacancyList({
-  index,
-  job,
-}: {
-  index: number;
-  job: Job;
-}) {
+export function VacancyList({ index, job }: { index: number; job: Job }) {
   return (
     <Stack mb={30}>
       <Text color="dark" weight="bold" mb={20}>{`Lowongan ${index + 1}: ${

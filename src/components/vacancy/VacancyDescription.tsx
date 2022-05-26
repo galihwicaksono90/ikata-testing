@@ -3,7 +3,7 @@ import { Company } from "generated/graphql";
 import { VacancyList } from "components/vacancy";
 import { formatTime } from "utils/time";
 
-export default function VacancyDesc(company: Company) {
+export function VacancyDescription(company: Company) {
   return (
     <Stack>
       <Title order={3} sx={(theme) => ({ color: theme.colors.dark })}>

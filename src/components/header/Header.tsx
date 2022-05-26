@@ -1,14 +1,19 @@
-import { Box, Center, Divider, Header, MediaQuery } from "@mantine/core";
-import { NavbarProps } from "components/layouts";
-import { useStyles } from "theme";
-import HeaderMenu from "./HeaderMenu";
-import HeaderTop from "./HeaderTop";
+import {
+  Box,
+  Center,
+  Divider,
+  Header as BaseHeader,
+  MediaQuery,
+} from "@mantine/core";
 import { Container } from "components/common";
+import { HeaderMenu, HeaderTop } from "components/header";
+import { MainLayoutProps } from "components/layouts";
+import { useStyles } from "theme";
 
-export default function HeaderComponent({ opened, setOpened }: NavbarProps) {
+export function Header({ opened, setOpened }: MainLayoutProps) {
   const { classes } = useStyles();
   return (
-    <Header height="auto" sx={{ border: "none" }}>
+    <BaseHeader height="auto" sx={{ border: "none" }}>
       <HeaderTop opened={opened} setOpened={setOpened} />
       <MediaQuery smallerThan="md" styles={{ display: "none" }}>
         <Box
@@ -36,6 +41,6 @@ export default function HeaderComponent({ opened, setOpened }: NavbarProps) {
           </Container>
         </Box>
       </MediaQuery>
-    </Header>
+    </BaseHeader>
   );
 }

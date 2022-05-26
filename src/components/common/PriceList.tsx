@@ -3,7 +3,7 @@ import { getCurrentDate } from "utils/time";
 import { Paper, PaperProps, Text, Divider, Group, Stack } from "@mantine/core";
 import { ArrowUp, ArrowDown, Equal } from "tabler-icons-react";
 
-export default function PriceList(props: PaperProps<"div">) {
+export function PriceList(props: PaperProps<"div">) {
   const date = useMemo(() => getCurrentDate(), []);
 
   return (

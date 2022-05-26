@@ -2,21 +2,21 @@ import {
   Box,
   Burger,
   MediaQuery,
-  Navbar,
+  Navbar as BaseNavbar,
   ScrollArea,
   Stack,
 } from "@mantine/core";
 import { SearchInput } from "components/common";
 import { NavbarProps } from "components/layouts";
 import { useStyles } from "theme";
-import NavbarMenu from "./NavbarMenu";
+import { NavbarMenu } from "components/navbar";
 
-export default function NavbarComponent({ opened, setOpened }: NavbarProps) {
+export function Navbar({ opened, setOpened }: NavbarProps) {
   const { classes } = useStyles();
   return (
     <MediaQuery largerThan="md" styles={{ display: "none" }}>
       <Box sx={{ height: "100vh%" }}>
-        <Navbar
+        <BaseNavbar
           hidden={!opened}
           sx={{
             right: 0,
@@ -28,7 +28,7 @@ export default function NavbarComponent({ opened, setOpened }: NavbarProps) {
           fixed
         >
           <Stack>
-            <Navbar.Section>
+            <BaseNavbar.Section>
               <Box
                 sx={{
                   height: 102,
@@ -43,11 +43,11 @@ export default function NavbarComponent({ opened, setOpened }: NavbarProps) {
                   color="white"
                 />
               </Box>
-            </Navbar.Section>
-            <Navbar.Section>
+            </BaseNavbar.Section>
+            <BaseNavbar.Section>
               <SearchInput width="100%" />
-            </Navbar.Section>
-            <Navbar.Section>
+            </BaseNavbar.Section>
+            <BaseNavbar.Section>
               <Box
                 component="ul"
                 className={classes.menuItemsNavbar}
@@ -66,9 +66,9 @@ export default function NavbarComponent({ opened, setOpened }: NavbarProps) {
                   <NavbarMenu />
                 </ScrollArea>
               </Box>
-            </Navbar.Section>
+            </BaseNavbar.Section>
           </Stack>
-        </Navbar>
+        </BaseNavbar>
       </Box>
     </MediaQuery>
   );

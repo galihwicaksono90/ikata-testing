@@ -1,2 +1,2 @@
-export { default as MerchCarousel } from "./MerchCarousel";
-export { default as MerchCard } from "./MerchCard";
+export * from "./MerchCard";
+export * from "./MerchCarousel";

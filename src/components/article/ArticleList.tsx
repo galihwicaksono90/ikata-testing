@@ -1,15 +1,15 @@
-import { Box, Stack, Text, Skeleton, AspectRatio } from "@mantine/core";
+import { Box, Skeleton, Stack, Text } from "@mantine/core";
+import { NextLink } from "@mantine/next";
+import { ArticleType, useGetArticlesQuery } from "generated/graphql";
 import Image from "next/image";
 import { formatTime } from "utils/time";
-import { useGetArticlesQuery, ArticleType } from "generated/graphql";
-import { NextLink } from "@mantine/next";
 
 interface ArticleItemsProps {
   type: ArticleType;
   limit?: number;
 }
 
-export default function ArticleList({ type, limit }: ArticleItemsProps) {
+export function ArticleList({ type, limit }: ArticleItemsProps) {
   const { data: articles, isLoading } = useGetArticlesQuery({
     limit,
     type,
