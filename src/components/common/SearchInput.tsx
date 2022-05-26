@@ -13,12 +13,16 @@ export function SearchInput({ width }: SearchInputProps) {
       placeholder="Search"
       styles={(theme) => ({
         input: {
+          fontWeight: 500,
           color: theme.white,
           height: "38px",
-          border: `solid 1px ${theme.colors.dark[2]}`,
-          background: theme.colors.dark[8],
+          border: `solid 1px ${theme.colors.dark[3]}`,
+          background: "transparent",
           borderRadius: "50px",
           width: width ?? "264px",
+          "&::placeholder": {
+            color: theme.colors.dark[3],
+          },
           "& span :hover": {
             borderColor: theme.white,
           },

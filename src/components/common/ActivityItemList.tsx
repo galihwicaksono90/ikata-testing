@@ -10,12 +10,13 @@ interface ActivityItemProps {
 interface Props {
   title: string;
   data: ActivityItemProps[];
+  href: string;
 }
 
-export function ActivityItemList({ title, data }: Props) {
+export function ActivityItemList({ title, data, href }: Props) {
   return (
     <Stack spacing={20}>
-      <SectionTitleWithLink title={title} href="/" />
+      <SectionTitleWithLink title={title} href={href} />
       <Stack>
         {data.map((item, index) => (
           <ActivityItem title={item.title} image={item.image} key={index} />
