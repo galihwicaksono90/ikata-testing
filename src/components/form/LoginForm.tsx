@@ -1,8 +1,7 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { Button, Group, Input, InputWrapper, Text } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
 import { NextLink } from "@mantine/next";
-/* import { useLoginMutation } from "generated/graphql"; */
 import { useForm } from "react-hook-form";
 import { useStyles } from "theme";
 import { X } from "tabler-icons-react";
@@ -17,7 +16,6 @@ export default function LoginForm() {
   const { classes } = useStyles();
   const [isLoading, setIsLoading] = useState(false);
 
-  /* const [login, { error, isLoading, data: loginData }] = useLoginMutation(); */
   const router = useRouter();
   const {
     register,
@@ -25,28 +23,7 @@ export default function LoginForm() {
     formState: { errors, isValid },
   } = useForm<LoginFormProps>({ mode: "onChange" });
 
-  /* const onSubmit = async (data: LoginFormProps) => {
-   *   try {
-   *     const response = await login(data).unwrap();
-   *     showNotification({
-   *       title: `Hi!`,
-   *       message: `Selamat datang kembali ${response.login.username}!`,
-   *     });
-   *     router.push("/");
-   *   } catch (e) {
-   *     showNotification({
-   *       title: "Login Error",
-   *       message: "Invalid credentials provided",
-   *       id: "login-error",
-   *       icon: <X />,
-   *       color: "red",
-   *     });
-   *     return;
-   *   }
-   * };
-   */
-
-  const onSubmit = (values: LoginFormProps) => {
+  const onSubmit = useCallback((values: LoginFormProps) => {
     setIsLoading(true);
     setTimeout(() => {
       setIsLoading(false);
@@ -66,7 +43,7 @@ export default function LoginForm() {
       });
       router.push("/");
     }, 3000);
-  };
+  }, []);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={classes.form}>

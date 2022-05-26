@@ -1,4 +1,12 @@
-import { Overlay, Container, Box, Paper, Stack, Title } from "@mantine/core";
+import {
+  Overlay,
+  Container,
+  Box,
+  Paper,
+  Stack,
+  Title,
+  UnstyledButton,
+} from "@mantine/core";
 import { NextLink } from "@mantine/next";
 import { LoginForm } from "components/form";
 import Image from "next/image";
@@ -18,9 +26,9 @@ export default function Login() {
         backgroundSize: "cover",
       }}
     >
-      <Container style={{ zIndex: 2 }}>
+      <Container style={{ zIndex: 2, width: "100%" }} size={408}>
         <Stack align="center" spacing={20}>
-          <Box
+          <UnstyledButton
             sx={{
               width: "108px",
               height: "108px",
@@ -30,12 +38,12 @@ export default function Login() {
             href="/"
           >
             <Image src="/ikataLogo.png" layout="fill" objectFit="cover" />
-          </Box>
+          </UnstyledButton>
           <Paper
             sx={{
               background: "rgba(0,0,0,0.45)",
               padding: "29px 24px 41px 24px",
-              width: 408,
+              width: "100%",
             }}
           >
             <Title order={3} align="center" mb={40}>
