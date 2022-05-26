@@ -7,13 +7,7 @@ export interface AlumniCardProps {
   image: string;
 }
 
-export default function AlumniCard({
-  title,
-  image,
-}: {
-  title: string;
-  image: string;
-}) {
+export function AlumniCard({ title, image }: { title: string; image: string }) {
   return (
     <Card
       sx={(theme) => ({ backgroundColor: theme.white, width: 264 })}

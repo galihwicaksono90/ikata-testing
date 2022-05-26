@@ -10,7 +10,7 @@ const breakpoints: CarouselBreakpoint[] = [
   { breakpoint: 575, settings: { slidesToShow: 1 } },
 ];
 
-export default function MerchCarousel() {
+export function MerchCarousel() {
   const { data: merchList, isLoading } = useGetMerchListQuery({ limit: 5 });
 
   if (isLoading) {

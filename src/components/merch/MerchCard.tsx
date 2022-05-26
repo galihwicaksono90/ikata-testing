@@ -7,11 +7,7 @@ export interface MerchCardProps {
   price: string;
 }
 
-export default function MerchandiseCard({
-  image,
-  title,
-  price,
-}: MerchCardProps) {
+export function MerchCard({ image, title, price }: MerchCardProps) {
   return (
     <Card
       mx="auto"

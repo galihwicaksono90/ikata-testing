@@ -2,7 +2,7 @@ import { Company } from "generated/graphql";
 import { UnstyledButton, Avatar, Divider, Group, Text } from "@mantine/core";
 import { formatTime } from "utils/time";
 
-export default function VacancyListItem({
+export function VacancyListItem({
   index,
   company,
   setCurrentVacancy,

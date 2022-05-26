@@ -1,6 +1,6 @@
-import { Box, Text, Menu, Group } from "@mantine/core";
-import { useRouter } from "next/router";
+import { Box, Group, Menu, Text } from "@mantine/core";
 import { NextLink } from "@mantine/next";
+import { useRouter } from "next/router";
 import { ChevronDown } from "tabler-icons-react";
 
 interface MenuItemProps {
@@ -10,7 +10,7 @@ interface MenuItemProps {
   withPadding?: boolean;
 }
 
-export default function MenuItem({
+export function MenuItem({
   children,
   title,
   href,

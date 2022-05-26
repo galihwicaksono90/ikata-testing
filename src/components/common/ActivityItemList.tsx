@@ -12,7 +12,7 @@ interface Props {
   data: ActivityItemProps[];
 }
 
-export default function ActivityItemList({ title, data }: Props) {
+export function ActivityItemList({ title, data }: Props) {
   return (
     <Stack spacing={20}>
       <SectionTitleWithLink title={title} href="/" />

@@ -1,13 +1,12 @@
-import { Space, Box, SimpleGrid, Stack, Title, Grid } from "@mantine/core";
+import { Box, Grid, SimpleGrid, Stack } from "@mantine/core";
 import {
+  ActivityItemList,
+  Container,
   PriceList,
   SectionTitleWithLink,
-  Container,
-  ActivityItemList,
 } from "components/common";
+import { NewsCard, NewsCarousel } from "components/news";
 import { useGetNewsItemsQuery } from "generated/graphql";
-import NewsCard from "./NewsCard";
-import NewsCarousel from "./NewsCarousel";
 
 const data = [
   {
@@ -28,7 +27,7 @@ const data = [
   },
 ];
 
-export default function News() {
+export function NewsLandingPage() {
   const { data: news, isLoading } = useGetNewsItemsQuery({ limit: 4 });
   if (isLoading) {
     return <div>Loading...</div>;

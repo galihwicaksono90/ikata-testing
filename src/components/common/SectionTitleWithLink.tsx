@@ -18,12 +18,7 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-export default function SectionTitleWithLink({
-  title,
-  href,
-  mb = 25,
-  ...rest
-}: Props) {
+export function SectionTitleWithLink({ title, href, mb = 25, ...rest }: Props) {
   const { classes } = useStyles();
   return (
     <Group

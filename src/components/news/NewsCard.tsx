@@ -11,14 +11,7 @@ interface Props {
   align?: "left" | "right" | "center" | "justify";
 }
 
-export default function NewsCard({
-  title,
-  image,
-  tags,
-  href,
-  bold,
-  align,
-}: Props) {
+export function NewsCard({ title, image, tags, href, bold, align }: Props) {
   return (
     <Card
       radius="md"

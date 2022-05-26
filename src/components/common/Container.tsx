@@ -1,5 +1,10 @@
 import React from "react";
-import { Box, Container, ContainerProps, useMantineTheme } from "@mantine/core";
+import {
+  Box,
+  Container as BaseContainer,
+  ContainerProps,
+  useMantineTheme,
+} from "@mantine/core";
 
 interface Props extends ContainerProps {
   light?: boolean;
@@ -7,7 +12,7 @@ interface Props extends ContainerProps {
   noPadding?: boolean;
 }
 
-export default function ContainerComponent({
+export function Container({
   children,
   light = false,
   noPadding = false,
@@ -32,16 +37,20 @@ export default function ContainerComponent({
           color: theme.colors.dark,
         })}
       >
-        <Container size={theme.other.containerSize} {...padding()} {...rest}>
+        <BaseContainer
+          size={theme.other.containerSize}
+          {...padding()}
+          {...rest}
+        >
           {children}
-        </Container>
+        </BaseContainer>
       </Box>
     );
   }
 
   return (
-    <Container size={theme.other.containerSize} {...padding()} {...rest}>
+    <BaseContainer size={theme.other.containerSize} {...padding()} {...rest}>
       {children}
-    </Container>
+    </BaseContainer>
   );
 }

@@ -1,2 +1,2 @@
-export { default as ArticleList } from "./ArticleList";
-export { default as ArticleLandingPage } from "./ArticleLandingPage";
+export * from "./ArticleList";
+export * from "./ArticleLandingPage";

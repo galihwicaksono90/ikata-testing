@@ -13,7 +13,7 @@ interface Props {
   slidesToShow?: number;
 }
 
-const AvatarCarousel = ({ data, rows = 2, slidesToShow = 4 }: Props) => {
+export const AvatarCarousel = ({ data, rows = 2, slidesToShow = 4 }: Props) => {
   const [avatars, setAvatars] = useState([]);
 
   useEffect(() => {
@@ -44,5 +44,3 @@ const AvatarCarousel = ({ data, rows = 2, slidesToShow = 4 }: Props) => {
     </Box>
   );
 };
-
-export default AvatarCarousel;

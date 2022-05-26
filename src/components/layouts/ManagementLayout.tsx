@@ -1,4 +1,4 @@
-import MainLayout from "./MainLayout";
+import { MainLayout } from "components/layouts";
 import { Box, Title, Text } from "@mantine/core";
 import { Container } from "components/common";
 import React from "react";
@@ -9,11 +9,7 @@ interface Props {
   children: React.ReactNode;
 }
 
-export default function ManagementLayout({
-  title,
-  description,
-  children,
-}: Props) {
+export function ManagementLayout({ title, description, children }: Props) {
   return (
     <MainLayout>
       <Box>

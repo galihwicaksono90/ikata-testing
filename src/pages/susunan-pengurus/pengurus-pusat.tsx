@@ -1,8 +1,7 @@
-import { useCallback } from "react";
-import { Grid, Text, Paper, Group } from "@mantine/core";
+import { Grid, Group, Paper, Text } from "@mantine/core";
 import { AvatarCarousel } from "components/common";
 import { ManagementLayout } from "components/layouts";
-import { api, useGetMembersQuery } from "generated/graphql";
+import { useGetMembersQuery } from "generated/graphql";
 import { setDewanPengawasTabPosition } from "redux/general/generalSlice";
 import { useAppDispatch, useAppSelector } from "redux/hooks";
 
