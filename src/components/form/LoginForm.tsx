@@ -13,7 +13,7 @@ interface LoginFormProps {
   password: string;
 }
 
-export default function LoginForm() {
+export function LoginForm() {
   const { classes } = useStyles();
   const [isLoading, setIsLoading] = useState(false);
 

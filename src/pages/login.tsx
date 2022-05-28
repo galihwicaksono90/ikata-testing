@@ -29,7 +29,12 @@ export default function Login() {
             component={NextLink}
             href="/"
           >
-            <Image src="/ikataLogo.png" layout="fill" objectFit="cover" />
+            <Image
+              alt=""
+              src="/ikataLogo.png"
+              layout="fill"
+              objectFit="cover"
+            />
           </Box>
           <Paper
             sx={{

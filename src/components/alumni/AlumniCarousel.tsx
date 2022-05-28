@@ -1,6 +1,6 @@
 import { Box } from "@mantine/core";
 import { Carousel, CarouselBreakpoint } from "components/common";
-import AlumniCard from "./AlumniCard";
+import { AlumniCard } from "components/alumni";
 
 export const items = [
   {
@@ -32,7 +32,7 @@ const breakpoints: CarouselBreakpoint[] = [
   },
 ];
 
-export default function AlumniCarousel() {
+export function AlumniCarousel() {
   return (
     <Box sx={{ flexGrow: 1, height: 400 }}>
       <Carousel slidesToShow={3} dots responsive={breakpoints} infinite={false}>

@@ -11,34 +11,23 @@ interface Props {
   align?: "left" | "right" | "center" | "justify";
 }
 
-export default function NewsCard({
-  title,
-  image,
-  tags,
-  href,
-  bold,
-  align,
-}: Props) {
+export function NewsCard({ title, image, tags, href, bold, align }: Props) {
   return (
     <Card
       radius="md"
       p={20}
+      shadow="md"
       sx={(theme) => ({
-        background: "rgba(255,255,255,0.15)",
-        transition: "ease-in-out 500 background",
-        cursor: "pointer",
-        boxShadow: theme.shadows.md,
-        "&:hover": {
-          backgroundColor: theme.fn.lighten("rgba(255,255,255,0.15)", 0.2),
+        background: theme.colors.dark[5],
+        "& a ": {
+          color: theme.white,
         },
-        color: theme.white,
       })}
-      component={NextLink}
-      href={href}
     >
       <Card.Section mb={20}>
         <AspectRatio ratio={744 / 433} sx={{ position: "relative" }}>
           <Image
+            alt=""
             src={image}
             layout="fill"
             objectFit="cover"
@@ -70,6 +59,9 @@ export default function NewsCard({
         size={bold ? "lg" : "md"}
         align={align}
         lineClamp={2}
+        component={NextLink}
+        href={href}
+        variant="link"
       >
         {title}
       </Text>

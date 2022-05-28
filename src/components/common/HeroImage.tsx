@@ -4,12 +4,13 @@ import Image from "next/image";
 import { Carousel, Container } from "components/common";
 import { useGetHeroImagesQuery } from "generated/graphql";
 
-export default function HeroImage() {
+export function HeroImage() {
   const { data: images, isLoading } = useGetHeroImagesQuery({ limit: 4 });
 
   if (isLoading) {
     return <span>Loading...</span>;
   }
+
   return (
     <Box sx={{ height: "679px" }}>
       <Carousel dotsPosition="inside" dots slidesToShow={1}>
@@ -30,7 +31,7 @@ function Content({ src }: { src: string }) {
         position: "relative",
       }}
     >
-      <Image src={src} layout="fill" objectFit="cover" priority />
+      <Image alt="" src={src} layout="fill" objectFit="cover" priority />
       <Box
         sx={{
           position: "absolute",

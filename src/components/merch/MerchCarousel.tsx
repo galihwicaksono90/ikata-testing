@@ -10,7 +10,7 @@ const breakpoints: CarouselBreakpoint[] = [
   { breakpoint: 575, settings: { slidesToShow: 1 } },
 ];
 
-export default function MerchCarousel() {
+export function MerchCarousel() {
   const { data: merchList, isLoading } = useGetMerchListQuery({ limit: 5 });
 
   if (isLoading) {
@@ -36,13 +36,8 @@ export default function MerchCarousel() {
         </Group>
         <Box sx={{ height: "466px" }}>
           <Carousel slidesToShow={4} autoplay responsive={breakpoints}>
-            {merchList.getMerchList.map((merch) => (
-              <MerchCard
-                image={merch.image}
-                title={merch.name}
-                price={merch.price}
-                key={merch.id}
-              />
+            {merchList?.getMerchList.map((merch) => (
+              <MerchCard data={merch} />
             ))}
           </Carousel>
         </Box>

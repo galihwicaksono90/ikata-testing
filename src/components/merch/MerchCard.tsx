@@ -1,17 +1,14 @@
-import { Card, Box, Title, Text, Button } from "@mantine/core";
+import { Card, Box, Title, Text } from "@mantine/core";
+import { GradientButton } from "components/common";
+import { Merch } from "generated/graphql";
 import Image from "next/image";
 
 export interface MerchCardProps {
-  title: string;
-  image: string;
-  price: string;
+  data: Merch;
 }
 
-export default function MerchandiseCard({
-  image,
-  title,
-  price,
-}: MerchCardProps) {
+export function MerchCard({ data }: MerchCardProps) {
+  const { id, name, price, image } = data;
   return (
     <Card
       mx="auto"
@@ -36,6 +33,7 @@ export default function MerchandiseCard({
         })}
       >
         <Image
+          alt=""
           src={image}
           layout="fill"
           objectFit="cover"
@@ -43,23 +41,15 @@ export default function MerchandiseCard({
         />
       </Box>
       <Title order={6} sx={(theme) => ({ color: theme.colors.dark })}>
-        {title}
+        {name}
       </Title>
       <Box sx={{ marginTop: "auto" }}>
         <Text mb={20} color="gray" weight="bold">
           {price}
         </Text>
-        <Button
-          fullWidth
-          variant="gradient"
-          gradient={{
-            from: "#feb240",
-            to: "#fe9040",
-            deg: 94,
-          }}
-        >
+        <GradientButton fullWidth href={`/merchandise/${id}`}>
           Lihat Detail
-        </Button>
+        </GradientButton>
       </Box>
     </Card>
   );

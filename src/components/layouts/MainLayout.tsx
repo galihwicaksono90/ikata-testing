@@ -4,7 +4,7 @@ import { Header } from "components/header";
 import { Footer } from "components/footer";
 import { Navbar } from "components/navbar";
 
-export interface NavbarProps {
+export interface MainLayoutProps {
   opened: boolean;
   setOpened: Dispatch<SetStateAction<boolean>>;
 }
@@ -13,7 +13,7 @@ interface Props {
   children: React.ReactNode;
 }
 
-const Layout = ({ children }: Props) => {
+export const MainLayout = ({ children }: Props) => {
   const [opened, setOpened] = useState(false);
 
   return (
@@ -27,5 +27,3 @@ const Layout = ({ children }: Props) => {
     </AppShell>
   );
 };
-
-export default Layout;

@@ -1,56 +1,75 @@
 import {
-  MediaQuery,
-  Overlay,
-  Navbar,
-  Stack,
-  Group,
-  Burger,
   Box,
+  Burger,
+  MediaQuery,
+  Navbar as BaseNavbar,
+  ScrollArea,
+  Stack,
 } from "@mantine/core";
-import { HeaderMenu } from "components/header";
+import { SearchInput } from "components/common";
 import { NavbarProps } from "components/layouts";
 import { useStyles } from "theme";
+import { NavbarMenu } from "components/navbar";
 
-export default function ({ opened, setOpened }: NavbarProps) {
+export function Navbar({ opened, setOpened }: NavbarProps) {
   const { classes } = useStyles();
   return (
     <MediaQuery largerThan="md" styles={{ display: "none" }}>
-      <div>
-        <Overlay
+      <Box sx={{ height: "100vh%" }}>
+        <BaseNavbar
           hidden={!opened}
-          onClick={() => setOpened((o) => !o)}
-          color="#000"
-          opacity={0.6}
-          sx={{ zIndex: 100, transition: "display 2000ms ease" }}
-          blur={2}
-        />
-        <Navbar
-          hidden={!opened}
-          position={{ bottom: 0, right: 0 }}
-          fixed
-          height="100vh"
-          width={{
-            base: 400,
+          sx={{
+            right: 0,
+            left: 0,
+            bottom: 0,
+            top: 0,
+            padding: "0px 16px",
           }}
-          sx={(theme) => ({
-            background: theme.colors.dark[7],
-            color: theme.white,
-          })}
+          fixed
         >
           <Stack>
-            <Group position="right" align="center" sx={{ height: 102 }} pr={20}>
-              <Burger
-                opened={opened}
-                onClick={() => setOpened((o) => !o)}
-                color="white"
-              />
-            </Group>
-            <Box component="ul" className={classes.menuItemsNavbar}>
-              <HeaderMenu />
-            </Box>
+            <BaseNavbar.Section>
+              <Box
+                sx={{
+                  height: 102,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "flex-end",
+                }}
+              >
+                <Burger
+                  opened={opened}
+                  onClick={() => setOpened((o) => !o)}
+                  color="white"
+                />
+              </Box>
+            </BaseNavbar.Section>
+            <BaseNavbar.Section>
+              <SearchInput width="100%" />
+            </BaseNavbar.Section>
+            <BaseNavbar.Section>
+              <Box
+                component="ul"
+                className={classes.menuItemsNavbar}
+                style={{
+                  gap: 0,
+                  width: "100%",
+                  paddingLeft: 0,
+                }}
+              >
+                <ScrollArea
+                  sx={{
+                    height: "calc(100vh - 179px)",
+                    width: "100%",
+                  }}
+                >
+                  <NavbarMenu />
+                </ScrollArea>
+              </Box>
+            </BaseNavbar.Section>
           </Stack>
-        </Navbar>
-      </div>
+        </BaseNavbar>
+      </Box>
     </MediaQuery>
   );
 }

@@ -1,5 +1,5 @@
-import { Card, AspectRatio, Text, Button } from "@mantine/core";
-import { NextLink } from "@mantine/next";
+import { Card, AspectRatio, Text } from "@mantine/core";
+import { GradientButton } from "components/common";
 import Image from "next/image";
 
 export interface AlumniCardProps {
@@ -7,13 +7,7 @@ export interface AlumniCardProps {
   image: string;
 }
 
-export default function AlumniCard({
-  title,
-  image,
-}: {
-  title: string;
-  image: string;
-}) {
+export function AlumniCard({ title, image }: { title: string; image: string }) {
   return (
     <Card
       sx={(theme) => ({ backgroundColor: theme.white, width: 264 })}
@@ -25,6 +19,7 @@ export default function AlumniCard({
       <Card.Section mb={20}>
         <AspectRatio ratio={264 / 196}>
           <Image
+            alt=""
             src={image}
             layout="fill"
             objectFit="cover"
@@ -35,22 +30,9 @@ export default function AlumniCard({
       <Text color="dark" mb={30} size="md" weight="bold">
         {title}
       </Text>
-      <Button
-        variant="gradient"
-        fullWidth
-        color="dark"
-        radius="xs"
-        size="lg"
-        component={NextLink}
-        href="/"
-        gradient={{
-          from: "#feb240",
-          to: "#fe9040",
-          deg: 94,
-        }}
-      >
+      <GradientButton fullWidth href="/alumni">
         Lihat Profil
-      </Button>
+      </GradientButton>
     </Card>
   );
 }

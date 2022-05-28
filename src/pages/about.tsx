@@ -49,21 +49,36 @@ export default function AboutPage() {
                 <Box
                   sx={{ position: "relative", height: "100%", width: "100%" }}
                 >
-                  <Image src="/mining1.jpg" layout="fill" objectFit="cover" />
+                  <Image
+                    alt=""
+                    src="/mining1.jpg"
+                    layout="fill"
+                    objectFit="cover"
+                  />
                 </Box>
               </Grid.Col>
               <Grid.Col span={6}>
                 <Box
                   sx={{ position: "relative", height: "100%", width: "100%" }}
                 >
-                  <Image src="/mining1.jpg" layout="fill" objectFit="cover" />
+                  <Image
+                    alt=""
+                    src="/mining2.jpg"
+                    layout="fill"
+                    objectFit="cover"
+                  />
                 </Box>
               </Grid.Col>
               <Grid.Col span={12}>
                 <Box
                   sx={{ position: "relative", height: "100%", width: "100%" }}
                 >
-                  <Image src="/mining1.jpg" layout="fill" objectFit="cover" />
+                  <Image
+                    alt=""
+                    src="/mining1.jpg"
+                    layout="fill"
+                    objectFit="cover"
+                  />
                 </Box>
               </Grid.Col>
             </Grid>

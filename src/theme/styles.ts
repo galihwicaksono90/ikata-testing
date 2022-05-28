@@ -121,15 +121,6 @@ export const useStyles = createStyles((theme) => ({
     borderRadius: "50%",
     background: "white",
   },
-  responsiveGroupSmall: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-
-    [`@media (max-width: ${theme.breakpoints.sm}px)`]: {
-      flexDirection: "column",
-    },
-  },
   tabLabel: {
     color: "white",
     fontSize: "24px",
@@ -148,9 +139,6 @@ export const useStyles = createStyles((theme) => ({
     "& input": {
       background: "rgba(255,255,255,0.25)",
       color: theme.colors.white,
-    },
-    "& .mantine-PasswordInput-visibilityToggle": {
-      background: "tomato",
     },
   },
 }));
