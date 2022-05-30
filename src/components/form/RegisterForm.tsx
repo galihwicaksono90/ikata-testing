@@ -21,6 +21,8 @@ import Image from "next/image";
 
 interface RegisterFormProps {
   fullName: string;
+  prefixTitle: string;
+  suffixTitle: string;
   email: string;
   phone: number;
   gender: string;
@@ -33,15 +35,24 @@ interface RegisterFormProps {
 const schema = yup.object({
   fullName: yup.string().max(60).min(3).required(),
   email: yup.string().email(),
-  phone: yup.number().integer().positive().required(),
+  phone: yup.number().integer().positive().max(9999999999999).required(),
   gender: yup.string().required(),
   class: yup.string().required(),
   nim: yup.number().integer().positive().required(),
-  password: yup.string().required(),
+  password: yup
+    .string()
+    .required()
+    .matches(
+      /^(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{6,13}$/,
+      "Harus berisi maksimal 13 karakter, minimal 6 karakter, satu huruf kapital, satu huruf kecil, dan satu karakter simbol"
+    ),
   confirmPassword: yup
     .string()
     .required()
-    .equals([yup.ref("password"), null]),
+    .equals(
+      [yup.ref("password"), null],
+      "Kombinasi password tidak sesuai. Silakan periksa kembali password anda."
+    ),
 });
 
 export const RegisterForm = () => {
@@ -64,6 +75,7 @@ export const RegisterForm = () => {
   });
 
   const onSubmit = useCallback((values: RegisterFormProps) => {
+    console.log({ values });
     setIsLoading(true);
     setTimeout(() => {
       setIsLoading(false);
@@ -75,10 +87,16 @@ export const RegisterForm = () => {
   }, []);
 
   const onError = useCallback((errors: any, e) => {
+    console.log({ errors });
+    if (errors?.password?.type === "matches") {
+      showNotification({
+        message: errors.password.message,
+        id: "password-error",
+      });
+    }
     if (errors?.confirmPassword?.type === "oneOf") {
       showNotification({
-        message:
-          "Kombinasi password tidak sesuai. Silakan periksa kembali password anda.",
+        message: errors.confirmPassword.message,
         id: "confirm-password-error",
       });
     }
@@ -97,6 +115,18 @@ export const RegisterForm = () => {
           label="Nama Lengkap"
           placeholder="Masukkan Nama Lengkap"
           error={!!errors.fullName}
+          size="lg"
+        />
+        <TextInput
+          {...register("prefixTitle")}
+          label="Gelar Belakang"
+          placeholder="Gelar Belakang"
+          size="lg"
+        />
+        <TextInput
+          {...register("suffixTitle")}
+          label="Gelar Depan"
+          placeholder="Gelar Depan"
           size="lg"
         />
         <TextInput

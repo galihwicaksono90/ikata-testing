@@ -15,7 +15,7 @@ export const GradientButton = ({
   loading,
   ...rest
 }: GradientButtonProps) => {
-  if (href) {
+  if (!!href) {
     return (
       <Link href={href} passHref>
         <Button {...rest} component="a" loading={loading}>
