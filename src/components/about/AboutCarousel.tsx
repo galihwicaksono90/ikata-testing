@@ -1,5 +1,6 @@
 import React from "react";
 import { Carousel } from "components/common";
+import { Stack, Title, Text, Box } from "@mantine/core";
 import { TestimonyCard } from "components/about";
 import { Testimony } from "generated/graphql";
 
@@ -13,10 +14,19 @@ export const AboutCarousel = ({ data }: Props) => {
   }
 
   return (
-    <Carousel arrows dots={false}>
-      {data.map((testimony) => (
-        <TestimonyCard data={testimony} key={testimony.id} />
-      ))}
-    </Carousel>
+    <Stack>
+      <Box sx={{ textAlign: "center", marginBottom: 40 }}>
+        <Title mb={14}>Ketua IKATA</Title>
+        <Text>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor
+        </Text>
+      </Box>
+      <Carousel arrows dots={false}>
+        {data.map((testimony) => (
+          <TestimonyCard data={testimony} key={testimony.id} />
+        ))}
+      </Carousel>
+    </Stack>
   );
 };
