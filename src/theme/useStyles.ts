@@ -139,6 +139,19 @@ export const useStyles = createStyles((theme) => ({
     "& input": {
       background: "rgba(255,255,255,0.25)",
       color: theme.colors.white,
+      "&::placeholder": {
+        fontStyle: "italic",
+        fontSize: theme.fontSizes.sm,
+      },
+    },
+    "& label": {
+      fontSize: theme.fontSizes.md,
+    },
+    "& .mantine-TextInput-invalid": {
+      color: theme.white,
+      "&::placeholder": {
+        color: theme.colors.gray[3],
+      },
     },
   },
 }));
