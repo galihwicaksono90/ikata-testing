@@ -75,25 +75,34 @@ export const RegisterForm = () => {
   });
 
   const onSubmit = useCallback((values: RegisterFormProps) => {
-    console.log({ values });
     setIsLoading(true);
+
     setTimeout(() => {
-      setIsLoading(false);
-      if (!isValid) {
+      if (!errors) {
         return;
       }
+
+      values.email = values.email.toLowerCase();
+      values.fullName = values.fullName.replace(/\w\S*/g, (w: string) =>
+        w.replace(/^\w/, (c: string) => c.toUpperCase())
+      );
+      delete values["confirmPassword"];
+
+      console.log({ values, errors: !errors, isValid });
+
+      setIsLoading(false);
       setShowModal(true);
     }, 1000);
   }, []);
 
   const onError = useCallback((errors: any, e) => {
-    console.log({ errors });
     if (errors?.password?.type === "matches") {
       showNotification({
         message: errors.password.message,
         id: "password-error",
       });
     }
+
     if (errors?.confirmPassword?.type === "oneOf") {
       showNotification({
         message: errors.confirmPassword.message,
@@ -118,15 +127,15 @@ export const RegisterForm = () => {
           size="lg"
         />
         <TextInput
-          {...register("prefixTitle")}
-          label="Gelar Belakang"
-          placeholder="Gelar Belakang"
-          size="lg"
-        />
-        <TextInput
           {...register("suffixTitle")}
           label="Gelar Depan"
           placeholder="Gelar Depan"
+          size="lg"
+        />
+        <TextInput
+          {...register("prefixTitle")}
+          label="Gelar Belakang"
+          placeholder="Gelar Belakang"
           size="lg"
         />
         <TextInput
@@ -138,6 +147,8 @@ export const RegisterForm = () => {
         />
         <TextInput
           {...register("phone")}
+          maxLength={13}
+          min={0}
           label="Nomor Telepon"
           placeholder="Masukkan Nomor Telepon"
           error={!!errors.phone}
@@ -185,6 +196,7 @@ export const RegisterForm = () => {
           placeholder="Masukkan Nomor Induk Mahasiswa"
           error={!!errors.nim}
           type="number"
+          min={0}
           size="lg"
         />
         <TextInput

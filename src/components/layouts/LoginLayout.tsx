@@ -32,7 +32,7 @@ export function LoginLayout({
         position: "relative",
         display: "flex",
         alignItems: center ? "center" : null,
-        backgroundImage: `url("/mining1.jpg")`,
+        backgroundImage: `url("/loginBackground.png")`,
         backgroundPosition: "center",
         backgroundSize: "cover",
         backgroundAttachment: "fixed",
