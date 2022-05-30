@@ -7,11 +7,11 @@ import {
   Stack,
 } from "@mantine/core";
 import { SearchInput } from "components/common";
-import { NavbarProps } from "components/layouts";
 import { useStyles } from "theme";
 import { NavbarMenu } from "components/navbar";
+import { MainLayoutProps } from "components/layouts";
 
-export function Navbar({ opened, setOpened }: NavbarProps) {
+export function Navbar({ opened, setOpened }: MainLayoutProps) {
   const { classes } = useStyles();
   return (
     <MediaQuery largerThan="md" styles={{ display: "none" }}>
