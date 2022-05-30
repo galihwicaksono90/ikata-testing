@@ -15,6 +15,18 @@ export type Scalars = {
   DateTime: any;
 };
 
+export type About = {
+  __typename?: 'About';
+  description: Scalars['String'];
+  image: Scalars['String'];
+  type: Scalars['String'];
+};
+
+export enum AboutType {
+  Jurusan = 'jurusan',
+  Organisasi = 'organisasi'
+}
+
 export type Article = {
   __typename?: 'Article';
   description: Scalars['String'];
@@ -58,6 +70,7 @@ export type HeroImage = {
   __typename?: 'HeroImage';
   id: Scalars['Int'];
   image: Scalars['String'];
+  message: Scalars['String'];
 };
 
 export type Job = {
@@ -84,6 +97,16 @@ export type Merch = {
   price: Scalars['String'];
 };
 
+export type Mutation = {
+  __typename?: 'Mutation';
+  validateResetToken: Scalars['Boolean'];
+};
+
+
+export type MutationValidateResetTokenArgs = {
+  token?: InputMaybe<Scalars['String']>;
+};
+
 export type News = {
   __typename?: 'News';
   author: Scalars['String'];
@@ -98,6 +121,7 @@ export type News = {
 
 export type Query = {
   __typename?: 'Query';
+  getAbout?: Maybe<About>;
   getArticle?: Maybe<Article>;
   getArticles: Array<Article>;
   getCompanyJobs: Array<Company>;
@@ -106,7 +130,13 @@ export type Query = {
   getMerchList: Array<Merch>;
   getNews?: Maybe<News>;
   getNewsItems: Array<News>;
+  getTestimonies: Array<Testimony>;
   getVacancies: Array<Maybe<Vacancy>>;
+};
+
+
+export type QueryGetAboutArgs = {
+  type: AboutType;
 };
 
 
@@ -146,9 +176,29 @@ export type QueryGetNewsItemsArgs = {
 };
 
 
+export type QueryGetTestimoniesArgs = {
+  limit: Scalars['Int'];
+};
+
+
 export type QueryGetVacanciesArgs = {
   limit?: InputMaybe<Scalars['Int']>;
   type: VacancyType;
+};
+
+export type ResetToken = {
+  __typename?: 'ResetToken';
+  token: Scalars['String'];
+};
+
+export type Testimony = {
+  __typename?: 'Testimony';
+  description: Scalars['String'];
+  endYear: Scalars['Int'];
+  id: Scalars['Int'];
+  image: Scalars['String'];
+  name: Scalars['String'];
+  startYear: Scalars['Int'];
 };
 
 export type Vacancy = {
@@ -163,6 +213,13 @@ export enum VacancyType {
   Job = 'job',
   Scholarship = 'scholarship'
 }
+
+export type GetAboutQueryVariables = Exact<{
+  limit: Scalars['Int'];
+}>;
+
+
+export type GetAboutQuery = { __typename?: 'Query', jurusan?: { __typename?: 'About', description: string, image: string, type: string } | null, organisasi?: { __typename?: 'About', description: string, image: string, type: string } | null, getTestimonies: Array<{ __typename?: 'Testimony', id: number, name: string, startYear: number, endYear: number, description: string, image: string }> };
 
 export type GetArticleQueryVariables = Exact<{
   id: Scalars['Int'];
@@ -219,6 +276,13 @@ export type GetNewsQueryVariables = Exact<{
 
 export type GetNewsQuery = { __typename?: 'Query', getNews?: { __typename?: 'News', id: number, title: string, description: string, content: string, image: string, author: string, createdAt: any, tags: Array<string> } | null };
 
+export type GetTestimoniesQueryVariables = Exact<{
+  limit: Scalars['Int'];
+}>;
+
+
+export type GetTestimoniesQuery = { __typename?: 'Query', getTestimonies: Array<{ __typename?: 'Testimony', id: number, name: string, startYear: number, endYear: number, description: string, image: string }> };
+
 export type GetVacanciesQueryVariables = Exact<{
   limit?: InputMaybe<Scalars['Int']>;
   type: VacancyType;
@@ -228,6 +292,28 @@ export type GetVacanciesQueryVariables = Exact<{
 export type GetVacanciesQuery = { __typename?: 'Query', getVacancies: Array<{ __typename?: 'Vacancy', id: number, title: string, company: string, type: string } | null> };
 
 
+export const GetAboutDocument = `
+    query GetAbout($limit: Int!) {
+  jurusan: getAbout(type: jurusan) {
+    description
+    image
+    type
+  }
+  organisasi: getAbout(type: organisasi) {
+    description
+    image
+    type
+  }
+  getTestimonies(limit: $limit) {
+    id
+    name
+    startYear
+    endYear
+    description
+    image
+  }
+}
+    `;
 export const GetArticleDocument = `
     query GetArticle($id: Int!) {
   getArticle(id: $id) {
@@ -322,6 +408,18 @@ export const GetNewsDocument = `
   }
 }
     `;
+export const GetTestimoniesDocument = `
+    query GetTestimonies($limit: Int!) {
+  getTestimonies(limit: $limit) {
+    id
+    name
+    startYear
+    endYear
+    description
+    image
+  }
+}
+    `;
 export const GetVacanciesDocument = `
     query GetVacancies($limit: Int, $type: VacancyType!) {
   getVacancies(type: $type, limit: $limit) {
@@ -335,6 +433,9 @@ export const GetVacanciesDocument = `
 
 const injectedRtkApi = api.injectEndpoints({
   endpoints: (build) => ({
+    GetAbout: build.query<GetAboutQuery, GetAboutQueryVariables>({
+      query: (variables) => ({ document: GetAboutDocument, variables })
+    }),
     GetArticle: build.query<GetArticleQuery, GetArticleQueryVariables>({
       query: (variables) => ({ document: GetArticleDocument, variables })
     }),
@@ -359,6 +460,9 @@ const injectedRtkApi = api.injectEndpoints({
     GetNews: build.query<GetNewsQuery, GetNewsQueryVariables>({
       query: (variables) => ({ document: GetNewsDocument, variables })
     }),
+    GetTestimonies: build.query<GetTestimoniesQuery, GetTestimoniesQueryVariables>({
+      query: (variables) => ({ document: GetTestimoniesDocument, variables })
+    }),
     GetVacancies: build.query<GetVacanciesQuery, GetVacanciesQueryVariables>({
       query: (variables) => ({ document: GetVacanciesDocument, variables })
     }),
@@ -366,5 +470,5 @@ const injectedRtkApi = api.injectEndpoints({
 });
 
 export { injectedRtkApi as api };
-export const { useGetArticleQuery, useLazyGetArticleQuery, useGetArticlesQuery, useLazyGetArticlesQuery, useGetCompanyJobsQuery, useLazyGetCompanyJobsQuery, useGetHeroImagesQuery, useLazyGetHeroImagesQuery, useGetMembersQuery, useLazyGetMembersQuery, useGetMerchListQuery, useLazyGetMerchListQuery, useGetNewsItemsQuery, useLazyGetNewsItemsQuery, useGetNewsQuery, useLazyGetNewsQuery, useGetVacanciesQuery, useLazyGetVacanciesQuery } = injectedRtkApi;
+export const { useGetAboutQuery, useLazyGetAboutQuery, useGetArticleQuery, useLazyGetArticleQuery, useGetArticlesQuery, useLazyGetArticlesQuery, useGetCompanyJobsQuery, useLazyGetCompanyJobsQuery, useGetHeroImagesQuery, useLazyGetHeroImagesQuery, useGetMembersQuery, useLazyGetMembersQuery, useGetMerchListQuery, useLazyGetMerchListQuery, useGetNewsItemsQuery, useLazyGetNewsItemsQuery, useGetNewsQuery, useLazyGetNewsQuery, useGetTestimoniesQuery, useLazyGetTestimoniesQuery, useGetVacanciesQuery, useLazyGetVacanciesQuery } = injectedRtkApi;
 
