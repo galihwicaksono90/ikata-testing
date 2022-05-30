@@ -1,108 +1,120 @@
-import { useState } from "react";
-import { Button, Group, Input, InputWrapper, Text } from "@mantine/core";
-import { showNotification } from "@mantine/notifications";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { Group, Text, TextInput, UnstyledButton } from "@mantine/core";
+import { Eye, EyeOff } from "tabler-icons-react";
 import { NextLink } from "@mantine/next";
-/* import { useLoginMutation } from "generated/graphql"; */
+import { GradientButton, showNotification } from "components/common";
+import { useRouter } from "next/router";
+import { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useStyles } from "theme";
-import { X } from "tabler-icons-react";
-import { useRouter } from "next/router";
+import * as yup from "yup";
 
 interface LoginFormProps {
-  username: string;
+  nim: number;
   password: string;
 }
 
+const schema = yup.object({
+  nim: yup.number().required(),
+  password: yup.string().required(),
+});
+
 export function LoginForm() {
+  const [showPassword, setShowPassword] = useState(false);
+
   const { classes } = useStyles();
   const [isLoading, setIsLoading] = useState(false);
-
-  /* const [login, { error, isLoading, data: loginData }] = useLoginMutation(); */
   const router = useRouter();
+
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors, isValid },
-  } = useForm<LoginFormProps>({ mode: "onChange" });
+  } = useForm<LoginFormProps>({
+    mode: "onChange",
+    resolver: yupResolver(schema),
+  });
 
-  /* const onSubmit = async (data: LoginFormProps) => {
-   *   try {
-   *     const response = await login(data).unwrap();
-   *     showNotification({
-   *       title: `Hi!`,
-   *       message: `Selamat datang kembali ${response.login.username}!`,
-   *     });
-   *     router.push("/");
-   *   } catch (e) {
-   *     showNotification({
-   *       title: "Login Error",
-   *       message: "Invalid credentials provided",
-   *       id: "login-error",
-   *       icon: <X />,
-   *       color: "red",
-   *     });
-   *     return;
-   *   }
-   * };
-   */
-
-  const onSubmit = (values: LoginFormProps) => {
+  const onSubmit = useCallback((values: LoginFormProps) => {
     setIsLoading(true);
     setTimeout(() => {
       setIsLoading(false);
-      if (values.password !== "password" || values.username !== "user") {
+      if (values.password !== "password" || values.nim !== 1234) {
+        setError("nim", { message: "" });
+        setError("password", { message: "" });
+
         showNotification({
-          title: "Login Error",
-          message: "Invalid credentials provided",
+          message: "Nomor induk Makasiswa / Password tidak terdaftar",
           id: "login-error",
-          icon: <X />,
-          color: "red",
+          radius: "xs",
         });
         return;
       }
+
       showNotification({
         title: `Hi!`,
         message: `Selamat datang kembali!`,
       });
+
       router.push("/");
-    }, 3000);
-  };
+    }, 2000);
+  }, []);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={classes.form}>
-      <InputWrapper label="Username" error={errors?.username?.message}>
-        <Input
-          {...register("username", { required: "Please enter your username" })}
-          size="lg"
-        />
-      </InputWrapper>
-      <InputWrapper label="Password" error={errors?.password?.message}>
-        <Input
-          type="password"
-          {...register("password", { required: "Please enter your password" })}
-          size="lg"
-        />
-      </InputWrapper>
+      <TextInput
+        {...register("nim")}
+        label="Nomor Induk Mahasiswa"
+        error={!!errors.nim}
+        type="number"
+        size="lg"
+      />
+      <TextInput
+        {...register("password")}
+        label="Password"
+        error={!!errors.password}
+        type={showPassword ? "text" : "password"}
+        size="lg"
+        rightSection={
+          <UnstyledButton
+            onClick={() => setShowPassword((o) => !o)}
+            sx={{ height: 22 }}
+          >
+            {showPassword ? <EyeOff color="gray" /> : <Eye color="gray" />}
+          </UnstyledButton>
+        }
+      />
       <Group position="right" mb={40}>
-        <Text variant="link" component={NextLink} href="/">
+        <Text
+          variant="link"
+          component={NextLink}
+          href="/forgot-password"
+          weight="bold"
+        >
           Lupa Password?
         </Text>
       </Group>
-      <Button
+      <GradientButton
         type="submit"
         disabled={!isValid}
-        size="lg"
+        variant={!isValid ? "default" : "gradient"}
         fullWidth
-        variant={isValid ? "gradient" : "default"}
-        gradient={{
-          from: "#feb240",
-          to: "#fe9040",
-          deg: 94,
-        }}
         loading={isLoading}
+        mb={50}
       >
-        {!isLoading ? "Login" : null}
-      </Button>
+        Login
+      </GradientButton>
+      <Group position="center">
+        <Text
+          variant="link"
+          component={NextLink}
+          href="/register"
+          weight="bold"
+        >
+          Daftar Baru
+        </Text>
+      </Group>
     </form>
   );
 }

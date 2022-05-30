@@ -15,6 +15,18 @@ export type Scalars = {
   DateTime: any;
 };
 
+export type About = {
+  __typename?: 'About';
+  description: Scalars['String'];
+  images: Array<Scalars['String']>;
+  type: Scalars['String'];
+};
+
+export enum AboutType {
+  Jurusan = 'jurusan',
+  Organisasi = 'organisasi'
+}
+
 export type Article = {
   __typename?: 'Article';
   description: Scalars['String'];
@@ -58,6 +70,7 @@ export type HeroImage = {
   __typename?: 'HeroImage';
   id: Scalars['Int'];
   image: Scalars['String'];
+  message: Scalars['String'];
 };
 
 export type Job = {
@@ -84,6 +97,16 @@ export type Merch = {
   price: Scalars['String'];
 };
 
+export type Mutation = {
+  __typename?: 'Mutation';
+  validateResetToken: Scalars['Boolean'];
+};
+
+
+export type MutationValidateResetTokenArgs = {
+  token?: InputMaybe<Scalars['String']>;
+};
+
 export type News = {
   __typename?: 'News';
   author: Scalars['String'];
@@ -98,6 +121,7 @@ export type News = {
 
 export type Query = {
   __typename?: 'Query';
+  getAbout?: Maybe<About>;
   getArticle?: Maybe<Article>;
   getArticles: Array<Article>;
   getCompanyJobs: Array<Company>;
@@ -106,7 +130,13 @@ export type Query = {
   getMerchList: Array<Merch>;
   getNews?: Maybe<News>;
   getNewsItems: Array<News>;
+  getTestimonies: Array<Testimony>;
   getVacancies: Array<Maybe<Vacancy>>;
+};
+
+
+export type QueryGetAboutArgs = {
+  type: AboutType;
 };
 
 
@@ -146,9 +176,29 @@ export type QueryGetNewsItemsArgs = {
 };
 
 
+export type QueryGetTestimoniesArgs = {
+  limit: Scalars['Int'];
+};
+
+
 export type QueryGetVacanciesArgs = {
   limit?: InputMaybe<Scalars['Int']>;
   type: VacancyType;
+};
+
+export type ResetToken = {
+  __typename?: 'ResetToken';
+  token: Scalars['String'];
+};
+
+export type Testimony = {
+  __typename?: 'Testimony';
+  description: Scalars['String'];
+  endYear: Scalars['Int'];
+  id: Scalars['Int'];
+  image: Scalars['String'];
+  name: Scalars['String'];
+  startYear: Scalars['Int'];
 };
 
 export type Vacancy = {
@@ -163,6 +213,13 @@ export enum VacancyType {
   Job = 'job',
   Scholarship = 'scholarship'
 }
+
+export type ValidateResetTokenMutationVariables = Exact<{
+  token?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type ValidateResetTokenMutation = { __typename?: 'Mutation', validateResetToken: boolean };
 
 export type GetArticleQueryVariables = Exact<{
   id: Scalars['Int'];
@@ -228,6 +285,11 @@ export type GetVacanciesQueryVariables = Exact<{
 export type GetVacanciesQuery = { __typename?: 'Query', getVacancies: Array<{ __typename?: 'Vacancy', id: number, title: string, company: string, type: string } | null> };
 
 
+export const ValidateResetTokenDocument = `
+    mutation ValidateResetToken($token: String) {
+  validateResetToken(token: $token)
+}
+    `;
 export const GetArticleDocument = `
     query GetArticle($id: Int!) {
   getArticle(id: $id) {
@@ -335,6 +397,9 @@ export const GetVacanciesDocument = `
 
 const injectedRtkApi = api.injectEndpoints({
   endpoints: (build) => ({
+    ValidateResetToken: build.mutation<ValidateResetTokenMutation, ValidateResetTokenMutationVariables | void>({
+      query: (variables) => ({ document: ValidateResetTokenDocument, variables })
+    }),
     GetArticle: build.query<GetArticleQuery, GetArticleQueryVariables>({
       query: (variables) => ({ document: GetArticleDocument, variables })
     }),
@@ -366,5 +431,5 @@ const injectedRtkApi = api.injectEndpoints({
 });
 
 export { injectedRtkApi as api };
-export const { useGetArticleQuery, useLazyGetArticleQuery, useGetArticlesQuery, useLazyGetArticlesQuery, useGetCompanyJobsQuery, useLazyGetCompanyJobsQuery, useGetHeroImagesQuery, useLazyGetHeroImagesQuery, useGetMembersQuery, useLazyGetMembersQuery, useGetMerchListQuery, useLazyGetMerchListQuery, useGetNewsItemsQuery, useLazyGetNewsItemsQuery, useGetNewsQuery, useLazyGetNewsQuery, useGetVacanciesQuery, useLazyGetVacanciesQuery } = injectedRtkApi;
+export const { useValidateResetTokenMutation, useGetArticleQuery, useLazyGetArticleQuery, useGetArticlesQuery, useLazyGetArticlesQuery, useGetCompanyJobsQuery, useLazyGetCompanyJobsQuery, useGetHeroImagesQuery, useLazyGetHeroImagesQuery, useGetMembersQuery, useLazyGetMembersQuery, useGetMerchListQuery, useLazyGetMerchListQuery, useGetNewsItemsQuery, useLazyGetNewsItemsQuery, useGetNewsQuery, useLazyGetNewsQuery, useGetVacanciesQuery, useLazyGetVacanciesQuery } = injectedRtkApi;
 

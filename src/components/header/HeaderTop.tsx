@@ -11,11 +11,11 @@ import {
 } from "@mantine/core";
 import { NextLink } from "@mantine/next";
 import Image from "next/image";
-import { NavbarProps } from "components/layouts";
 import { UserCircle } from "tabler-icons-react";
 import { Container, SearchInput } from "components/common";
+import { MainLayoutProps } from "components/layouts";
 
-export function HeaderTop({ opened, setOpened }: NavbarProps) {
+export function HeaderTop({ opened, setOpened }: MainLayoutProps) {
   return (
     <Box
       sx={(theme) => ({
@@ -83,8 +83,27 @@ export function HeaderTop({ opened, setOpened }: NavbarProps) {
                 >
                   <UserCircle size={30} color="white" />
                 </Avatar>
-                <Text variant="link" component={NextLink} href="/login">
+                <Text
+                  variant="link"
+                  component={NextLink}
+                  href="/login"
+                  weight="bold"
+                >
                   Login
+                </Text>
+                <Text weight="bold" color="orange">
+                  |
+                </Text>
+                <Text
+                  variant="link"
+                  component={NextLink}
+                  href="/register"
+                  weight="bold"
+                  sx={{
+                    color: "white",
+                  }}
+                >
+                  Register
                 </Text>
               </Group>
             </Group>

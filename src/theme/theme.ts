@@ -6,7 +6,6 @@ export const theme: MantineThemeOverride = {
   colorScheme: "dark",
   primaryColor: "orange",
   defaultRadius: "md",
-  loader: "dots",
   //@ts-ignore
   radius: { xs: 8, sm: 10, md: 12, lg: 14, xl: "50%" },
   fontFamily: "Montserrat",

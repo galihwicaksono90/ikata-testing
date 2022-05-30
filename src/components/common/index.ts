@@ -9,3 +9,5 @@ export * from "./PriceList";
 export * from "./SearchInput";
 export * from "./SectionTitleWithLink";
 export * from "./GradientButton";
+export * from "./Modal";
+export * from "./showNotification";
