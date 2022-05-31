@@ -1,4 +1,4 @@
-import { Box, Stack, Text, Title } from "@mantine/core";
+import { Box, Stack, Text, Title, Group } from "@mantine/core";
 import { Container } from "components/common";
 import { ResetPasswordForm } from "components/form";
 import { LoginLayout, MainLayout } from "components/layouts";
@@ -15,16 +15,29 @@ const ForgotPassword = ({ tokenValid }: Props) => {
   if (!tokenValid) {
     return (
       <MainLayout>
-        <Container light>
-          <Stack align="center" sx={{ textAlign: "center" }}>
-            <Box sx={{ position: "relative", height: 282, width: 282 }}>
-              <Image src="/shareLink.png" layout="fill" />
+        <Container light sx={{ height: 845 }}>
+          <Group
+            align="center"
+            position="center"
+            sx={{ textAlign: "center", height: "100%" }}
+          >
+            <Box>
+              <Box
+                sx={{
+                  position: "relative",
+                  height: 282,
+                  width: 282,
+                  margin: "0px auto",
+                }}
+              >
+                <Image src="/shareLink.png" layout="fill" />
+              </Box>
+              <Title>Link Kadaluarsa</Title>
+              <Text>
+                Halaman yang anda cari sudah tidak tersedia untuk saat ini.
+              </Text>
             </Box>
-            <Title>Link Kadaluarsa</Title>
-            <Text>
-              Halaman yang anda cari sudah tidak tersedia untuk saat ini.
-            </Text>
-          </Stack>
+          </Group>
         </Container>
       </MainLayout>
     );
@@ -48,10 +61,11 @@ export const getServerSideProps: GetServerSideProps =
     let tokenValid = false;
 
     try {
-      await store.dispatch(
+      const response = await store.dispatch(
         api.endpoints.ValidateResetToken.initiate({ token: token as string })
       );
-      tokenValid = true;
+
+      tokenValid = response["data"].validateResetToken;
     } catch (e) {}
 
     return {

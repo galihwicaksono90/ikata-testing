@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Box, Stack, Text, TextInput, Title } from "@mantine/core";
-import { GradientButton, Modal } from "components/common";
+import { GradientButton, Modal, showNotification } from "components/common";
 import Image from "next/image";
 import { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -14,11 +14,20 @@ interface FormProps {
 }
 
 const schema = yup.object({
-  password: yup.string().required(),
+  password: yup
+    .string()
+    .required()
+    .matches(
+      /^(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{6,13}$/,
+      "Password harus berisi maksimal 13 karakter, minimal 6 karakter, satu huruf kapital, satu huruf kecil, dan satu karakter simbol"
+    ),
   confirmPassword: yup
     .string()
     .required()
-    .equals([yup.ref("password"), null]),
+    .equals(
+      [yup.ref("password"), null],
+      "Kombinasi password tidak sesuai. Silakan periksa kembali password anda."
+    ),
 });
 
 export const ResetPasswordForm = () => {
@@ -33,14 +42,14 @@ export const ResetPasswordForm = () => {
     register,
     handleSubmit,
     formState: { errors, isValid },
-  } = useForm({ mode: "onChange", resolver: yupResolver(schema) });
+  } = useForm({ mode: "onSubmit", resolver: yupResolver(schema) });
 
   const onSubmit = useCallback((values: FormProps) => {
     setIsLoading(true);
     setTimeout(() => {
       setIsLoading(false);
       console.log({ isValid });
-      if (!isValid) {
+      if (!errors) {
         return;
       }
       setIsLoading(false);
@@ -48,9 +57,24 @@ export const ResetPasswordForm = () => {
     }, 2000);
   }, []);
 
+  const onError = useCallback((errors, e) => {
+    if (errors?.password?.type === "matches") {
+      showNotification({
+        message: errors.password.message,
+        id: "password-error",
+      });
+    }
+    if (errors?.confirmPassword?.type === "oneOf") {
+      showNotification({
+        message: errors.confirmPassword.message,
+        id: "confirm-password-error",
+      });
+    }
+  }, []);
+
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)} className={classes.form}>
+      <form onSubmit={handleSubmit(onSubmit, onError)} className={classes.form}>
         <TextInput
           {...register("password")}
           label="Password"
@@ -88,13 +112,7 @@ export const ResetPasswordForm = () => {
             </Box>
           }
         />
-        <GradientButton
-          type="submit"
-          disabled={!isValid}
-          variant={!isValid ? "default" : "gradient"}
-          loading={isLoading}
-          fullWidth
-        >
+        <GradientButton type="submit" loading={isLoading} fullWidth>
           Simpan
         </GradientButton>
       </form>
