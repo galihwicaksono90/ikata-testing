@@ -147,6 +147,9 @@ export const useStyles = createStyles((theme) => ({
     "& label": {
       fontSize: theme.fontSizes.md,
     },
+    "& .mantine-RadioGroup-label": {
+      fontSize: theme.fontSizes.md,
+    },
     "& .mantine-TextInput-invalid": {
       color: theme.white,
       "&::placeholder": {

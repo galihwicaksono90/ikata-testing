@@ -1,3 +1,4 @@
+import { forwardRef } from "react";
 import {
   Button as BaseButton,
   ButtonProps as BaseButtonProps,
@@ -15,7 +16,7 @@ export const GradientButton = ({
   loading,
   ...rest
 }: GradientButtonProps) => {
-  if (!!href) {
+  if (href) {
     return (
       <Link href={href} passHref>
         <Button {...rest} component="a" loading={loading}>
@@ -31,28 +32,31 @@ export const GradientButton = ({
   );
 };
 
-const Button = ({ children, variant = "gradient", loading, ...rest }) => {
-  return (
-    <BaseButton
-      loading={loading}
-      variant={variant as ButtonVariant}
-      gradient={{
-        from: "#feb240",
-        to: "#fe9040",
-        deg: 94,
-      }}
-      size="lg"
-      radius="md"
-      sx={(theme) => ({
-        color: theme.colors.dark[7],
-      })}
-      loaderProps={{
-        color: "#272727",
-        variant: "dots",
-      }}
-      {...rest}
-    >
-      {loading ? null : children}
-    </BaseButton>
-  );
-};
+const Button = forwardRef(
+  ({ children, variant = "gradient", loading, ...rest }: any, ref) => {
+    return (
+      <BaseButton
+        ref={ref}
+        loading={loading}
+        variant={variant as ButtonVariant}
+        gradient={{
+          from: "#feb240",
+          to: "#fe9040",
+          deg: 94,
+        }}
+        size="lg"
+        radius="md"
+        sx={(theme) => ({
+          color: theme.colors.dark[7],
+        })}
+        loaderProps={{
+          color: "#272727",
+          variant: "dots",
+        }}
+        {...rest}
+      >
+        {loading ? null : children}
+      </BaseButton>
+    );
+  }
+);

@@ -44,7 +44,7 @@ const schema = yup.object({
     .required()
     .matches(
       /^(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{6,13}$/,
-      "Harus berisi maksimal 13 karakter, minimal 6 karakter, satu huruf kapital, satu huruf kecil, dan satu karakter simbol"
+      "Password harus berisi maksimal 13 karakter, minimal 6 karakter, satu huruf kapital, satu huruf kecil, dan satu karakter simbol"
     ),
   confirmPassword: yup
     .string()
@@ -155,16 +155,17 @@ export const RegisterForm = () => {
           type="number"
           size="lg"
         />
-        <Group noWrap position="apart">
+        <Group noWrap position="apart" align="flex-start">
           <Controller
             name="gender"
             control={control}
             render={({ field }) => {
               return (
                 <RadioGroup
-                  label="Pilih Angkatan"
+                  label="Jenis Kelamin"
                   {...field}
                   error={!!errors?.gender}
+                  size="lg"
                 >
                   <Radio value="male" label="Pria" />
                   <Radio value="female" label="Wanita" />
@@ -222,6 +223,7 @@ export const RegisterForm = () => {
           error={!!errors.password}
           type={showConfirmPassword ? "text" : "password"}
           size="lg"
+          mb={50}
           rightSection={
             <Box
               onClick={() => setConfirmShowPassword((o) => !o)}
