@@ -12,6 +12,7 @@ interface Props {
 }
 
 const ForgotPassword = ({ tokenValid }: Props) => {
+  console.log({ tokenValid });
   if (!tokenValid) {
     return (
       <MainLayout>
@@ -64,8 +65,10 @@ export const getServerSideProps: GetServerSideProps =
       const response = await store.dispatch(
         api.endpoints.ValidateResetToken.initiate({ token: token as string })
       );
-
-      tokenValid = response["data"].validateResetToken;
+      console.log({ response });
+      if (!!response["data"]) {
+        tokenValid = response["data"].validateResetToken;
+      }
     } catch (e) {}
 
     return {
