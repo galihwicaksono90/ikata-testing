@@ -18,7 +18,7 @@ export type Scalars = {
 export type About = {
   __typename?: 'About';
   description: Scalars['String'];
-  images: Array<Scalars['String']>;
+  image: Scalars['String'];
   type: Scalars['String'];
 };
 
@@ -40,6 +40,12 @@ export enum ArticleType {
   NonScientific = 'nonScientific',
   Scientific = 'scientific'
 }
+
+export type AuthPayload = {
+  __typename?: 'AuthPayload';
+  token?: Maybe<Scalars['String']>;
+  user?: Maybe<User>;
+};
 
 export type Company = {
   __typename?: 'Company';
@@ -99,7 +105,29 @@ export type Merch = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  login: AuthPayload;
+  register: User;
   validateResetToken: Scalars['Boolean'];
+};
+
+
+export type MutationLoginArgs = {
+  nim: Scalars['Int'];
+  password: Scalars['String'];
+};
+
+
+export type MutationRegisterArgs = {
+  classYear: Scalars['String'];
+  confirmPassword: Scalars['String'];
+  email: Scalars['String'];
+  fullName: Scalars['String'];
+  gender: Scalars['String'];
+  nim: Scalars['Int'];
+  password: Scalars['String'];
+  phone: Scalars['Int'];
+  prefixTitle?: InputMaybe<Scalars['String']>;
+  suffixTitle?: InputMaybe<Scalars['String']>;
 };
 
 
@@ -201,6 +229,20 @@ export type Testimony = {
   startYear: Scalars['Int'];
 };
 
+export type User = {
+  __typename?: 'User';
+  email: Scalars['String'];
+  fullName: Scalars['String'];
+  id: Scalars['Int'];
+  role: Scalars['String'];
+};
+
+export enum UserRole {
+  Admin = 'admin',
+  Guess = 'guess',
+  User = 'user'
+}
+
 export type Vacancy = {
   __typename?: 'Vacancy';
   company: Scalars['String'];
@@ -220,6 +262,22 @@ export type ValidateResetTokenMutationVariables = Exact<{
 
 
 export type ValidateResetTokenMutation = { __typename?: 'Mutation', validateResetToken: boolean };
+
+export type RegisterMutationVariables = Exact<{
+  fullName: Scalars['String'];
+  email: Scalars['String'];
+  phone: Scalars['Int'];
+  gender: Scalars['String'];
+  classYear: Scalars['String'];
+  nim: Scalars['Int'];
+  password: Scalars['String'];
+  confirmPassword: Scalars['String'];
+  prefixTitle?: InputMaybe<Scalars['String']>;
+  suffixTitle?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'User', id: number, fullName: string, role: string, email: string } };
 
 export type GetArticleQueryVariables = Exact<{
   id: Scalars['Int'];
@@ -288,6 +346,27 @@ export type GetVacanciesQuery = { __typename?: 'Query', getVacancies: Array<{ __
 export const ValidateResetTokenDocument = `
     mutation ValidateResetToken($token: String) {
   validateResetToken(token: $token)
+}
+    `;
+export const RegisterDocument = `
+    mutation Register($fullName: String!, $email: String!, $phone: Int!, $gender: String!, $classYear: String!, $nim: Int!, $password: String!, $confirmPassword: String!, $prefixTitle: String, $suffixTitle: String) {
+  register(
+    fullName: $fullName
+    email: $email
+    phone: $phone
+    gender: $gender
+    classYear: $classYear
+    nim: $nim
+    password: $password
+    confirmPassword: $confirmPassword
+    prefixTitle: $prefixTitle
+    suffixTitle: $suffixTitle
+  ) {
+    id
+    fullName
+    role
+    email
+  }
 }
     `;
 export const GetArticleDocument = `
@@ -400,6 +479,9 @@ const injectedRtkApi = api.injectEndpoints({
     ValidateResetToken: build.mutation<ValidateResetTokenMutation, ValidateResetTokenMutationVariables | void>({
       query: (variables) => ({ document: ValidateResetTokenDocument, variables })
     }),
+    Register: build.mutation<RegisterMutation, RegisterMutationVariables>({
+      query: (variables) => ({ document: RegisterDocument, variables })
+    }),
     GetArticle: build.query<GetArticleQuery, GetArticleQueryVariables>({
       query: (variables) => ({ document: GetArticleDocument, variables })
     }),
@@ -431,5 +513,5 @@ const injectedRtkApi = api.injectEndpoints({
 });
 
 export { injectedRtkApi as api };
-export const { useValidateResetTokenMutation, useGetArticleQuery, useLazyGetArticleQuery, useGetArticlesQuery, useLazyGetArticlesQuery, useGetCompanyJobsQuery, useLazyGetCompanyJobsQuery, useGetHeroImagesQuery, useLazyGetHeroImagesQuery, useGetMembersQuery, useLazyGetMembersQuery, useGetMerchListQuery, useLazyGetMerchListQuery, useGetNewsItemsQuery, useLazyGetNewsItemsQuery, useGetNewsQuery, useLazyGetNewsQuery, useGetVacanciesQuery, useLazyGetVacanciesQuery } = injectedRtkApi;
+export const { useValidateResetTokenMutation, useRegisterMutation, useGetArticleQuery, useLazyGetArticleQuery, useGetArticlesQuery, useLazyGetArticlesQuery, useGetCompanyJobsQuery, useLazyGetCompanyJobsQuery, useGetHeroImagesQuery, useLazyGetHeroImagesQuery, useGetMembersQuery, useLazyGetMembersQuery, useGetMerchListQuery, useLazyGetMerchListQuery, useGetNewsItemsQuery, useLazyGetNewsItemsQuery, useGetNewsQuery, useLazyGetNewsQuery, useGetVacanciesQuery, useLazyGetVacanciesQuery } = injectedRtkApi;
 

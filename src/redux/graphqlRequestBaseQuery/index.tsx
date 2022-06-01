@@ -65,7 +65,12 @@ export const graphqlRequestBaseQuery = (
       if (error instanceof ClientError) {
         const { name, message, stack, request, response } = error;
 
-        return { error: { name, message, stack }, meta: { request, response } };
+        console.log({ error });
+        const errorMessage = response?.errors[0].message;
+        return {
+          error: { name, message: errorMessage, stack },
+          meta: { request, response },
+        };
       }
 
       throw error;

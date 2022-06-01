@@ -1,9 +1,7 @@
-import { yupResolver } from "@hookform/resolvers/yup";
 import {
   Group,
   Box,
   Text,
-  TextInput,
   RadioGroup,
   Radio,
   Select,
@@ -13,11 +11,17 @@ import {
 import { useCallback, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useStyles } from "theme";
-import { Eye, EyeOff } from "tabler-icons-react";
-import { GradientButton, Modal, showNotification } from "components/common";
+import {
+  GradientButton,
+  Modal,
+  showNotification,
+  PasswordInput,
+  TextInput,
+} from "components/common";
 import { createClassYears } from "utils/createClassYears";
-import * as yup from "yup";
 import Image from "next/image";
+import { registerFormResolver } from "./formResolver";
+import { useRegisterMutation } from "generated/graphql";
 
 interface RegisterFormProps {
   fullName: string;
@@ -26,38 +30,13 @@ interface RegisterFormProps {
   email: string;
   phone: number;
   gender: string;
-  class: string;
+  classYear: string;
   nim: number;
   password: string;
   confirmPassword: string;
 }
 
-const schema = yup.object({
-  fullName: yup.string().max(60).min(3).required(),
-  email: yup.string().email(),
-  phone: yup.number().integer().positive().max(9999999999999).required(),
-  gender: yup.string().required(),
-  class: yup.string().required(),
-  nim: yup.number().integer().positive().required(),
-  password: yup
-    .string()
-    .required()
-    .matches(
-      /^(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{6,13}$/,
-      "Password harus berisi maksimal 13 karakter, minimal 6 karakter, satu huruf kapital, satu huruf kecil, dan satu karakter simbol"
-    ),
-  confirmPassword: yup
-    .string()
-    .required()
-    .equals(
-      [yup.ref("password"), null],
-      "Kombinasi password tidak sesuai. Silakan periksa kembali password anda."
-    ),
-});
-
 export const RegisterForm = () => {
-  const [isLoading, setIsLoading] = useState(false);
-
   const [showModal, setShowModal] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showConfirmPassword, setConfirmShowPassword] =
@@ -71,89 +50,80 @@ export const RegisterForm = () => {
     formState: { errors, isValid },
   } = useForm<RegisterFormProps>({
     mode: "onSubmit",
-    resolver: yupResolver(schema),
+    resolver: registerFormResolver,
   });
+  const [registerUser, { isLoading, isError, data: registerData }] =
+    useRegisterMutation();
 
-  const onSubmit = useCallback((values: RegisterFormProps) => {
-    setIsLoading(true);
-
-    setTimeout(() => {
-      if (!errors) {
-        return;
-      }
-
-      values.email = values.email.toLowerCase();
-      values.fullName = values.fullName.replace(/\w\S*/g, (w: string) =>
-        w.replace(/^\w/, (c: string) => c.toUpperCase())
-      );
-      delete values["confirmPassword"];
-
-      console.log({ values, errors: !errors, isValid });
-
-      setIsLoading(false);
-      setShowModal(true);
-    }, 1000);
-  }, []);
-
-  const onError = useCallback((errors: any, e) => {
-    if (errors?.password?.type === "matches") {
+  const onSubmit = useCallback(async (values: RegisterFormProps) => {
+    try {
+      const registerData = await registerUser(values).unwrap();
+      console.log({ registerData });
+    } catch (error) {
       showNotification({
-        message: errors.password.message,
-        id: "password-error",
+        title: "Error",
+        message: error?.message,
+        id: "register-error",
       });
     }
-
-    if (errors?.confirmPassword?.type === "oneOf") {
-      showNotification({
-        message: errors.confirmPassword.message,
-        id: "confirm-password-error",
-      });
-    }
-
-    showNotification({
-      message: "Form tidak boleh kosong. Harap isi semua form dengan benar",
-      id: "register-error",
-    });
   }, []);
+
+  /* const onError = useCallback((errors: any, e) => {
+   *   if (errors?.password?.type === "matches") {
+   *     showNotification({
+   *       message: errors.password.message,
+   *       id: "password-error",
+   *     });
+   *   }
+   *   if (errors?.confirmPassword?.type === "oneOf") {
+   *     showNotification({
+   *       message: errors.confirmPassword.message,
+   *       id: "confirm-password-error",
+   *     });
+   *   }
+   *   showNotification({
+   *     message: "Form tidak boleh kosong. Harap isi semua form dengan benar",
+   *     id: "register-error",
+   *   });
+   * }, []);
+   */
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit, onError)} className={classes.form}>
+      <form onSubmit={handleSubmit(onSubmit)} className={classes.form}>
         <TextInput
-          {...register("fullName")}
+          register={register("fullName")}
           label="Nama Lengkap"
           placeholder="Masukkan Nama Lengkap"
-          error={!!errors.fullName}
-          size="lg"
+          error={errors.fullName}
         />
         <TextInput
-          {...register("suffixTitle")}
+          register={register("suffixTitle")}
+          description="Optional"
           label="Gelar Depan"
           placeholder="Gelar Depan"
-          size="lg"
         />
         <TextInput
-          {...register("prefixTitle")}
+          register={register("prefixTitle")}
+          description="Optional"
           label="Gelar Belakang"
           placeholder="Gelar Belakang"
-          size="lg"
         />
         <TextInput
-          {...register("email")}
+          autoComplete="off"
+          register={register("email")}
           label="Email"
           placeholder="Masukkan Email"
-          error={!!errors.fullName}
-          size="lg"
+          error={errors.email}
         />
         <TextInput
-          {...register("phone")}
+          register={register("phone")}
           maxLength={13}
           min={0}
           label="Nomor Telepon"
           placeholder="Masukkan Nomor Telepon"
-          error={!!errors.phone}
+          error={errors.phone}
           type="number"
-          size="lg"
         />
         <Group noWrap position="apart" align="flex-start">
           <Controller
@@ -164,7 +134,7 @@ export const RegisterForm = () => {
                 <RadioGroup
                   label="Jenis Kelamin"
                   {...field}
-                  error={!!errors?.gender}
+                  error={!!errors?.gender ? errors.gender.message : null}
                   size="lg"
                 >
                   <Radio value="male" label="Pria" />
@@ -174,7 +144,7 @@ export const RegisterForm = () => {
             }}
           />
           <Controller
-            name="class"
+            name="classYear"
             control={control}
             render={({ field }) => {
               return (
@@ -185,57 +155,31 @@ export const RegisterForm = () => {
                   placeholder="-Pilih Angkatan-"
                   searchable
                   size="lg"
-                  error={!!errors?.class}
+                  error={!!errors?.classYear ? errors.classYear.message : null}
                 />
               );
             }}
           ></Controller>
         </Group>
         <TextInput
-          {...register("nim")}
+          register={register("nim")}
           label="Nomor Induk Mahasiswa"
           placeholder="Masukkan Nomor Induk Mahasiswa"
-          error={!!errors.nim}
+          error={errors.nim}
           type="number"
           min={0}
-          size="lg"
         />
-        <TextInput
-          {...register("password")}
+        <PasswordInput
+          register={register("password")}
           label="Password"
           placeholder="Masukkan Password"
-          error={!!errors.password}
-          type={showPassword ? "text" : "password"}
-          size="lg"
-          rightSection={
-            <Box
-              onClick={() => setShowPassword((o) => !o)}
-              sx={{ height: 22, cursor: "pointer" }}
-            >
-              {showPassword ? <EyeOff color="gray" /> : <Eye color="gray" />}
-            </Box>
-          }
+          error={errors.password}
         />
-        <TextInput
-          {...register("confirmPassword")}
-          label="Konfirmasi Password"
+        <PasswordInput
+          register={register("confirmPassword")}
+          label="Confirm Password"
           placeholder="Konfirmasi Password"
-          error={!!errors.password}
-          type={showConfirmPassword ? "text" : "password"}
-          size="lg"
-          mb={50}
-          rightSection={
-            <Box
-              onClick={() => setConfirmShowPassword((o) => !o)}
-              sx={{ height: 22, cursor: "pointer" }}
-            >
-              {showConfirmPassword ? (
-                <EyeOff color="gray" />
-              ) : (
-                <Eye color="gray" />
-              )}
-            </Box>
-          }
+          error={errors.confirmPassword}
         />
         <GradientButton type="submit" fullWidth my={50} loading={isLoading}>
           Daftar Baru

@@ -11,3 +11,5 @@ export * from "./SectionTitleWithLink";
 export * from "./GradientButton";
 export * from "./Modal";
 export * from "./showNotification";
+export * from "./PasswordInput";
+export * from "./TextInput";

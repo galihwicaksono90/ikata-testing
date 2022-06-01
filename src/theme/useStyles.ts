@@ -156,5 +156,11 @@ export const useStyles = createStyles((theme) => ({
         color: theme.colors.gray[3],
       },
     },
+    "& input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus, textarea:-webkit-autofill, textarea:-webkit-autofill:hover, textarea:-webkit-autofill:focus, select:-webkit-autofill, select:-webkit-autofill:hover, select:-webkit-autofill:focus":
+      {
+        border: "1px solid pink",
+        WebkitTextFillColor: theme.colors.dark,
+        WebkitBoxShadow: "0 0 0px 1px rgba(255, 255, 255, 0.01) inset",
+      },
   },
 }));
