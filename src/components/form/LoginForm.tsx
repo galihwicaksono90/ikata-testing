@@ -98,7 +98,6 @@ export function LoginForm() {
       <GradientButton
         type="submit"
         disabled={!isValid}
-        variant={!isValid ? "default" : "gradient"}
         fullWidth
         loading={isLoading}
         mb={50}

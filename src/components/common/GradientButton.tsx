@@ -33,7 +33,7 @@ export const GradientButton = ({
 };
 
 const Button = forwardRef(
-  ({ children, variant = "gradient", loading, ...rest }: any, ref) => {
+  ({ children, variant = "gradient", loading, sx, ...rest }: any, ref) => {
     return (
       <BaseButton
         ref={ref}
@@ -47,7 +47,11 @@ const Button = forwardRef(
         size="lg"
         radius="md"
         sx={(theme) => ({
+          ...sx,
           color: theme.colors.dark[7],
+          "&:disabled": {
+            filter: "brightness(40%)",
+          },
         })}
         loaderProps={{
           color: "#272727",

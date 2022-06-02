@@ -7,25 +7,24 @@ const messages = {
   email: "Format email tidak valid",
   password:
     "Password harus berisi maksimal 13 karakter, minimal 6 karakter, satu huruf kapital, satu huruf kecil, dan satu angka",
-  confirmPassword:
-    "Kombinasi password tidak sesuai. Silakan periksa kembali password anda.",
+  confirmPassword: "Kombinasi password tidak sesuai.",
 };
 
+const email = yup.string().email(messages.email).required(messages.required);
+const gender = yup.string().required(messages.selectOne);
+const classYear = yup.string().required(messages.selectOne);
+const nim = yup.number().integer().positive().required(messages.required);
 const fullName = yup
   .string()
   .max(60)
   .min(3, "Minimal 3 huruf")
   .required(messages.required);
-const email = yup.string().email(messages.email).required(messages.required);
 const phone = yup
   .number()
   .integer()
   .positive()
   .max(9999999999999)
   .required(messages.required);
-const gender = yup.string().required(messages.selectOne);
-const classYear = yup.string().required(messages.selectOne);
-const nim = yup.number().integer().positive().required(messages.required);
 const password = yup
   .string()
   .required(messages.required)
@@ -43,6 +42,19 @@ export const registerFormResolver = yupResolver(
     gender,
     classYear,
     nim,
+    password,
+    confirmPassword,
+  })
+);
+
+export const forgotPasswordResolver = yupResolver(
+  yup.object({
+    email,
+  })
+);
+
+export const resetPasswordResolver = yupResolver(
+  yup.object({
     password,
     confirmPassword,
   })
