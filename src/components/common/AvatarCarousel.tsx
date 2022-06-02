@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { MemberAvatarProps, MemberAvatar } from "components/common";
 import { Box } from "@mantine/core";
 import { Carousel } from "components/common";
+import { Member } from "generated/graphql";
 
 import "swiper/css";
 import "swiper/css/pagination";

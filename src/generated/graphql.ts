@@ -95,6 +95,7 @@ export type Job = {
 
 export type Member = {
   __typename?: "Member";
+  field: Scalars["String"];
   id: Scalars["Int"];
   image: Scalars["String"];
   name: Scalars["String"];
@@ -183,6 +184,7 @@ export type QueryGetHeroImagesArgs = {
 };
 
 export type QueryGetMembersArgs = {
+  field: Scalars["String"];
   limit: Scalars["Int"];
 };
 
@@ -383,6 +385,7 @@ export type GetHeroImagesQuery = {
 
 export type GetMembersQueryVariables = Exact<{
   limit: Scalars["Int"];
+  field: Scalars["String"];
 }>;
 
 export type GetMembersQuery = {
@@ -393,6 +396,7 @@ export type GetMembersQuery = {
     name: string;
     title: string;
     image: string;
+    field: string;
   }>;
 };
 
@@ -577,12 +581,13 @@ export const GetHeroImagesDocument = `
 }
     `;
 export const GetMembersDocument = `
-    query GetMembers($limit: Int!) {
-  getMembers(limit: $limit) {
+    query GetMembers($limit: Int!, $field: String!) {
+  getMembers(limit: $limit, field: $field) {
     id
     name
     title
     image
+    field
   }
 }
     `;

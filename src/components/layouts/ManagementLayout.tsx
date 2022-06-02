@@ -12,15 +12,30 @@ interface Props {
 export function ManagementLayout({ title, description, children }: Props) {
   return (
     <MainLayout>
-      <Box>
-        <Container pt={80} pb={80}>
-          <Title order={1} mb={7}>
-            {title}
-          </Title>
-          <Text mb={40}>{description}</Text>
-          {children}
-        </Container>
-      </Box>
+      <Container
+        pt={60}
+        pb={60}
+        sx={(theme) => ({
+          [`@media (max-width: ${theme.breakpoints.sm}px)`]: {
+            paddingTop: 30,
+          },
+        })}
+      >
+        <Text
+          component="h1"
+          mb={46}
+          sx={(theme) => ({
+            fontSize: "3rem",
+            [`@media (max-width: ${theme.breakpoints.sm}px)`]: {
+              fontSize: "1.6rem",
+            },
+          })}
+        >
+          {title}
+        </Text>
+        {/* <Text mb={40}>{description}</Text> */}
+        {children}
+      </Container>
     </MainLayout>
   );
 }

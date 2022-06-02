@@ -1,8 +1,9 @@
-query GetMembers($limit: Int!) {
-  getMembers(limit: $limit) {
+query GetMembers($limit: Int!, $field: String!) {
+  getMembers(limit: $limit, field: $field) {
     id
     name
     title
     image
+    field
   }
 }
