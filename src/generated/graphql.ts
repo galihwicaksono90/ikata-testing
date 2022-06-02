@@ -1,9 +1,15 @@
-import { api } from 'redux/api/apiSlice';
+import { api } from "redux/api/apiSlice";
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type Exact<T extends { [key: string]: unknown }> = {
+  [K in keyof T]: T[K];
+};
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]?: Maybe<T[SubKey]>;
+};
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]: Maybe<T[SubKey]>;
+};
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -16,139 +22,136 @@ export type Scalars = {
 };
 
 export type About = {
-  __typename?: 'About';
-  description: Scalars['String'];
-  image: Scalars['String'];
-  type: Scalars['String'];
+  __typename?: "About";
+  description: Scalars["String"];
+  image: Scalars["String"];
+  type: Scalars["String"];
 };
 
 export enum AboutType {
-  Jurusan = 'jurusan',
-  Organisasi = 'organisasi'
+  Jurusan = "jurusan",
+  Organisasi = "organisasi",
 }
 
 export type Article = {
-  __typename?: 'Article';
-  description: Scalars['String'];
-  id: Scalars['Int'];
-  image: Scalars['String'];
-  postedAt: Scalars['DateTime'];
-  title: Scalars['String'];
+  __typename?: "Article";
+  description: Scalars["String"];
+  id: Scalars["Int"];
+  image: Scalars["String"];
+  postedAt: Scalars["DateTime"];
+  title: Scalars["String"];
 };
 
 export enum ArticleType {
-  NonScientific = 'nonScientific',
-  Scientific = 'scientific'
+  NonScientific = "nonScientific",
+  Scientific = "scientific",
 }
 
 export type AuthPayload = {
-  __typename?: 'AuthPayload';
-  token?: Maybe<Scalars['String']>;
+  __typename?: "AuthPayload";
+  token?: Maybe<Scalars["String"]>;
   user?: Maybe<User>;
 };
 
 export type Company = {
-  __typename?: 'Company';
-  address: Scalars['String'];
-  city: Scalars['String'];
-  description: Scalars['String'];
-  email: Scalars['String'];
-  expiredAt: Scalars['String'];
-  id: Scalars['Int'];
-  image: Scalars['String'];
+  __typename?: "Company";
+  address: Scalars["String"];
+  city: Scalars["String"];
+  description: Scalars["String"];
+  email: Scalars["String"];
+  expiredAt: Scalars["String"];
+  id: Scalars["Int"];
+  image: Scalars["String"];
   jobs: Array<Job>;
-  name: Scalars['String'];
-  postedAt: Scalars['String'];
+  name: Scalars["String"];
+  postedAt: Scalars["String"];
 };
 
 export type FieldError = {
-  __typename?: 'FieldError';
-  field?: Maybe<Scalars['String']>;
-  message?: Maybe<Scalars['String']>;
+  __typename?: "FieldError";
+  field?: Maybe<Scalars["String"]>;
+  message?: Maybe<Scalars["String"]>;
 };
 
 export type FieldErrors = {
-  __typename?: 'FieldErrors';
+  __typename?: "FieldErrors";
   errors?: Maybe<Array<Maybe<FieldError>>>;
 };
 
 export type HeroImage = {
-  __typename?: 'HeroImage';
-  id: Scalars['Int'];
-  image: Scalars['String'];
-  message: Scalars['String'];
+  __typename?: "HeroImage";
+  id: Scalars["Int"];
+  image: Scalars["String"];
+  message: Scalars["String"];
 };
 
 export type Job = {
-  __typename?: 'Job';
-  description: Scalars['String'];
-  id: Scalars['Int'];
-  qualifications: Array<Scalars['String']>;
-  title: Scalars['String'];
+  __typename?: "Job";
+  description: Scalars["String"];
+  id: Scalars["Int"];
+  qualifications: Array<Scalars["String"]>;
+  title: Scalars["String"];
 };
 
 export type Member = {
-  __typename?: 'Member';
-  id: Scalars['Int'];
-  image: Scalars['String'];
-  name: Scalars['String'];
-  title: Scalars['String'];
+  __typename?: "Member";
+  id: Scalars["Int"];
+  image: Scalars["String"];
+  name: Scalars["String"];
+  title: Scalars["String"];
 };
 
 export type Merch = {
-  __typename?: 'Merch';
-  id: Scalars['Int'];
-  image: Scalars['String'];
-  name: Scalars['String'];
-  price: Scalars['String'];
+  __typename?: "Merch";
+  id: Scalars["Int"];
+  image: Scalars["String"];
+  name: Scalars["String"];
+  price: Scalars["String"];
 };
 
 export type Mutation = {
-  __typename?: 'Mutation';
+  __typename?: "Mutation";
   login: AuthPayload;
   register: User;
-  validateResetToken: Scalars['Boolean'];
+  validateResetToken: Scalars["Boolean"];
 };
-
 
 export type MutationLoginArgs = {
-  nim: Scalars['Int'];
-  password: Scalars['String'];
+  nim: Scalars["Int"];
+  password: Scalars["String"];
 };
-
 
 export type MutationRegisterArgs = {
-  classYear: Scalars['String'];
-  confirmPassword: Scalars['String'];
-  email: Scalars['String'];
-  fullName: Scalars['String'];
-  gender: Scalars['String'];
-  nim: Scalars['Int'];
-  password: Scalars['String'];
-  phone: Scalars['Int'];
-  prefixTitle?: InputMaybe<Scalars['String']>;
-  suffixTitle?: InputMaybe<Scalars['String']>;
+  classYear: Scalars["String"];
+  confirmPassword: Scalars["String"];
+  email: Scalars["String"];
+  fullName: Scalars["String"];
+  gender: Scalars["String"];
+  nim: Scalars["Int"];
+  password: Scalars["String"];
+  phone: Scalars["Int"];
+  prefixTitle?: InputMaybe<Scalars["String"]>;
+  suffixTitle?: InputMaybe<Scalars["String"]>;
 };
 
-
 export type MutationValidateResetTokenArgs = {
-  token?: InputMaybe<Scalars['String']>;
+  token?: InputMaybe<Scalars["String"]>;
 };
 
 export type News = {
-  __typename?: 'News';
-  author: Scalars['String'];
-  content: Scalars['String'];
-  createdAt: Scalars['DateTime'];
-  description: Scalars['String'];
-  id: Scalars['Int'];
-  image: Scalars['String'];
-  tags: Array<Scalars['String']>;
-  title: Scalars['String'];
+  __typename?: "News";
+  author: Scalars["String"];
+  content: Scalars["String"];
+  createdAt: Scalars["DateTime"];
+  description: Scalars["String"];
+  id: Scalars["Int"];
+  image: Scalars["String"];
+  tags: Array<Scalars["String"]>;
+  title: Scalars["String"];
 };
 
 export type Query = {
-  __typename?: 'Query';
+  __typename?: "Query";
   getAbout?: Maybe<About>;
   getArticle?: Maybe<Article>;
   getArticles: Array<Article>;
@@ -162,186 +165,318 @@ export type Query = {
   getVacancies: Array<Maybe<Vacancy>>;
 };
 
-
 export type QueryGetAboutArgs = {
   type: AboutType;
 };
 
-
 export type QueryGetArticleArgs = {
-  id: Scalars['Int'];
+  id: Scalars["Int"];
 };
 
-
 export type QueryGetArticlesArgs = {
-  limit: Scalars['Int'];
+  limit: Scalars["Int"];
   type: ArticleType;
 };
 
-
 export type QueryGetHeroImagesArgs = {
-  limit: Scalars['Int'];
+  limit: Scalars["Int"];
 };
-
 
 export type QueryGetMembersArgs = {
-  limit: Scalars['Int'];
+  limit: Scalars["Int"];
 };
-
 
 export type QueryGetMerchListArgs = {
-  limit: Scalars['Int'];
+  limit: Scalars["Int"];
 };
-
 
 export type QueryGetNewsArgs = {
-  id: Scalars['Int'];
+  id: Scalars["Int"];
 };
-
 
 export type QueryGetNewsItemsArgs = {
-  limit: Scalars['Int'];
+  limit: Scalars["Int"];
 };
-
 
 export type QueryGetTestimoniesArgs = {
-  limit: Scalars['Int'];
+  limit: Scalars["Int"];
 };
 
-
 export type QueryGetVacanciesArgs = {
-  limit?: InputMaybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars["Int"]>;
   type: VacancyType;
 };
 
 export type ResetToken = {
-  __typename?: 'ResetToken';
-  token: Scalars['String'];
+  __typename?: "ResetToken";
+  token: Scalars["String"];
 };
 
 export type Testimony = {
-  __typename?: 'Testimony';
-  description: Scalars['String'];
-  endYear: Scalars['Int'];
-  id: Scalars['Int'];
-  image: Scalars['String'];
-  name: Scalars['String'];
-  startYear: Scalars['Int'];
+  __typename?: "Testimony";
+  description: Scalars["String"];
+  endYear: Scalars["Int"];
+  id: Scalars["Int"];
+  image: Scalars["String"];
+  name: Scalars["String"];
+  startYear: Scalars["Int"];
 };
 
 export type User = {
-  __typename?: 'User';
-  email: Scalars['String'];
-  fullName: Scalars['String'];
-  id: Scalars['Int'];
-  role: Scalars['String'];
+  __typename?: "User";
+  email: Scalars["String"];
+  fullName: Scalars["String"];
+  id: Scalars["Int"];
+  role: Scalars["String"];
 };
 
 export enum UserRole {
-  Admin = 'admin',
-  Guess = 'guess',
-  User = 'user'
+  Admin = "admin",
+  Guess = "guess",
+  User = "user",
 }
 
 export type Vacancy = {
-  __typename?: 'Vacancy';
-  company: Scalars['String'];
-  id: Scalars['Int'];
-  title: Scalars['String'];
-  type: Scalars['String'];
+  __typename?: "Vacancy";
+  company: Scalars["String"];
+  id: Scalars["Int"];
+  title: Scalars["String"];
+  type: Scalars["String"];
 };
 
 export enum VacancyType {
-  Job = 'job',
-  Scholarship = 'scholarship'
+  Job = "job",
+  Scholarship = "scholarship",
 }
 
 export type ValidateResetTokenMutationVariables = Exact<{
-  token?: InputMaybe<Scalars['String']>;
+  token?: InputMaybe<Scalars["String"]>;
 }>;
 
-
-export type ValidateResetTokenMutation = { __typename?: 'Mutation', validateResetToken: boolean };
+export type ValidateResetTokenMutation = {
+  __typename?: "Mutation";
+  validateResetToken: boolean;
+};
 
 export type RegisterMutationVariables = Exact<{
-  fullName: Scalars['String'];
-  email: Scalars['String'];
-  phone: Scalars['Int'];
-  gender: Scalars['String'];
-  classYear: Scalars['String'];
-  nim: Scalars['Int'];
-  password: Scalars['String'];
-  confirmPassword: Scalars['String'];
-  prefixTitle?: InputMaybe<Scalars['String']>;
-  suffixTitle?: InputMaybe<Scalars['String']>;
+  fullName: Scalars["String"];
+  email: Scalars["String"];
+  phone: Scalars["Int"];
+  gender: Scalars["String"];
+  classYear: Scalars["String"];
+  nim: Scalars["Int"];
+  password: Scalars["String"];
+  confirmPassword: Scalars["String"];
+  prefixTitle?: InputMaybe<Scalars["String"]>;
+  suffixTitle?: InputMaybe<Scalars["String"]>;
 }>;
 
+export type RegisterMutation = {
+  __typename?: "Mutation";
+  register: {
+    __typename?: "User";
+    id: number;
+    fullName: string;
+    role: string;
+    email: string;
+  };
+};
 
-export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'User', id: number, fullName: string, role: string, email: string } };
+export type GetAboutQueryVariables = Exact<{
+  limit: Scalars["Int"];
+}>;
+
+export type GetAboutQuery = {
+  __typename?: "Query";
+  jurusan?: {
+    __typename?: "About";
+    description: string;
+    image: string;
+    type: string;
+  } | null;
+  organisasi?: {
+    __typename?: "About";
+    description: string;
+    image: string;
+    type: string;
+  } | null;
+  getTestimonies: Array<{
+    __typename?: "Testimony";
+    id: number;
+    name: string;
+    startYear: number;
+    endYear: number;
+    description: string;
+    image: string;
+  }>;
+};
 
 export type GetArticleQueryVariables = Exact<{
-  id: Scalars['Int'];
+  id: Scalars["Int"];
 }>;
 
-
-export type GetArticleQuery = { __typename?: 'Query', getArticle?: { __typename?: 'Article', id: number, title: string, description: string, postedAt: any } | null };
+export type GetArticleQuery = {
+  __typename?: "Query";
+  getArticle?: {
+    __typename?: "Article";
+    id: number;
+    title: string;
+    description: string;
+    postedAt: any;
+  } | null;
+};
 
 export type GetArticlesQueryVariables = Exact<{
-  limit: Scalars['Int'];
+  limit: Scalars["Int"];
   type: ArticleType;
 }>;
 
+export type GetArticlesQuery = {
+  __typename?: "Query";
+  getArticles: Array<{
+    __typename?: "Article";
+    id: number;
+    title: string;
+    description: string;
+    postedAt: any;
+    image: string;
+  }>;
+};
 
-export type GetArticlesQuery = { __typename?: 'Query', getArticles: Array<{ __typename?: 'Article', id: number, title: string, description: string, postedAt: any, image: string }> };
+export type GetCompanyJobsQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetCompanyJobsQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetCompanyJobsQuery = { __typename?: 'Query', getCompanyJobs: Array<{ __typename?: 'Company', id: number, name: string, postedAt: string, expiredAt: string, city: string, description: string, address: string, email: string, image: string, jobs: Array<{ __typename?: 'Job', id: number, title: string, qualifications: Array<string>, description: string }> }> };
+export type GetCompanyJobsQuery = {
+  __typename?: "Query";
+  getCompanyJobs: Array<{
+    __typename?: "Company";
+    id: number;
+    name: string;
+    postedAt: string;
+    expiredAt: string;
+    city: string;
+    description: string;
+    address: string;
+    email: string;
+    image: string;
+    jobs: Array<{
+      __typename?: "Job";
+      id: number;
+      title: string;
+      qualifications: Array<string>;
+      description: string;
+    }>;
+  }>;
+};
 
 export type GetHeroImagesQueryVariables = Exact<{
-  limit: Scalars['Int'];
+  limit: Scalars["Int"];
 }>;
 
-
-export type GetHeroImagesQuery = { __typename?: 'Query', getHeroImages: Array<{ __typename?: 'HeroImage', id: number, image: string } | null> };
+export type GetHeroImagesQuery = {
+  __typename?: "Query";
+  getHeroImages: Array<{
+    __typename?: "HeroImage";
+    id: number;
+    image: string;
+  } | null>;
+};
 
 export type GetMembersQueryVariables = Exact<{
-  limit: Scalars['Int'];
+  limit: Scalars["Int"];
 }>;
 
-
-export type GetMembersQuery = { __typename?: 'Query', getMembers: Array<{ __typename?: 'Member', id: number, name: string, title: string, image: string }> };
+export type GetMembersQuery = {
+  __typename?: "Query";
+  getMembers: Array<{
+    __typename?: "Member";
+    id: number;
+    name: string;
+    title: string;
+    image: string;
+  }>;
+};
 
 export type GetMerchListQueryVariables = Exact<{
-  limit: Scalars['Int'];
+  limit: Scalars["Int"];
 }>;
 
-
-export type GetMerchListQuery = { __typename?: 'Query', getMerchList: Array<{ __typename?: 'Merch', id: number, name: string, price: string, image: string }> };
+export type GetMerchListQuery = {
+  __typename?: "Query";
+  getMerchList: Array<{
+    __typename?: "Merch";
+    id: number;
+    name: string;
+    price: string;
+    image: string;
+  }>;
+};
 
 export type GetNewsItemsQueryVariables = Exact<{
-  limit: Scalars['Int'];
+  limit: Scalars["Int"];
 }>;
 
-
-export type GetNewsItemsQuery = { __typename?: 'Query', getNewsItems: Array<{ __typename?: 'News', id: number, title: string, description: string, image: string }> };
+export type GetNewsItemsQuery = {
+  __typename?: "Query";
+  getNewsItems: Array<{
+    __typename?: "News";
+    id: number;
+    title: string;
+    description: string;
+    image: string;
+  }>;
+};
 
 export type GetNewsQueryVariables = Exact<{
-  id: Scalars['Int'];
+  id: Scalars["Int"];
 }>;
 
+export type GetNewsQuery = {
+  __typename?: "Query";
+  getNews?: {
+    __typename?: "News";
+    id: number;
+    title: string;
+    description: string;
+    content: string;
+    image: string;
+    author: string;
+    createdAt: any;
+    tags: Array<string>;
+  } | null;
+};
 
-export type GetNewsQuery = { __typename?: 'Query', getNews?: { __typename?: 'News', id: number, title: string, description: string, content: string, image: string, author: string, createdAt: any, tags: Array<string> } | null };
+export type GetTestimoniesQueryVariables = Exact<{
+  limit: Scalars["Int"];
+}>;
+
+export type GetTestimoniesQuery = {
+  __typename?: "Query";
+  getTestimonies: Array<{
+    __typename?: "Testimony";
+    id: number;
+    name: string;
+    startYear: number;
+    endYear: number;
+    description: string;
+    image: string;
+  }>;
+};
 
 export type GetVacanciesQueryVariables = Exact<{
-  limit?: InputMaybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars["Int"]>;
   type: VacancyType;
 }>;
 
-
-export type GetVacanciesQuery = { __typename?: 'Query', getVacancies: Array<{ __typename?: 'Vacancy', id: number, title: string, company: string, type: string } | null> };
-
+export type GetVacanciesQuery = {
+  __typename?: "Query";
+  getVacancies: Array<{
+    __typename?: "Vacancy";
+    id: number;
+    title: string;
+    company: string;
+    type: string;
+  } | null>;
+};
 
 export const ValidateResetTokenDocument = `
     mutation ValidateResetToken($token: String) {
@@ -366,6 +501,28 @@ export const RegisterDocument = `
     fullName
     role
     email
+  }
+}
+    `;
+export const GetAboutDocument = `
+    query GetAbout($limit: Int!) {
+  jurusan: getAbout(type: jurusan) {
+    description
+    image
+    type
+  }
+  organisasi: getAbout(type: organisasi) {
+    description
+    image
+    type
+  }
+  getTestimonies(limit: $limit) {
+    id
+    name
+    startYear
+    endYear
+    description
+    image
   }
 }
     `;
@@ -463,6 +620,18 @@ export const GetNewsDocument = `
   }
 }
     `;
+export const GetTestimoniesDocument = `
+    query GetTestimonies($limit: Int!) {
+  getTestimonies(limit: $limit) {
+    id
+    name
+    startYear
+    endYear
+    description
+    image
+  }
+}
+    `;
 export const GetVacanciesDocument = `
     query GetVacancies($limit: Int, $type: VacancyType!) {
   getVacancies(type: $type, limit: $limit) {
@@ -476,42 +645,86 @@ export const GetVacanciesDocument = `
 
 const injectedRtkApi = api.injectEndpoints({
   endpoints: (build) => ({
-    ValidateResetToken: build.mutation<ValidateResetTokenMutation, ValidateResetTokenMutationVariables | void>({
-      query: (variables) => ({ document: ValidateResetTokenDocument, variables })
+    ValidateResetToken: build.mutation<
+      ValidateResetTokenMutation,
+      ValidateResetTokenMutationVariables | void
+    >({
+      query: (variables) => ({
+        document: ValidateResetTokenDocument,
+        variables,
+      }),
     }),
     Register: build.mutation<RegisterMutation, RegisterMutationVariables>({
-      query: (variables) => ({ document: RegisterDocument, variables })
+      query: (variables) => ({ document: RegisterDocument, variables }),
+    }),
+    GetAbout: build.query<GetAboutQuery, GetAboutQueryVariables>({
+      query: (variables) => ({ document: GetAboutDocument, variables }),
     }),
     GetArticle: build.query<GetArticleQuery, GetArticleQueryVariables>({
-      query: (variables) => ({ document: GetArticleDocument, variables })
+      query: (variables) => ({ document: GetArticleDocument, variables }),
     }),
     GetArticles: build.query<GetArticlesQuery, GetArticlesQueryVariables>({
-      query: (variables) => ({ document: GetArticlesDocument, variables })
+      query: (variables) => ({ document: GetArticlesDocument, variables }),
     }),
-    GetCompanyJobs: build.query<GetCompanyJobsQuery, GetCompanyJobsQueryVariables | void>({
-      query: (variables) => ({ document: GetCompanyJobsDocument, variables })
+    GetCompanyJobs: build.query<
+      GetCompanyJobsQuery,
+      GetCompanyJobsQueryVariables | void
+    >({
+      query: (variables) => ({ document: GetCompanyJobsDocument, variables }),
     }),
-    GetHeroImages: build.query<GetHeroImagesQuery, GetHeroImagesQueryVariables>({
-      query: (variables) => ({ document: GetHeroImagesDocument, variables })
-    }),
+    GetHeroImages: build.query<GetHeroImagesQuery, GetHeroImagesQueryVariables>(
+      {
+        query: (variables) => ({ document: GetHeroImagesDocument, variables }),
+      }
+    ),
     GetMembers: build.query<GetMembersQuery, GetMembersQueryVariables>({
-      query: (variables) => ({ document: GetMembersDocument, variables })
+      query: (variables) => ({ document: GetMembersDocument, variables }),
     }),
     GetMerchList: build.query<GetMerchListQuery, GetMerchListQueryVariables>({
-      query: (variables) => ({ document: GetMerchListDocument, variables })
+      query: (variables) => ({ document: GetMerchListDocument, variables }),
     }),
     GetNewsItems: build.query<GetNewsItemsQuery, GetNewsItemsQueryVariables>({
-      query: (variables) => ({ document: GetNewsItemsDocument, variables })
+      query: (variables) => ({ document: GetNewsItemsDocument, variables }),
     }),
     GetNews: build.query<GetNewsQuery, GetNewsQueryVariables>({
-      query: (variables) => ({ document: GetNewsDocument, variables })
+      query: (variables) => ({ document: GetNewsDocument, variables }),
+    }),
+    GetTestimonies: build.query<
+      GetTestimoniesQuery,
+      GetTestimoniesQueryVariables
+    >({
+      query: (variables) => ({ document: GetTestimoniesDocument, variables }),
     }),
     GetVacancies: build.query<GetVacanciesQuery, GetVacanciesQueryVariables>({
-      query: (variables) => ({ document: GetVacanciesDocument, variables })
+      query: (variables) => ({ document: GetVacanciesDocument, variables }),
     }),
   }),
 });
 
 export { injectedRtkApi as api };
-export const { useValidateResetTokenMutation, useRegisterMutation, useGetArticleQuery, useLazyGetArticleQuery, useGetArticlesQuery, useLazyGetArticlesQuery, useGetCompanyJobsQuery, useLazyGetCompanyJobsQuery, useGetHeroImagesQuery, useLazyGetHeroImagesQuery, useGetMembersQuery, useLazyGetMembersQuery, useGetMerchListQuery, useLazyGetMerchListQuery, useGetNewsItemsQuery, useLazyGetNewsItemsQuery, useGetNewsQuery, useLazyGetNewsQuery, useGetVacanciesQuery, useLazyGetVacanciesQuery } = injectedRtkApi;
-
+export const {
+  useValidateResetTokenMutation,
+  useRegisterMutation,
+  useGetAboutQuery,
+  useLazyGetAboutQuery,
+  useGetArticleQuery,
+  useLazyGetArticleQuery,
+  useGetArticlesQuery,
+  useLazyGetArticlesQuery,
+  useGetCompanyJobsQuery,
+  useLazyGetCompanyJobsQuery,
+  useGetHeroImagesQuery,
+  useLazyGetHeroImagesQuery,
+  useGetMembersQuery,
+  useLazyGetMembersQuery,
+  useGetMerchListQuery,
+  useLazyGetMerchListQuery,
+  useGetNewsItemsQuery,
+  useLazyGetNewsItemsQuery,
+  useGetNewsQuery,
+  useLazyGetNewsQuery,
+  useGetTestimoniesQuery,
+  useLazyGetTestimoniesQuery,
+  useGetVacanciesQuery,
+  useLazyGetVacanciesQuery,
+} = injectedRtkApi;
