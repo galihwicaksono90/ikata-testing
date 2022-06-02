@@ -1,29 +1,24 @@
-import { yupResolver } from "@hookform/resolvers/yup";
 import {
-  Divider,
-  Button,
-  Group,
-  TextInput,
-  Stack,
   Box,
-  Title,
+  Button,
+  Divider,
+  Group,
+  Stack,
   Text,
+  TextInput,
+  Title,
 } from "@mantine/core";
+import { GradientButton, Modal, showNotification } from "components/common";
 import Image from "next/image";
-import { GradientButton, Modal } from "components/common";
 import Link from "next/link";
 import { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useStyles } from "theme";
-import * as yup from "yup";
+import { forgotPasswordResolver } from "./formResolver";
 
 interface FormProps {
   email: string;
 }
-
-const schema = yup.object({
-  email: yup.string().email().required(),
-});
 
 export const ForgotPasswordForm = () => {
   const [showModal, setShowModal] = useState(false);
@@ -37,18 +32,22 @@ export const ForgotPasswordForm = () => {
     formState: { errors, isValid },
   } = useForm<FormProps>({
     mode: "onChange",
-    resolver: yupResolver(schema),
+    resolver: forgotPasswordResolver,
   });
 
   const onSubmit = useCallback((values: FormProps) => {
     setIsLoading(true);
     setTimeout(() => {
-      setIsLoading(false);
-      if (!errors) {
+      if (values.email === "wrong@gmail.com") {
+        showNotification({
+          title: "Error",
+          message: "Email not found",
+        });
+        setIsLoading(false);
         return;
       }
-      setIsLoading(false);
       setShowModal(true);
+      setIsLoading(false);
     }, 2000);
   }, []);
 
@@ -72,7 +71,6 @@ export const ForgotPasswordForm = () => {
           <GradientButton
             type="submit"
             disabled={!isValid}
-            variant={!isValid ? "default" : "gradient"}
             loading={isLoading}
             fullWidth
           >
@@ -116,6 +114,12 @@ export const ForgotPasswordForm = () => {
             >
               ikata@email.com
             </Text>
+            <GradientButton
+              onClick={() => setShowModal((o) => !o)}
+              sx={{ width: 360 }}
+            >
+              Tutup
+            </GradientButton>
           </Stack>
         </Modal>
       </form>
