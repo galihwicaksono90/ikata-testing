@@ -70,7 +70,7 @@ export default function PengurusPusat({ activeTab }: Props) {
             fontSize: theme.fontSizes.sm,
             textAlign: "left",
             borderRadius: theme.radius.md,
-            background: theme.colors.dark[7],
+            background: theme.colors.dark[5],
             height: 60,
             boxShadow: theme.shadows.lg,
             "&.mantine-Tabs-tabActive": {

@@ -30,7 +30,7 @@ export const theme: MantineThemeOverride = {
       "#898989",
       "#ABAAAA",
       "#ABAAAA",
-      "#3f3f3f",
+      "#2f2f2f",
       "#1d1d1d",
       "#272727",
       "#1d1d1d",
@@ -51,5 +51,6 @@ export const theme: MantineThemeOverride = {
   },
   other: {
     containerSize: CONTAINER_SIZE,
+    gray: "#eaeaea",
   },
 };

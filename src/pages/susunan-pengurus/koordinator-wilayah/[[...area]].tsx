@@ -23,11 +23,24 @@ const areas = [
   { id: 12, name: "bandung" },
 ];
 
-export default function KoordinatorWilayah() {
-  const [currentAreaId, setCurrentAreaId] = useState<number>(1);
+interface Props {
+  activeArea: number;
+}
+
+export default function KoordinatorWilayah({ activeArea }: Props) {
+  const [currentAreaId, setCurrentAreaId] = useState<number>(activeArea);
   const [filter, setFilter] = useState("");
   const [debouncedFilter] = useDebouncedValue(filter, 500);
-  const { data: members, isLoading } = useGetMembersQuery({ limit: 8 });
+  const {
+    data: members,
+    isLoading,
+    isFetching,
+  } = useGetMembersQuery({
+    limit: 8,
+    field: areas.find((area) => area.id === currentAreaId).name,
+  });
+
+  if (isLoading) <div>Loadingg...</div>;
 
   return (
     <ManagementLayout
@@ -41,9 +54,8 @@ export default function KoordinatorWilayah() {
           <Group
             p={20}
             sx={(theme) => ({
-              border: `1px solid`,
-              borderColor: theme.colors.gray[2],
               borderRadius: theme.radius.md,
+              background: theme.colors.dark[5],
             })}
           >
             <Text weight="bold">List Wilayah</Text>
@@ -51,21 +63,21 @@ export default function KoordinatorWilayah() {
               placeholder="Cari Wilayah"
               icon={<Search />}
               sx={(theme) => ({
-                backgroundColor: theme.white,
-
                 border: `1px solid`,
-                borderColor: theme.colors.gray[2],
+                borderColor: "#eaeaea",
                 borderRadius: theme.radius.md,
                 input: {
-                  color: theme.colors.dark,
+                  color: theme.other.gray,
                 },
               })}
               rightSection={
                 <Text
                   size="xs"
-                  color="gray"
                   onClick={() => setFilter("")}
-                  sx={{ cursor: "pointer" }}
+                  sx={(theme) => ({
+                    cursor: "pointer",
+                    color: theme.other.gray,
+                  })}
                 >
                   X
                 </Text>
@@ -73,6 +85,7 @@ export default function KoordinatorWilayah() {
               variant="unstyled"
               value={filter}
               onChange={(e) => setFilter(e.target.value)}
+              mb={20}
             />
             <Group direction="column">
               {areas
@@ -95,7 +108,7 @@ export default function KoordinatorWilayah() {
           </Group>
         </Grid.Col>
         <Grid.Col span={9}>
-          {isLoading ? (
+          {isFetching ? (
             <div>Loading...</div>
           ) : (
             <AvatarCarousel
@@ -110,15 +123,12 @@ export default function KoordinatorWilayah() {
   );
 }
 
-export const getServerSideProps: GetServerSideProps =
-  wrapper.getServerSideProps((store) => async () => {
-    await store.dispatch(
-      api.endpoints.GetMembers.initiate({
-        limit: 8,
-      })
-    );
-    Promise.all(api.util.getRunningOperationPromises());
-    return {
-      props: {},
-    };
+export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+  let tab = areas.find((area) => {
+    return area.name.toLowerCase() == (query.area as string);
   });
+  tab = !tab ? areas[0] : tab;
+  return {
+    props: { activeArea: tab.id },
+  };
+};
