@@ -27,11 +27,15 @@ export default function AboutPage({ data }: AboutProps) {
   const { query, push } = useRouter();
 
   useEffect(() => {
-    const tab = query.tab[0];
     setActiveTab(() => {
+      const tab = query?.tab;
+      console.log({ tab });
+      if (!Array.isArray(tab)) return 0;
+
       const key = Object.keys(tabObject).find(
-        (key) => tabObject[parseFloat(key)] === tab
+        (key) => tabObject[parseFloat(key)] === tab[0]
       );
+      console.log({ key });
 
       return key ? parseFloat(key) : 0;
     });
