@@ -1,0 +1,10 @@
+query GetTestimonies($limit: Int!) {
+  getTestimonies(limit: $limit) {
+    id
+    name
+    startYear
+    endYear
+    description
+    image
+  }
+}
