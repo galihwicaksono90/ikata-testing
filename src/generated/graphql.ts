@@ -112,12 +112,26 @@ export type Merch = {
 export type Mutation = {
   __typename?: "Mutation";
   login: AuthPayload;
+  register: User;
   validateResetToken: Scalars["Boolean"];
 };
 
 export type MutationLoginArgs = {
   nim: Scalars["Int"];
   password: Scalars["String"];
+};
+
+export type MutationRegisterArgs = {
+  classYear: Scalars["String"];
+  confirmPassword: Scalars["String"];
+  email: Scalars["String"];
+  fullName: Scalars["String"];
+  gender: Scalars["String"];
+  nim: Scalars["Int"];
+  password: Scalars["String"];
+  phone: Scalars["Int"];
+  prefixTitle?: InputMaybe<Scalars["String"]>;
+  suffixTitle?: InputMaybe<Scalars["String"]>;
 };
 
 export type MutationValidateResetTokenArgs = {
@@ -242,6 +256,30 @@ export type ValidateResetTokenMutationVariables = Exact<{
 export type ValidateResetTokenMutation = {
   __typename?: "Mutation";
   validateResetToken: boolean;
+};
+
+export type RegisterMutationVariables = Exact<{
+  fullName: Scalars["String"];
+  email: Scalars["String"];
+  phone: Scalars["Int"];
+  gender: Scalars["String"];
+  classYear: Scalars["String"];
+  nim: Scalars["Int"];
+  password: Scalars["String"];
+  confirmPassword: Scalars["String"];
+  prefixTitle?: InputMaybe<Scalars["String"]>;
+  suffixTitle?: InputMaybe<Scalars["String"]>;
+}>;
+
+export type RegisterMutation = {
+  __typename?: "Mutation";
+  register: {
+    __typename?: "User";
+    id: number;
+    fullName: string;
+    role: string;
+    email: string;
+  };
 };
 
 export type GetAboutQueryVariables = Exact<{
@@ -445,6 +483,27 @@ export const ValidateResetTokenDocument = `
   validateResetToken(token: $token)
 }
     `;
+export const RegisterDocument = `
+    mutation Register($fullName: String!, $email: String!, $phone: Int!, $gender: String!, $classYear: String!, $nim: Int!, $password: String!, $confirmPassword: String!, $prefixTitle: String, $suffixTitle: String) {
+  register(
+    fullName: $fullName
+    email: $email
+    phone: $phone
+    gender: $gender
+    classYear: $classYear
+    nim: $nim
+    password: $password
+    confirmPassword: $confirmPassword
+    prefixTitle: $prefixTitle
+    suffixTitle: $suffixTitle
+  ) {
+    id
+    fullName
+    role
+    email
+  }
+}
+    `;
 export const GetAboutDocument = `
     query GetAbout($limit: Int!) {
   jurusan: getAbout(type: jurusan) {
@@ -595,6 +654,9 @@ const injectedRtkApi = api.injectEndpoints({
         variables,
       }),
     }),
+    Register: build.mutation<RegisterMutation, RegisterMutationVariables>({
+      query: (variables) => ({ document: RegisterDocument, variables }),
+    }),
     GetAbout: build.query<GetAboutQuery, GetAboutQueryVariables>({
       query: (variables) => ({ document: GetAboutDocument, variables }),
     }),
@@ -642,6 +704,7 @@ const injectedRtkApi = api.injectEndpoints({
 export { injectedRtkApi as api };
 export const {
   useValidateResetTokenMutation,
+  useRegisterMutation,
   useGetAboutQuery,
   useLazyGetAboutQuery,
   useGetArticleQuery,
