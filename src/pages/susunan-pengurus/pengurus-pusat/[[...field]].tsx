@@ -31,17 +31,18 @@ export default function PengurusPusat({ activeTab }: Props) {
 
   const onTabChange = (tabIndex: number) => {
     setCurrentTab(tabIndex);
-    router.push(
-      `/susunan-pengurus/pengurus-pusat/${organization[
-        tabIndex
-      ].label.toLowerCase()}`,
-      undefined,
-      { shallow: true }
-    );
+    setUrl(organization[tabIndex].label.toLowerCase());
   };
 
   const onSelectTab = (value: string) => {
     setCurrentTab(parseFloat(value));
+    setUrl(organization.find((org) => org.value === value).label.toLowerCase());
+  };
+
+  const setUrl = (text) => {
+    router.push(`/susunan-pengurus/pengurus-pusat/${text}`, undefined, {
+      shallow: true,
+    });
   };
 
   return (
@@ -126,7 +127,8 @@ export default function PengurusPusat({ activeTab }: Props) {
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   let tab = organization.findIndex((org) => {
-    return org.label.toLowerCase() == (query.field as string);
+    if (!Array.isArray(query?.field) || query.field.length === 0) return false;
+    return org.label.toLowerCase() == (query.field[0].toLowerCase() as string);
   });
   tab = tab === -1 ? 0 : tab;
   return {

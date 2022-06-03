@@ -16,13 +16,13 @@ interface Area {
 }
 
 interface Props {
-  activeArea: Area;
+  initialArea: Area;
   areas: Area[];
 }
 
-export default function KoordinatorWilayah({ activeArea, areas }: Props) {
+export default function KoordinatorWilayah({ initialArea, areas }: Props) {
   const router = useRouter();
-  const [currentArea, setCurrentArea] = useState(activeArea);
+  const [currentArea, setCurrentArea] = useState(initialArea);
   const [filter, setFilter] = useState("");
   const [debouncedFilter] = useDebouncedValue(filter, 500);
   const {
@@ -48,7 +48,7 @@ export default function KoordinatorWilayah({ activeArea, areas }: Props) {
   };
 
   const setUrl = (area: string) => {
-    router.push(`/susunan-pengurus/koordinator-wilayah/${area}`);
+    router.push(`/susunan-pengurus/koordinator-wilayah/${area.toLowerCase()}`);
   };
 
   return (
@@ -165,18 +165,24 @@ export const getServerSideProps: GetServerSideProps =
       label: capitalize(item.name),
     }));
 
-    let tab = areas[0];
-    let areaQuery: any;
+    /* let tab = areas[0];
+     * let areaQuery: any; */
 
-    if (query?.area) {
-      areaQuery = areas.find((area) => {
-        return area.label.toLowerCase() == (query.area as string);
-      });
-    }
-    tab = !areaQuery ? tab : areaQuery;
+    /* if (query?.area) {
+     *   areaQuery = areas.find((area) => {
+     *     return area.label.toLowerCase() == (query.area as string);
+     *   });
+     * }
+     * tab = !areaQuery ? tab : areaQuery; */
 
-    console.log({ tab, areaQuery });
+    let initialAreaIndex = areas.findIndex((area) => {
+      if (!Array.isArray(query?.area) || query.area.length === 0) return false;
+      return area.label.toLowerCase() == query.area[0].toLowerCase();
+    });
+    initialAreaIndex = initialAreaIndex === -1 ? 0 : initialAreaIndex;
+
+    console.log({ initialAreaIndex });
     return {
-      props: { activeArea: tab, areas: areas },
+      props: { initialArea: areas[initialAreaIndex], areas: areas },
     };
   });
