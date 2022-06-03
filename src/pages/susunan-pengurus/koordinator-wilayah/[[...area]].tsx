@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Text, Grid, Group, Input } from "@mantine/core";
+import { Text, Grid, Group, Input, MediaQuery, Select } from "@mantine/core";
 import { useDebouncedValue } from "@mantine/hooks";
 import { Search } from "tabler-icons-react";
 import { AvatarCarousel } from "components/common";
@@ -7,28 +7,22 @@ import { ManagementLayout } from "components/layouts";
 import { api, useGetMembersQuery } from "generated/graphql";
 import { GetServerSideProps } from "next";
 import { wrapper } from "redux/store";
+import { useRouter } from "next/router";
+import { capitalize } from "utils/capitalize";
 
-const areas = [
-  { id: 1, name: "ambon" },
-  { id: 2, name: "balikpapan" },
-  { id: 3, name: "banda aceh" },
-  { id: 4, name: "bandar lampung" },
-  { id: 5, name: "banjar" },
-  { id: 6, name: "banjarbaru" },
-  { id: 7, name: "banjarmasin" },
-  { id: 8, name: "batam" },
-  { id: 9, name: "bontang" },
-  { id: 10, name: "cilegon" },
-  { id: 11, name: "cirebon" },
-  { id: 12, name: "bandung" },
-];
-
-interface Props {
-  activeArea: number;
+interface Area {
+  label: string;
+  value: string;
 }
 
-export default function KoordinatorWilayah({ activeArea }: Props) {
-  const [currentAreaId, setCurrentAreaId] = useState<number>(activeArea);
+interface Props {
+  activeArea: Area;
+  areas: Area[];
+}
+
+export default function KoordinatorWilayah({ activeArea, areas }: Props) {
+  const router = useRouter();
+  const [currentArea, setCurrentArea] = useState(activeArea);
   const [filter, setFilter] = useState("");
   const [debouncedFilter] = useDebouncedValue(filter, 500);
   const {
@@ -37,10 +31,25 @@ export default function KoordinatorWilayah({ activeArea }: Props) {
     isFetching,
   } = useGetMembersQuery({
     limit: 8,
-    field: areas.find((area) => area.id === currentAreaId).name,
+    field: currentArea.label,
   });
 
   if (isLoading) <div>Loadingg...</div>;
+
+  const handleAreaChange = (area: Area) => {
+    setCurrentArea(area);
+    setUrl(area.label);
+  };
+
+  const onSelectArea = (value: string) => {
+    const selectedArea = areas.find((area) => area.value === value);
+    setCurrentArea(selectedArea);
+    setUrl(selectedArea.label);
+  };
+
+  const setUrl = (area: string) => {
+    router.push(`/susunan-pengurus/koordinator-wilayah/${area}`);
+  };
 
   return (
     <ManagementLayout
@@ -49,65 +58,81 @@ export default function KoordinatorWilayah({ activeArea }: Props) {
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
             ad minim veniam, quis "
     >
+      <MediaQuery largerThan="md" styles={{ display: "none" }}>
+        <Select
+          data={areas}
+          value={currentArea.value}
+          onChange={onSelectArea}
+          mb={40}
+          size="lg"
+        />
+      </MediaQuery>
       <Grid>
-        <Grid.Col span={3}>
-          <Group
-            p={20}
-            sx={(theme) => ({
-              borderRadius: theme.radius.md,
-              background: theme.colors.dark[5],
-            })}
-          >
-            <Text weight="bold">List Wilayah</Text>
-            <Input
-              placeholder="Cari Wilayah"
-              icon={<Search />}
+        <MediaQuery smallerThan="md" styles={{ display: "none" }}>
+          <Grid.Col span={3}>
+            <Group
+              p={20}
               sx={(theme) => ({
-                border: `1px solid`,
-                borderColor: "#eaeaea",
                 borderRadius: theme.radius.md,
-                input: {
-                  color: theme.other.gray,
-                },
+                background: theme.colors.dark[5],
               })}
-              rightSection={
-                <Text
-                  size="xs"
-                  onClick={() => setFilter("")}
-                  sx={(theme) => ({
-                    cursor: "pointer",
+            >
+              <Text weight="bold">List Wilayah</Text>
+              <Input
+                placeholder="Cari Wilayah"
+                icon={<Search />}
+                sx={(theme) => ({
+                  border: `1px solid`,
+                  borderColor: "#eaeaea",
+                  borderRadius: theme.radius.md,
+                  input: {
                     color: theme.other.gray,
-                  })}
-                >
-                  X
-                </Text>
-              }
-              variant="unstyled"
-              value={filter}
-              onChange={(e) => setFilter(e.target.value)}
-              mb={20}
-            />
-            <Group direction="column">
-              {areas
-                .filter((area) =>
-                  area.name.includes(debouncedFilter.toLowerCase())
-                )
-                .map((area) => (
+                  },
+                })}
+                rightSection={
                   <Text
-                    color={currentAreaId === area.id ? "orange" : "gray"}
-                    weight={currentAreaId === area.id ? "bold" : "normal"}
-                    transform="capitalize"
-                    onClick={() => setCurrentAreaId(area.id)}
-                    key={area.id}
-                    sx={{ cursor: "pointer" }}
+                    size="xs"
+                    onClick={() => setFilter("")}
+                    sx={(theme) => ({
+                      cursor: "pointer",
+                      color: theme.other.gray,
+                    })}
                   >
-                    {area.name}
+                    X
                   </Text>
-                ))}
+                }
+                variant="unstyled"
+                value={filter}
+                onChange={(e: any) => setFilter(e.target.value)}
+                mb={20}
+              />
+              <Group direction="column">
+                {areas
+                  .filter((area) =>
+                    area.label.includes(debouncedFilter.toLowerCase())
+                  )
+                  .map((area) => (
+                    <Text
+                      color={
+                        currentArea.value === area.value ? "orange" : "gray"
+                      }
+                      weight={
+                        currentArea.value === area.value ? "bold" : "normal"
+                      }
+                      transform="capitalize"
+                      onClick={() => handleAreaChange(area)}
+                      key={area.value}
+                      sx={{ cursor: "pointer" }}
+                      component="a"
+                    >
+                      {area.label}
+                    </Text>
+                  ))}
+              </Group>
             </Group>
-          </Group>
-        </Grid.Col>
-        <Grid.Col span={9}>
+          </Grid.Col>
+        </MediaQuery>
+        <Grid.Col md={9} span={12}>
           {isFetching ? (
             <div>Loading...</div>
           ) : (
@@ -115,6 +140,12 @@ export default function KoordinatorWilayah({ activeArea }: Props) {
               data={members.getMembers}
               rows={2}
               slidesToShow={3}
+              responsive={[
+                {
+                  breakpoint: 555,
+                  settings: { slidesToShow: 2, slidesToScroll: 2 },
+                },
+              ]}
             />
           )}
         </Grid.Col>
@@ -123,12 +154,29 @@ export default function KoordinatorWilayah({ activeArea }: Props) {
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-  let tab = areas.find((area) => {
-    return area.name.toLowerCase() == (query.area as string);
+export const getServerSideProps: GetServerSideProps =
+  wrapper.getServerSideProps((store) => async ({ query }) => {
+    const { data: response } = await store.dispatch(
+      api.endpoints.GetAreas.initiate()
+    );
+
+    const areas = response.getAreas.map((item) => ({
+      value: item.id.toString(),
+      label: capitalize(item.name),
+    }));
+
+    let tab = areas[0];
+    let areaQuery: any;
+
+    if (query?.area) {
+      areaQuery = areas.find((area) => {
+        return area.label.toLowerCase() == (query.area as string);
+      });
+    }
+    tab = !areaQuery ? tab : areaQuery;
+
+    console.log({ tab, areaQuery });
+    return {
+      props: { activeArea: tab, areas: areas },
+    };
   });
-  tab = !tab ? areas[0] : tab;
-  return {
-    props: { activeArea: tab.id },
-  };
-};

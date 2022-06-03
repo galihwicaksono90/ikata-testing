@@ -11,7 +11,6 @@ export default function DewanPengawas() {
     limit: 5,
     field: "Dewan Pengawas",
   });
-  console.log({ members });
   if (isLoading && !members) {
     return <div>Loading...</div>;
   }
@@ -20,13 +19,7 @@ export default function DewanPengawas() {
   }
 
   return (
-    <ManagementLayout
-      title="Dewan Pengawas"
-      description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis "
-    >
-      {/* <AvatarCarousel data={members?.getMembers} /> */}
+    <ManagementLayout title="Dewan Pengawas">
       <Grid>
         <Grid.Col sm={12} span={6}>
           <MemberAvatar {...members.getMembers[0]} />

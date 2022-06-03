@@ -1,20 +1,28 @@
-import { useState, useEffect } from "react";
-import { MemberAvatarProps, MemberAvatar } from "components/common";
 import { Box } from "@mantine/core";
-import { Carousel } from "components/common";
-import { Member } from "generated/graphql";
-
+import {
+  Carousel,
+  CarouselBreakpoint,
+  MemberAvatar,
+  MemberAvatarProps,
+} from "components/common";
+import { useEffect, useState } from "react";
 import "swiper/css";
-import "swiper/css/pagination";
 import "swiper/css/grid";
+import "swiper/css/pagination";
 
 interface Props {
   data: MemberAvatarProps[];
   rows?: number;
   slidesToShow?: number;
+  responsive?: CarouselBreakpoint[];
 }
 
-export const AvatarCarousel = ({ data, rows = 2, slidesToShow = 4 }: Props) => {
+export const AvatarCarousel = ({
+  data,
+  rows = 2,
+  slidesToShow = 4,
+  responsive,
+}: Props) => {
   const [avatars, setAvatars] = useState([]);
 
   useEffect(() => {
@@ -37,6 +45,7 @@ export const AvatarCarousel = ({ data, rows = 2, slidesToShow = 4 }: Props) => {
         slidesToShow={slidesToShow}
         dots
         infinite={false}
+        responsive={responsive}
       >
         {data.map((item) => (
           <MemberAvatar {...item} key={item.id} />

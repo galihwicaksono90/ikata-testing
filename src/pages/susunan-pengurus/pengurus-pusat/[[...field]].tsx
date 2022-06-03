@@ -1,5 +1,4 @@
-import { Box, Tabs } from "@mantine/core";
-import { nanoid } from "@reduxjs/toolkit";
+import { Box, Tabs, Select, MediaQuery } from "@mantine/core";
 import { AvatarCarousel } from "components/common";
 import { ManagementLayout } from "components/layouts";
 import { useGetMembersQuery } from "generated/graphql";
@@ -8,13 +7,13 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 
 const organization = [
-  { id: 0, name: "Pengurus Inti" },
-  { id: 1, name: "Biro Organisasi" },
-  { id: 2, name: "Biro Kerjasama" },
-  { id: 3, name: "Biro Dana & Pengembangan Kewirausahaan" },
-  { id: 4, name: "Biro Penelitian & Pengembangan" },
-  { id: 5, name: "Biro Sosial Budaya" },
-  { id: 6, name: "Biro Human & Publikasi" },
+  { value: "0", label: "Pengurus Inti" },
+  { value: "1", label: "Biro Organisasi" },
+  { value: "2", label: "Biro Kerjasama" },
+  { value: "3", label: "Biro Dana & Pengembangan Kewirausahaan" },
+  { value: "4", label: "Biro Penelitian & Pengembangan" },
+  { value: "5", label: "Biro Sosial Budaya" },
+  { value: "6", label: "Biro Human & Publikasi" },
 ];
 
 interface Props {
@@ -25,27 +24,24 @@ export default function PengurusPusat({ activeTab }: Props) {
   const router = useRouter();
   const [currentTab, setCurrentTab] = useState(activeTab);
 
-  const {
-    data: members,
-    refetch,
-    isLoading,
-    isFetching,
-  } = useGetMembersQuery({
+  const { data: members, isFetching } = useGetMembersQuery({
     limit: 10,
-    field: organization[currentTab].name,
+    field: organization[currentTab].label,
   });
 
   const onTabChange = (tabIndex: number) => {
-    console.log({ tabIndex });
-    /* dispatch(setPengurusPusatTabPosition(tabIndex)); */
     setCurrentTab(tabIndex);
     router.push(
       `/susunan-pengurus/pengurus-pusat/${organization[
         tabIndex
-      ].name.toLowerCase()}`,
+      ].label.toLowerCase()}`,
       undefined,
       { shallow: true }
     );
+  };
+
+  const onSelectTab = (value: string) => {
+    setCurrentTab(parseFloat(value));
   };
 
   return (
@@ -55,6 +51,15 @@ export default function PengurusPusat({ activeTab }: Props) {
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
             ad minim veniam, quis "
     >
+      <MediaQuery largerThan="sm" styles={{ display: "none" }}>
+        <Select
+          size="lg"
+          mb={40}
+          data={organization}
+          value={currentTab.toString()}
+          onChange={onSelectTab}
+        />
+      </MediaQuery>
       <Tabs
         active={currentTab}
         onTabChange={onTabChange}
@@ -80,10 +85,18 @@ export default function PengurusPusat({ activeTab }: Props) {
           "& .mantine-Tabs-body": {
             maxWidth: "75%",
           },
+          [`@media (max-width: ${theme.breakpoints.sm}px)`]: {
+            "& .mantine-Tabs-tabsListWrapper": {
+              display: "none",
+            },
+            "& .mantine-Tabs-body": {
+              maxWidth: "100%",
+            },
+          },
         })}
       >
         {organization.map((org) => (
-          <Tabs.Tab label={org.name} key={nanoid()}>
+          <Tabs.Tab label={org.label} key={org.value}>
             {isFetching ? (
               <div>Loading...</div>
             ) : (
@@ -92,6 +105,15 @@ export default function PengurusPusat({ activeTab }: Props) {
                   data={!!members?.getMembers ? members.getMembers : []}
                   slidesToShow={3}
                   rows={2}
+                  responsive={[
+                    {
+                      breakpoint: 555,
+                      settings: {
+                        slidesToShow: 2,
+                        slidesToScroll: 2,
+                      },
+                    },
+                  ]}
                 ></AvatarCarousel>
               </Box>
             )}
@@ -104,7 +126,7 @@ export default function PengurusPusat({ activeTab }: Props) {
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   let tab = organization.findIndex((org) => {
-    return org.name.toLowerCase() == (query.field as string);
+    return org.label.toLowerCase() == (query.field as string);
   });
   tab = tab === -1 ? 0 : tab;
   return {
