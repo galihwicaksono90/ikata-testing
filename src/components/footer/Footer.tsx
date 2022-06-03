@@ -1,30 +1,36 @@
-import React from "react";
 import {
   Box,
-  MediaQuery,
-  Container,
-  UnstyledButton,
-  Footer,
+  Button,
   Center,
-  Text,
+  Footer as BaseFooter,
   Group,
   Stack,
-  Button,
-  createStyles,
+  Text,
+  UnstyledButton,
   UnstyledButtonProps,
 } from "@mantine/core";
-import Image from "next/image";
 import { NextLink } from "@mantine/next";
+import { Container } from "components/common";
+import Image from "next/image";
+import React from "react";
 import { useStyles } from "theme";
 
-export default function FooterComponent() {
+export function Footer() {
   const { classes } = useStyles();
   return (
-    <Footer height="auto" className={classes.footer}>
-      <Container size={1128} sx={{ width: "100%" }}>
-        <Box
-          className={classes.responsiveGroupSmall}
-          sx={{ width: "100%", marginBottom: 60 }}
+    <BaseFooter height="auto" className={classes.footer}>
+      <Container sx={{ width: "100%" }}>
+        <Group
+          sx={(theme) => ({
+            marginBottom: 60,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+
+            [`@media (max-width: ${theme.breakpoints.sm}px)`]: {
+              flexDirection: "column",
+            },
+          })}
         >
           <Stack>
             <Box
@@ -49,7 +55,7 @@ export default function FooterComponent() {
                   position: "relative",
                 }}
               >
-                <Image src="/ikataLogo.png" layout="fill" />
+                <Image alt="" src="/ikataLogo.png" layout="fill" />
               </Box>
               <Stack>
                 <Text
@@ -62,7 +68,7 @@ export default function FooterComponent() {
                   })}
                 >
                   Ikatan Alumni Tambang <br />
-                  UPN "Veteran" Yogyakarta
+                  UPN &quot;Veteran&quot; Yogyakarta
                 </Text>
               </Stack>
             </Box>
@@ -88,24 +94,27 @@ export default function FooterComponent() {
               href="https://youtube.com"
               image="/youtube.png"
               mr={30}
+              alt=""
             />
             <SocialMediaButton
               href="https://instagram.com"
               image="/instagram.png"
+              alt=""
             />
           </Group>
-        </Box>
+        </Group>
       </Container>
       <Text className={classes.copyright}>&copy; 2022 Copyright</Text>
-    </Footer>
+    </BaseFooter>
   );
 }
 
 interface SocialMediaButtonProps extends UnstyledButtonProps<"a"> {
   image: string;
+  alt?: string;
 }
 
-function SocialMediaButton({ href, image, mr }: SocialMediaButtonProps) {
+function SocialMediaButton({ href, image, mr, alt }: SocialMediaButtonProps) {
   const { classes } = useStyles();
   return (
     <UnstyledButton
@@ -116,6 +125,7 @@ function SocialMediaButton({ href, image, mr }: SocialMediaButtonProps) {
     >
       <Center style={{ height: "100%" }}>
         <Image
+          alt={alt}
           src={image}
           layout="fixed"
           objectFit="contain"

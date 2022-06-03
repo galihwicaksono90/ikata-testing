@@ -2,7 +2,7 @@ import { Menu, Text } from "@mantine/core";
 import { NextLink } from "@mantine/next";
 import { useRouter } from "next/router";
 
-export default function MenuItemChild({
+export function MenuItemChild({
   children,
   href,
 }: {

@@ -2,20 +2,20 @@ import { PaperProps, Paper, Title, List, Box, Text } from "@mantine/core";
 import { useGetVacanciesQuery, VacancyType } from "generated/graphql";
 import { NextLink } from "@mantine/next";
 
-export interface VacancyListProps extends PaperProps<"div"> {
+export interface VacancyListLandingPageProps extends PaperProps<"div"> {
   type: VacancyType;
   limit?: number;
   title: "Beasiswa" | "Lowongan";
   href: string;
 }
 
-export default function VacancyList({
+export function VacancyListLandingPage({
   type,
   limit,
   title,
   href,
   ...rest
-}: VacancyListProps) {
+}: VacancyListLandingPageProps) {
   const { data: vacancies, isLoading } = useGetVacanciesQuery({ type, limit });
 
   if (isLoading) {
@@ -33,6 +33,7 @@ export default function VacancyList({
         borderColor: theme.colors.dark[4],
         borderWidth: "1px",
         borderStyle: "solid",
+        width: "100%",
       })}
       {...rest}
     >
@@ -54,7 +55,7 @@ export default function VacancyList({
         }
         mb={30}
       >
-        {vacancies.getVacancies.map((vacancy) => {
+        {vacancies?.getVacancies.map((vacancy) => {
           return (
             <Box
               key={vacancy.id}

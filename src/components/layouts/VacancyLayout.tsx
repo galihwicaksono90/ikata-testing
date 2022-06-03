@@ -1,23 +1,13 @@
-import MainLayout from "./MainLayout";
+import { Box, Container, Divider, Group, ScrollArea } from "@mantine/core";
 import {
-  Title,
-  ScrollArea,
-  Stack,
-  Divider,
-  Box,
-  Container,
-  Group,
-  Text,
-} from "@mantine/core";
+  VacancyDescription,
+  VacancyListItem,
+  VacancySearchbar,
+} from "components/vacancy";
+import { Company } from "generated/graphql";
 import React, { useState } from "react";
 import { useStyles } from "theme";
-import { Company, Job } from "generated/graphql";
-import {
-  VacancySearchbar,
-  VacancyListItem,
-  VacancyList,
-  VacancyDescription,
-} from "components/vacancy";
+import { MainLayout } from "components/layouts";
 
 interface Props {
   title: string;
@@ -26,7 +16,7 @@ interface Props {
   data: Company[];
 }
 
-export default function VacancyLayout({
+export function VacancyLayout({
   title,
   placeholder = "-Cari berdasarkan title dan profesi-",
   setValue,

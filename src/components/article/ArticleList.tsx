@@ -1,21 +1,20 @@
-import { Box, Stack, Text, Skeleton, AspectRatio } from "@mantine/core";
+import { Box, Skeleton, Stack, Text } from "@mantine/core";
+import { NextLink } from "@mantine/next";
+import { ArticleType, useGetArticlesQuery } from "generated/graphql";
 import Image from "next/image";
 import { formatTime } from "utils/time";
-import { useGetArticlesQuery, ArticleType } from "generated/graphql";
-import { NextLink } from "@mantine/next";
 
 interface ArticleItemsProps {
   type: ArticleType;
   limit?: number;
 }
 
-export default function ArticleList({ type, limit }: ArticleItemsProps) {
+export function ArticleList({ type, limit }: ArticleItemsProps) {
   const { data: articles, isLoading } = useGetArticlesQuery({
     limit,
     type,
   });
 
-  // show loading skeleton if loading
   if (isLoading) {
     return (
       <Stack spacing={20} mt={20}>
@@ -78,13 +77,15 @@ export default function ArticleList({ type, limit }: ArticleItemsProps) {
           sx={(theme) => ({
             display: "flex",
             gap: 20,
-
+            "& a": { color: theme.white },
             [`@media (max-width: ${theme.breakpoints.sm}px)`]: {
               flexDirection: "column",
             },
           })}
         >
           <Box
+            component={NextLink}
+            href={`/article/${article.id}`}
             sx={{
               width: "100%",
               overflow: "hidden",
@@ -93,7 +94,7 @@ export default function ArticleList({ type, limit }: ArticleItemsProps) {
               position: "relative",
             }}
           >
-            <Image src={article.image} layout="fill" objectFit="cover" />
+            <Image alt="" src={article.image} layout="fill" objectFit="cover" />
           </Box>
           <Stack spacing={6} sx={{ width: "100%" }}>
             <Text
@@ -101,7 +102,8 @@ export default function ArticleList({ type, limit }: ArticleItemsProps) {
               size="xl"
               lineClamp={2}
               component={NextLink}
-              href="/about"
+              href={`/article/${article.id}`}
+              variant="link"
             >
               {article.title}
             </Text>

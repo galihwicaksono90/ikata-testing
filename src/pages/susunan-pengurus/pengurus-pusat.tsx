@@ -1,13 +1,10 @@
-import { useState, useCallback } from "react";
+import { useCallback } from "react";
 import { Grid, Text, Paper, Group } from "@mantine/core";
 import { AvatarCarousel } from "components/common";
 import { ManagementLayout } from "components/layouts";
 import { api, useGetMembersQuery } from "generated/graphql";
-import { GetServerSideProps } from "next";
-import { wrapper } from "redux/store";
 import { setDewanPengawasTabPosition } from "redux/general/generalSlice";
 import { useAppDispatch, useAppSelector } from "redux/hooks";
-import { useDispatch } from "react-redux";
 
 const data = [
   "Pengurus Inti",
@@ -25,13 +22,12 @@ export default function PengurusPusat() {
   );
   const dispatch = useAppDispatch();
 
-  /* const [currentPageIndex, setCurrentPageIndex] = useState<number>(0); */
   const { data: members, status, refetch } = useGetMembersQuery({ limit: 5 });
 
-  const onClick = useCallback((index: number) => {
+  const onClick = (index: number) => {
     dispatch(setDewanPengawasTabPosition(index));
     refetch();
-  }, []);
+  };
 
   return (
     <ManagementLayout

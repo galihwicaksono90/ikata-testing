@@ -1,6 +1,6 @@
 import { Box } from "@mantine/core";
-import { Carousel } from "components/common";
-import AlumniCard from "./AlumniCard";
+import { Carousel, CarouselBreakpoint } from "components/common";
+import { AlumniCard } from "components/alumni";
 
 export const items = [
   {
@@ -17,10 +17,25 @@ export const items = [
   },
 ];
 
-export default function AlumniCarousel() {
+const breakpoints: CarouselBreakpoint[] = [
+  {
+    breakpoint: 860,
+    settings: {
+      slidesToShow: 2,
+    },
+  },
+  {
+    breakpoint: 580,
+    settings: {
+      slidesToShow: 1,
+    },
+  },
+];
+
+export function AlumniCarousel() {
   return (
     <Box sx={{ flexGrow: 1, height: 400 }}>
-      <Carousel slidesToShow={3} dots>
+      <Carousel slidesToShow={3} dots responsive={breakpoints} infinite={false}>
         {items.map((item, index) => (
           <AlumniCard key={index} title={item.title} image={item.image} />
         ))}

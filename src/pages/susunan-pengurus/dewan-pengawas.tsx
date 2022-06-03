@@ -1,11 +1,11 @@
 import { AvatarCarousel } from "components/common";
 import { ManagementLayout } from "components/layouts";
-import { api, ArticleType, useGetMembersQuery } from "generated/graphql";
+import { api, useGetMembersQuery } from "generated/graphql";
 import { GetServerSideProps } from "next";
 import { wrapper } from "redux/store";
 
 export default function DewanPengawas() {
-  const { data: members, isLoading } = useGetMembersQuery({ limit: 5 });
+  const { data: members, isLoading } = useGetMembersQuery({ limit: 6 });
   return (
     <ManagementLayout
       title="Dewan Pengawas"
@@ -16,7 +16,7 @@ export default function DewanPengawas() {
       {isLoading ? (
         <div>Loading...</div>
       ) : (
-        <AvatarCarousel data={members.getMembers} />
+        <AvatarCarousel data={members?.getMembers} />
       )}
     </ManagementLayout>
   );
@@ -26,7 +26,7 @@ export const getServerSideProps: GetServerSideProps =
   wrapper.getServerSideProps((store) => async () => {
     await store.dispatch(
       api.endpoints.GetMembers.initiate({
-        limit: 8,
+        limit: 6,
       })
     );
     Promise.all(api.util.getRunningOperationPromises());

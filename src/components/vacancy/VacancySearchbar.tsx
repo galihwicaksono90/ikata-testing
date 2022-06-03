@@ -1,4 +1,4 @@
-import { Group, Container, Text, Input } from "@mantine/core";
+import { Container, Group, Input, Text } from "@mantine/core";
 import { Search } from "tabler-icons-react";
 
 interface VacancySearchbarProps {
@@ -6,7 +6,10 @@ interface VacancySearchbarProps {
   placeholder?: string;
 }
 
-const VacancySearchbar = ({ title, placeholder }: VacancySearchbarProps) => {
+export const VacancySearchbar = ({
+  title,
+  placeholder,
+}: VacancySearchbarProps) => {
   return (
     <Container size={1128} sx={{ height: 90 }}>
       <Group position="apart" align="center" sx={{ height: "100%" }}>
@@ -33,5 +36,3 @@ const VacancySearchbar = ({ title, placeholder }: VacancySearchbarProps) => {
     </Container>
   );
 };
-
-export default VacancySearchbar;

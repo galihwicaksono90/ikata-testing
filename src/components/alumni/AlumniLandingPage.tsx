@@ -1,8 +1,8 @@
-import { Box, Container, Text, Title, Group } from "@mantine/core";
+import { Box, Container, Text, Title, Group, MediaQuery } from "@mantine/core";
 import { NextLink } from "@mantine/next";
 import { AlumniCarousel } from "components/alumni";
 
-export default function Alumni() {
+export function AlumniLandingPage() {
   return (
     <div style={{ width: "100%", background: "white" }}>
       <Container size={1128} pt={80} pb={50}>
@@ -17,6 +17,7 @@ export default function Alumni() {
         >
           <Title
             mt={30}
+            mb={40}
             order={2}
             sx={(theme) => ({
               fontWeight: 700,
@@ -24,8 +25,11 @@ export default function Alumni() {
               "& span": { color: theme.primaryColor },
             })}
           >
-            <span>Bisnis</span> Alumni <br />
-            Tambang
+            <span>Bisnis</span> Alumni
+            <MediaQuery smallerThan="md" styles={{ display: "none" }}>
+              <br />
+            </MediaQuery>
+            {" Tambang"}
           </Title>
           <AlumniCarousel />
         </Box>

@@ -1,51 +1,12 @@
 import React from "react";
 import { ManagementLayout } from "components/layouts";
 import { AvatarCarousel } from "components/common";
+import { api, ArticleType, useGetMembersQuery } from "generated/graphql";
+import { GetServerSideProps } from "next";
+import { wrapper } from "redux/store";
 
-const data = [
-  {
-    name: "Rizki Amrullah",
-    title: "Ketua",
-  },
-  {
-    name: "Budi Gunawan",
-    title: "Wakil Ketua",
-  },
-  {
-    name: "Sri Lestari",
-    title: "Sekretaris",
-  },
-  {
-    name: "Setyo Kurniawan",
-    title: "Bendahara",
-  },
-  {
-    name: "Rizki Amrullah",
-    title: "Ketua",
-  },
-  {
-    name: "Budi Gunawan",
-    title: "Wakil Ketua",
-  },
-  {
-    name: "Sri Lestari",
-    title: "Sekretaris",
-  },
-  {
-    name: "Setyo Kurniawan",
-    title: "Bendahara",
-  },
-  {
-    name: "Sri Lestari",
-    title: "Sekretaris",
-  },
-  {
-    name: "Setyo Kurniawan",
-    title: "Bendahara",
-  },
-];
-
-const KoordinatorAngkatan = () => {
+export default function KoordinatorAngkatan() {
+  const { data: members, isLoading } = useGetMembersQuery({ limit: 8 });
   return (
     <ManagementLayout
       title="Koordinator Angkatan"
@@ -53,9 +14,24 @@ const KoordinatorAngkatan = () => {
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
             ad minim veniam, quis "
     >
-      <AvatarCarousel data={data} />
+      {isLoading ? (
+        <div>Loading...</div>
+      ) : (
+        <AvatarCarousel data={members?.getMembers} />
+      )}
     </ManagementLayout>
   );
-};
+}
 
-export default KoordinatorAngkatan;
+export const getServerSideProps: GetServerSideProps =
+  wrapper.getServerSideProps((store) => async () => {
+    await store.dispatch(
+      api.endpoints.GetMembers.initiate({
+        limit: 8,
+      })
+    );
+    Promise.all(api.util.getRunningOperationPromises());
+    return {
+      props: {},
+    };
+  });

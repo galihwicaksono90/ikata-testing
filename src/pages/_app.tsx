@@ -27,13 +27,13 @@ function App(props: AppProps) {
           },
           [`@media (max-width: ${theme.breakpoints.sm}px)`]: {
             html: {
-              fontSize: "12px",
+              fontSize: "14px",
             },
           },
         })}
       />
       <MantineProvider withGlobalStyles withNormalizeCSS theme={theme}>
-        <NotificationsProvider position="bottom-center">
+        <NotificationsProvider position="bottom-center" position="top-right">
           <Component {...pageProps} />
         </NotificationsProvider>
       </MantineProvider>

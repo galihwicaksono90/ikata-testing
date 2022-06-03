@@ -7,18 +7,21 @@ interface ActivityItemProps {
   image: string;
 }
 
-interface Props extends ActivityItemProps {
+interface Props {
   title: string;
   data: ActivityItemProps[];
+  href: string;
 }
 
-export default function ActivityItemList({ title, data }: Props) {
+export function ActivityItemList({ title, data, href }: Props) {
   return (
-    <Stack>
-      <SectionTitleWithLink title={title} href="/" />
-      {data.map((item, index) => (
-        <ActivityItem title={item.title} image={item.image} key={index} />
-      ))}
+    <Stack spacing={20}>
+      <SectionTitleWithLink title={title} href={href} />
+      <Stack>
+        {data.map((item, index) => (
+          <ActivityItem title={item.title} image={item.image} key={index} />
+        ))}
+      </Stack>
     </Stack>
   );
 }
@@ -35,7 +38,7 @@ function ActivityItem({ title, image }: ActivityItemProps) {
           overflow: "hidden",
         }}
       >
-        <Image src={image} layout="fill" objectFit="cover" />
+        <Image alt="" src={image} layout="fill" objectFit="cover" />
       </Center>
       <Text weight="bold" size="lg">
         {title}
