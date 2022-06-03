@@ -24,7 +24,7 @@ export default function AboutPage({ data, initialTab }: AboutProps) {
   const router = useRouter();
 
   const onTabChange = (active: number, tabKey: string) => {
-    router.push(`/tentang/${tabKey}`, undefined, { shallow: true });
+    router.push(`/tentang-kami/${tabKey}`, undefined, { shallow: true });
     setActiveTab(active);
   };
 

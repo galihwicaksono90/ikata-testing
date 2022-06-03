@@ -73,7 +73,6 @@ export function HeaderTop({ opened, setOpened }: MainLayoutProps) {
           </Group>
           <MediaQuery smallerThan="md" styles={{ display: "none" }}>
             <Group spacing={53}>
-              <SearchInput />
               <Group spacing="sm">
                 <Avatar
                   radius="xl"

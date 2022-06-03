@@ -12,7 +12,6 @@ interface Props {
 }
 
 const ForgotPassword = ({ tokenValid }: Props) => {
-  console.log({ tokenValid });
   if (!tokenValid) {
     return (
       <MainLayout>
@@ -31,7 +30,7 @@ const ForgotPassword = ({ tokenValid }: Props) => {
                   margin: "0px auto",
                 }}
               >
-                <Image src="/shareLink.png" layout="fill" />
+                <Image src="/shareLink.png" layout="fill" alt="" />
               </Box>
               <Title>Link Kadaluarsa</Title>
               <Text>
