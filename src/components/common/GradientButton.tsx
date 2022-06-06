@@ -10,12 +10,12 @@ interface GradientButtonProps extends BaseButtonProps<"button"> {
   href?: string;
 }
 
-export const GradientButton = ({
+function GradientButton({
   children,
   href,
   loading,
   ...rest
-}: GradientButtonProps) => {
+}: GradientButtonProps) {
   if (href) {
     return (
       <Link href={href} passHref>
@@ -30,7 +30,7 @@ export const GradientButton = ({
       {children}
     </Button>
   );
-};
+}
 
 const Button = forwardRef(
   ({ children, variant = "gradient", loading, sx, ...rest }: any, ref) => {
@@ -64,3 +64,6 @@ const Button = forwardRef(
     );
   }
 );
+
+Button.displayName = "ButtonComponent";
+export { GradientButton };

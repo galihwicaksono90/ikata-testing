@@ -38,35 +38,35 @@ interface RegisterFormProps {
 
 export const RegisterForm = () => {
   const [showModal, setShowModal] = useState<boolean>(false);
-  const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [showConfirmPassword, setConfirmShowPassword] =
-    useState<boolean>(false);
+  useState<boolean>(false);
   const { classes } = useStyles();
   const {
     register,
     handleSubmit,
-    setError,
     control,
     formState: { errors, isValid },
   } = useForm<RegisterFormProps>({
     mode: "onSubmit",
     resolver: registerFormResolver,
   });
-  const [registerUser, { isLoading, isError, data: registerData }] =
+  const [registerUser, { isLoading, data: registerData }] =
     useRegisterMutation();
 
-  const onSubmit = useCallback(async (values: RegisterFormProps) => {
-    try {
-      const registerData = await registerUser(values).unwrap();
-      console.log({ registerData });
-    } catch (error) {
-      showNotification({
-        title: "Error",
-        message: error?.message,
-        id: "register-error",
-      });
-    }
-  }, []);
+  const onSubmit = useCallback(
+    async (values: RegisterFormProps) => {
+      try {
+        const registerData = await registerUser(values).unwrap();
+        console.log({ registerData });
+      } catch (error) {
+        showNotification({
+          title: "Error",
+          message: error?.message,
+          id: "register-error",
+        });
+      }
+    },
+    [registerUser]
+  );
 
   /* const onError = useCallback((errors: any, e) => {
    *   if (errors?.password?.type === "matches") {
@@ -195,7 +195,7 @@ export const RegisterForm = () => {
       >
         <Stack align="center">
           <Box sx={{ position: "relative", width: 192, height: 150 }}>
-            <Image src="/warning.png" layout="fill" />
+            <Image src="/warning.png" layout="fill" alt="" />
           </Box>
           <Title order={3} align="center">
             Pendaftaran Akun Berhasil

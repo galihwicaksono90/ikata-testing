@@ -2,8 +2,10 @@ import { Tabs } from "@mantine/core";
 import { AboutCarousel, AboutDescription } from "components/about";
 import { Container } from "components/common";
 import { MainLayout } from "components/layouts";
-import { AboutType, api, About, Testimony } from "generated/graphql";
+import { About, api, Testimony } from "generated/graphql";
 import { GetServerSideProps } from "next";
+import { useRouter } from "next/router";
+import { useState } from "react";
 import { wrapper } from "redux/store";
 
 interface AboutProps {
@@ -12,13 +14,26 @@ interface AboutProps {
     organisasi: About;
     testimonies: Testimony[];
   };
+  initialTab: number;
 }
 
-export default function AboutPage({ data }: AboutProps) {
+const tabObject = ["ikata", "jurusan", "ketua"];
+
+export default function AboutPage({ data, initialTab }: AboutProps) {
+  const [activeTab, setActiveTab] = useState(initialTab);
+  const router = useRouter();
+
+  const onTabChange = (active: number, tabKey: string) => {
+    router.push(`/tentang-kami/${tabKey}`, undefined, { shallow: true });
+    setActiveTab(active);
+  };
+
   return (
     <MainLayout>
       <Container pt={40}>
         <Tabs
+          active={activeTab}
+          onTabChange={onTabChange}
           variant="pills"
           tabPadding={40}
           sx={(theme) => ({
@@ -33,16 +48,19 @@ export default function AboutPage({ data }: AboutProps) {
             },
           })}
         >
-          <Tabs.Tab label="Tentang IKATA">
+          <Tabs.Tab label="Tentang IKATA" tabKey="ikata">
             <AboutDescription title="Tentang IKATA" data={data.jurusan} />
           </Tabs.Tab>
-          <Tabs.Tab label="Tentang Jurusan Teknik Pertambangan">
+          <Tabs.Tab
+            label="Tentang Jurusan Teknik Pertambangan"
+            tabKey="jurusan"
+          >
             <AboutDescription
               title={`Tentang Jurusan Teknik Pertambangan UPN "Veteran" Yogyakarta`}
               data={data.organisasi}
             />
           </Tabs.Tab>
-          <Tabs.Tab label="Ketua Ikata">
+          <Tabs.Tab label="Ketua Ikata" tabKey="ketua">
             <AboutCarousel data={data.testimonies} />
           </Tabs.Tab>
         </Tabs>
@@ -52,7 +70,19 @@ export default function AboutPage({ data }: AboutProps) {
 }
 
 export const getServerSideProps: GetServerSideProps =
-  wrapper.getServerSideProps((store) => async () => {
+  wrapper.getServerSideProps((store) => async ({ query }) => {
+    const getTab = (arr) => {
+      if (!Array.isArray(arr) || arr.length === 0) return 0;
+
+      const tab = arr[0];
+
+      const index = tabObject.findIndex((obj) => obj == tab.toLowerCase());
+
+      return index >= 0 ? index : 0;
+    };
+
+    const initialTab = getTab(query?.tab);
+
     try {
       const response = await store.dispatch(
         api.endpoints.GetAbout.initiate({
@@ -66,6 +96,7 @@ export const getServerSideProps: GetServerSideProps =
             organisasi: response.data.organisasi,
             testimonies: response.data.getTestimonies,
           },
+          initialTab,
         },
       };
     } catch (e) {
@@ -76,9 +107,8 @@ export const getServerSideProps: GetServerSideProps =
             organisasi: {},
             testimonies: [],
           },
+          initialTab,
         },
       };
     }
-
-    /* Promise.all(api.util.getRunningOperationPromises()); */
   });

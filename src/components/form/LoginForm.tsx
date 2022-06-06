@@ -36,30 +36,33 @@ export function LoginForm() {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = useCallback((values: LoginFormProps) => {
-    setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-      if (values.password !== "password" || values.nim !== 1234) {
-        setError("nim", { message: "" });
-        setError("password", { message: "" });
+  const onSubmit = useCallback(
+    (values: LoginFormProps) => {
+      setIsLoading(true);
+      setTimeout(() => {
+        setIsLoading(false);
+        if (values.password !== "password" || values.nim !== 1234) {
+          setError("nim", { message: "" });
+          setError("password", { message: "" });
+
+          showNotification({
+            message: "Nomor induk Mahasiswa / Password tidak terdaftar",
+            id: "login-error",
+            radius: "xs",
+          });
+          return;
+        }
 
         showNotification({
-          message: "Nomor induk Makasiswa / Password tidak terdaftar",
-          id: "login-error",
-          radius: "xs",
+          title: `Hi!`,
+          message: `Selamat datang kembali!`,
         });
-        return;
-      }
 
-      showNotification({
-        title: `Hi!`,
-        message: `Selamat datang kembali!`,
-      });
-
-      router.push("/");
-    }, 2000);
-  }, []);
+        router.push("/");
+      }, 2000);
+    },
+    [router, setError]
+  );
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={classes.form}>

@@ -27,47 +27,42 @@ export function Navbar({ opened, setOpened }: MainLayoutProps) {
           }}
           fixed
         >
-          <Stack>
-            <BaseNavbar.Section>
-              <Box
+          <BaseNavbar.Section>
+            <Box
+              sx={{
+                height: 102,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "flex-end",
+              }}
+            >
+              <Burger
+                opened={opened}
+                onClick={() => setOpened((o) => !o)}
+                color="white"
+              />
+            </Box>
+          </BaseNavbar.Section>
+          <BaseNavbar.Section>
+            <Box
+              component="ul"
+              className={classes.menuItemsNavbar}
+              style={{
+                gap: 0,
+                width: "100%",
+                paddingLeft: 0,
+              }}
+            >
+              <ScrollArea
                 sx={{
-                  height: 102,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "flex-end",
-                }}
-              >
-                <Burger
-                  opened={opened}
-                  onClick={() => setOpened((o) => !o)}
-                  color="white"
-                />
-              </Box>
-            </BaseNavbar.Section>
-            <BaseNavbar.Section>
-              <SearchInput width="100%" />
-            </BaseNavbar.Section>
-            <BaseNavbar.Section>
-              <Box
-                component="ul"
-                className={classes.menuItemsNavbar}
-                style={{
-                  gap: 0,
+                  height: "calc(100vh - 179px)",
                   width: "100%",
-                  paddingLeft: 0,
                 }}
               >
-                <ScrollArea
-                  sx={{
-                    height: "calc(100vh - 179px)",
-                    width: "100%",
-                  }}
-                >
-                  <NavbarMenu />
-                </ScrollArea>
-              </Box>
-            </BaseNavbar.Section>
-          </Stack>
+                <NavbarMenu />
+              </ScrollArea>
+            </Box>
+          </BaseNavbar.Section>
         </BaseNavbar>
       </Box>
     </MediaQuery>

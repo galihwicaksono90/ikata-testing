@@ -26,20 +26,23 @@ export const ResetPasswordForm = () => {
     formState: { errors, isValid },
   } = useForm({ mode: "onChange", resolver: resetPasswordResolver });
 
-  const onSubmit = useCallback((values: FormProps) => {
-    setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-      console.log({ isValid });
-      if (!errors) {
-        return;
-      }
-      setIsLoading(false);
-      setShowModal(true);
-    }, 2000);
-  }, []);
+  const onSubmit = useCallback(
+    (values: FormProps) => {
+      setIsLoading(true);
+      setTimeout(() => {
+        setIsLoading(false);
+        console.log({ isValid });
+        if (!errors) {
+          return;
+        }
+        setIsLoading(false);
+        setShowModal(true);
+      }, 2000);
+    },
+    [errors, isValid]
+  );
 
-  const onError = useCallback((errors, e) => {
+  const onError = useCallback((errors: any, e) => {
     if (errors?.password?.type === "matches") {
       showNotification({
         message: errors.password.message,
@@ -87,7 +90,7 @@ export const ResetPasswordForm = () => {
       >
         <Stack align="center" spacing={30}>
           <Box sx={{ position: "relative", width: 192, height: 150 }}>
-            <Image src="/warning.png" layout="fill" />
+            <Image src="/warning.png" layout="fill" alt="" />
           </Box>
           <Title order={3} align="center">
             Password Berhasil Dirubah
