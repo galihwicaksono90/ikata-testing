@@ -49,6 +49,12 @@ const Button = forwardRef(
         sx={(theme) => ({
           ...sx,
           color: theme.colors.dark[7],
+          fontSize: theme.fontSizes.md,
+          "&.mantine-Button-loading": {
+            "&:disabled": {
+              filter: "none",
+            },
+          },
           "&:disabled": {
             filter: "brightness(40%)",
           },

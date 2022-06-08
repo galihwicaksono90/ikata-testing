@@ -1,19 +1,16 @@
-import React from "react";
 import {
   AspectRatio,
   Box,
+  Burger,
   Group,
+  MediaQuery,
   Stack,
   Text,
-  MediaQuery,
-  Avatar,
-  Burger,
 } from "@mantine/core";
-import { NextLink } from "@mantine/next";
-import Image from "next/image";
-import { UserCircle } from "tabler-icons-react";
-import { Container, SearchInput } from "components/common";
+import { Container, UserAvatar } from "components/common";
 import { MainLayoutProps } from "components/layouts";
+import Image from "next/image";
+import React from "react";
 
 export function HeaderTop({ opened, setOpened }: MainLayoutProps) {
   return (
@@ -71,43 +68,7 @@ export function HeaderTop({ opened, setOpened }: MainLayoutProps) {
               </Stack>
             </MediaQuery>
           </Group>
-          <MediaQuery smallerThan="md" styles={{ display: "none" }}>
-            <Group spacing={53}>
-              <SearchInput />
-              <Group spacing="sm">
-                <Avatar
-                  radius="xl"
-                  styles={(theme) => ({
-                    placeholder: { background: theme.colors.dark[8] },
-                  })}
-                >
-                  <UserCircle size={30} color="white" />
-                </Avatar>
-                <Text
-                  variant="link"
-                  component={NextLink}
-                  href="/login"
-                  weight="bold"
-                >
-                  Login
-                </Text>
-                <Text weight="bold" color="orange">
-                  |
-                </Text>
-                <Text
-                  variant="link"
-                  component={NextLink}
-                  href="/register"
-                  weight="bold"
-                  sx={{
-                    color: "white",
-                  }}
-                >
-                  Register
-                </Text>
-              </Group>
-            </Group>
-          </MediaQuery>
+          <UserAvatar />
           <MediaQuery largerThan="md" styles={{ display: "none" }}>
             <Burger
               opened={opened}

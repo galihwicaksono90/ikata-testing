@@ -5,8 +5,9 @@ import {
   Navbar as BaseNavbar,
   ScrollArea,
   Stack,
+  Group,
 } from "@mantine/core";
-import { SearchInput } from "components/common";
+import { SearchInput, UserAvatar } from "components/common";
 import { useStyles } from "theme";
 import { NavbarMenu } from "components/navbar";
 import { MainLayoutProps } from "components/layouts";
@@ -29,20 +30,20 @@ export function Navbar({ opened, setOpened }: MainLayoutProps) {
         >
           <Stack>
             <BaseNavbar.Section>
-              <Box
+              <Group
+                align="center"
+                position="apart"
                 sx={{
                   height: 102,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "flex-end",
                 }}
               >
+                <UserAvatar hidden />
                 <Burger
                   opened={opened}
                   onClick={() => setOpened((o) => !o)}
                   color="white"
                 />
-              </Box>
+              </Group>
             </BaseNavbar.Section>
             <BaseNavbar.Section>
               <SearchInput width="100%" />
