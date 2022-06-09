@@ -11,6 +11,7 @@ import { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useStyles } from "theme";
 import { loginResolver } from "./formResolver";
+import { useLoginMutation } from "generated/graphql";
 
 interface LoginFormProps {
   email: string;
@@ -19,9 +20,9 @@ interface LoginFormProps {
 
 export function LoginForm() {
   const { classes } = useStyles();
-  const [isLoading, setIsLoading] = useState(false);
+  /* const [isLoading, setIsLoading] = useState(false); */
   const router = useRouter();
-
+  const [login, { isLoading, error }] = useLoginMutation();
   const {
     register,
     handleSubmit,
@@ -31,34 +32,22 @@ export function LoginForm() {
     mode: "onChange",
     resolver: loginResolver,
   });
-
-  console.log({ errors });
-  const onSubmit = useCallback((values: LoginFormProps) => {
-    setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-      if (
-        values.password !== "Password1" ||
-        values.email !== "user@benar.com"
-      ) {
-        setError("email", { message: "" });
-        setError("password", { message: "" });
-
-        showNotification({
-          message: "Nomor induk Makasiswa / Password tidak terdaftar",
-          id: "login-error",
-          radius: "xs",
-        });
-        return;
-      }
-
+  const onSubmit = useCallback(async (values: LoginFormProps) => {
+    try {
+      const user = await login({ user: values }).unwrap();
       showNotification({
         title: `Hi!`,
         message: `Selamat datang kembali!`,
       });
-
-      router.push("/");
-    }, 2000);
+      console.log({ user });
+    } catch (e) {
+      console.log({ e });
+      showNotification({
+        title: e.name,
+        message: e.message,
+        id: "login-error",
+      });
+    }
   }, []);
 
   return (
@@ -78,13 +67,7 @@ export function LoginForm() {
       <Group position="right" mb={40}>
         <TextLink href="/forgot-password">Lupa Password?</TextLink>
       </Group>
-      <GradientButton
-        type="submit"
-        disabled={!isValid}
-        fullWidth
-        loading={isLoading}
-        mb={50}
-      >
+      <GradientButton type="submit" fullWidth loading={isLoading} mb={50}>
         Login
       </GradientButton>
       <Group position="center">

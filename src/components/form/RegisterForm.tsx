@@ -23,7 +23,6 @@ import {
 import { createClassYears } from "utils/createClassYears";
 import Image from "next/image";
 import { registerFormResolver } from "./formResolver";
-import { useRegisterMutation } from "generated/graphql";
 
 interface RegisterFormProps {
   fullName: string;
@@ -52,21 +51,9 @@ export const RegisterForm = () => {
     mode: "onSubmit",
     resolver: registerFormResolver,
   });
-  const [registerUser, { isLoading, isError, data: registerData }] =
-    useRegisterMutation();
 
   const onSubmit = useCallback(async (values: RegisterFormProps) => {
-    try {
-      const registerData = await registerUser(values).unwrap();
-      console.log({ registerData });
-      setShowModal(true);
-    } catch (error) {
-      showNotification({
-        title: "Error",
-        message: error?.message,
-        id: "register-error",
-      });
-    }
+    console.log({ values });
   }, []);
 
   return (

@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "gen": "graphql-codegen --config codegen.yml"
+    "gen": "graphql-codegen -r dotenv/config --config codegen.yml"
   },
   "dependencies": {
     "@graphql-codegen/cli": "^2.6.2",
@@ -20,6 +20,7 @@
     "@mantine/next": "^4.1.4",
     "@mantine/notifications": "^4.2.5",
     "@reduxjs/toolkit": "^1.8.1",
+    "dotenv": "^16.0.1",
     "graphql": "^16.5.0",
     "graphql-request": "^4.2.0",
     "next": "12.1.5",

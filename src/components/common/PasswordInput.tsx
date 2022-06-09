@@ -9,7 +9,6 @@ export const PasswordInput = ({ ...rest }: PasswordInputProps) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const toggleVisibility = () => {
-    console.log("toggle");
     setShowPassword((o) => !o);
   };
 
