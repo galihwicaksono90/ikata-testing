@@ -20,7 +20,7 @@ export const UserAvatar = ({ hidden }: Props) => {
       const token = localStorage.getItem("token");
       if (!!user || !token || token === "undefined") return;
       try {
-        await me();
+        const user = await me().unwrap();
       } catch (e) {
         showNotification({
           title: e.name,

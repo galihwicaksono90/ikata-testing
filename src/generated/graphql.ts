@@ -176,6 +176,13 @@ export type LoginMutationVariables = Exact<{
 
 export type LoginMutation = { __typename?: 'rootMutation', login?: { __typename?: 'User', id?: string | null, fullName?: string | null, nickName?: string | null, email?: string | null, token?: string | null } | null };
 
+export type RegisterMutationVariables = Exact<{
+  user?: InputMaybe<UserInputTypeRegiste>;
+}>;
+
+
+export type RegisterMutation = { __typename?: 'rootMutation', register?: { __typename?: 'User', id?: string | null, email?: string | null } | null };
+
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -197,6 +204,14 @@ export const LoginDocument = `
   }
 }
     ${BasicAuthUserFragmentDoc}`;
+export const RegisterDocument = `
+    mutation Register($user: UserInputTypeRegiste) {
+  register(user: $user) {
+    id
+    email
+  }
+}
+    `;
 export const MeDocument = `
     query Me {
   user {
@@ -210,6 +225,9 @@ const injectedRtkApi = api.injectEndpoints({
     Login: build.mutation<LoginMutation, LoginMutationVariables>({
       query: (variables) => ({ document: LoginDocument, variables })
     }),
+    Register: build.mutation<RegisterMutation, RegisterMutationVariables | void>({
+      query: (variables) => ({ document: RegisterDocument, variables })
+    }),
     Me: build.query<MeQuery, MeQueryVariables | void>({
       query: (variables) => ({ document: MeDocument, variables })
     }),
@@ -217,5 +235,5 @@ const injectedRtkApi = api.injectEndpoints({
 });
 
 export { injectedRtkApi as api };
-export const { useLoginMutation, useMeQuery, useLazyMeQuery } = injectedRtkApi;
+export const { useLoginMutation, useRegisterMutation, useMeQuery, useLazyMeQuery } = injectedRtkApi;
 

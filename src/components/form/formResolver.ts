@@ -1,10 +1,15 @@
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { UseFormSetError } from "react-hook-form";
+import { UseFormSetError, UseFormSetFocus } from "react-hook-form";
+import { UserInputTypeRegiste, UserInputTypeLogi } from "generated/graphql";
+import { RegisterFormProps } from "components/form";
 
-export interface LoginFormProps {
-  email: string;
-  password: string;
+interface ValidationProps<T> {
+  (
+    values: T,
+    setError: UseFormSetError<T>,
+    setFocus?: UseFormSetFocus<T>
+  ): boolean;
 }
 
 const numberRegex = /^\d+$/;
@@ -21,12 +26,48 @@ export const errorMessage = {
   number: "Wajib menggunakan angka",
 };
 
-export const validateLoginForm = (
-  values: LoginFormProps,
-  setError: UseFormSetError<LoginFormProps>
-): boolean => {
+export const validateLoginForm: ValidationProps<UserInputTypeLogi> = (
+  values,
+  setError
+) => {
   if (!values.email.match(emailRegex)) {
     setError("email", { message: errorMessage.email }, { shouldFocus: true });
+    return false;
+  }
+
+  return true;
+};
+
+export const validateRegisterForm: ValidationProps<RegisterFormProps> = (
+  values,
+  setError,
+  setFocus
+) => {
+  let errors = [];
+  if (!values.email.match(emailRegex)) {
+    setError("email", { message: errorMessage.email });
+    errors.push("email");
+  }
+  if (!values.nim.toString().match(numberRegex)) {
+    setError("nim", { message: errorMessage.number });
+    errors.push("nim");
+  }
+  if (!values.phone.match(numberRegex)) {
+    setError("phone", { message: errorMessage.number });
+    errors.push("phone");
+  }
+  if (!values.password.match(passwordRegex)) {
+    setError("password", { message: errorMessage.password });
+    errors.push("password");
+  }
+  if (values.password !== values.confirmPassword) {
+    setError("confirmPassword", { message: errorMessage.confirmPassword });
+    errors.push("confirmPassword");
+  }
+
+  // set focus to the first error field
+  if (errors.length > 0) {
+    setFocus(errors[0]);
     return false;
   }
 

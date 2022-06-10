@@ -1,66 +1,75 @@
-import {
-  Divider,
-  Group,
-  Box,
-  Text,
-  RadioGroup,
-  Radio,
-  Select,
-  Stack,
-  Title,
-} from "@mantine/core";
-import { useCallback, useState } from "react";
-import { useForm, Controller } from "react-hook-form";
-import { useStyles } from "theme";
+import { Divider, Group, Radio, RadioGroup, Select, Text } from "@mantine/core";
 import {
   GradientButton,
-  Modal,
-  showNotification,
   PasswordInput,
-  TextInput,
+  showNotification,
   SuccessModal,
+  TextInput,
 } from "components/common";
-import { createClassYears } from "utils/createClassYears";
-import Image from "next/image";
-import { registerFormResolver } from "./formResolver";
+import { useCallback, useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { useStyles } from "theme";
+import { registerFormResolver, validateRegisterForm } from "./formResolver";
+import {
+  useRegisterMutation,
+  UserInputTypeRegiste,
+  GenderEnum,
+} from "generated/graphql";
+import { capitalize, createClassYears } from "utils";
 
-interface RegisterFormProps {
-  fullName: string;
-  nickName: string;
-  prefixTitle: string;
-  suffixTitle: string;
-  email: string;
-  phone: number;
-  gender: string;
-  classYear: string;
-  nim: number;
-  password: string;
+export type RegisterFormProps = Omit<
+  UserInputTypeRegiste,
+  "classYear" | "nim"
+> & {
   confirmPassword: string;
-}
+  classYear: string;
+  nim: string;
+};
 
 export const RegisterForm = () => {
-  const [showModal, setShowModal] = useState<boolean>(false);
-  useState<boolean>(false);
+  const [showModal, setShowModal] = useState(false);
   const { classes } = useStyles();
+  const [registerUser, { isLoading }] = useRegisterMutation();
   const {
     register,
     handleSubmit,
     control,
-    formState: { errors },
+    setError,
+    setFocus,
+    formState: { errors, isValid },
   } = useForm<RegisterFormProps>({
-    mode: "onSubmit",
-    resolver: registerFormResolver,
+    mode: "onChange",
   });
 
   const onSubmit = useCallback(async (values: RegisterFormProps) => {
-    console.log({ values });
+    if (!validateRegisterForm(values, setError, setFocus)) return;
+
+    delete values.confirmPassword;
+
+    const newValues: UserInputTypeRegiste = {
+      ...values,
+      classYear: parseInt(values.classYear),
+      nim: parseInt(values.nim),
+      fullName: capitalize(values.fullName),
+      email: values.email.toLowerCase(),
+    };
+
+    try {
+      await registerUser({ user: newValues }).unwrap();
+      setShowModal(true);
+    } catch (e) {
+      showNotification({
+        message: e.message,
+        id: "register-error",
+      });
+    }
   }, []);
 
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)} className={classes.form}>
         <TextInput
-          register={register("fullName")}
+          register={register("fullName", { required: true })}
           label="Nama Lengkap"
           placeholder="Masukkan Nama Lengkap"
           error={errors.fullName}
@@ -85,13 +94,13 @@ export const RegisterForm = () => {
         />
         <TextInput
           autoComplete="off"
-          register={register("email")}
+          register={register("email", { required: true })}
           label="Email"
           placeholder="Masukkan Email"
           error={errors.email}
         />
         <TextInput
-          register={register("phone")}
+          register={register("phone", { required: true })}
           maxLength={13}
           min={0}
           label="Nomor Telepon"
@@ -103,6 +112,7 @@ export const RegisterForm = () => {
           <Controller
             name="gender"
             control={control}
+            rules={{ required: true }}
             render={({ field }) => {
               return (
                 <RadioGroup
@@ -111,8 +121,8 @@ export const RegisterForm = () => {
                   error={!!errors?.gender ? errors.gender.message : null}
                   size="lg"
                 >
-                  <Radio value="male" label="Pria" />
-                  <Radio value="female" label="Wanita" />
+                  <Radio value={GenderEnum.Pria} label="Pria" />
+                  <Radio value={GenderEnum.Wanita} label="Wanita" />
                 </RadioGroup>
               );
             }}
@@ -120,6 +130,7 @@ export const RegisterForm = () => {
           <Controller
             name="classYear"
             control={control}
+            rules={{ required: true }}
             render={({ field }) => {
               return (
                 <Select
@@ -136,7 +147,7 @@ export const RegisterForm = () => {
           ></Controller>
         </Group>
         <TextInput
-          register={register("nim")}
+          register={register("nim", { required: true })}
           label="Nomor Induk Mahasiswa"
           placeholder="Masukkan Nomor Induk Mahasiswa"
           error={errors.nim}
@@ -144,13 +155,13 @@ export const RegisterForm = () => {
           min={0}
         />
         <PasswordInput
-          register={register("password")}
+          register={register("password", { required: true })}
           label="Password"
           placeholder="Masukkan Password"
           error={errors.password}
         />
         <PasswordInput
-          register={register("confirmPassword")}
+          register={register("confirmPassword", { required: true })}
           label="Konfirmasi Password"
           placeholder="Konfirmasi Password"
           error={errors.confirmPassword}
@@ -160,7 +171,13 @@ export const RegisterForm = () => {
           panjang minimal 6 karakter
         </Text>
         <Divider mt={30} sx={{ backgroundColor: "#d9d9d9" }} />
-        <GradientButton type="submit" fullWidth mt={45} loading={isLoading}>
+        <GradientButton
+          type="submit"
+          fullWidth
+          mt={45}
+          loading={isLoading}
+          disabled={!isValid}
+        >
           Daftar Baru
         </GradientButton>
       </form>
