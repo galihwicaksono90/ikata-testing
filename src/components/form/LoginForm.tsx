@@ -6,44 +6,33 @@ import {
   TextInput,
   TextLink,
 } from "components/common";
+import { useLoginMutation } from "generated/graphql";
 import { useRouter } from "next/router";
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { useStyles } from "theme";
-import { loginResolver } from "./formResolver";
-import { useLoginMutation } from "generated/graphql";
-
-interface LoginFormProps {
-  email: string;
-  password: string;
-}
+import { LoginFormProps, validateLoginForm } from "./formResolver";
 
 export function LoginForm() {
   const { classes } = useStyles();
-  /* const [isLoading, setIsLoading] = useState(false); */
   const router = useRouter();
-  const [login, { isLoading, error }] = useLoginMutation();
-  const {
-    register,
-    handleSubmit,
-    setError,
-    formState: { errors, isValid },
-  } = useForm<LoginFormProps>({
-    mode: "onChange",
-    resolver: loginResolver,
-  });
+  const [login, { isLoading }] = useLoginMutation();
+  const { register, handleSubmit, formState, setError } =
+    useForm<LoginFormProps>({
+      mode: "onChange",
+    });
+
+  const { errors, isValid } = formState;
+
   const onSubmit = useCallback(async (values: LoginFormProps) => {
+    if (!validateLoginForm(values, setError)) return;
+
     try {
       const user = await login({ user: values }).unwrap();
-      showNotification({
-        title: `Hi!`,
-        message: `Selamat datang kembali!`,
-      });
-      console.log({ user });
+      localStorage.setItem("token", user.login.token);
+      router.push("/");
     } catch (e) {
-      console.log({ e });
       showNotification({
-        title: e.name,
         message: e.message,
         id: "login-error",
       });
@@ -53,13 +42,13 @@ export function LoginForm() {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={classes.form}>
       <TextInput
-        register={register("email")}
+        register={register("email", { required: true })}
         label="Email"
-        error={!!errors.email}
+        error={errors.email}
         placeholder="Masukkan Email"
       />
       <PasswordInput
-        register={register("password")}
+        register={register("password", { required: true })}
         label="Password"
         error={!!errors.password}
         placeholder="Masukkan Password"
@@ -67,7 +56,13 @@ export function LoginForm() {
       <Group position="right" mb={40}>
         <TextLink href="/forgot-password">Lupa Password?</TextLink>
       </Group>
-      <GradientButton type="submit" fullWidth loading={isLoading} mb={50}>
+      <GradientButton
+        type="submit"
+        fullWidth
+        loading={isLoading}
+        mb={50}
+        disabled={!isValid}
+      >
         Login
       </GradientButton>
       <Group position="center">

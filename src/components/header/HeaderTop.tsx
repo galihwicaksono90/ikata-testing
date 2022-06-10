@@ -10,7 +10,6 @@ import {
 import { Container, UserAvatar } from "components/common";
 import { MainLayoutProps } from "components/layouts";
 import Image from "next/image";
-import React from "react";
 
 export function HeaderTop({ opened, setOpened }: MainLayoutProps) {
   return (

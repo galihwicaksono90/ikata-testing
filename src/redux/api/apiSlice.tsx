@@ -1,9 +1,7 @@
-import { createApi, BaseQueryFn } from "@reduxjs/toolkit/query/react";
-import { graphqlRequestBaseQuery } from "redux/graphqlRequestBaseQuery";
+import { createApi } from "@reduxjs/toolkit/query/react";
 import { GraphQLClient } from "graphql-request";
 import { HYDRATE } from "next-redux-wrapper";
-import { DocumentNode } from "graphql";
-import { ClientError } from "graphql-request";
+import { graphqlRequestBaseQuery } from "redux/graphqlRequestBaseQuery";
 
 const client = new GraphQLClient(process.env.NEXT_PUBLIC_GRAPHQL_SERVER, {
   credentials: "include",
@@ -12,6 +10,13 @@ const client = new GraphQLClient(process.env.NEXT_PUBLIC_GRAPHQL_SERVER, {
 
 const baseQuery = graphqlRequestBaseQuery({
   client,
+  prepareHeaders: (headers) => {
+    const token = localStorage.getItem("token");
+    if (!!token) {
+      headers.set("Authorization", `Bearer ${token}`);
+    }
+    return headers;
+  },
 });
 
 // const baseQueryWithReauth: BaseQueryFn<

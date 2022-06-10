@@ -1,10 +1,5 @@
-import { Tabs } from "@mantine/core";
-import { AboutCarousel, AboutDescription } from "components/about";
-import { Container } from "components/common";
 import { MainLayout } from "components/layouts";
-import { AboutType, api, About, Testimony } from "generated/graphql";
-import { GetServerSideProps } from "next";
-import { wrapper } from "redux/store";
+import { About, Testimony } from "generated/graphql";
 
 interface AboutProps {
   data?: {
@@ -17,7 +12,7 @@ interface AboutProps {
 export default function AboutPage({ data }: AboutProps) {
   return (
     <MainLayout>
-      <Container pt={40}>
+      {/* <Container pt={40}>
         <Tabs
           variant="pills"
           tabPadding={40}
@@ -46,39 +41,7 @@ export default function AboutPage({ data }: AboutProps) {
             <AboutCarousel data={data.testimonies} />
           </Tabs.Tab>
         </Tabs>
-      </Container>
+      </Container> */}
     </MainLayout>
   );
 }
-
-export const getServerSideProps: GetServerSideProps =
-  wrapper.getServerSideProps((store) => async () => {
-    try {
-      const response = await store.dispatch(
-        api.endpoints.GetAbout.initiate({
-          limit: 3,
-        })
-      );
-      return {
-        props: {
-          data: {
-            jurusan: response.data.jurusan,
-            organisasi: response.data.organisasi,
-            testimonies: response.data.getTestimonies,
-          },
-        },
-      };
-    } catch (e) {
-      return {
-        props: {
-          data: {
-            jurusan: {},
-            organisasi: {},
-            testimonies: [],
-          },
-        },
-      };
-    }
-
-    /* Promise.all(api.util.getRunningOperationPromises()); */
-  });

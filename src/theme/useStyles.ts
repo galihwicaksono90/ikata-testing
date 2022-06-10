@@ -144,6 +144,11 @@ export const useStyles = createStyles((theme) => ({
         fontSize: theme.fontSizes.sm,
         color: theme.other.placeholderColor,
       },
+      '&[type="password"]:not(:placeholder-shown)': {
+        fontSize: "2rem",
+        fontFamily: "pass",
+        fontStyle: "normal",
+      },
     },
     "& .mantine-TextInput-root": {
       "& label": {

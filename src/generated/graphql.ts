@@ -67,7 +67,6 @@ export type UserInputTypeLogi = {
 /** This represents a UserInputType */
 export type UserInputTypeRegiste = {
   classYear: Scalars['Int'];
-  confirmPassword: Scalars['String'];
   email: Scalars['String'];
   fullName?: InputMaybe<Scalars['String']>;
   gender: GenderEnum;
@@ -168,33 +167,55 @@ export type RootQueryTokenForgotPasswordArgs = {
   user?: InputMaybe<UserInputCheckToken>;
 };
 
+export type BasicAuthUserFragment = { __typename?: 'User', id?: string | null, fullName?: string | null, nickName?: string | null, email?: string | null, token?: string | null };
+
 export type LoginMutationVariables = Exact<{
   user: UserInputTypeLogi;
 }>;
 
 
-export type LoginMutation = { __typename?: 'rootMutation', login?: { __typename?: 'User', id?: string | null, fullName?: string | null, email?: string | null, token?: string | null } | null };
+export type LoginMutation = { __typename?: 'rootMutation', login?: { __typename?: 'User', id?: string | null, fullName?: string | null, nickName?: string | null, email?: string | null, token?: string | null } | null };
+
+export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
+export type MeQuery = { __typename?: 'rootQuery', user?: Array<{ __typename?: 'User', id?: string | null, fullName?: string | null, nickName?: string | null, email?: string | null, token?: string | null } | null> | null };
+
+export const BasicAuthUserFragmentDoc = `
+    fragment BasicAuthUser on User {
+  id
+  fullName
+  nickName
+  email
+  token
+}
+    `;
 export const LoginDocument = `
     mutation Login($user: UserInputTypeLogi!) {
   login(user: $user) {
-    id
-    fullName
-    email
-    token
+    ...BasicAuthUser
   }
 }
-    `;
+    ${BasicAuthUserFragmentDoc}`;
+export const MeDocument = `
+    query Me {
+  user {
+    ...BasicAuthUser
+  }
+}
+    ${BasicAuthUserFragmentDoc}`;
 
 const injectedRtkApi = api.injectEndpoints({
   endpoints: (build) => ({
     Login: build.mutation<LoginMutation, LoginMutationVariables>({
       query: (variables) => ({ document: LoginDocument, variables })
     }),
+    Me: build.query<MeQuery, MeQueryVariables | void>({
+      query: (variables) => ({ document: MeDocument, variables })
+    }),
   }),
 });
 
 export { injectedRtkApi as api };
-export const { useLoginMutation } = injectedRtkApi;
+export const { useLoginMutation, useMeQuery, useLazyMeQuery } = injectedRtkApi;
 

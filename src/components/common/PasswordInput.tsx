@@ -17,7 +17,10 @@ export const PasswordInput = ({ ...rest }: PasswordInputProps) => {
       {...rest}
       type={showPassword ? "text" : "password"}
       rightSection={
-        <Box onClick={toggleVisibility} sx={{ height: 22, cursor: "pointer" }}>
+        <Box
+          onClick={toggleVisibility}
+          sx={{ height: 22, cursor: "pointer", paddingRight: 7 }}
+        >
           {showPassword ? <Eye color="gray" /> : <EyeOff color="gray" />}
         </Box>
       }
@@ -26,6 +29,7 @@ export const PasswordInput = ({ ...rest }: PasswordInputProps) => {
           fontWeight: 600,
         },
       }}
+      sx={{}}
     ></TextInput>
   );
 };

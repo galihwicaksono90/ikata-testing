@@ -155,11 +155,11 @@ export const RegisterForm = () => {
           placeholder="Konfirmasi Password"
           error={errors.confirmPassword}
         />
-        <Text>
+        <Text weight="500">
           Password harus merupakan gabungan huruf kecil, besar, dan angka dengan
           panjang minimal 6 karakter
         </Text>
-        <Divider mt={30} />
+        <Divider mt={30} sx={{ backgroundColor: "#d9d9d9" }} />
         <GradientButton type="submit" fullWidth mt={45} loading={isLoading}>
           Daftar Baru
         </GradientButton>

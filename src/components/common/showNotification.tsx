@@ -8,6 +8,10 @@ export const showNotification = ({ ...rest }: BaseNotificationProps) => {
     ...rest,
     sx: (theme) => ({
       border: `1px solid ${theme.primaryColor}`,
+      paddingLeft: 14,
+      "&::before": {
+        background: "transparent",
+      },
     }),
     radius: "xs",
   });
