@@ -16,13 +16,14 @@ export function MenuItem({
   href,
   withPadding,
 }: MenuItemProps) {
-  const { pathname } = useRouter();
+  const { asPath } = useRouter();
 
   if (!children) {
     return (
       <Box
         component="li"
         py={withPadding ? 16 : 0}
+        pl={withPadding ? 10 : 0}
         sx={(theme) => ({
           width: withPadding ? "100%" : "initial",
           "&:hover": {
@@ -34,7 +35,11 @@ export function MenuItem({
           sx={(theme) => ({
             "& a": {
               color:
-                pathname === href ? theme.primaryColor : theme.colors.white,
+                asPath === href
+                  ? theme.primaryColor
+                  : href !== "/" && asPath.startsWith(href)
+                  ? theme.primaryColor
+                  : theme.white,
             },
           })}
         >
@@ -52,7 +57,7 @@ export function MenuItem({
         control={
           <Group
             sx={(theme) => ({
-              color: pathname.startsWith(href)
+              color: asPath.startsWith(href)
                 ? theme.primaryColor
                 : theme.colors.white,
             })}

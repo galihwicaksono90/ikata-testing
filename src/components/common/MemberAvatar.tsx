@@ -8,22 +8,33 @@ export interface MemberAvatarProps {
   image?: string;
 }
 
-export function MemberAvatar({ name, image, title }: MemberAvatarProps) {
+export function MemberAvatar(props: MemberAvatarProps) {
+  const { name, image, title } = props;
   return (
-    <Stack align="center" mb={35}>
+    <Stack align="center" mb={35} sx={{ height: 339, minHeight: 339 }}>
       <Avatar
         radius="xl"
-        sx={{ height: 170, width: 170, marginBottom: 20 }}
+        sx={(theme) => ({
+          height: 170,
+          width: 170,
+          marginBottom: 20,
+          [`@media (max-width: ${theme.breakpoints.sm}px)`]: {
+            height: 156,
+            width: 156,
+          },
+        })}
         src={image}
-      ></Avatar>
-      <Text size="lg" weight={600}>
+      />
+      <Text size="lg" weight={600} align="center">
         {name}
       </Text>
 
-      <Text color="dimmed" size="sm" weight={500}>
+      <Text color="dimmed" size="sm" weight={500} align="center" lineClamp={2}>
         {title}
       </Text>
-      <Box component={Mail} sx={(theme) => ({ color: theme.colors.dark[3] })} />
+      <Box sx={(theme) => ({ color: theme.colors.dark[3], marginTop: "auto" })}>
+        <Mail />
+      </Box>
     </Stack>
   );
 }

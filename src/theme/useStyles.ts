@@ -24,16 +24,19 @@ export const useStyles = createStyles((theme) => ({
           height: 27,
           borderRadius: theme.radius.xl,
         },
+        "& > * + * ": {
+          marginLeft: 10,
+        },
       },
       "& li div": {
-        backgroundColor: theme.colors.gray[3],
-        color: theme.colors.gray[5],
+        backgroundColor: theme.colors.dark[8],
+        color: theme.colors.gray[6],
         fontWeight: "bold",
         lineHeight: "30px",
       },
       "& li.slick-active div": {
         background: theme.primaryColor,
-        color: theme.white,
+        color: theme.colors.dark,
       },
     },
     "& .carousel-arrow-next": {

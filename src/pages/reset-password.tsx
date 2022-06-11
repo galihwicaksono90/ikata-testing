@@ -30,7 +30,7 @@ const ResetPassword = ({ tokenValid }: Props) => {
                   margin: "0px auto",
                 }}
               >
-                <Image src="/shareLink.png" layout="fill" />
+                <Image src="/shareLink.png" layout="fill" alt="" />
               </Box>
               <Title>Link Kadaluarsa</Title>
               <Text>

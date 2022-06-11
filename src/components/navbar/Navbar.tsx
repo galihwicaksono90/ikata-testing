@@ -55,20 +55,12 @@ export function Navbar({ opened, setOpened }: MainLayoutProps) {
                 style={{
                   gap: 0,
                   width: "100%",
-                  paddingLeft: 0,
                 }}
               >
-                <ScrollArea
-                  sx={{
-                    height: "calc(100vh - 179px)",
-                    width: "100%",
-                  }}
-                >
-                  <NavbarMenu />
-                </ScrollArea>
-              </Box>
-            </BaseNavbar.Section>
-          </Stack>
+                <NavbarMenu />
+              </ScrollArea>
+            </Box>
+          </BaseNavbar.Section>
         </BaseNavbar>
       </Box>
     </MediaQuery>

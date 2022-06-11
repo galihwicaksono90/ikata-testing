@@ -39,6 +39,7 @@ export default function News() {
               <ActivityItemList
                 data={[{ image: "/news1.jpg", title: "Mantap" }]}
                 title="Berita Lain"
+                href="/"
               />
             </Stack>
           </Grid.Col>
