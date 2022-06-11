@@ -23,7 +23,13 @@ export const AboutDescription = ({ data, title }: AboutDescriptionProps) => {
           marginBottom: 35,
         }}
       >
-        <Image src={data.image} layout="fill" objectFit="cover" priority />
+        <Image
+          src={data.image}
+          layout="fill"
+          objectFit="cover"
+          priority
+          alt=""
+        />
       </AspectRatio>
       <Title mb={21}>{title}</Title>
       <Text sx={{ whiteSpace: "pre-line" }}>{data.description}</Text>

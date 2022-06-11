@@ -30,7 +30,7 @@ export const theme: MantineThemeOverride = {
       "#898989",
       "#ABAAAA",
       "#ABAAAA",
-      "#3f3f3f",
+      "#2f2f2f",
       "#1d1d1d",
       "#272727",
       "#1d1d1d",
@@ -54,5 +54,6 @@ export const theme: MantineThemeOverride = {
     errorRed: "#DB0D00",
     errorWhite: "rgba(255,255,255,0.5)",
     placeholderColor: "rgba(255,255,255,0.5)",
+    gray: "#eaeaea",
   },
 };

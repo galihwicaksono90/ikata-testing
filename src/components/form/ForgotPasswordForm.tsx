@@ -88,7 +88,7 @@ export const ForgotPasswordForm = () => {
                 marginBottom: 40,
               }}
             >
-              <Image src="/email.png" layout="fill" />
+              <Image src="/email.png" layout="fill" alt="" />
             </Box>
             <Title order={3} align="center" mb={20}>
               Periksa Email Anda!

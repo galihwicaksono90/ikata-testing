@@ -24,7 +24,7 @@ export const errorMessage = {
     "Password harus berisi maksimal 13 karakter, minimal 6 karakter, satu huruf kapital, satu huruf kecil, dan satu angka",
   confirmPassword: "Kombinasi password tidak sesuai.",
   number: "Wajib menggunakan angka",
-  phoneNumber: "Format Nomer Telepon, cth: 628xxxxxxxxxx",
+  phoneNumber: "Format nomer telepon, cth: 628xxxxxxxxxx",
 };
 
 export const validateLoginForm: ValidationProps<UserInputTypeLogi> = (
