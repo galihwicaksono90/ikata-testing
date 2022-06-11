@@ -68,10 +68,10 @@ export type UserInputTypeLogi = {
 export type UserInputTypeRegiste = {
   classYear: Scalars['Int'];
   email: Scalars['String'];
-  fullName?: InputMaybe<Scalars['String']>;
+  fullName: Scalars['String'];
   gender: GenderEnum;
-  nickName?: InputMaybe<Scalars['String']>;
-  nim: Scalars['Int'];
+  nickName: Scalars['String'];
+  nim: Scalars['String'];
   password: Scalars['String'];
   phone: Scalars['String'];
   prefixTitle?: InputMaybe<Scalars['String']>;
