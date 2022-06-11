@@ -3,7 +3,7 @@ import { RegisterForm } from "components/form";
 
 const register = () => {
   return (
-    <LoginLayout containerSize={600} headerTitle="Daftar Baru">
+    <LoginLayout containerSize={632} headerTitle="Daftar Baru">
       <RegisterForm />
     </LoginLayout>
   );

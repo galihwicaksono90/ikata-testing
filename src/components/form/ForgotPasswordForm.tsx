@@ -1,14 +1,10 @@
+import { Box, Button, Divider, Group, Stack, Text, Title } from "@mantine/core";
 import {
-  Box,
-  Button,
-  Divider,
-  Group,
-  Stack,
-  Text,
+  GradientButton,
+  Modal,
+  showNotification,
   TextInput,
-  Title,
-} from "@mantine/core";
-import { GradientButton, Modal, showNotification } from "components/common";
+} from "components/common";
 import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useState } from "react";
@@ -29,6 +25,7 @@ export const ForgotPasswordForm = () => {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors, isValid },
   } = useForm<FormProps>({
     mode: "onChange",
@@ -55,11 +52,10 @@ export const ForgotPasswordForm = () => {
     <>
       <form onSubmit={handleSubmit(onSubmit)} className={classes.form}>
         <TextInput
-          {...register("email")}
+          register={register("email")}
           label="Email"
           error={!!errors.email}
           placeholder="Masukkan Alamat Email"
-          size="lg"
           sx={{ marginBottom: 57 }}
         />
         <Group position="apart" noWrap>
@@ -81,7 +77,7 @@ export const ForgotPasswordForm = () => {
           opened={showModal}
           onClose={() => setShowModal(false)}
           centered
-          size={522}
+          size={552}
         >
           <Stack align="center">
             <Box
@@ -116,7 +112,8 @@ export const ForgotPasswordForm = () => {
             </Text>
             <GradientButton
               onClick={() => setShowModal((o) => !o)}
-              sx={{ width: 360 }}
+              sx={{ maxWidth: 360 }}
+              fullWidth
             >
               Tutup
             </GradientButton>

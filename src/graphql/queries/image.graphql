@@ -1,6 +1,0 @@
-query GetHeroImages($limit: Int!) {
-  getHeroImages(limit: $limit) {
-    id
-    image
-  }
-}

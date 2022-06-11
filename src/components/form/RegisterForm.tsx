@@ -1,4 +1,5 @@
 import {
+  Divider,
   Group,
   Box,
   Text,
@@ -17,14 +18,15 @@ import {
   showNotification,
   PasswordInput,
   TextInput,
+  SuccessModal,
 } from "components/common";
 import { createClassYears } from "utils/createClassYears";
 import Image from "next/image";
 import { registerFormResolver } from "./formResolver";
-import { useRegisterMutation } from "generated/graphql";
 
 interface RegisterFormProps {
   fullName: string;
+  nickName: string;
   prefixTitle: string;
   suffixTitle: string;
   email: string;
@@ -44,49 +46,15 @@ export const RegisterForm = () => {
     register,
     handleSubmit,
     control,
-    formState: { errors, isValid },
+    formState: { errors },
   } = useForm<RegisterFormProps>({
     mode: "onSubmit",
     resolver: registerFormResolver,
   });
-  const [registerUser, { isLoading, data: registerData }] =
-    useRegisterMutation();
 
-  const onSubmit = useCallback(
-    async (values: RegisterFormProps) => {
-      try {
-        const registerData = await registerUser(values).unwrap();
-        console.log({ registerData });
-      } catch (error) {
-        showNotification({
-          title: "Error",
-          message: error?.message,
-          id: "register-error",
-        });
-      }
-    },
-    [registerUser]
-  );
-
-  /* const onError = useCallback((errors: any, e) => {
-   *   if (errors?.password?.type === "matches") {
-   *     showNotification({
-   *       message: errors.password.message,
-   *       id: "password-error",
-   *     });
-   *   }
-   *   if (errors?.confirmPassword?.type === "oneOf") {
-   *     showNotification({
-   *       message: errors.confirmPassword.message,
-   *       id: "confirm-password-error",
-   *     });
-   *   }
-   *   showNotification({
-   *     message: "Form tidak boleh kosong. Harap isi semua form dengan benar",
-   *     id: "register-error",
-   *   });
-   * }, []);
-   */
+  const onSubmit = useCallback(async (values: RegisterFormProps) => {
+    console.log({ values });
+  }, []);
 
   return (
     <>
@@ -98,16 +66,22 @@ export const RegisterForm = () => {
           error={errors.fullName}
         />
         <TextInput
+          register={register("nickName")}
+          label="Nama Panggilan"
+          placeholder="Masukkan Nama Panggilan"
+          optional
+        />
+        <TextInput
           register={register("suffixTitle")}
-          description="Optional"
           label="Gelar Depan"
-          placeholder="Gelar Depan"
+          placeholder="Masukkan Gelar Depan"
+          optional
         />
         <TextInput
           register={register("prefixTitle")}
-          description="Optional"
           label="Gelar Belakang"
-          placeholder="Gelar Belakang"
+          placeholder="Masukkan Gelar Belakang"
+          optional
         />
         <TextInput
           autoComplete="off"
@@ -177,37 +151,29 @@ export const RegisterForm = () => {
         />
         <PasswordInput
           register={register("confirmPassword")}
-          label="Confirm Password"
+          label="Konfirmasi Password"
           placeholder="Konfirmasi Password"
           error={errors.confirmPassword}
         />
-        <GradientButton type="submit" fullWidth my={50} loading={isLoading}>
+        <Text weight="500">
+          Password harus merupakan gabungan huruf kecil, besar, dan angka dengan
+          panjang minimal 6 karakter
+        </Text>
+        <Divider mt={30} sx={{ backgroundColor: "#d9d9d9" }} />
+        <GradientButton type="submit" fullWidth mt={45} loading={isLoading}>
           Daftar Baru
         </GradientButton>
       </form>
-      <Modal
+      <SuccessModal
         opened={showModal}
         onClose={() => setShowModal(false)}
-        closable={false}
-        centered
-        radius="lg"
-        size={522}
-      >
-        <Stack align="center">
-          <Box sx={{ position: "relative", width: 192, height: 150 }}>
-            <Image src="/warning.png" layout="fill" alt="" />
-          </Box>
-          <Title order={3} align="center">
-            Pendaftaran Akun Berhasil
-          </Title>
-          <Text align="center">
-            Saat ini akun anda sedang dalam tahap verifikasi oleh admin kami.
-            Harap menunggu hasil verifikasi maksimal 2 x x24 jam untuk
-            mendapatkan login.
-          </Text>
-          <GradientButton href="/">Kembali ke Beranda</GradientButton>
-        </Stack>
-      </Modal>
+        title="Pendaftaran Akun Berhasil"
+        message="Saat ini akun anda sedang dalam tahap verifikasi oleh admin kami.
+            Harap menunggu hasil verifikasi maksimal 2 x 24 jam untuk
+            mendapatkan login."
+        href="/"
+        buttonLabel="Kembali ke Beranda"
+      />
     </>
   );
 };

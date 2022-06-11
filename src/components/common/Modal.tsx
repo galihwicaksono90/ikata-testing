@@ -3,7 +3,7 @@ import {
   ModalProps as BaseModalProps,
 } from "@mantine/core";
 
-interface ModalProps extends BaseModalProps {
+export interface ModalProps extends BaseModalProps {
   closable?: boolean;
 }
 

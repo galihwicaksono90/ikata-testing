@@ -1,6 +1,0 @@
-query GetAreas {
-  getAreas {
-    id
-    name
-  }
-}

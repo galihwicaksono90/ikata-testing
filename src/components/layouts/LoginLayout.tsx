@@ -3,11 +3,12 @@ import {
   Container,
   Overlay,
   Paper,
-  Title,
+  Text,
   UnstyledButton,
 } from "@mantine/core";
 import { useRouter } from "next/router";
 import { ArrowLeft } from "tabler-icons-react";
+import Image from "next/image";
 
 interface LoginLayoutProps {
   containerSize: number;
@@ -32,14 +33,29 @@ export function LoginLayout({
         position: "relative",
         display: "flex",
         alignItems: center ? "center" : null,
-        backgroundImage: `url("/loginBackground.png")`,
-        backgroundPosition: "center",
-        backgroundSize: "cover",
-        backgroundAttachment: "fixed",
         paddingTop: 40,
         paddingBottom: 40,
       }}
     >
+      <Box
+        style={{
+          top: 0,
+          bottom: 0,
+          left: 0,
+          right: 0,
+          background: "tomato",
+          position: "fixed",
+        }}
+      >
+        <Image
+          src="/loginBackground.png"
+          layout="fill"
+          objectFit="cover"
+          objectPosition="center"
+          priority
+        />
+      </Box>
+
       <Container style={{ zIndex: 2, width: "100%" }} size={containerSize}>
         <Paper
           sx={{
@@ -48,16 +64,16 @@ export function LoginLayout({
             width: "100%",
           }}
         >
-          <Box sx={{ marginBottom: 40, position: "relative", width: "100%" }}>
+          <Box sx={{ marginBottom: 60, position: "relative", width: "100%" }}>
             <UnstyledButton
               sx={{ position: "absolute", left: 0, top: 0, bottom: 0 }}
               onClick={() => router.back()}
             >
               <ArrowLeft />
             </UnstyledButton>
-            <Title order={3} align="center">
+            <Text align="center" sx={{ fontSize: "1.375rem", fontWeight: 600 }}>
               {headerTitle}
-            </Title>
+            </Text>
           </Box>
           {children}
         </Paper>

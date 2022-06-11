@@ -51,6 +51,9 @@ export const theme: MantineThemeOverride = {
   },
   other: {
     containerSize: CONTAINER_SIZE,
+    errorRed: "#DB0D00",
+    errorWhite: "rgba(255,255,255,0.5)",
+    placeholderColor: "rgba(255,255,255,0.5)",
     gray: "#eaeaea",
   },
 };

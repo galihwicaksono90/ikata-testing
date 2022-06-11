@@ -11,7 +11,7 @@ import { LoginLayout } from "components/layouts";
 
 export default function Login() {
   return (
-    <LoginLayout containerSize={408} headerTitle="Login Anggota" center>
+    <LoginLayout containerSize={440} headerTitle="Login Anggota" center>
       <LoginForm />
     </LoginLayout>
   );

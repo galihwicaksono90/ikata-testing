@@ -4,6 +4,7 @@ import {
   Modal,
   showNotification,
   PasswordInput,
+  SuccessModal,
 } from "components/common";
 import Image from "next/image";
 import { useCallback, useState } from "react";
@@ -62,16 +63,20 @@ export const ResetPasswordForm = () => {
       <form onSubmit={handleSubmit(onSubmit, onError)} className={classes.form}>
         <PasswordInput
           register={register("password")}
-          error={errors.password}
+          error={!!errors.password}
           label="Password"
           placeholder="Masukkan Password"
         />
         <PasswordInput
           register={register("confirmPassword")}
-          error={errors.confirmPassword}
+          error={!!errors.confirmPassword}
           label="Konfirmasi Password"
           placeholder="Konfirmasi Password"
         />
+        <Text sx={{ lineHeight: "28.8px" }}>
+          Password harus merupakan gabungan huruf kecil, besar, dan angka dengan
+          panjang minimal 8 karakter
+        </Text>
         <GradientButton
           type="submit"
           loading={isLoading}
@@ -81,32 +86,14 @@ export const ResetPasswordForm = () => {
           Simpan
         </GradientButton>
       </form>
-      <Modal
+      <SuccessModal
         opened={showModal}
         onClose={() => setShowModal(false)}
-        closable={false}
-        centered
-        size={522}
-      >
-        <Stack align="center" spacing={30}>
-          <Box sx={{ position: "relative", width: 192, height: 150 }}>
-            <Image src="/warning.png" layout="fill" alt="" />
-          </Box>
-          <Title order={3} align="center">
-            Password Berhasil Dirubah
-          </Title>
-          <Text
-            align="center"
-            sx={(theme) => ({ color: theme.colors.dark[4] })}
-          >
-            Silakan kembali ke halaman login dan gunakan password baru anda
-            untuk masuk ke halaman website
-          </Text>
-          <GradientButton href="/login" fullWidth>
-            Login
-          </GradientButton>
-        </Stack>
-      </Modal>
+        title="Password Berhasil Diubah"
+        message="Silakan kembali ke halaman login dan gunakan password baru anda untuk masuk ke halaman website"
+        href="/login"
+        buttonLabel="Login"
+      />
     </>
   );
 };

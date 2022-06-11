@@ -11,7 +11,7 @@ interface Props {
   tokenValid?: boolean;
 }
 
-const ForgotPassword = ({ tokenValid }: Props) => {
+const ResetPassword = ({ tokenValid }: Props) => {
   if (!tokenValid) {
     return (
       <MainLayout>
@@ -44,8 +44,8 @@ const ForgotPassword = ({ tokenValid }: Props) => {
   }
 
   return (
-    <LoginLayout containerSize={408} headerTitle="Reset Password" center>
-      <Text align="center" mb={40}>
+    <LoginLayout containerSize={440} headerTitle="Reset Password" center>
+      <Text align="center" mb={30}>
         Masukkan password baru anda
       </Text>
       <ResetPasswordForm />
@@ -53,26 +53,15 @@ const ForgotPassword = ({ tokenValid }: Props) => {
   );
 };
 
-export default ForgotPassword;
+export default ResetPassword;
 
 export const getServerSideProps: GetServerSideProps =
   wrapper.getServerSideProps((store) => async ({ query }) => {
     const token = query.token;
-    let tokenValid = false;
-
-    try {
-      const response = await store.dispatch(
-        api.endpoints.ValidateResetToken.initiate({ token: token as string })
-      );
-      console.log({ response });
-      if (!!response["data"]) {
-        tokenValid = response["data"].validateResetToken;
-      }
-    } catch (e) {}
 
     return {
       props: {
-        tokenValid: tokenValid,
+        tokenValid: token === "valid",
       },
     };
   });
