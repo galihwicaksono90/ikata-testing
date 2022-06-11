@@ -7,7 +7,7 @@ import {
   UnstyledButton,
 } from "@mantine/core";
 import { useRouter } from "next/router";
-import { ArrowLeft } from "tabler-icons-react";
+import { IconArrowLeft } from "@tabler/icons";
 import Image from "next/image";
 
 interface LoginLayoutProps {
@@ -69,7 +69,7 @@ export function LoginLayout({
               sx={{ position: "absolute", left: 0, top: 0, bottom: 0 }}
               onClick={() => router.back()}
             >
-              <ArrowLeft />
+              <IconArrowLeft />
             </UnstyledButton>
             <Text align="center" sx={{ fontSize: "1.375rem", fontWeight: 600 }}>
               {headerTitle}

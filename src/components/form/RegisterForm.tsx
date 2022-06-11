@@ -9,7 +9,7 @@ import {
 import { useCallback, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useStyles } from "theme";
-import { registerFormResolver, validateRegisterForm } from "./formResolver";
+import { validateRegisterForm } from "./formResolver";
 import {
   useRegisterMutation,
   UserInputTypeRegiste,
@@ -17,13 +17,9 @@ import {
 } from "generated/graphql";
 import { capitalize, createClassYears } from "utils";
 
-export type RegisterFormProps = Omit<
-  UserInputTypeRegiste,
-  "classYear" | "nim"
-> & {
+export type RegisterFormProps = Omit<UserInputTypeRegiste, "classYear"> & {
   confirmPassword: string;
   classYear: string;
-  nim: string;
 };
 
 export const RegisterForm = () => {
@@ -49,10 +45,10 @@ export const RegisterForm = () => {
     const newValues: UserInputTypeRegiste = {
       ...values,
       classYear: parseInt(values.classYear),
-      nim: parseInt(values.nim),
       fullName: capitalize(values.fullName),
       email: values.email.toLowerCase(),
     };
+    console.log({ newValues });
 
     try {
       await registerUser({ user: newValues }).unwrap();
@@ -75,10 +71,9 @@ export const RegisterForm = () => {
           error={errors.fullName}
         />
         <TextInput
-          register={register("nickName")}
+          register={register("nickName", { required: true })}
           label="Nama Panggilan"
           placeholder="Masukkan Nama Panggilan"
-          optional
         />
         <TextInput
           register={register("suffixTitle")}

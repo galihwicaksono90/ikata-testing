@@ -1,6 +1,7 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import { createWrapper } from "next-redux-wrapper";
 import { api } from "./api/apiSlice";
+import { api as mockApi } from "./mockApi/mockApiSlice";
 import generalReducer from "./general/generalSlice";
 import authReducer from "./auth/authSlice";
 
@@ -8,6 +9,7 @@ export const makeStore = () => {
   return configureStore({
     reducer: {
       [api.reducerPath]: api.reducer,
+      [mockApi.reducerPath]: mockApi.reducer,
       general: generalReducer,
       auth: authReducer,
     },

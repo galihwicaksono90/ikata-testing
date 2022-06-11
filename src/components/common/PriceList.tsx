@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { getCurrentDate } from "utils/time";
 import { Paper, PaperProps, Text, Divider, Group, Stack } from "@mantine/core";
-import { ArrowUp, ArrowDown, Equal } from "tabler-icons-react";
+import { IconArrowUp, IconArrowDown, IconEqual } from "@tabler/icons";
 
 export function PriceList(props: PaperProps<"div">) {
   const date = useMemo(() => getCurrentDate(), []);
@@ -43,13 +43,13 @@ const PriceItem = ({
   const arrowIcon = () => {
     switch (icon) {
       case "up":
-        return <ArrowUp size={16} />;
+        return <IconArrowUp size={16} />;
       case "down":
-        return <ArrowDown size={16} />;
+        return <IconArrowDown size={16} />;
       case "equal":
-        return <Equal size={16} />;
+        return <IconEqual size={16} />;
       default:
-        return <ArrowUp size={16} />;
+        return <IconArrowUp size={16} />;
     }
   };
   return (

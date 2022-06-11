@@ -1,8 +1,7 @@
 import { VacancyLayout } from "components/layouts";
-import { useGetCompanyJobsQuery } from "generated/graphql";
+import { useGetCompanyJobsQuery, api } from "generated/mockGraphql";
 import { GetServerSideProps } from "next";
 import { wrapper } from "redux/store";
-import { api } from "generated/graphql";
 
 export default function LowonganPekerjaan() {
   const { data, isLoading } = useGetCompanyJobsQuery();

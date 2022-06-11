@@ -6,7 +6,7 @@ import {
   SectionTitleWithLink,
 } from "components/common";
 import { NewsCard, NewsCarousel } from "components/news";
-import { useGetNewsItemsQuery } from "generated/graphql";
+import { useGetNewsItemsQuery } from "generated/mockGraphql";
 
 const data = [
   {

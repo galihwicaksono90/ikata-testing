@@ -68,10 +68,10 @@ export type UserInputTypeLogi = {
 export type UserInputTypeRegiste = {
   classYear: Scalars['Int'];
   email: Scalars['String'];
-  fullName?: InputMaybe<Scalars['String']>;
+  fullName: Scalars['String'];
   gender: GenderEnum;
-  nickName?: InputMaybe<Scalars['String']>;
-  nim: Scalars['Int'];
+  nickName: Scalars['String'];
+  nim: Scalars['String'];
   password: Scalars['String'];
   phone: Scalars['String'];
   prefixTitle?: InputMaybe<Scalars['String']>;
@@ -167,34 +167,32 @@ export type RootQueryTokenForgotPasswordArgs = {
   user?: InputMaybe<UserInputCheckToken>;
 };
 
-export type BasicAuthUserFragment = { __typename?: 'User', id?: string | null, fullName?: string | null, nickName?: string | null, email?: string | null, token?: string | null };
+export type BasicAuthUserFragment = { __typename?: 'User', id?: string | null, fullName?: string | null, nickName?: string | null };
 
 export type LoginMutationVariables = Exact<{
   user: UserInputTypeLogi;
 }>;
 
 
-export type LoginMutation = { __typename?: 'rootMutation', login?: { __typename?: 'User', id?: string | null, fullName?: string | null, nickName?: string | null, email?: string | null, token?: string | null } | null };
+export type LoginMutation = { __typename?: 'rootMutation', login?: { __typename?: 'User', id?: string | null, fullName?: string | null, nickName?: string | null } | null };
 
 export type RegisterMutationVariables = Exact<{
   user?: InputMaybe<UserInputTypeRegiste>;
 }>;
 
 
-export type RegisterMutation = { __typename?: 'rootMutation', register?: { __typename?: 'User', id?: string | null, email?: string | null } | null };
+export type RegisterMutation = { __typename?: 'rootMutation', register?: { __typename?: 'User', id?: string | null, email?: string | null, token?: string | null } | null };
 
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MeQuery = { __typename?: 'rootQuery', user?: Array<{ __typename?: 'User', id?: string | null, fullName?: string | null, nickName?: string | null, email?: string | null, token?: string | null } | null> | null };
+export type MeQuery = { __typename?: 'rootQuery', user?: Array<{ __typename?: 'User', id?: string | null, fullName?: string | null, nickName?: string | null } | null> | null };
 
 export const BasicAuthUserFragmentDoc = `
     fragment BasicAuthUser on User {
   id
   fullName
   nickName
-  email
-  token
 }
     `;
 export const LoginDocument = `
@@ -209,6 +207,7 @@ export const RegisterDocument = `
   register(user: $user) {
     id
     email
+    token
   }
 }
     `;

@@ -1,12 +1,15 @@
 import React from "react";
 import { ManagementLayout } from "components/layouts";
 import { AvatarCarousel } from "components/common";
-import { api, ArticleType, useGetMembersQuery } from "generated/graphql";
+import { api, ArticleType, useGetMembersQuery } from "generated/mockGraphql";
 import { GetServerSideProps } from "next";
 import { wrapper } from "redux/store";
 
 export default function KoordinatorAngkatan() {
-  const { data: members, isLoading } = useGetMembersQuery({ limit: 8 });
+  const { data: members, isLoading } = useGetMembersQuery({
+    limit: 8,
+    field: "Koordinator Angkatan",
+  });
   return (
     <ManagementLayout
       title="Koordinator Angkatan"
@@ -28,6 +31,7 @@ export const getServerSideProps: GetServerSideProps =
     await store.dispatch(
       api.endpoints.GetMembers.initiate({
         limit: 8,
+        field: "Koordinator Angkatan",
       })
     );
     Promise.all(api.util.getRunningOperationPromises());

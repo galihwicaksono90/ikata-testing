@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { Text, Grid, Group, Input } from "@mantine/core";
 import { useDebouncedValue } from "@mantine/hooks";
-import { Search } from "tabler-icons-react";
+import { IconSearch } from "@tabler/icons";
 import { AvatarCarousel } from "components/common";
 import { ManagementLayout } from "components/layouts";
-import { api, useGetMembersQuery } from "generated/graphql";
+import { api, useGetMembersQuery } from "generated/mockGraphql";
 import { GetServerSideProps } from "next";
 import { wrapper } from "redux/store";
 
@@ -27,7 +27,10 @@ export default function KoordinatorWilayah() {
   const [currentAreaId, setCurrentAreaId] = useState<number>(1);
   const [filter, setFilter] = useState("");
   const [debouncedFilter] = useDebouncedValue(filter, 500);
-  const { data: members, isLoading } = useGetMembersQuery({ limit: 8 });
+  const { data: members, isLoading } = useGetMembersQuery({
+    limit: 8,
+    field: "Koordinator Wilayah",
+  });
 
   return (
     <ManagementLayout
@@ -49,7 +52,7 @@ export default function KoordinatorWilayah() {
             <Text weight="bold">List Wilayah</Text>
             <Input
               placeholder="Cari Wilayah"
-              icon={<Search />}
+              icon={<IconSearch />}
               sx={(theme) => ({
                 backgroundColor: theme.white,
 

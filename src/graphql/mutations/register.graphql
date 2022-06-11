@@ -2,5 +2,6 @@ mutation Register($user: UserInputTypeRegiste) {
   register(user: $user) {
     id
     email
+    token
   }
 }

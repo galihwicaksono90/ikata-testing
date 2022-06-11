@@ -1,8 +1,7 @@
-import { useCallback } from "react";
 import { Grid, Text, Paper, Group } from "@mantine/core";
 import { AvatarCarousel } from "components/common";
 import { ManagementLayout } from "components/layouts";
-import { api, useGetMembersQuery } from "generated/graphql";
+import { api, useGetMembersQuery } from "generated/mockGraphql";
 import { setDewanPengawasTabPosition } from "redux/general/generalSlice";
 import { useAppDispatch, useAppSelector } from "redux/hooks";
 
@@ -22,7 +21,11 @@ export default function PengurusPusat() {
   );
   const dispatch = useAppDispatch();
 
-  const { data: members, status, refetch } = useGetMembersQuery({ limit: 5 });
+  const {
+    data: members,
+    status,
+    refetch,
+  } = useGetMembersQuery({ limit: 5, field: "Pengurus Pusat" });
 
   const onClick = (index: number) => {
     dispatch(setDewanPengawasTabPosition(index));

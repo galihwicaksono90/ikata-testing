@@ -1,6 +1,6 @@
 import { Box, Skeleton, Stack, Text } from "@mantine/core";
 import { NextLink } from "@mantine/next";
-import { ArticleType, useGetArticlesQuery } from "generated/graphql";
+import { ArticleType, useGetArticlesQuery } from "generated/mockGraphql";
 import Image from "next/image";
 import { formatTime } from "utils/time";
 

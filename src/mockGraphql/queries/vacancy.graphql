@@ -1,0 +1,8 @@
+query GetVacancies($limit: Int, $type: VacancyType!) {
+  getVacancies(type: $type, limit: $limit) {
+    id
+    title
+    company
+    type
+  }
+}

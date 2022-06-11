@@ -2,7 +2,7 @@ import { Container, Box, Title, Text, Group } from "@mantine/core";
 import { NextLink } from "@mantine/next";
 import { Carousel, CarouselBreakpoint } from "components/common";
 import { MerchCard } from "components/merch";
-import { useGetMerchListQuery } from "generated/graphql";
+import { useGetMerchListQuery } from "generated/mockGraphql";
 
 const breakpoints: CarouselBreakpoint[] = [
   { breakpoint: 1111, settings: { slidesToShow: 3 } },
