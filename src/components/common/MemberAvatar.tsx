@@ -1,5 +1,5 @@
 import { Avatar, Stack, Text, Box } from "@mantine/core";
-import { Mail } from "tabler-icons-react";
+import { IconMail } from "@tabler/icons";
 
 export interface MemberAvatarProps {
   id: number;
@@ -32,9 +32,10 @@ export function MemberAvatar(props: MemberAvatarProps) {
       <Text color="dimmed" size="sm" weight={500} align="center" lineClamp={2}>
         {title}
       </Text>
-      <Box sx={(theme) => ({ color: theme.colors.dark[3], marginTop: "auto" })}>
-        <Mail />
-      </Box>
+      <Box
+        component={IconMail}
+        sx={(theme) => ({ color: theme.colors.dark[3] })}
+      />
     </Stack>
   );
 }

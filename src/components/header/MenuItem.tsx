@@ -1,7 +1,7 @@
 import { Box, Group, Menu, Text } from "@mantine/core";
 import { NextLink } from "@mantine/next";
 import { useRouter } from "next/router";
-import { ChevronDown } from "tabler-icons-react";
+import { IconChevronDown } from "@tabler/icons";
 
 interface MenuItemProps {
   children?: React.ReactNode;
@@ -63,7 +63,7 @@ export function MenuItem({
             })}
           >
             <Text>{title}</Text>
-            <ChevronDown size={14} />
+            <IconChevronDown size={14} />
           </Group>
         }
         styles={(theme) => ({

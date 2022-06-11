@@ -4,20 +4,20 @@ import { AdBanner, HeroImage } from "components/common";
 import { MainLayout } from "components/layouts";
 import { MerchCarousel } from "components/merch";
 import { NewsLandingPage } from "components/news";
-import { api, ArticleType, VacancyType } from "generated/graphql";
+import { api, ArticleType, VacancyType } from "generated/mockGraphql";
 import { GetServerSideProps } from "next";
 import { wrapper } from "redux/store";
 
 export default function Home() {
   return (
     <MainLayout>
-      {/* <HeroImage />
+      <HeroImage />
       <NewsLandingPage />
       <AdBanner src="/banner1.png" />
       <ArticleLandingPage />
       <AlumniLandingPage />
       <AdBanner src="/banner2.png" />
-      <MerchCarousel /> */}
+      <MerchCarousel />
     </MainLayout>
   );
 }

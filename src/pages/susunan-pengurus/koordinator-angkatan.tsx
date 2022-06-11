@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Select, Text, Group, Stack, Grid } from "@mantine/core";
 import { ManagementLayout } from "components/layouts";
+import { api, ArticleType, useGetMembersQuery } from "generated/mockGraphql";
 import { AvatarCarousel, MemberAvatar } from "components/common";
-import { api, ArticleType, useGetMembersQuery } from "generated/graphql";
 import { GetServerSideProps } from "next";
 import { generateEightYears } from "utils/generateEightYears";
 import { nanoid } from "@reduxjs/toolkit";

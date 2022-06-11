@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { TextInput, TextInputProps } from "components/common";
 import { Box } from "@mantine/core";
-import { Eye, EyeOff } from "tabler-icons-react";
+import { IconEye, IconEyeOff } from "@tabler/icons";
 
 interface PasswordInputProps extends TextInputProps {}
 
@@ -21,7 +21,11 @@ export const PasswordInput = ({ ...rest }: PasswordInputProps) => {
           onClick={toggleVisibility}
           sx={{ height: 22, cursor: "pointer", paddingRight: 7 }}
         >
-          {showPassword ? <Eye color="gray" /> : <EyeOff color="gray" />}
+          {showPassword ? (
+            <IconEye color="gray" />
+          ) : (
+            <IconEyeOff color="gray" />
+          )}
         </Box>
       }
       styles={{

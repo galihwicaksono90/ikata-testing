@@ -1,0 +1,18 @@
+query GetArticle($id: Int!) {
+  getArticle(id: $id) {
+    id
+    title
+    description
+    postedAt
+  }
+}
+
+query GetArticles($limit: Int!, $type: ArticleType!) {
+  getArticles(limit: $limit, type: $type) {
+    id
+    title
+    description
+    postedAt
+    image
+  }
+}

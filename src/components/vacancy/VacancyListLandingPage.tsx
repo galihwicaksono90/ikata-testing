@@ -1,5 +1,5 @@
 import { PaperProps, Paper, Title, List, Box, Text } from "@mantine/core";
-import { useGetVacanciesQuery, VacancyType } from "generated/graphql";
+import { useGetVacanciesQuery, VacancyType } from "generated/mockGraphql";
 import { NextLink } from "@mantine/next";
 
 export interface VacancyListLandingPageProps extends PaperProps<"div"> {

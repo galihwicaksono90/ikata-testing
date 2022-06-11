@@ -1,8 +1,8 @@
 import { AvatarCarousel } from "components/common";
 import { ManagementLayout } from "components/layouts";
+import { api, useGetMembersQuery } from "generated/mockGraphql";
 import { MemberAvatar } from "components/common";
 import { Grid } from "@mantine/core";
-import { api, useGetMembersQuery } from "generated/graphql";
 import { GetServerSideProps } from "next";
 import { wrapper } from "redux/store";
 

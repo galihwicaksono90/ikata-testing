@@ -3,7 +3,7 @@ import { TextLink } from "components/common";
 import { useLazyMeQuery } from "generated/graphql";
 import { useEffect } from "react";
 import { useAppSelector } from "redux/hooks";
-import { UserCircle } from "tabler-icons-react";
+import { IconUserCircle } from "@tabler/icons";
 import { showNotification } from "components/common";
 
 interface Props {
@@ -20,7 +20,7 @@ export const UserAvatar = ({ hidden }: Props) => {
       const token = localStorage.getItem("token");
       if (!!user || !token || token === "undefined") return;
       try {
-        await me();
+        const user = await me().unwrap();
       } catch (e) {
         showNotification({
           title: e.name,
@@ -43,7 +43,7 @@ export const UserAvatar = ({ hidden }: Props) => {
             placeholder: { background: theme.colors.dark[8] },
           })}
         >
-          <UserCircle size={30} color="white" />
+          <IconUserCircle size={30} color="white" />
         </Avatar>
         {!user ? (
           <>

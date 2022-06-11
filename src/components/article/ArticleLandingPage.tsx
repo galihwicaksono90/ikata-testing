@@ -3,7 +3,7 @@ import { NextLink } from "@mantine/next";
 import { ArticleList } from "components/article";
 import { Container } from "components/common";
 import { VacancyListLandingPage } from "components/vacancy";
-import { ArticleType, VacancyType } from "generated/graphql";
+import { ArticleType, VacancyType } from "generated/mockGraphql";
 import { setArticleMenuPosition } from "redux/general/generalSlice";
 import { useAppDispatch, useAppSelector } from "redux/hooks";
 import { useStyles } from "theme";
