@@ -1,75 +1,69 @@
-import { Box, Stack, Text, Title } from "@mantine/core";
+import { Text } from "@mantine/core";
 import {
   GradientButton,
-  Modal,
-  showNotification,
   PasswordInput,
   SuccessModal,
+  showNotification,
 } from "components/common";
-import Image from "next/image";
+import { useUpdatePasswordMutation } from "generated/graphql";
+import { useRouter } from "next/router";
 import { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useStyles } from "theme";
-import { resetPasswordResolver } from "./formResolver";
+import { validateResetPasswordForm } from "./formResolver";
 
-interface FormProps {
+export interface ResetPasswordFormProps {
   password: string;
   confirmPassword: string;
 }
 
 export const ResetPasswordForm = () => {
   const [showModal, setShowModal] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const { classes } = useStyles();
+  const [updatePassword, { isLoading }] = useUpdatePasswordMutation();
+  const router = useRouter();
   const {
     register,
     handleSubmit,
+    setError,
+    setFocus,
     formState: { errors, isValid },
-  } = useForm({ mode: "onChange", resolver: resetPasswordResolver });
+  } = useForm<ResetPasswordFormProps>({ mode: "onChange" });
 
   const onSubmit = useCallback(
-    (values: FormProps) => {
-      setIsLoading(true);
-      setTimeout(() => {
-        setIsLoading(false);
-        console.log({ isValid });
-        if (!errors) {
-          return;
-        }
-        setIsLoading(false);
+    async (values: ResetPasswordFormProps) => {
+      if (!validateResetPasswordForm(values, setError, setFocus)) return;
+      try {
+        const token = router.query.token;
+        await updatePassword({
+          user: {
+            password: values.password,
+            token: token as string,
+          },
+        });
         setShowModal(true);
-      }, 2000);
+      } catch (error) {
+        showNotification({
+          message: error.message,
+          id: "reset-password",
+        });
+      }
     },
-    [errors, isValid]
+    [router.query.token, setError, setFocus, , updatePassword]
   );
-
-  const onError = useCallback((errors: any, e) => {
-    if (errors?.password?.type === "matches") {
-      showNotification({
-        message: errors.password.message,
-        id: "password-error",
-      });
-    }
-    if (errors?.confirmPassword?.type === "oneOf") {
-      showNotification({
-        message: errors.confirmPassword.message,
-        id: "confirm-password-error",
-      });
-    }
-  }, []);
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit, onError)} className={classes.form}>
+      <form onSubmit={handleSubmit(onSubmit)} className={classes.form}>
         <PasswordInput
-          register={register("password")}
-          error={!!errors.password}
+          register={register("password", { required: true })}
+          error={errors.password}
           label="Password"
           placeholder="Masukkan Password"
         />
         <PasswordInput
-          register={register("confirmPassword")}
-          error={!!errors.confirmPassword}
+          register={register("confirmPassword", { required: true })}
+          error={errors.confirmPassword}
           label="Konfirmasi Password"
           placeholder="Konfirmasi Password"
         />

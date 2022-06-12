@@ -4,7 +4,7 @@ import {
   VacancyListItem,
   VacancySearchbar,
 } from "components/vacancy";
-import { Company } from "generated/graphql";
+import { Company } from "generated/mockGraphql";
 import React, { useState } from "react";
 import { useStyles } from "theme";
 import { MainLayout } from "components/layouts";

@@ -1,5 +1,5 @@
 import { Paper, Text, Stack, Group, Avatar } from "@mantine/core";
-import { Testimony } from "generated/graphql";
+import { Testimony } from "generated/mockGraphql";
 
 interface Props {
   data: Testimony;

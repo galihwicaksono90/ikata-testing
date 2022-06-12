@@ -1,9 +1,12 @@
 import { MainLayout } from "components/layouts";
-import { About, api, Testimony } from "generated/graphql";
+import { About, api, Testimony } from "generated/mockGraphql";
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { wrapper } from "redux/store";
+import { Container } from "components/common";
+import { Tabs } from "@mantine/core";
+import { AboutDescription, AboutCarousel } from "components/about";
 
 interface AboutProps {
   data?: {
@@ -27,7 +30,7 @@ export default function AboutPage({ data, initialTab }: AboutProps) {
 
   return (
     <MainLayout>
-      {/* <Container pt={40}>
+      <Container pt={40}>
         <Tabs
           active={activeTab}
           onTabChange={onTabChange}
@@ -61,7 +64,7 @@ export default function AboutPage({ data, initialTab }: AboutProps) {
             <AboutCarousel data={data.testimonies} />
           </Tabs.Tab>
         </Tabs>
-      </Container> */}
+      </Container>
     </MainLayout>
   );
 }

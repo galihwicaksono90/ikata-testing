@@ -295,6 +295,11 @@ export type GetAboutQueryVariables = Exact<{
 
 export type GetAboutQuery = { __typename?: 'Query', jurusan?: { __typename?: 'About', description: string, image: string, type: string } | null, organisasi?: { __typename?: 'About', description: string, image: string, type: string } | null, getTestimonies: Array<{ __typename?: 'Testimony', id: number, name: string, startYear: number, endYear: number, description: string, image: string }> };
 
+export type GetAreasQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAreasQuery = { __typename?: 'Query', getAreas: Array<{ __typename?: 'Area', id: number, name: string }> };
+
 export type GetArticleQueryVariables = Exact<{
   id: Scalars['Int'];
 }>;
@@ -412,6 +417,14 @@ export const GetAboutDocument = `
     endYear
     description
     image
+  }
+}
+    `;
+export const GetAreasDocument = `
+    query GetAreas {
+  getAreas {
+    id
+    name
   }
 }
     `;
@@ -544,6 +557,9 @@ const injectedRtkApi = api.injectEndpoints({
     GetAbout: build.query<GetAboutQuery, GetAboutQueryVariables>({
       query: (variables) => ({ document: GetAboutDocument, variables })
     }),
+    GetAreas: build.query<GetAreasQuery, GetAreasQueryVariables | void>({
+      query: (variables) => ({ document: GetAreasDocument, variables })
+    }),
     GetArticle: build.query<GetArticleQuery, GetArticleQueryVariables>({
       query: (variables) => ({ document: GetArticleDocument, variables })
     }),
@@ -578,5 +594,5 @@ const injectedRtkApi = api.injectEndpoints({
 });
 
 export { injectedRtkApi as api };
-export const { useValidateResetTokenMutation, useRegisterMutation, useGetAboutQuery, useLazyGetAboutQuery, useGetArticleQuery, useLazyGetArticleQuery, useGetArticlesQuery, useLazyGetArticlesQuery, useGetCompanyJobsQuery, useLazyGetCompanyJobsQuery, useGetHeroImagesQuery, useLazyGetHeroImagesQuery, useGetMembersQuery, useLazyGetMembersQuery, useGetMerchListQuery, useLazyGetMerchListQuery, useGetNewsItemsQuery, useLazyGetNewsItemsQuery, useGetNewsQuery, useLazyGetNewsQuery, useGetTestimoniesQuery, useLazyGetTestimoniesQuery, useGetVacanciesQuery, useLazyGetVacanciesQuery } = injectedRtkApi;
+export const { useValidateResetTokenMutation, useRegisterMutation, useGetAboutQuery, useLazyGetAboutQuery, useGetAreasQuery, useLazyGetAreasQuery, useGetArticleQuery, useLazyGetArticleQuery, useGetArticlesQuery, useLazyGetArticlesQuery, useGetCompanyJobsQuery, useLazyGetCompanyJobsQuery, useGetHeroImagesQuery, useLazyGetHeroImagesQuery, useGetMembersQuery, useLazyGetMembersQuery, useGetMerchListQuery, useLazyGetMerchListQuery, useGetNewsItemsQuery, useLazyGetNewsItemsQuery, useGetNewsQuery, useLazyGetNewsQuery, useGetTestimoniesQuery, useLazyGetTestimoniesQuery, useGetVacanciesQuery, useLazyGetVacanciesQuery } = injectedRtkApi;
 

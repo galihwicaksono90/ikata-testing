@@ -6,8 +6,8 @@ const ForgotPassword = () => {
   return (
     <LoginLayout containerSize={440} headerTitle="Lupa Password" center>
       <Text align="center" mb={40}>
-        Masukkan alamat email anda. Kami akan mengimkan link untuk me-reset
-        password anda.
+        Masukkan alamat email anda. Kami akan mengirimkan link untuk me{" "}
+        <i>reset</i> password anda.
       </Text>
       <ForgotPasswordForm />
     </LoginLayout>

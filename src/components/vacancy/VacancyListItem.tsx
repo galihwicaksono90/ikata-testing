@@ -1,4 +1,4 @@
-import { Company } from "generated/graphql";
+import { Company } from "generated/mockGraphql";
 import { UnstyledButton, Avatar, Divider, Group, Text } from "@mantine/core";
 import { formatTime } from "utils/time";
 

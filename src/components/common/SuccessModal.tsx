@@ -36,7 +36,7 @@ export const SuccessModal = ({
             marginBottom: "36.11px",
           }}
         >
-          <Image src="/warning.png" layout="fill" />
+          <Image src="/warning.png" layout="fill" alt="" />
         </Box>
         <Text sx={{ fontSize: "1.5rem" }} align="center" mb={20} weight="bold">
           {title}

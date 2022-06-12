@@ -167,14 +167,21 @@ export type RootQueryTokenForgotPasswordArgs = {
   user?: InputMaybe<UserInputCheckToken>;
 };
 
-export type BasicAuthUserFragment = { __typename?: 'User', id?: string | null, fullName?: string | null, nickName?: string | null };
+export type BasicAuthUserFragment = { __typename?: 'User', id?: string | null, fullName?: string | null, nickName?: string | null, token?: string | null };
+
+export type ForgotPasswordMutationVariables = Exact<{
+  user: UserInputForgotPassword;
+}>;
+
+
+export type ForgotPasswordMutation = { __typename?: 'rootMutation', forgotPassword?: { __typename?: 'TokenForgotPassword', status?: string | null, isValid?: boolean | null, token?: string | null } | null };
 
 export type LoginMutationVariables = Exact<{
   user: UserInputTypeLogi;
 }>;
 
 
-export type LoginMutation = { __typename?: 'rootMutation', login?: { __typename?: 'User', id?: string | null, fullName?: string | null, nickName?: string | null } | null };
+export type LoginMutation = { __typename?: 'rootMutation', login?: { __typename?: 'User', id?: string | null, fullName?: string | null, nickName?: string | null, token?: string | null } | null };
 
 export type RegisterMutationVariables = Exact<{
   user?: InputMaybe<UserInputTypeRegiste>;
@@ -183,16 +190,40 @@ export type RegisterMutationVariables = Exact<{
 
 export type RegisterMutation = { __typename?: 'rootMutation', register?: { __typename?: 'User', id?: string | null, email?: string | null, token?: string | null } | null };
 
+export type UpdatePasswordMutationVariables = Exact<{
+  user: UserInputUpdatePassword;
+}>;
+
+
+export type UpdatePasswordMutation = { __typename?: 'rootMutation', updatePassword?: { __typename?: 'TokenForgotPassword', status?: string | null, isValid?: boolean | null, token?: string | null } | null };
+
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MeQuery = { __typename?: 'rootQuery', user?: Array<{ __typename?: 'User', id?: string | null, fullName?: string | null, nickName?: string | null } | null> | null };
+export type MeQuery = { __typename?: 'rootQuery', user?: Array<{ __typename?: 'User', id?: string | null, fullName?: string | null, nickName?: string | null, token?: string | null } | null> | null };
+
+export type TokenForgotPasswordQueryVariables = Exact<{
+  user?: InputMaybe<UserInputCheckToken>;
+}>;
+
+
+export type TokenForgotPasswordQuery = { __typename?: 'rootQuery', tokenForgotPassword?: { __typename?: 'TokenForgotPassword', status?: string | null, isValid?: boolean | null, token?: string | null } | null };
 
 export const BasicAuthUserFragmentDoc = `
     fragment BasicAuthUser on User {
   id
   fullName
   nickName
+  token
+}
+    `;
+export const ForgotPasswordDocument = `
+    mutation ForgotPassword($user: UserInputForgotPassword!) {
+  forgotPassword(user: $user) {
+    status
+    isValid
+    token
+  }
 }
     `;
 export const LoginDocument = `
@@ -211,6 +242,15 @@ export const RegisterDocument = `
   }
 }
     `;
+export const UpdatePasswordDocument = `
+    mutation UpdatePassword($user: UserInputUpdatePassword!) {
+  updatePassword(user: $user) {
+    status
+    isValid
+    token
+  }
+}
+    `;
 export const MeDocument = `
     query Me {
   user {
@@ -218,21 +258,39 @@ export const MeDocument = `
   }
 }
     ${BasicAuthUserFragmentDoc}`;
+export const TokenForgotPasswordDocument = `
+    query TokenForgotPassword($user: UserInputCheckToken) {
+  tokenForgotPassword(user: $user) {
+    status
+    isValid
+    token
+  }
+}
+    `;
 
 const injectedRtkApi = api.injectEndpoints({
   endpoints: (build) => ({
+    ForgotPassword: build.mutation<ForgotPasswordMutation, ForgotPasswordMutationVariables>({
+      query: (variables) => ({ document: ForgotPasswordDocument, variables })
+    }),
     Login: build.mutation<LoginMutation, LoginMutationVariables>({
       query: (variables) => ({ document: LoginDocument, variables })
     }),
     Register: build.mutation<RegisterMutation, RegisterMutationVariables | void>({
       query: (variables) => ({ document: RegisterDocument, variables })
     }),
+    UpdatePassword: build.mutation<UpdatePasswordMutation, UpdatePasswordMutationVariables>({
+      query: (variables) => ({ document: UpdatePasswordDocument, variables })
+    }),
     Me: build.query<MeQuery, MeQueryVariables | void>({
       query: (variables) => ({ document: MeDocument, variables })
+    }),
+    TokenForgotPassword: build.query<TokenForgotPasswordQuery, TokenForgotPasswordQueryVariables | void>({
+      query: (variables) => ({ document: TokenForgotPasswordDocument, variables })
     }),
   }),
 });
 
 export { injectedRtkApi as api };
-export const { useLoginMutation, useRegisterMutation, useMeQuery, useLazyMeQuery } = injectedRtkApi;
+export const { useForgotPasswordMutation, useLoginMutation, useRegisterMutation, useUpdatePasswordMutation, useMeQuery, useLazyMeQuery, useTokenForgotPasswordQuery, useLazyTokenForgotPasswordQuery } = injectedRtkApi;
 

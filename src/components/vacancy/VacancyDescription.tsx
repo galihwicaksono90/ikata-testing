@@ -1,5 +1,5 @@
 import { Stack, Title, Divider, Text } from "@mantine/core";
-import { Company } from "generated/graphql";
+import { Company } from "generated/mockGraphql";
 import { VacancyList } from "components/vacancy";
 import { formatTime } from "utils/time";
 

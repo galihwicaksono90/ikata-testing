@@ -14,7 +14,7 @@ export const makeStore = () => {
       auth: authReducer,
     },
     middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware().concat(api.middleware),
+      getDefaultMiddleware().concat(api.middleware, mockApi.middleware),
     devTools: process.env.NEXT_PUBLIC_NODE_ENV !== "production",
   });
 };
@@ -32,6 +32,4 @@ export type AppThunk<ReturnType = void> = ThunkAction<
   Action<string>
 >;
 
-export const wrapper = createWrapper(makeStore, {
-  debug: process.env.NEXT_PUBLIC_NODE_ENV !== "production",
-});
+export const wrapper = createWrapper(makeStore);

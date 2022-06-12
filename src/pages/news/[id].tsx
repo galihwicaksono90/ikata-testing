@@ -1,7 +1,7 @@
 import { Text, Title, Stack, Grid, Badge, Group } from "@mantine/core";
 import { Container } from "components/common";
 import { MainLayout } from "components/layouts";
-import { api, News } from "generated/graphql";
+import { api, News } from "generated/mockGraphql";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { wrapper } from "redux/store";
 import { formatTime } from "utils/time";

@@ -1,6 +1,6 @@
 import { Card, Box, Title, Text } from "@mantine/core";
 import { GradientButton } from "components/common";
-import { Merch } from "generated/graphql";
+import { Merch } from "generated/mockGraphql";
 import Image from "next/image";
 
 export interface MerchCardProps {

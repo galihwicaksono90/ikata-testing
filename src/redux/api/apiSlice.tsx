@@ -8,12 +8,14 @@ const client = new GraphQLClient(process.env.NEXT_PUBLIC_GRAPHQL_SERVER, {
   mode: "cors",
 });
 
-const baseQuery = graphqlRequestBaseQuery({
+export const baseQuery = graphqlRequestBaseQuery({
   client,
   prepareHeaders: (headers) => {
-    const token = localStorage.getItem("token");
-    if (!!token) {
-      headers.set("Authorization", `Bearer ${token}`);
+    if (typeof window !== "undefined") {
+      const token = localStorage.getItem("token");
+      if (!!token) {
+        headers.set("Authorization", `Bearer ${token}`);
+      }
     }
     return headers;
   },

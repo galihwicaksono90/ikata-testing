@@ -50,22 +50,6 @@ export const useStyles = createStyles((theme) => ({
       left: "-40px",
     },
   },
-  carousel: {
-    height: "100%",
-    "& .swiper-pagination.swiper-pagination-bullets": {},
-    "& .swiper-pagination-bullet": {
-      width: "16px",
-      height: "7px",
-      background: theme.colors.dark[4],
-      borderRadius: "40px",
-      // opacity: 0.5,
-      transition: "opacity 300ms ease",
-    },
-    "& .swiper-pagination-bullet-active": {
-      background: theme.primaryColor,
-      opacity: 1,
-    },
-  },
   menuItems: {
     listStyle: "none",
     display: "flex",
@@ -147,11 +131,11 @@ export const useStyles = createStyles((theme) => ({
         fontSize: theme.fontSizes.sm,
         color: theme.other.placeholderColor,
       },
-      '&[type="password"]:not(:placeholder-shown)': {
-        fontSize: "2rem",
-        fontFamily: "pass",
-        fontStyle: "normal",
-      },
+      // '&[type="password"]:not(:placeholder-shown)': {
+      //   fontSize: "1.8rem",
+      //   fontFamily: "caption",
+      //   fontStyle: "normal",
+      // },
     },
     "& .mantine-TextInput-root": {
       "& label": {
@@ -164,15 +148,18 @@ export const useStyles = createStyles((theme) => ({
     },
     "& .mantine-TextInput-invalid": {
       color: theme.white,
+      borderColor: theme.other.errorRed,
       "&::placeholder": {
         color: theme.other.placeholderColor,
+      },
+      "&:focus-within": {
+        borderColor: `${theme.other.errorRed} !important`,
       },
     },
     "& input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus, textarea:-webkit-autofill, textarea:-webkit-autofill:hover, textarea:-webkit-autofill:focus, select:-webkit-autofill, select:-webkit-autofill:hover, select:-webkit-autofill:focus":
       {
-        border: "1px solid pink",
-        WebkitTextFillColor: theme.colors.dark,
-        WebkitBoxShadow: "0 0 0px 1px rgba(255, 255, 255, 0.01) inset",
+        // WebkitTextFillColor: theme.colors.dark,
+        // WebkitBoxShadow: "0 0 0px 1px rgba(255, 255, 255, 0.01) inset",
       },
 
     "& .mantine-RadioGroup-root": {
@@ -221,5 +208,17 @@ export const useStyles = createStyles((theme) => ({
         gap: 20,
       },
     },
+    // "@media screen and (-webkit-min-device-pixel-ratio: 0) and (min-resolution: 0.001dpcm)":
+    //   {
+    //     '& input[type="password"]:not(:placeholder-shown)': {
+    //       fontFamily: "pass",
+    //       fontSize: "30px",
+    //     },
+    //     "@-moz-document url-prefix()": {
+    //       fontFamily: "pass",
+    //       fontSize: "18px",
+    //       color: "red",
+    //     },
+    //   },
   },
 }));

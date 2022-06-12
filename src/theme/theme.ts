@@ -8,7 +8,7 @@ export const theme: MantineThemeOverride = {
   defaultRadius: "md",
   //@ts-ignore
   radius: { xs: 8, sm: 10, md: 12, lg: 14, xl: "50%" },
-  fontFamily: "Montserrat",
+  fontFamily: "Montserrat, sans-serif",
   //@ts-ignore
   fontSizes: { sm: "0.875rem", md: "1rem", lg: "1.125rem", xl: "1.374rem" },
   headings: {

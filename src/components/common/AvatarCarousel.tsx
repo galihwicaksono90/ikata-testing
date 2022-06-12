@@ -6,9 +6,6 @@ import {
   MemberAvatarProps,
 } from "components/common";
 import { useEffect, useState } from "react";
-import "swiper/css";
-import "swiper/css/grid";
-import "swiper/css/pagination";
 
 interface Props {
   data: MemberAvatarProps[];

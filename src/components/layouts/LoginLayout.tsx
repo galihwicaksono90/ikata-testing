@@ -1,11 +1,4 @@
-import {
-  Box,
-  Container,
-  Overlay,
-  Paper,
-  Text,
-  UnstyledButton,
-} from "@mantine/core";
+import { Box, Container, Paper, Text, UnstyledButton } from "@mantine/core";
 import { useRouter } from "next/router";
 import { IconArrowLeft } from "@tabler/icons";
 import Image from "next/image";
@@ -29,12 +22,13 @@ export function LoginLayout({
       sx={{
         height: "100%",
         minHeight: "100vh",
-        width: "100vw",
+        maxWidth: "100vw",
         position: "relative",
         display: "flex",
         alignItems: center ? "center" : null,
         paddingTop: 40,
         paddingBottom: 40,
+        overflow: "hidden",
       }}
     >
       <Box
@@ -43,11 +37,12 @@ export function LoginLayout({
           bottom: 0,
           left: 0,
           right: 0,
-          background: "tomato",
           position: "fixed",
+          filter: "brightness(50%)",
         }}
       >
         <Image
+          alt=""
           src="/loginBackground.png"
           layout="fill"
           objectFit="cover"
@@ -78,7 +73,6 @@ export function LoginLayout({
           {children}
         </Paper>
       </Container>
-      <Overlay color="#000" blur={2} opacity={0.6} zIndex={1} />
     </Box>
   );
 }
