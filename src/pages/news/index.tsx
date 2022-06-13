@@ -2,7 +2,7 @@ import { SimpleGrid, Stack, Grid } from "@mantine/core";
 import { MainLayout } from "components/layouts";
 import { NewsCarousel, NewsCard } from "components/news";
 import { Container, PriceList, ActivityItemList } from "components/common";
-import { useGetNewsItemsQuery } from "generated/graphql";
+import { useGetNewsItemsQuery } from "generated/mockGraphql";
 
 export default function News() {
   const { data: news, isLoading } = useGetNewsItemsQuery({ limit: 6 });

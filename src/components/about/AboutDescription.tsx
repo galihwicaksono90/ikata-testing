@@ -1,5 +1,5 @@
-import { useGetAboutQuery, About } from "generated/graphql";
-import { Title, Text, Box, AspectRatio } from "@mantine/core";
+import { About } from "generated/mockGraphql";
+import { Title, Text, AspectRatio } from "@mantine/core";
 import Image from "next/image";
 
 interface AboutDescriptionProps {
@@ -8,8 +8,6 @@ interface AboutDescriptionProps {
 }
 
 export const AboutDescription = ({ data, title }: AboutDescriptionProps) => {
-  /* const { data: about, isLoading } = useGetAboutQuery({ type }); */
-
   if (!data) {
     return <div>Loading...</div>;
   }

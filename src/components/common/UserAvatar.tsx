@@ -18,9 +18,9 @@ export const UserAvatar = ({ hidden }: Props) => {
   useEffect(() => {
     const init = async () => {
       const token = localStorage.getItem("token");
-      if (!!user || !token || token === "undefined") return;
+      if (!token || token === "undefined") return;
       try {
-        const user = await me().unwrap();
+        await me().unwrap();
       } catch (e) {
         showNotification({
           title: e.name,
@@ -28,8 +28,8 @@ export const UserAvatar = ({ hidden }: Props) => {
         });
       }
     };
-    init();
-  }, []);
+    if (!user) init();
+  }, [me, user]);
 
   return (
     <MediaQuery

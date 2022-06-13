@@ -1,17 +1,17 @@
-import { useState } from "react";
-import { Text, Grid, Group, Input, MediaQuery, Select } from "@mantine/core";
+import { Grid, Group, Input, MediaQuery, Select, Text } from "@mantine/core";
 import { useDebouncedValue } from "@mantine/hooks";
-import { Search } from "tabler-icons-react";
+import { IconSearch } from "@tabler/icons";
 import { AvatarCarousel } from "components/common";
 import { ManagementLayout } from "components/layouts";
-import { api, useGetMembersQuery } from "generated/graphql";
+import { api, useGetMembersQuery } from "generated/mockGraphql";
 import { GetServerSideProps } from "next";
-import { wrapper } from "redux/store";
 import { useRouter } from "next/router";
+import { useState } from "react";
+import { wrapper } from "redux/store";
 import { capitalize } from "utils/capitalize";
 
 interface Area {
-  label: string;
+  Label: string;
   value: string;
 }
 
@@ -31,20 +31,20 @@ export default function KoordinatorWilayah({ initialArea, areas }: Props) {
     isFetching,
   } = useGetMembersQuery({
     limit: 8,
-    field: currentArea.label,
+    field: currentArea.Label,
   });
 
   if (isLoading) <div>Loadingg...</div>;
 
   const handleAreaChange = (area: Area) => {
     setCurrentArea(area);
-    setUrl(area.label);
+    setUrl(area.Label);
   };
 
   const onSelectArea = (value: string) => {
     const selectedArea = areas.find((area) => area.value === value);
     setCurrentArea(selectedArea);
-    setUrl(selectedArea.label);
+    setUrl(selectedArea.Label);
   };
 
   const setUrl = (area: string) => {
@@ -80,7 +80,7 @@ export default function KoordinatorWilayah({ initialArea, areas }: Props) {
               <Text weight="bold">List Wilayah</Text>
               <Input
                 placeholder="Cari Wilayah"
-                icon={<Search />}
+                icon={<IconSearch />}
                 sx={(theme) => ({
                   border: `1px solid`,
                   borderColor: "#eaeaea",
@@ -109,7 +109,7 @@ export default function KoordinatorWilayah({ initialArea, areas }: Props) {
               <Group direction="column">
                 {areas
                   .filter((area) =>
-                    area.label.includes(debouncedFilter.toLowerCase())
+                    area.Label.includes(debouncedFilter.toLowerCase())
                   )
                   .map((area) => (
                     <Text
@@ -125,7 +125,7 @@ export default function KoordinatorWilayah({ initialArea, areas }: Props) {
                       sx={{ cursor: "pointer" }}
                       component="a"
                     >
-                      {area.label}
+                      {area.Label}
                     </Text>
                   ))}
               </Group>

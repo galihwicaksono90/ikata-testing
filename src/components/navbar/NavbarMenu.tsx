@@ -19,7 +19,7 @@ export const NavbarMenu = () => {
           },
           label: {
             fontSize: theme.fontSizes.md,
-            fontWeight: 400,
+            fontWeight: 500,
             paddingLeft: 10,
           },
           control: {

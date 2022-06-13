@@ -7,8 +7,6 @@ import type {
   PrepareHeaders,
   RequestHeaders,
 } from "./GraphqlBaseQueryTypes";
-import { showNotification } from "@mantine/notifications";
-import { AlertOctagon } from "tabler-icons-react";
 
 export const graphqlRequestBaseQuery = (
   options: GraphqlRequestBaseQueryArgs

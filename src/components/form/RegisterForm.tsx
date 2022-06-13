@@ -37,29 +37,31 @@ export const RegisterForm = () => {
     mode: "onChange",
   });
 
-  const onSubmit = useCallback(async (values: RegisterFormProps) => {
-    if (!validateRegisterForm(values, setError, setFocus)) return;
+  const onSubmit = useCallback(
+    async (values: RegisterFormProps) => {
+      if (!validateRegisterForm(values, setError, setFocus)) return;
 
-    delete values.confirmPassword;
+      delete values.confirmPassword;
 
-    const newValues: UserInputTypeRegiste = {
-      ...values,
-      classYear: parseInt(values.classYear),
-      fullName: capitalize(values.fullName),
-      email: values.email.toLowerCase(),
-    };
-    console.log({ newValues });
+      const newValues: UserInputTypeRegiste = {
+        ...values,
+        classYear: parseInt(values.classYear),
+        fullName: capitalize(values.fullName),
+        email: values.email.toLowerCase(),
+      };
 
-    try {
-      await registerUser({ user: newValues }).unwrap();
-      setShowModal(true);
-    } catch (e) {
-      showNotification({
-        message: e.message,
-        id: "register-error",
-      });
-    }
-  }, []);
+      try {
+        await registerUser({ user: newValues }).unwrap();
+        setShowModal(true);
+      } catch (e) {
+        showNotification({
+          message: e.message,
+          id: "register-error",
+        });
+      }
+    },
+    [registerUser, setError, setFocus]
+  );
 
   return (
     <>

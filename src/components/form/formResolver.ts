@@ -1,6 +1,6 @@
 import { UseFormSetError, UseFormSetFocus } from "react-hook-form";
-import { UserInputTypeRegiste, UserInputTypeLogi } from "generated/graphql";
-import { RegisterFormProps } from "components/form";
+import { UserInputTypeLogi, UserInputForgotPassword } from "generated/graphql";
+import { RegisterFormProps, ResetPasswordFormProps } from "components/form";
 
 interface ValidationProps<T> {
   (
@@ -76,5 +76,35 @@ export const validateRegisterForm: ValidationProps<RegisterFormProps> = (
     return false;
   }
 
+  return true;
+};
+
+export const validateForgotPasswordForm: ValidationProps<
+  UserInputForgotPassword
+> = (values, setError, setFocus) => {
+  if (!values.email.match(emailRegex)) {
+    setError("email", { message: errorMessage.email });
+    setFocus("email");
+    return false;
+  }
+  return true;
+};
+
+export const validateResetPasswordForm: ValidationProps<
+  ResetPasswordFormProps
+> = (values, setError, setFocus) => {
+  let errors = [];
+  if (!values.password.match(passwordRegex)) {
+    setError("password", { message: errorMessage.password });
+    errors.push("password");
+  }
+  if (values.password !== values.confirmPassword) {
+    setError("confirmPassword", { message: errorMessage.confirmPassword });
+    errors.push("confirmPassword");
+  }
+  if (errors.length > 0) {
+    setFocus(errors[0]);
+    return false;
+  }
   return true;
 };

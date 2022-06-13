@@ -1,7 +1,7 @@
 import { Box, Tabs, Select, MediaQuery } from "@mantine/core";
 import { AvatarCarousel } from "components/common";
 import { ManagementLayout } from "components/layouts";
-import { useGetMembersQuery } from "generated/graphql";
+import { useGetMembersQuery } from "generated/mockGraphql";
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import { useState } from "react";

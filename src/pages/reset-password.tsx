@@ -57,11 +57,27 @@ export default ResetPassword;
 
 export const getServerSideProps: GetServerSideProps =
   wrapper.getServerSideProps((store) => async ({ query }) => {
-    const token = query.token;
-
-    return {
-      props: {
-        tokenValid: token === "valid",
-      },
-    };
+    /* if (!token) {
+     *   return { props: { tokenValid: false } };
+     * } */
+    try {
+      const token = query?.token;
+      if (!token) throw Error;
+      const isValid = await store.dispatch(
+        api.endpoints.TokenForgotPassword.initiate({
+          user: { token: token as string },
+        })
+      );
+      return {
+        props: {
+          tokenValid: isValid.data.tokenForgotPassword.isValid,
+        },
+      };
+    } catch (error) {
+      return {
+        props: {
+          tokenValid: false,
+        },
+      };
+    }
   });

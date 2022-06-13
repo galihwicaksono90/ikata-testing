@@ -25,20 +25,24 @@ export function LoginForm() {
 
   const { errors, isValid } = formState;
 
-  const onSubmit = useCallback(async (values: UserInputTypeLogi) => {
-    if (!validateLoginForm(values, setError)) return;
+  const onSubmit = useCallback(
+    async (values: UserInputTypeLogi) => {
+      if (!validateLoginForm(values, setError)) return;
 
-    try {
-      const user = await login({ user: values }).unwrap();
-      localStorage.setItem("token", user.login.token);
-      router.push("/");
-    } catch (e) {
-      showNotification({
-        message: e.message,
-        id: "login-error",
-      });
-    }
-  }, []);
+      try {
+        const user = await login({ user: values }).unwrap();
+        localStorage.setItem("token", user.login.token);
+        router.push("/");
+      } catch (e) {
+        showNotification({
+          message: e.message,
+          id: "login-error",
+        });
+      }
+    },
+    [login, router, setError]
+  );
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={classes.form}>
       <TextInput
@@ -46,12 +50,14 @@ export function LoginForm() {
         label="Email"
         error={errors.email}
         placeholder="Masukkan Email"
+        autoComplete="email"
       />
       <PasswordInput
         register={register("password", { required: true })}
         label="Password"
         error={!!errors.password}
         placeholder="Masukkan Password"
+        autoComplete="password"
       />
       <Group position="right" mb={40}>
         <TextLink href="/forgot-password">Lupa Password?</TextLink>
