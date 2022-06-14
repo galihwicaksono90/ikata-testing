@@ -36,9 +36,9 @@ export function MenuItem({
             "& a": {
               color:
                 asPath === href
-                  ? theme.primaryColor
+                  ? theme.colors.orange[0]
                   : href !== "/" && asPath.startsWith(href)
-                  ? theme.primaryColor
+                  ? theme.colors.orange[0]
                   : theme.white,
             },
           })}
@@ -58,7 +58,7 @@ export function MenuItem({
           <Group
             sx={(theme) => ({
               color: asPath.startsWith(href)
-                ? theme.primaryColor
+                ? theme.colors.orange
                 : theme.colors.white,
             })}
           >

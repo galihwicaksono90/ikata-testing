@@ -26,11 +26,13 @@ export const AboutDescription = ({ data, title }: AboutDescriptionProps) => {
           layout="fill"
           objectFit="cover"
           priority
-          alt=""
+          alt={title}
         />
       </AspectRatio>
       <Title mb={21}>{title}</Title>
-      <Text sx={{ whiteSpace: "pre-line" }}>{data.description}</Text>
+      <Text sx={{ whiteSpace: "pre-line", lineHeight: "28.8px" }}>
+        {data.description}
+      </Text>
     </div>
   );
 };

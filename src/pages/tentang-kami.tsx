@@ -7,6 +7,7 @@ import { wrapper } from "redux/store";
 import { Container } from "components/common";
 import { Tabs } from "@mantine/core";
 import { AboutDescription, AboutCarousel } from "components/about";
+import { useStyles } from "theme";
 
 interface AboutProps {
   data?: {
@@ -17,16 +18,21 @@ interface AboutProps {
   initialTab: number;
 }
 
-const tabObject = ["ikata", "jurusan", "ketua"];
+const tabObject = ["ikata", "jurusan", "ketua-ikata"];
 
 export default function AboutPage({ data, initialTab }: AboutProps) {
   const [activeTab, setActiveTab] = useState(initialTab);
+  const { classes } = useStyles();
   const router = useRouter();
 
   const onTabChange = (active: number, tabKey: string) => {
-    router.push(`/tentang-kami/${tabKey}`, undefined, { shallow: true });
+    router.push(`/tentang-kami?tab=${tabKey}`, undefined, { shallow: true });
     setActiveTab(active);
   };
+
+  if (!data) {
+    return "no data";
+  }
 
   return (
     <MainLayout>
@@ -36,17 +42,7 @@ export default function AboutPage({ data, initialTab }: AboutProps) {
           onTabChange={onTabChange}
           variant="pills"
           tabPadding={40}
-          sx={(theme) => ({
-            "& .mantine-Tabs-tabControl.mantine-Tabs-pills": {
-              borderRadius: 50,
-              color: theme.primaryColor,
-              border: `1px solid ${theme.primaryColor}`,
-              "&.mantine-Tabs-tabActive": {
-                color: theme.white,
-                background: theme.primaryColor,
-              },
-            },
-          })}
+          className={classes.tab}
         >
           <Tabs.Tab label="Tentang IKATA" tabKey="ikata">
             <AboutDescription title="Tentang IKATA" data={data.jurusan} />
@@ -60,7 +56,7 @@ export default function AboutPage({ data, initialTab }: AboutProps) {
               data={data.organisasi}
             />
           </Tabs.Tab>
-          <Tabs.Tab label="Ketua Ikata" tabKey="ketua">
+          <Tabs.Tab label="Ketua Ikata" tabKey="ketua-ikata">
             <AboutCarousel data={data.testimonies} />
           </Tabs.Tab>
         </Tabs>
@@ -71,17 +67,12 @@ export default function AboutPage({ data, initialTab }: AboutProps) {
 
 export const getServerSideProps: GetServerSideProps =
   wrapper.getServerSideProps((store) => async ({ query }) => {
-    const getTab = (arr) => {
-      if (!Array.isArray(arr) || arr.length === 0) return 0;
+    let initialTab = 0;
 
-      const tab = arr[0];
-
-      const index = tabObject.findIndex((obj) => obj == tab.toLowerCase());
-
-      return index >= 0 ? index : 0;
-    };
-
-    const initialTab = getTab(query?.tab);
+    if (query?.tab) {
+      const tab = tabObject.findIndex((t) => t === query.tab);
+      initialTab = tab < 0 ? 0 : tab;
+    }
 
     try {
       const response = await store.dispatch(
