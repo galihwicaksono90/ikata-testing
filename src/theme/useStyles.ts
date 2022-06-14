@@ -207,6 +207,12 @@ export const useStyles = createStyles((theme) => ({
       "& .mantine-RadioGroup-root .mantine-Group-root": {
         gap: 20,
       },
+      "& .mantine-RadioGroup-root": {
+        "& .mantine-RadioGroup-radio": {
+          height: "25px",
+          width: "25px",
+        },
+      },
     },
     // "@media screen and (-webkit-min-device-pixel-ratio: 0) and (min-resolution: 0.001dpcm)":
     //   {
