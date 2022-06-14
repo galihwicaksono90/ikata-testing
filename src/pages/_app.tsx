@@ -27,7 +27,7 @@ function App(props: AppProps) {
           },
           [`@media (max-width: ${theme.breakpoints.sm}px)`]: {
             html: {
-              fontSize: "14px",
+              fontSize: "13px",
             },
           },
         })}

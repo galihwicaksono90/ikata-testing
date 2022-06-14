@@ -67,7 +67,15 @@ export const ForgotPasswordForm = () => {
           sx={{ marginBottom: 57 }}
           autoComplete="email"
         />
-        <Group position="apart" noWrap>
+        <Group
+          position="apart"
+          noWrap
+          sx={(theme) => ({
+            [`@media (max-width: ${theme.breakpoints.xs}px)`]: {
+              flexDirection: "column-reverse",
+            },
+          })}
+        >
           <Link href="/" passHref>
             <Button
               variant="outline"
