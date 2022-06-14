@@ -1,12 +1,18 @@
-import { Box, Container, Paper, Text, UnstyledButton } from "@mantine/core";
+import {
+  Box,
+  Container,
+  Paper,
+  Text,
+  UnstyledButton,
+  BoxProps,
+} from "@mantine/core";
 import { useRouter } from "next/router";
 import { IconArrowLeft } from "@tabler/icons";
 import Image from "next/image";
 
-interface LoginLayoutProps {
+interface LoginLayoutProps extends BoxProps<"div"> {
   containerSize: number;
   headerTitle: string;
-  children: React.ReactNode;
   center?: boolean;
 }
 
@@ -20,15 +26,13 @@ export function LoginLayout({
   return (
     <Box
       sx={{
-        height: "100%",
+        height: "100vh",
         minHeight: "100vh",
         maxWidth: "100vw",
         position: "relative",
         display: "flex",
         alignItems: center ? "center" : null,
-        paddingTop: 40,
-        paddingBottom: 40,
-        overflow: "hidden",
+        //overflow: "hidden",
       }}
     >
       <Box
@@ -38,15 +42,26 @@ export function LoginLayout({
           left: 0,
           right: 0,
           position: "fixed",
-          filter: "brightness(50%)",
+          filter: "blur(8px)",
         }}
       >
+        <Box
+          sx={{
+            position: "absolute",
+            backgroundColor: "rgb(0,0,0,0.5)",
+            top: 0,
+            bottom: 0,
+            left: 0,
+            right: 0,
+            zIndex: 2,
+          }}
+        />
         <Image
           alt=""
-          src="/loginBackground.png"
+          src="/loginBackground.svg"
           layout="fill"
           objectFit="cover"
-          objectPosition="center"
+          objectPosition="top"
           priority
         />
       </Box>
@@ -58,6 +73,7 @@ export function LoginLayout({
             padding: "29px 24px 41px 24px",
             width: "100%",
           }}
+          my={40}
         >
           <Box sx={{ marginBottom: 60, position: "relative", width: "100%" }}>
             <UnstyledButton
