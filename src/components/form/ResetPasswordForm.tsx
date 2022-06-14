@@ -1,74 +1,76 @@
-import { Box, Stack, Text, Title } from "@mantine/core";
+import { Text } from "@mantine/core";
 import {
   GradientButton,
-  Modal,
-  showNotification,
   PasswordInput,
+  SuccessModal,
+  showNotification,
 } from "components/common";
-import Image from "next/image";
+import { useUpdatePasswordMutation } from "generated/graphql";
+import { useRouter } from "next/router";
 import { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useStyles } from "theme";
-import { resetPasswordResolver } from "./formResolver";
+import { validateResetPasswordForm } from "./formResolver";
 
-interface FormProps {
+export interface ResetPasswordFormProps {
   password: string;
   confirmPassword: string;
 }
 
 export const ResetPasswordForm = () => {
   const [showModal, setShowModal] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const { classes } = useStyles();
+  const [updatePassword, { isLoading }] = useUpdatePasswordMutation();
+  const router = useRouter();
   const {
     register,
     handleSubmit,
+    setError,
+    setFocus,
     formState: { errors, isValid },
-  } = useForm({ mode: "onChange", resolver: resetPasswordResolver });
+  } = useForm<ResetPasswordFormProps>({ mode: "onChange" });
 
-  const onSubmit = useCallback((values: FormProps) => {
-    setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-      console.log({ isValid });
-      if (!errors) {
-        return;
+  const onSubmit = useCallback(
+    async (values: ResetPasswordFormProps) => {
+      if (!validateResetPasswordForm(values, setError, setFocus)) return;
+      try {
+        const token = router.query.token;
+        await updatePassword({
+          user: {
+            password: values.password,
+            token: token as string,
+          },
+        });
+        setShowModal(true);
+      } catch (error) {
+        showNotification({
+          message: error.message,
+          id: "reset-password",
+        });
       }
-      setIsLoading(false);
-      setShowModal(true);
-    }, 2000);
-  }, []);
-
-  const onError = useCallback((errors, e) => {
-    if (errors?.password?.type === "matches") {
-      showNotification({
-        message: errors.password.message,
-        id: "password-error",
-      });
-    }
-    if (errors?.confirmPassword?.type === "oneOf") {
-      showNotification({
-        message: errors.confirmPassword.message,
-        id: "confirm-password-error",
-      });
-    }
-  }, []);
+    },
+    [router.query.token, setError, setFocus, , updatePassword]
+  );
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit, onError)} className={classes.form}>
+      <form onSubmit={handleSubmit(onSubmit)} className={classes.form}>
         <PasswordInput
-          register={register("password")}
+          register={register("password", { required: true })}
           error={errors.password}
           label="Password"
           placeholder="Masukkan Password"
         />
         <PasswordInput
-          register={register("confirmPassword")}
+          register={register("confirmPassword", { required: true })}
           error={errors.confirmPassword}
           label="Konfirmasi Password"
           placeholder="Konfirmasi Password"
         />
+        <Text sx={{ lineHeight: "28.8px" }}>
+          Password harus merupakan gabungan huruf kecil, besar, dan angka dengan
+          panjang minimal 8 karakter
+        </Text>
         <GradientButton
           type="submit"
           loading={isLoading}
@@ -78,32 +80,14 @@ export const ResetPasswordForm = () => {
           Simpan
         </GradientButton>
       </form>
-      <Modal
+      <SuccessModal
         opened={showModal}
         onClose={() => setShowModal(false)}
-        closable={false}
-        centered
-        size={522}
-      >
-        <Stack align="center" spacing={30}>
-          <Box sx={{ position: "relative", width: 192, height: 150 }}>
-            <Image src="/warning.png" layout="fill" />
-          </Box>
-          <Title order={3} align="center">
-            Password Berhasil Dirubah
-          </Title>
-          <Text
-            align="center"
-            sx={(theme) => ({ color: theme.colors.dark[4] })}
-          >
-            Silakan kembali ke halaman login dan gunakan password baru anda
-            untuk masuk ke halaman website
-          </Text>
-          <GradientButton href="/login" fullWidth>
-            Login
-          </GradientButton>
-        </Stack>
-      </Modal>
+        title="Password Berhasil Diubah"
+        message="Silakan kembali ke halaman login dan gunakan password baru anda untuk masuk ke halaman website"
+        href="/login"
+        buttonLabel="Login"
+      />
     </>
   );
 };

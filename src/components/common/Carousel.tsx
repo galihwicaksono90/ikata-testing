@@ -2,7 +2,7 @@ import React from "react";
 import { ActionIcon, Box } from "@mantine/core";
 import { useStyles } from "theme";
 import Slider from "react-slick";
-import { ArrowLeft, ArrowRight } from "tabler-icons-react";
+import { IconArrowLeft, IconArrowRight } from "@tabler/icons";
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -97,7 +97,7 @@ const Arrow = ({ type, onClick }: ArrowProps) => {
       radius="xl"
       size="lg"
     >
-      {type === "next" ? <ArrowRight /> : <ArrowLeft />}
+      {type === "next" ? <IconArrowRight /> : <IconArrowLeft />}
     </ActionIcon>
   );
 };

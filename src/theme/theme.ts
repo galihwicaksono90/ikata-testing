@@ -8,7 +8,7 @@ export const theme: MantineThemeOverride = {
   defaultRadius: "md",
   //@ts-ignore
   radius: { xs: 8, sm: 10, md: 12, lg: 14, xl: "50%" },
-  fontFamily: "Montserrat",
+  fontFamily: "Montserrat, sans-serif",
   //@ts-ignore
   fontSizes: { sm: "0.875rem", md: "1rem", lg: "1.125rem", xl: "1.374rem" },
   headings: {
@@ -30,7 +30,7 @@ export const theme: MantineThemeOverride = {
       "#898989",
       "#ABAAAA",
       "#ABAAAA",
-      "#3f3f3f",
+      "#2f2f2f",
       "#1d1d1d",
       "#272727",
       "#1d1d1d",
@@ -51,5 +51,9 @@ export const theme: MantineThemeOverride = {
   },
   other: {
     containerSize: CONTAINER_SIZE,
+    errorRed: "#DB0D00",
+    errorWhite: "rgba(255,255,255,0.5)",
+    placeholderColor: "rgba(255,255,255,0.5)",
+    gray: "#eaeaea",
   },
 };

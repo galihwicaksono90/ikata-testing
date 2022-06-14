@@ -24,16 +24,19 @@ export const useStyles = createStyles((theme) => ({
           height: 27,
           borderRadius: theme.radius.xl,
         },
+        "& > * + * ": {
+          marginLeft: 10,
+        },
       },
       "& li div": {
-        backgroundColor: theme.colors.gray[3],
-        color: theme.colors.gray[5],
+        backgroundColor: theme.colors.dark[8],
+        color: theme.colors.gray[6],
         fontWeight: "bold",
         lineHeight: "30px",
       },
       "& li.slick-active div": {
         background: theme.primaryColor,
-        color: theme.white,
+        color: theme.colors.dark,
       },
     },
     "& .carousel-arrow-next": {
@@ -45,22 +48,6 @@ export const useStyles = createStyles((theme) => ({
       position: "absolute",
       top: "50%",
       left: "-40px",
-    },
-  },
-  carousel: {
-    height: "100%",
-    "& .swiper-pagination.swiper-pagination-bullets": {},
-    "& .swiper-pagination-bullet": {
-      width: "16px",
-      height: "7px",
-      background: theme.colors.dark[4],
-      borderRadius: "40px",
-      // opacity: 0.5,
-      transition: "opacity 300ms ease",
-    },
-    "& .swiper-pagination-bullet-active": {
-      background: theme.primaryColor,
-      opacity: 1,
     },
   },
   menuItems: {
@@ -134,7 +121,7 @@ export const useStyles = createStyles((theme) => ({
   },
   form: {
     "& > * + *": {
-      marginTop: 25,
+      marginTop: 30,
     },
     "& input": {
       background: "rgba(255,255,255,0.25)",
@@ -142,25 +129,96 @@ export const useStyles = createStyles((theme) => ({
       "&::placeholder": {
         fontStyle: "italic",
         fontSize: theme.fontSizes.sm,
+        color: theme.other.placeholderColor,
       },
+      // '&[type="password"]:not(:placeholder-shown)': {
+      //   fontSize: "1.8rem",
+      //   fontFamily: "caption",
+      //   fontStyle: "normal",
+      // },
     },
-    "& label": {
-      fontSize: theme.fontSizes.md,
+    "& .mantine-TextInput-root": {
+      "& label": {
+        fontSize: theme.fontSizes.md,
+        marginBottom: "15px",
+      },
     },
     "& .mantine-RadioGroup-label": {
       fontSize: theme.fontSizes.md,
     },
     "& .mantine-TextInput-invalid": {
       color: theme.white,
+      borderColor: theme.other.errorRed,
       "&::placeholder": {
-        color: theme.colors.gray[3],
+        color: theme.other.placeholderColor,
+      },
+      "&:focus-within": {
+        borderColor: `${theme.other.errorRed} !important`,
       },
     },
     "& input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus, textarea:-webkit-autofill, textarea:-webkit-autofill:hover, textarea:-webkit-autofill:focus, select:-webkit-autofill, select:-webkit-autofill:hover, select:-webkit-autofill:focus":
       {
-        border: "1px solid pink",
-        WebkitTextFillColor: theme.colors.dark,
-        WebkitBoxShadow: "0 0 0px 1px rgba(255, 255, 255, 0.01) inset",
+        // WebkitTextFillColor: theme.colors.dark,
+        // WebkitBoxShadow: "0 0 0px 1px rgba(255, 255, 255, 0.01) inset",
       },
+
+    "& .mantine-RadioGroup-root": {
+      "& > .mantine-RadioGroup-label": {
+        marginBottom: "15px",
+        fontWeight: 600,
+      },
+      "& .mantine-Group-root": {
+        gap: 40,
+        "& .mantine-RadioGroup-label": {
+          fontSize: theme.fontSizes.sm,
+        },
+      },
+      "& .mantine-RadioGroup-error": {
+        fontSize: theme.fontSizes.sm,
+        color: theme.other.errorWhite,
+      },
+      "& .mantine-RadioGroup-radio": {
+        height: "30px",
+        width: "30px",
+      },
+    },
+
+    "& .mantine-Select-root": {
+      "& .mantine-Select-invalid": {
+        borderColor: theme.other.errorRed,
+        "&::placeholder": {
+          color: theme.other.placeholderColor,
+        },
+      },
+      " input": {
+        fontSize: theme.fontSizes.sm,
+      },
+      "& > .mantine-Select-label": {
+        fontSize: theme.fontSizes.md,
+        fontWeight: 600,
+        marginBottom: "15px",
+      },
+      "& .mantine-Select-error": {
+        fontSize: theme.fontSizes.sm,
+        color: theme.other.errorWhite,
+      },
+    },
+    [`@media (max-width: ${theme.breakpoints.sm}px)`]: {
+      "& .mantine-RadioGroup-root .mantine-Group-root": {
+        gap: 20,
+      },
+    },
+    // "@media screen and (-webkit-min-device-pixel-ratio: 0) and (min-resolution: 0.001dpcm)":
+    //   {
+    //     '& input[type="password"]:not(:placeholder-shown)': {
+    //       fontFamily: "pass",
+    //       fontSize: "30px",
+    //     },
+    //     "@-moz-document url-prefix()": {
+    //       fontFamily: "pass",
+    //       fontSize: "18px",
+    //       color: "red",
+    //     },
+    //   },
   },
 }));

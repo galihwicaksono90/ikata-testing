@@ -1,0 +1,6 @@
+fragment BasicAuthUser on User {
+  id
+  fullName
+  nickName
+  token
+}

@@ -1,5 +1,5 @@
 import { Container, Group, Input, Text } from "@mantine/core";
-import { Search } from "tabler-icons-react";
+import { IconSearch } from "@tabler/icons";
 
 interface VacancySearchbarProps {
   title: string;
@@ -18,7 +18,7 @@ export const VacancySearchbar = ({
         </Text>
         <Input
           placeholder={placeholder}
-          icon={<Search />}
+          icon={<IconSearch />}
           size="md"
           variant="unstyled"
           sx={(theme) => ({

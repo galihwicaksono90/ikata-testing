@@ -1,123 +1,103 @@
-import {
-  Group,
-  Box,
-  Text,
-  RadioGroup,
-  Radio,
-  Select,
-  Stack,
-  Title,
-} from "@mantine/core";
-import { useCallback, useState } from "react";
-import { useForm, Controller } from "react-hook-form";
-import { useStyles } from "theme";
+import { Divider, Group, Radio, RadioGroup, Select, Text } from "@mantine/core";
 import {
   GradientButton,
-  Modal,
-  showNotification,
   PasswordInput,
+  showNotification,
+  SuccessModal,
   TextInput,
 } from "components/common";
-import { createClassYears } from "utils/createClassYears";
-import Image from "next/image";
-import { registerFormResolver } from "./formResolver";
-import { useRegisterMutation } from "generated/graphql";
+import { useCallback, useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { useStyles } from "theme";
+import { validateRegisterForm } from "./formResolver";
+import {
+  useRegisterMutation,
+  UserInputTypeRegiste,
+  GenderEnum,
+} from "generated/graphql";
+import { capitalize, createClassYears } from "utils";
 
-interface RegisterFormProps {
-  fullName: string;
-  prefixTitle: string;
-  suffixTitle: string;
-  email: string;
-  phone: number;
-  gender: string;
-  classYear: string;
-  nim: number;
-  password: string;
+export type RegisterFormProps = Omit<UserInputTypeRegiste, "classYear"> & {
   confirmPassword: string;
-}
+  classYear: string;
+};
 
 export const RegisterForm = () => {
-  const [showModal, setShowModal] = useState<boolean>(false);
-  const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [showConfirmPassword, setConfirmShowPassword] =
-    useState<boolean>(false);
+  const [showModal, setShowModal] = useState(false);
   const { classes } = useStyles();
+  const [registerUser, { isLoading }] = useRegisterMutation();
   const {
     register,
     handleSubmit,
-    setError,
     control,
+    setError,
+    setFocus,
     formState: { errors, isValid },
   } = useForm<RegisterFormProps>({
-    mode: "onSubmit",
-    resolver: registerFormResolver,
+    mode: "onChange",
   });
-  const [registerUser, { isLoading, isError, data: registerData }] =
-    useRegisterMutation();
 
-  const onSubmit = useCallback(async (values: RegisterFormProps) => {
-    try {
-      const registerData = await registerUser(values).unwrap();
-      console.log({ registerData });
-    } catch (error) {
-      showNotification({
-        title: "Error",
-        message: error?.message,
-        id: "register-error",
-      });
-    }
-  }, []);
+  const onSubmit = useCallback(
+    async (values: RegisterFormProps) => {
+      if (!validateRegisterForm(values, setError, setFocus)) return;
 
-  /* const onError = useCallback((errors: any, e) => {
-   *   if (errors?.password?.type === "matches") {
-   *     showNotification({
-   *       message: errors.password.message,
-   *       id: "password-error",
-   *     });
-   *   }
-   *   if (errors?.confirmPassword?.type === "oneOf") {
-   *     showNotification({
-   *       message: errors.confirmPassword.message,
-   *       id: "confirm-password-error",
-   *     });
-   *   }
-   *   showNotification({
-   *     message: "Form tidak boleh kosong. Harap isi semua form dengan benar",
-   *     id: "register-error",
-   *   });
-   * }, []);
-   */
+      delete values.confirmPassword;
+
+      const newValues: UserInputTypeRegiste = {
+        ...values,
+        classYear: parseInt(values.classYear),
+        fullName: capitalize(values.fullName),
+        email: values.email.toLowerCase(),
+      };
+
+      try {
+        await registerUser({ user: newValues }).unwrap();
+        setShowModal(true);
+      } catch (e) {
+        showNotification({
+          message: e.message,
+          id: "register-error",
+        });
+      }
+    },
+    [registerUser, setError, setFocus]
+  );
 
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)} className={classes.form}>
         <TextInput
-          register={register("fullName")}
+          register={register("fullName", { required: true })}
           label="Nama Lengkap"
           placeholder="Masukkan Nama Lengkap"
           error={errors.fullName}
         />
         <TextInput
+          register={register("nickName", { required: true })}
+          label="Nama Panggilan"
+          placeholder="Masukkan Nama Panggilan"
+        />
+        <TextInput
           register={register("suffixTitle")}
-          description="Optional"
           label="Gelar Depan"
-          placeholder="Gelar Depan"
+          placeholder="Masukkan Gelar Depan"
+          optional
         />
         <TextInput
           register={register("prefixTitle")}
-          description="Optional"
           label="Gelar Belakang"
-          placeholder="Gelar Belakang"
+          placeholder="Masukkan Gelar Belakang"
+          optional
         />
         <TextInput
           autoComplete="off"
-          register={register("email")}
+          register={register("email", { required: true })}
           label="Email"
           placeholder="Masukkan Email"
           error={errors.email}
         />
         <TextInput
-          register={register("phone")}
+          register={register("phone", { required: true })}
           maxLength={13}
           min={0}
           label="Nomor Telepon"
@@ -129,6 +109,7 @@ export const RegisterForm = () => {
           <Controller
             name="gender"
             control={control}
+            rules={{ required: true }}
             render={({ field }) => {
               return (
                 <RadioGroup
@@ -137,8 +118,8 @@ export const RegisterForm = () => {
                   error={!!errors?.gender ? errors.gender.message : null}
                   size="lg"
                 >
-                  <Radio value="male" label="Pria" />
-                  <Radio value="female" label="Wanita" />
+                  <Radio value={GenderEnum.Pria} label="Pria" />
+                  <Radio value={GenderEnum.Wanita} label="Wanita" />
                 </RadioGroup>
               );
             }}
@@ -146,6 +127,7 @@ export const RegisterForm = () => {
           <Controller
             name="classYear"
             control={control}
+            rules={{ required: true }}
             render={({ field }) => {
               return (
                 <Select
@@ -162,7 +144,7 @@ export const RegisterForm = () => {
           ></Controller>
         </Group>
         <TextInput
-          register={register("nim")}
+          register={register("nim", { required: true })}
           label="Nomor Induk Mahasiswa"
           placeholder="Masukkan Nomor Induk Mahasiswa"
           error={errors.nim}
@@ -170,44 +152,42 @@ export const RegisterForm = () => {
           min={0}
         />
         <PasswordInput
-          register={register("password")}
+          register={register("password", { required: true })}
           label="Password"
           placeholder="Masukkan Password"
           error={errors.password}
         />
         <PasswordInput
-          register={register("confirmPassword")}
-          label="Confirm Password"
+          register={register("confirmPassword", { required: true })}
+          label="Konfirmasi Password"
           placeholder="Konfirmasi Password"
           error={errors.confirmPassword}
         />
-        <GradientButton type="submit" fullWidth my={50} loading={isLoading}>
+        <Text weight="500">
+          Password harus merupakan gabungan huruf kecil, besar, dan angka dengan
+          panjang minimal 6 karakter
+        </Text>
+        <Divider mt={30} sx={{ backgroundColor: "#d9d9d9" }} />
+        <GradientButton
+          type="submit"
+          fullWidth
+          mt={45}
+          loading={isLoading}
+          disabled={!isValid}
+        >
           Daftar Baru
         </GradientButton>
       </form>
-      <Modal
+      <SuccessModal
         opened={showModal}
         onClose={() => setShowModal(false)}
-        closable={false}
-        centered
-        radius="lg"
-        size={522}
-      >
-        <Stack align="center">
-          <Box sx={{ position: "relative", width: 192, height: 150 }}>
-            <Image src="/warning.png" layout="fill" />
-          </Box>
-          <Title order={3} align="center">
-            Pendaftaran Akun Berhasil
-          </Title>
-          <Text align="center">
-            Saat ini akun anda sedang dalam tahap verifikasi oleh admin kami.
-            Harap menunggu hasil verifikasi maksimal 2 x x24 jam untuk
-            mendapatkan login.
-          </Text>
-          <GradientButton href="/">Kembali ke Beranda</GradientButton>
-        </Stack>
-      </Modal>
+        title="Pendaftaran Akun Berhasil"
+        message="Saat ini akun anda sedang dalam tahap verifikasi oleh admin kami.
+            Harap menunggu hasil verifikasi maksimal 2 x 24 jam untuk
+            mendapatkan login."
+        href="/"
+        buttonLabel="Kembali ke Beranda"
+      />
     </>
   );
 };

@@ -11,8 +11,7 @@ interface Props {
   tokenValid?: boolean;
 }
 
-const ForgotPassword = ({ tokenValid }: Props) => {
-  console.log({ tokenValid });
+const ResetPassword = ({ tokenValid }: Props) => {
   if (!tokenValid) {
     return (
       <MainLayout>
@@ -31,7 +30,7 @@ const ForgotPassword = ({ tokenValid }: Props) => {
                   margin: "0px auto",
                 }}
               >
-                <Image src="/shareLink.png" layout="fill" />
+                <Image src="/shareLink.png" layout="fill" alt="" />
               </Box>
               <Title>Link Kadaluarsa</Title>
               <Text>
@@ -45,8 +44,8 @@ const ForgotPassword = ({ tokenValid }: Props) => {
   }
 
   return (
-    <LoginLayout containerSize={408} headerTitle="Reset Password" center>
-      <Text align="center" mb={40}>
+    <LoginLayout containerSize={440} headerTitle="Reset Password" center>
+      <Text align="center" mb={30}>
         Masukkan password baru anda
       </Text>
       <ResetPasswordForm />
@@ -54,26 +53,31 @@ const ForgotPassword = ({ tokenValid }: Props) => {
   );
 };
 
-export default ForgotPassword;
+export default ResetPassword;
 
 export const getServerSideProps: GetServerSideProps =
   wrapper.getServerSideProps((store) => async ({ query }) => {
-    const token = query.token;
-    let tokenValid = false;
-
+    /* if (!token) {
+     *   return { props: { tokenValid: false } };
+     * } */
     try {
-      const response = await store.dispatch(
-        api.endpoints.ValidateResetToken.initiate({ token: token as string })
+      const token = query?.token;
+      if (!token) throw Error;
+      const isValid = await store.dispatch(
+        api.endpoints.TokenForgotPassword.initiate({
+          user: { token: token as string },
+        })
       );
-      console.log({ response });
-      if (!!response["data"]) {
-        tokenValid = response["data"].validateResetToken;
-      }
-    } catch (e) {}
-
-    return {
-      props: {
-        tokenValid: tokenValid,
-      },
-    };
+      return {
+        props: {
+          tokenValid: isValid.data.tokenForgotPassword.isValid,
+        },
+      };
+    } catch (error) {
+      return {
+        props: {
+          tokenValid: false,
+        },
+      };
+    }
   });

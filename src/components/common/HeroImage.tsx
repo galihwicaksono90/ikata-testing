@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Overlay, Title, Text } from "@mantine/core";
 import Image from "next/image";
 import { Carousel, Container } from "components/common";
-import { useGetHeroImagesQuery } from "generated/graphql";
+import { useGetHeroImagesQuery } from "generated/mockGraphql";
 
 export function HeroImage() {
   const { data: images, isLoading } = useGetHeroImagesQuery({ limit: 4 });

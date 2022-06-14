@@ -1,18 +1,18 @@
 import {
   Box,
   Container,
-  Overlay,
   Paper,
-  Title,
+  Text,
   UnstyledButton,
+  BoxProps,
 } from "@mantine/core";
 import { useRouter } from "next/router";
-import { ArrowLeft } from "tabler-icons-react";
+import { IconArrowLeft } from "@tabler/icons";
+import Image from "next/image";
 
-interface LoginLayoutProps {
+interface LoginLayoutProps extends BoxProps<"div"> {
   containerSize: number;
   headerTitle: string;
-  children: React.ReactNode;
   center?: boolean;
 }
 
@@ -26,20 +26,46 @@ export function LoginLayout({
   return (
     <Box
       sx={{
-        height: "100%",
+        height: "100vh",
         minHeight: "100vh",
-        width: "100vw",
+        maxWidth: "100vw",
         position: "relative",
         display: "flex",
         alignItems: center ? "center" : null,
-        backgroundImage: `url("/loginBackground.png")`,
-        backgroundPosition: "center",
-        backgroundSize: "cover",
-        backgroundAttachment: "fixed",
-        paddingTop: 40,
-        paddingBottom: 40,
+        //overflow: "hidden",
       }}
     >
+      <Box
+        style={{
+          top: 0,
+          bottom: 0,
+          left: 0,
+          right: 0,
+          position: "fixed",
+          filter: "blur(8px)",
+        }}
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            backgroundColor: "rgb(0,0,0,0.5)",
+            top: 0,
+            bottom: 0,
+            left: 0,
+            right: 0,
+            zIndex: 2,
+          }}
+        />
+        <Image
+          alt=""
+          src="/loginBackground.svg"
+          layout="fill"
+          objectFit="cover"
+          objectPosition="top"
+          priority
+        />
+      </Box>
+
       <Container style={{ zIndex: 2, width: "100%" }} size={containerSize}>
         <Paper
           sx={{
@@ -47,22 +73,22 @@ export function LoginLayout({
             padding: "29px 24px 41px 24px",
             width: "100%",
           }}
+          my={40}
         >
-          <Box sx={{ marginBottom: 40, position: "relative", width: "100%" }}>
+          <Box sx={{ marginBottom: 60, position: "relative", width: "100%" }}>
             <UnstyledButton
               sx={{ position: "absolute", left: 0, top: 0, bottom: 0 }}
               onClick={() => router.back()}
             >
-              <ArrowLeft />
+              <IconArrowLeft />
             </UnstyledButton>
-            <Title order={3} align="center">
+            <Text align="center" sx={{ fontSize: "1.375rem", fontWeight: 600 }}>
               {headerTitle}
-            </Title>
+            </Text>
           </Box>
           {children}
         </Paper>
       </Container>
-      <Overlay color="#000" blur={2} opacity={0.6} zIndex={1} />
     </Box>
   );
 }

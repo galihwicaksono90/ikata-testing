@@ -1,5 +1,5 @@
 import { Stack, Text, List } from "@mantine/core";
-import { Job } from "generated/graphql";
+import { Job } from "generated/mockGraphql";
 
 export function VacancyList({ index, job }: { index: number; job: Job }) {
   return (

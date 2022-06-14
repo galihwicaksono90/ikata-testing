@@ -1,12 +1,12 @@
-import { useState, useEffect } from "react";
-import { Tabs } from "@mantine/core";
-import { AboutCarousel, AboutDescription } from "components/about";
-import { Container } from "components/common";
 import { MainLayout } from "components/layouts";
-import { AboutType, api, About, Testimony } from "generated/graphql";
+import { About, api, Testimony } from "generated/mockGraphql";
 import { GetServerSideProps } from "next";
-import { wrapper } from "redux/store";
 import { useRouter } from "next/router";
+import { useState } from "react";
+import { wrapper } from "redux/store";
+import { Container } from "components/common";
+import { Tabs } from "@mantine/core";
+import { AboutDescription, AboutCarousel } from "components/about";
 
 interface AboutProps {
   data?: {
@@ -14,35 +14,17 @@ interface AboutProps {
     organisasi: About;
     testimonies: Testimony[];
   };
+  initialTab: number;
 }
 
-const tabObject = {
-  0: "ikata",
-  1: "jurusan",
-  2: "ketua",
-};
+const tabObject = ["ikata", "jurusan", "ketua"];
 
-export default function AboutPage({ data }: AboutProps) {
-  const [activeTab, setActiveTab] = useState(0);
-  const { query, push } = useRouter();
-
-  useEffect(() => {
-    setActiveTab(() => {
-      const tab = query?.tab;
-      console.log({ tab });
-      if (!Array.isArray(tab)) return 0;
-
-      const key = Object.keys(tabObject).find(
-        (key) => tabObject[parseFloat(key)] === tab[0]
-      );
-      console.log({ key });
-
-      return key ? parseFloat(key) : 0;
-    });
-  }, []);
+export default function AboutPage({ data, initialTab }: AboutProps) {
+  const [activeTab, setActiveTab] = useState(initialTab);
+  const router = useRouter();
 
   const onTabChange = (active: number, tabKey: string) => {
-    push(`/tentang/${tabKey}`, undefined, { shallow: true });
+    router.push(`/tentang-kami/${tabKey}`, undefined, { shallow: true });
     setActiveTab(active);
   };
 
@@ -88,7 +70,19 @@ export default function AboutPage({ data }: AboutProps) {
 }
 
 export const getServerSideProps: GetServerSideProps =
-  wrapper.getServerSideProps((store) => async () => {
+  wrapper.getServerSideProps((store) => async ({ query }) => {
+    const getTab = (arr) => {
+      if (!Array.isArray(arr) || arr.length === 0) return 0;
+
+      const tab = arr[0];
+
+      const index = tabObject.findIndex((obj) => obj == tab.toLowerCase());
+
+      return index >= 0 ? index : 0;
+    };
+
+    const initialTab = getTab(query?.tab);
+
     try {
       const response = await store.dispatch(
         api.endpoints.GetAbout.initiate({
@@ -102,6 +96,7 @@ export const getServerSideProps: GetServerSideProps =
             organisasi: response.data.organisasi,
             testimonies: response.data.getTestimonies,
           },
+          initialTab,
         },
       };
     } catch (e) {
@@ -112,9 +107,8 @@ export const getServerSideProps: GetServerSideProps =
             organisasi: {},
             testimonies: [],
           },
+          initialTab,
         },
       };
     }
-
-    /* Promise.all(api.util.getRunningOperationPromises()); */
   });

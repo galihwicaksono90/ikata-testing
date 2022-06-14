@@ -1,5 +1,5 @@
 import { Input } from "@mantine/core";
-import { Search } from "tabler-icons-react";
+import { IconSearch } from "@tabler/icons";
 
 interface SearchInputProps {
   width?: string | number;
@@ -8,7 +8,7 @@ interface SearchInputProps {
 export function SearchInput({ width }: SearchInputProps) {
   return (
     <Input
-      icon={<Search />}
+      icon={<IconSearch />}
       radius="xl"
       placeholder="Search"
       styles={(theme) => ({

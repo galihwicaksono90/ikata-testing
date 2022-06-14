@@ -4,7 +4,7 @@ export function HeaderMenu() {
   return (
     <>
       <MenuItem title="Beranda" href="/" />
-      <MenuItem title="Tentang Kami" href="/about" />
+      <MenuItem title="Tentang Kami" href="/tentang-kami" />
       <MenuItem title="Susunan Pengurus" href="/susunan-pengurus">
         <MenuItemChild href="/susunan-pengurus/dewan-pengawas">
           Dewan Pengurus

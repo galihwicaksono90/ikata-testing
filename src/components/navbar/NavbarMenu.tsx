@@ -3,11 +3,11 @@ import { MenuItem } from "components/header";
 import { useRouter } from "next/router";
 
 export const NavbarMenu = () => {
-  const { pathname } = useRouter();
+  const { asPath } = useRouter();
   return (
     <>
       <MenuItem title="Beranda" href="/" withPadding />
-      <MenuItem title="Tentang Kami" href="/about" withPadding />
+      <MenuItem title="Tentang Kami" href="/tentang-kami" withPadding />
       <Accordion
         sx={{
           padding: 0,
@@ -19,7 +19,8 @@ export const NavbarMenu = () => {
           },
           label: {
             fontSize: theme.fontSizes.md,
-            fontWeight: 400,
+            fontWeight: 500,
+            paddingLeft: 10,
           },
           control: {
             paddingLeft: 0,
@@ -32,7 +33,7 @@ export const NavbarMenu = () => {
           iconPosition="right"
           sx={(theme) => ({
             "& .mantine-Accordion-label": {
-              color: pathname.startsWith("/susunan-pengurus")
+              color: asPath.startsWith("/susunan-pengurus")
                 ? theme.primaryColor
                 : theme.colors.white,
             },
@@ -64,7 +65,7 @@ export const NavbarMenu = () => {
           iconPosition="right"
           sx={(theme) => ({
             "& .mantine-Accordion-label": {
-              color: pathname.startsWith("/lowongan")
+              color: asPath.startsWith("/lowongan")
                 ? theme.primaryColor
                 : theme.colors.white,
             },
@@ -91,7 +92,7 @@ export const NavbarMenu = () => {
           iconPosition="right"
           sx={(theme) => ({
             "& .mantine-Accordion-label": {
-              color: pathname.startsWith("/berita")
+              color: asPath.startsWith("/berita")
                 ? theme.primaryColor
                 : theme.colors.white,
             },

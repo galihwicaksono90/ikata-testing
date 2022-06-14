@@ -1,5 +1,5 @@
 import { Carousel } from "components/common";
-import { useGetNewsItemsQuery } from "generated/graphql";
+import { useGetNewsItemsQuery } from "generated/mockGraphql";
 import React from "react";
 import { NewsCard } from "components/news";
 
