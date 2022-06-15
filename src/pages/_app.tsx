@@ -32,11 +32,11 @@ function App(props: AppProps) {
           },
         })}
       />
-      <NotificationsProvider position="top-right">
-        <MantineProvider withGlobalStyles withNormalizeCSS theme={theme}>
+      <MantineProvider withGlobalStyles withNormalizeCSS theme={theme}>
+        <NotificationsProvider position="top-right">
           <Component {...pageProps} />
-        </MantineProvider>
-      </NotificationsProvider>
+        </NotificationsProvider>
+      </MantineProvider>
     </>
   );
 }
