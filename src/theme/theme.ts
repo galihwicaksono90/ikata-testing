@@ -4,15 +4,15 @@ const CONTAINER_SIZE = 1128;
 
 export const theme: MantineThemeOverride = {
   colorScheme: "dark",
-  primaryColor: "orange",
   defaultRadius: "md",
+  primaryColor: "orange",
   //@ts-ignore
   radius: { xs: 8, sm: 10, md: 12, lg: 14, xl: "50%" },
   fontFamily: "Montserrat, sans-serif",
   //@ts-ignore
   fontSizes: { sm: "0.875rem", md: "1rem", lg: "1.125rem", xl: "1.374rem" },
   headings: {
-    fontFamily: "Montserrat",
+    fontFamily: "Montserrat, sans-serif",
     sizes: {
       h1: { fontSize: "3rem", lineHeight: "5.3rem" },
       h2: { fontSize: "2rem", lineHeight: "3.6rem" },
@@ -22,7 +22,7 @@ export const theme: MantineThemeOverride = {
       h6: { fontSize: "1rem", lineHeight: "1.8rem" },
     },
   },
-  breakpoints: { md: CONTAINER_SIZE, xs: 414 },
+  breakpoints: { xs: 555, md: CONTAINER_SIZE },
   colors: {
     dark: [
       "#fff",
@@ -47,6 +47,18 @@ export const theme: MantineThemeOverride = {
       "#FEB240",
       "#FEB240",
       "#FEB240",
+    ],
+    white: [
+      "#F1F1F1",
+      "#F1F1F1",
+      "#F1F1F1",
+      "#F1F1F1",
+      "#F1F1F1",
+      "#F1F1F1",
+      "#F1F1F1",
+      "#F1F1F1",
+      "#F1F1F1",
+      "#F1F1F1",
     ],
   },
   other: {

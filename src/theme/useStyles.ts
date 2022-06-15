@@ -33,10 +33,13 @@ export const useStyles = createStyles((theme) => ({
         color: theme.colors.gray[6],
         fontWeight: "bold",
         lineHeight: "30px",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
       },
       "& li.slick-active div": {
-        background: theme.primaryColor,
-        color: theme.colors.dark,
+        background: theme.colors.orange[0],
+        color: theme.colors.dark[8],
       },
     },
     "& .carousel-arrow-next": {
@@ -60,7 +63,7 @@ export const useStyles = createStyles((theme) => ({
     cursor: "pointer",
     fontWeight: 500,
     "& .active a": {
-      color: theme.primaryColor,
+      color: theme.colors.orange[0],
     },
     "& a": {
       color: theme.colors.white,
@@ -158,8 +161,8 @@ export const useStyles = createStyles((theme) => ({
     },
     "& input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus, textarea:-webkit-autofill, textarea:-webkit-autofill:hover, textarea:-webkit-autofill:focus, select:-webkit-autofill, select:-webkit-autofill:hover, select:-webkit-autofill:focus":
       {
-        // WebkitTextFillColor: theme.colors.dark,
-        // WebkitBoxShadow: "0 0 0px 1px rgba(255, 255, 255, 0.01) inset",
+        WebkitTextFillColor: theme.colors.dark[0],
+        WebkitBoxShadow: "0 0 0px 1px rgba(255, 255, 255, 0.01) inset",
       },
 
     "& .mantine-RadioGroup-root": {
@@ -226,5 +229,18 @@ export const useStyles = createStyles((theme) => ({
     //       color: "red",
     //     },
     //   },
+  },
+  tab: {
+    "& .mantine-Tabs-tabControl.mantine-Tabs-pills": {
+      height: 48,
+      fontWeight: 600,
+      borderRadius: 50,
+      color: theme.colors.orange[0],
+      border: `1px solid ${theme.colors.orange[1]}`,
+      "&.mantine-Tabs-tabActive": {
+        color: theme.colors.white[1],
+        background: theme.colors.orange[0],
+      },
+    },
   },
 }));

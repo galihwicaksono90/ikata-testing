@@ -12,7 +12,7 @@ export function MenuItemChild({
   const { pathname } = useRouter();
   return (
     <Menu.Item component={NextLink} href={href}>
-      <Text color={pathname === href ? "orange" : "white"}>{children}</Text>
+      <Text color={pathname === href ? "#feb240" : "white"}>{children}</Text>
     </Menu.Item>
   );
 }

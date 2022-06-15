@@ -51,6 +51,7 @@ export function Navbar({ opened, setOpened }: MainLayoutProps) {
               style={{
                 gap: 0,
                 width: "100%",
+                paddingLeft: "0px",
               }}
             >
               <ScrollArea
