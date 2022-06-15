@@ -1,17 +1,15 @@
 import { Box } from "@mantine/core";
-import {
-  Carousel,
-  CarouselBreakpoint,
-  MemberAvatar,
-  MemberAvatarProps,
-} from "components/common";
-import { useEffect, useState } from "react";
+import { Carousel, CarouselBreakpoint, MemberAvatar } from "components/common";
+import { Member } from "generated/mockGraphql";
 
 interface Props {
-  data: MemberAvatarProps[];
+  data: Member[];
   rows?: number;
   slidesToShow?: number;
   responsive?: CarouselBreakpoint[];
+  loading?: boolean;
+  withTitle?: boolean;
+  withClassYear?: boolean;
 }
 
 export const AvatarCarousel = ({
@@ -19,21 +17,10 @@ export const AvatarCarousel = ({
   rows = 2,
   slidesToShow = 4,
   responsive,
+  loading,
+  withClassYear,
+  withTitle,
 }: Props) => {
-  const [avatars, setAvatars] = useState([]);
-
-  useEffect(() => {
-    if (data) {
-      setAvatars(data);
-      return;
-    }
-    setAvatars([]);
-  }, [data]);
-
-  if (!avatars) {
-    return null;
-  }
-
   return (
     <Box>
       <Carousel
@@ -44,9 +31,18 @@ export const AvatarCarousel = ({
         infinite={false}
         responsive={responsive}
       >
-        {data.map((item) => (
-          <MemberAvatar {...item} key={item.id} />
-        ))}
+        {loading
+          ? [...Array(10).fill(0)].map((item, index) => (
+              <MemberAvatar loading={loading} key={index} />
+            ))
+          : data.map((item) => (
+              <MemberAvatar
+                data={item}
+                key={item.id}
+                withTitle={withTitle}
+                withClassYear={withClassYear}
+              />
+            ))}
       </Carousel>
     </Box>
   );

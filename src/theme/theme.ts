@@ -12,7 +12,7 @@ export const theme: MantineThemeOverride = {
   //@ts-ignore
   fontSizes: { sm: "0.875rem", md: "1rem", lg: "1.125rem", xl: "1.374rem" },
   headings: {
-    fontFamily: "Montserrat",
+    fontFamily: "Montserrat, sans-serif",
     sizes: {
       h1: { fontSize: "3rem", lineHeight: "5.3rem" },
       h2: { fontSize: "2rem", lineHeight: "3.6rem" },
@@ -22,7 +22,7 @@ export const theme: MantineThemeOverride = {
       h6: { fontSize: "1rem", lineHeight: "1.8rem" },
     },
   },
-  breakpoints: { md: CONTAINER_SIZE, xs: 414 },
+  breakpoints: { xs: 555, md: CONTAINER_SIZE },
   colors: {
     dark: [
       "#fff",

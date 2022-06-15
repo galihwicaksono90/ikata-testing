@@ -19,8 +19,8 @@ export const generateEightYears = () => {
     arr.push({
       value: i.toString(),
       data: dividedYears[i],
-      label: `${dividedYears[i][0]} - ${
-        dividedYears[i][dividedYears[i].length - 1]
+      label: `${dividedYears[i][dividedYears[i].length - 1]} - ${
+        dividedYears[i][0]
       }`,
     });
   }

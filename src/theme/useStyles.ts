@@ -33,10 +33,13 @@ export const useStyles = createStyles((theme) => ({
         color: theme.colors.gray[6],
         fontWeight: "bold",
         lineHeight: "30px",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
       },
       "& li.slick-active div": {
         background: theme.colors.orange[0],
-        color: theme.colors.dark,
+        color: theme.colors.dark[8],
       },
     },
     "& .carousel-arrow-next": {
