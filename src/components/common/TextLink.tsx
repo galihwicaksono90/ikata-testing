@@ -19,10 +19,10 @@ export const TextLink = ({
       {...rest}
       href={href}
       sx={(theme) => ({
-        color: type === "primary" ? theme.primaryColor : theme.white,
+        color: type === "primary" ? theme.colors.orange[0] : theme.white,
         "&:hover": {
           textDecoration: type === "primary" ? "underline" : "none",
-          color: theme.primaryColor,
+          color: theme.colors.orange[0],
         },
       })}
       weight="bold"

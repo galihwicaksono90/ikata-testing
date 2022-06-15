@@ -4,8 +4,8 @@ const CONTAINER_SIZE = 1128;
 
 export const theme: MantineThemeOverride = {
   colorScheme: "dark",
-  primaryColor: "orange",
   defaultRadius: "md",
+  primaryColor: "orange",
   //@ts-ignore
   radius: { xs: 8, sm: 10, md: 12, lg: 14, xl: "50%" },
   fontFamily: "Montserrat, sans-serif",
@@ -47,6 +47,18 @@ export const theme: MantineThemeOverride = {
       "#FEB240",
       "#FEB240",
       "#FEB240",
+    ],
+    white: [
+      "#F1F1F1",
+      "#F1F1F1",
+      "#F1F1F1",
+      "#F1F1F1",
+      "#F1F1F1",
+      "#F1F1F1",
+      "#F1F1F1",
+      "#F1F1F1",
+      "#F1F1F1",
+      "#F1F1F1",
     ],
   },
   other: {
