@@ -20,6 +20,7 @@ export function ManagementLayout({ title, description, children }: Props) {
             paddingTop: 30,
           },
         })}
+        mb={80}
       >
         <Text
           component="h1"
@@ -28,6 +29,7 @@ export function ManagementLayout({ title, description, children }: Props) {
             fontSize: "3rem",
             [`@media (max-width: ${theme.breakpoints.sm}px)`]: {
               fontSize: "1.6rem",
+              marginBottom: 30,
             },
           })}
         >

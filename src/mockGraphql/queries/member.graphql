@@ -5,5 +5,7 @@ query GetMembers($limit: Int!, $field: String!) {
     title
     image
     field
+    email
+    classYear
   }
 }

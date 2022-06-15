@@ -1,10 +1,11 @@
 import { Box, Tabs, Select, MediaQuery } from "@mantine/core";
 import { AvatarCarousel } from "components/common";
 import { ManagementLayout } from "components/layouts";
-import { useGetMembersQuery } from "generated/mockGraphql";
+import { api, useGetMembersQuery } from "generated/mockGraphql";
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { wrapper } from "redux/store";
 
 const organization = [
   { value: "0", label: "Pengurus Inti" },
@@ -17,12 +18,12 @@ const organization = [
 ];
 
 interface Props {
-  activeTab: number;
+  initialTab: number;
 }
 
-export default function PengurusPusat({ activeTab }: Props) {
+export default function PengurusPusat({ initialTab }: Props) {
   const router = useRouter();
-  const [currentTab, setCurrentTab] = useState(activeTab);
+  const [currentTab, setCurrentTab] = useState(initialTab);
 
   const { data: members, isFetching } = useGetMembersQuery({
     limit: 10,
@@ -31,7 +32,7 @@ export default function PengurusPusat({ activeTab }: Props) {
 
   const onTabChange = (tabIndex: number) => {
     setCurrentTab(tabIndex);
-    setUrl(organization[tabIndex].label.toLowerCase());
+    setUrl(organization[tabIndex].value.toLowerCase());
   };
 
   const onSelectTab = (value: string) => {
@@ -39,8 +40,8 @@ export default function PengurusPusat({ activeTab }: Props) {
     setUrl(organization.find((org) => org.value === value).label.toLowerCase());
   };
 
-  const setUrl = (text) => {
-    router.push(`/susunan-pengurus/pengurus-pusat/${text}`, undefined, {
+  const setUrl = (text: string) => {
+    router.push(`/susunan-pengurus/pengurus-pusat?tab=${text}`, undefined, {
       shallow: true,
     });
   };
@@ -59,6 +60,14 @@ export default function PengurusPusat({ activeTab }: Props) {
           data={organization}
           value={currentTab.toString()}
           onChange={onSelectTab}
+          sx={(theme) => ({
+            "& input": {
+              color: theme.colors.orange[0],
+              fontSize: 14,
+              fontWeight: 700,
+              boxShadow: "0px 4px 7px 0px #00000026",
+            },
+          })}
         />
       </MediaQuery>
       <Tabs
@@ -67,6 +76,7 @@ export default function PengurusPusat({ activeTab }: Props) {
         orientation="vertical"
         variant="pills"
         sx={(theme) => ({
+          marginBottom: 50,
           "& .mantine-Tabs-tabsList": {
             gap: 20,
             width: 264,
@@ -98,26 +108,26 @@ export default function PengurusPusat({ activeTab }: Props) {
       >
         {organization.map((org) => (
           <Tabs.Tab label={org.label} key={org.value}>
-            {isFetching ? (
-              <div>Loading...</div>
-            ) : (
-              <Box sx={{ maxWidth: "100%" }}>
-                <AvatarCarousel
-                  data={!!members?.getMembers ? members.getMembers : []}
-                  slidesToShow={3}
-                  rows={2}
-                  responsive={[
-                    {
-                      breakpoint: 555,
-                      settings: {
-                        slidesToShow: 2,
-                        slidesToScroll: 2,
-                      },
-                    },
-                  ]}
-                ></AvatarCarousel>
-              </Box>
-            )}
+            <Box sx={{ maxWidth: "100%" }}>
+              <AvatarCarousel
+                loading={isFetching}
+                data={members.getMembers}
+                slidesToShow={3}
+                rows={2}
+                responsive={[
+                  {
+                    breakpoint: 555,
+                    settings: { slidesToShow: 2, slidesToScroll: 2 },
+                  },
+                  {
+                    breakpoint: 400,
+                    settings: { slidesToShow: 1, slidesToScroll: 1 },
+                  },
+                ]}
+                withClassYear
+                withTitle
+              />
+            </Box>
           </Tabs.Tab>
         ))}
       </Tabs>
@@ -125,13 +135,26 @@ export default function PengurusPusat({ activeTab }: Props) {
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-  let tab = organization.findIndex((org) => {
-    if (!Array.isArray(query?.field) || query.field.length === 0) return false;
-    return org.label.toLowerCase() == (query.field[0].toLowerCase() as string);
+export const getServerSideProps: GetServerSideProps =
+  wrapper.getServerSideProps((store) => async ({ query }) => {
+    let initialTab = 0;
+    const tabQuery = query.tab as string;
+
+    if (query?.tab) {
+      const tab = organization.findIndex(
+        (t) => t.value.toLowerCase() === tabQuery.toLowerCase()
+      );
+      initialTab = tab < 0 ? 0 : tab;
+    }
+
+    await store.dispatch(
+      api.endpoints.GetMembers.initiate({
+        limit: 10,
+        field: organization[initialTab].label,
+      })
+    );
+
+    return {
+      props: { initialTab },
+    };
   });
-  tab = tab === -1 ? 0 : tab;
-  return {
-    props: { activeTab: tab },
-  };
-};

@@ -95,6 +95,8 @@ export type Job = {
 
 export type Member = {
   __typename?: 'Member';
+  classYear: Scalars['Int'];
+  email: Scalars['String'];
   field: Scalars['String'];
   id: Scalars['Int'];
   image: Scalars['String'];
@@ -333,7 +335,7 @@ export type GetMembersQueryVariables = Exact<{
 }>;
 
 
-export type GetMembersQuery = { __typename?: 'Query', getMembers: Array<{ __typename?: 'Member', id: number, name: string, title: string, image: string, field: string }> };
+export type GetMembersQuery = { __typename?: 'Query', getMembers: Array<{ __typename?: 'Member', id: number, name: string, title: string, image: string, field: string, email: string, classYear: number }> };
 
 export type GetMerchListQueryVariables = Exact<{
   limit: Scalars['Int'];
@@ -486,6 +488,8 @@ export const GetMembersDocument = `
     title
     image
     field
+    email
+    classYear
   }
 }
     `;

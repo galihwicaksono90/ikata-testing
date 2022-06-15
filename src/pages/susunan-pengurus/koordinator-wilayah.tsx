@@ -11,7 +11,7 @@ import { wrapper } from "redux/store";
 import { capitalize } from "utils/capitalize";
 
 interface Area {
-  Label: string;
+  label: string;
   value: string;
 }
 
@@ -31,24 +31,26 @@ export default function KoordinatorWilayah({ initialArea, areas }: Props) {
     isFetching,
   } = useGetMembersQuery({
     limit: 8,
-    field: currentArea.Label,
+    field: currentArea.label,
   });
-
-  if (isLoading) <div>Loadingg...</div>;
 
   const handleAreaChange = (area: Area) => {
     setCurrentArea(area);
-    setUrl(area.Label);
+    setUrl(area.label);
   };
 
   const onSelectArea = (value: string) => {
     const selectedArea = areas.find((area) => area.value === value);
     setCurrentArea(selectedArea);
-    setUrl(selectedArea.Label);
+    setUrl(selectedArea.label);
   };
 
   const setUrl = (area: string) => {
-    router.push(`/susunan-pengurus/koordinator-wilayah/${area.toLowerCase()}`);
+    router.push(
+      `/susunan-pengurus/koordinator-wilayah?area=${area.toLowerCase()}`,
+      undefined,
+      { shallow: true }
+    );
   };
 
   return (
@@ -65,6 +67,16 @@ export default function KoordinatorWilayah({ initialArea, areas }: Props) {
           onChange={onSelectArea}
           mb={40}
           size="lg"
+          searchable
+          icon={<IconSearch color="#abaaaa" />}
+          sx={(theme) => ({
+            "& input": {
+              color: theme.colors.orange[0],
+              fontWeight: 700,
+              border: "1px solid #EAEAEA",
+              fontSize: 14,
+            },
+          })}
         />
       </MediaQuery>
       <Grid>
@@ -109,7 +121,9 @@ export default function KoordinatorWilayah({ initialArea, areas }: Props) {
               <Group direction="column">
                 {areas
                   .filter((area) =>
-                    area.Label.includes(debouncedFilter.toLowerCase())
+                    area.label
+                      .toLowerCase()
+                      .includes(debouncedFilter.toLowerCase())
                   )
                   .map((area) => (
                     <Text
@@ -125,7 +139,7 @@ export default function KoordinatorWilayah({ initialArea, areas }: Props) {
                       sx={{ cursor: "pointer" }}
                       component="a"
                     >
-                      {area.Label}
+                      {area.label}
                     </Text>
                   ))}
               </Group>
@@ -133,21 +147,24 @@ export default function KoordinatorWilayah({ initialArea, areas }: Props) {
           </Grid.Col>
         </MediaQuery>
         <Grid.Col md={9} span={12}>
-          {isFetching ? (
-            <div>Loading...</div>
-          ) : (
-            <AvatarCarousel
-              data={members.getMembers}
-              rows={2}
-              slidesToShow={3}
-              responsive={[
-                {
-                  breakpoint: 555,
-                  settings: { slidesToShow: 2, slidesToScroll: 2 },
-                },
-              ]}
-            />
-          )}
+          <AvatarCarousel
+            loading={isFetching}
+            data={members.getMembers}
+            rows={2}
+            slidesToShow={3}
+            responsive={[
+              {
+                breakpoint: 555,
+                settings: { slidesToShow: 2, slidesToScroll: 2 },
+              },
+              {
+                breakpoint: 400,
+                settings: { slidesToShow: 1, slidesToScroll: 1 },
+              },
+            ]}
+            withClassYear
+            withTitle
+          />
         </Grid.Col>
       </Grid>
     </ManagementLayout>
@@ -156,33 +173,44 @@ export default function KoordinatorWilayah({ initialArea, areas }: Props) {
 
 export const getServerSideProps: GetServerSideProps =
   wrapper.getServerSideProps((store) => async ({ query }) => {
-    const { data: response } = await store.dispatch(
-      api.endpoints.GetAreas.initiate()
-    );
+    try {
+      const { data: response } = await store.dispatch(
+        api.endpoints.GetAreas.initiate()
+      );
 
-    const areas = response.getAreas.map((item) => ({
-      value: item.id.toString(),
-      label: capitalize(item.name),
-    }));
+      const areas = response.getAreas.map((item) => ({
+        value: item.id.toString(),
+        label: capitalize(item.name),
+      }));
 
-    /* let tab = areas[0];
-     * let areaQuery: any; */
+      let initialArea = areas[0];
+      const areaQuery = query.area as string;
 
-    /* if (query?.area) {
-     *   areaQuery = areas.find((area) => {
-     *     return area.label.toLowerCase() == (query.area as string);
-     *   });
-     * }
-     * tab = !areaQuery ? tab : areaQuery; */
+      if (!!areaQuery) {
+        const area = areas.find(
+          (a) => a.label.toLowerCase() === areaQuery.toLowerCase()
+        );
+        if (!!area) {
+          initialArea = area;
+        }
+      }
 
-    let initialAreaIndex = areas.findIndex((area) => {
-      if (!Array.isArray(query?.area) || query.area.length === 0) return false;
-      return area.label.toLowerCase() == query.area[0].toLowerCase();
-    });
-    initialAreaIndex = initialAreaIndex === -1 ? 0 : initialAreaIndex;
+      await store.dispatch(
+        api.endpoints.GetMembers.initiate({
+          limit: 8,
+          field: initialArea.label,
+        })
+      );
 
-    console.log({ initialAreaIndex });
-    return {
-      props: { initialArea: areas[initialAreaIndex], areas: areas },
-    };
+      return {
+        props: { initialArea: initialArea, areas: areas },
+      };
+    } catch (e) {
+      return {
+        props: {
+          initialArea: {},
+          areas: [],
+        },
+      };
+    }
   });
