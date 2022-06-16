@@ -1,4 +1,4 @@
-watch: true
+# watch: true
 overwrite: true
 generates:
   # main endpoints
