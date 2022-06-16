@@ -64,10 +64,11 @@ export const getServerSideProps: GetServerSideProps =
       const token = query?.token;
       if (!token) throw Error;
       const isValid = await store.dispatch(
-        api.endpoints.TokenForgotPassword.initiate({
+        api.endpoints.TokenForgotPasswordesnst.initiate({
           user: { token: token as string },
         })
       );
+      console.log({ isValid });
       return {
         props: {
           tokenValid: isValid.data.tokenForgotPassword.isValid,

@@ -128,7 +128,7 @@ export const useStyles = createStyles((theme) => ({
     },
     "& input": {
       background: "rgba(255,255,255,0.25)",
-      color: theme.colors.white,
+      color: theme.white,
       "&::placeholder": {
         fontStyle: "italic",
         fontSize: theme.fontSizes.sm,
@@ -145,9 +145,6 @@ export const useStyles = createStyles((theme) => ({
         fontSize: theme.fontSizes.md,
         marginBottom: "15px",
       },
-    },
-    "& .mantine-RadioGroup-label": {
-      fontSize: theme.fontSizes.md,
     },
     "& .mantine-TextInput-invalid": {
       color: theme.white,
@@ -169,6 +166,7 @@ export const useStyles = createStyles((theme) => ({
       "& > .mantine-RadioGroup-label": {
         marginBottom: "15px",
         fontWeight: 600,
+        fontSize: theme.fontSizes.md,
       },
       "& .mantine-Group-root": {
         gap: 40,
@@ -209,6 +207,12 @@ export const useStyles = createStyles((theme) => ({
     [`@media (max-width: ${theme.breakpoints.sm}px)`]: {
       "& .mantine-RadioGroup-root .mantine-Group-root": {
         gap: 20,
+      },
+      "& .mantine-RadioGroup-root": {
+        "& .mantine-RadioGroup-radio": {
+          height: "25px",
+          width: "25px",
+        },
       },
     },
     // "@media screen and (-webkit-min-device-pixel-ratio: 0) and (min-resolution: 0.001dpcm)":
