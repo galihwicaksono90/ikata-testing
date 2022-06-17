@@ -158,8 +158,9 @@ export const useStyles = createStyles((theme) => ({
     },
     "& input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus, textarea:-webkit-autofill, textarea:-webkit-autofill:hover, textarea:-webkit-autofill:focus, select:-webkit-autofill, select:-webkit-autofill:hover, select:-webkit-autofill:focus":
       {
-        WebkitTextFillColor: theme.colors.dark[0],
-        WebkitBoxShadow: "0 0 0px 1px rgba(255, 255, 255, 0.01) inset",
+        WebkitTextFillColor: theme.white,
+        // WebkitBoxShadow: "0 0 0px 30px blue inset !important",
+        transition: "background-color 9999s ease-in-out 0s",
       },
 
     "& .mantine-RadioGroup-root": {

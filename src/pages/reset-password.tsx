@@ -64,7 +64,7 @@ export const getServerSideProps: GetServerSideProps =
       const token = query?.token;
       if (!token) throw Error;
       const isValid = await store.dispatch(
-        api.endpoints.TokenForgotPasswordesnst.initiate({
+        api.endpoints.TokenForgotPassword.initiate({
           user: { token: token as string },
         })
       );
