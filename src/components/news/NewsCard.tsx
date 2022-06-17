@@ -36,8 +36,7 @@ export function NewsCard({
       <Box
         sx={(theme) => ({
           height: 129,
-          background:
-            "linear-gradient(0.51deg, #000000 0.5%, rgba(0, 0, 0, 0.5) 99.63%)",
+          background: theme.other.darkGradient,
           zIndex: 2000,
           position: "absolute",
           bottom: 0,

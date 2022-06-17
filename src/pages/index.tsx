@@ -11,7 +11,7 @@ import { GetServerSideProps } from "next";
 import { wrapper } from "redux/store";
 
 export default function Home() {
-  return <AlumniLandingPage />;
+  //return <AlumniLandingPage />;
 
   return (
     <MainLayout>
@@ -21,7 +21,8 @@ export default function Home() {
       <AdBanner src="/banner1.png" />
       <ArticleLandingPage />
       <VacancyLandingPage />
-      {/* <AlumniLandingPage />
+      <AlumniLandingPage />
+      {/*
       <AdBanner src="/banner2.png" />
       <MerchCarousel /> */}
     </MainLayout>
@@ -65,6 +66,12 @@ export const getServerSideProps: GetServerSideProps =
     await store.dispatch(
       api.endpoints.GetVacancies.initiate({
         type: VacancyType.Job,
+      })
+    );
+
+    await store.dispatch(
+      api.endpoints.GetAlumniBusinesses.initiate({
+        limit: 0,
       })
     );
 

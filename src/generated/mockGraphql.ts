@@ -36,6 +36,13 @@ export type Activity = {
   title: Scalars['String'];
 };
 
+export type Alumni = {
+  __typename?: 'Alumni';
+  id: Scalars['Int'];
+  image: Scalars['String'];
+  name: Scalars['String'];
+};
+
 export type Area = {
   __typename?: 'Area';
   id: Scalars['Int'];
@@ -170,6 +177,7 @@ export type Query = {
   getAbout?: Maybe<About>;
   getActivities: Array<Activity>;
   getActivity?: Maybe<Activity>;
+  getAlumniBusinesses: Array<Maybe<Alumni>>;
   getAreas: Array<Area>;
   getArticle?: Maybe<Article>;
   getArticles: Array<Article>;
@@ -196,6 +204,11 @@ export type QueryGetActivitiesArgs = {
 
 export type QueryGetActivityArgs = {
   id: Scalars['Int'];
+};
+
+
+export type QueryGetAlumniBusinessesArgs = {
+  limit: Scalars['Int'];
 };
 
 
@@ -325,6 +338,13 @@ export type GetActivitiesQueryVariables = Exact<{
 
 
 export type GetActivitiesQuery = { __typename?: 'Query', getActivities: Array<{ __typename?: 'Activity', id: number, title: string, postedAt: any, description: string, image: string }> };
+
+export type GetAlumniBusinessesQueryVariables = Exact<{
+  limit: Scalars['Int'];
+}>;
+
+
+export type GetAlumniBusinessesQuery = { __typename?: 'Query', getAlumniBusinesses: Array<{ __typename?: 'Alumni', id: number, name: string, image: string } | null> };
 
 export type GetAreasQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -468,6 +488,15 @@ export const GetActivitiesDocument = `
     title
     postedAt
     description
+    image
+  }
+}
+    `;
+export const GetAlumniBusinessesDocument = `
+    query GetAlumniBusinesses($limit: Int!) {
+  getAlumniBusinesses(limit: $limit) {
+    id
+    name
     image
   }
 }
@@ -658,6 +687,9 @@ const injectedRtkApi = api.injectEndpoints({
     GetActivities: build.query<GetActivitiesQuery, GetActivitiesQueryVariables>({
       query: (variables) => ({ document: GetActivitiesDocument, variables })
     }),
+    GetAlumniBusinesses: build.query<GetAlumniBusinessesQuery, GetAlumniBusinessesQueryVariables>({
+      query: (variables) => ({ document: GetAlumniBusinessesDocument, variables })
+    }),
     GetAreas: build.query<GetAreasQuery, GetAreasQueryVariables | void>({
       query: (variables) => ({ document: GetAreasDocument, variables })
     }),
@@ -698,5 +730,5 @@ const injectedRtkApi = api.injectEndpoints({
 });
 
 export { injectedRtkApi as api };
-export const { useValidateResetTokenMutation, useRegisterMutation, useGetAboutQuery, useLazyGetAboutQuery, useGetActivitiesQuery, useLazyGetActivitiesQuery, useGetAreasQuery, useLazyGetAreasQuery, useGetArticleQuery, useLazyGetArticleQuery, useGetArticlesQuery, useLazyGetArticlesQuery, useGetCompanyJobsQuery, useLazyGetCompanyJobsQuery, useGetHeroImagesQuery, useLazyGetHeroImagesQuery, useLandingPageQuery, useLazyLandingPageQuery, useGetMembersQuery, useLazyGetMembersQuery, useGetMerchListQuery, useLazyGetMerchListQuery, useGetNewsItemsQuery, useLazyGetNewsItemsQuery, useGetNewsQuery, useLazyGetNewsQuery, useGetTestimoniesQuery, useLazyGetTestimoniesQuery, useGetVacanciesQuery, useLazyGetVacanciesQuery } = injectedRtkApi;
+export const { useValidateResetTokenMutation, useRegisterMutation, useGetAboutQuery, useLazyGetAboutQuery, useGetActivitiesQuery, useLazyGetActivitiesQuery, useGetAlumniBusinessesQuery, useLazyGetAlumniBusinessesQuery, useGetAreasQuery, useLazyGetAreasQuery, useGetArticleQuery, useLazyGetArticleQuery, useGetArticlesQuery, useLazyGetArticlesQuery, useGetCompanyJobsQuery, useLazyGetCompanyJobsQuery, useGetHeroImagesQuery, useLazyGetHeroImagesQuery, useLandingPageQuery, useLazyLandingPageQuery, useGetMembersQuery, useLazyGetMembersQuery, useGetMerchListQuery, useLazyGetMerchListQuery, useGetNewsItemsQuery, useLazyGetNewsItemsQuery, useGetNewsQuery, useLazyGetNewsQuery, useGetTestimoniesQuery, useLazyGetTestimoniesQuery, useGetVacanciesQuery, useLazyGetVacanciesQuery } = injectedRtkApi;
 

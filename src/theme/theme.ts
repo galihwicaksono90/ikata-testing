@@ -68,5 +68,7 @@ export const theme: MantineThemeOverride = {
     placeholderColor: "rgba(255,255,255,0.5)",
     gray: "#eaeaea",
     gradientColor: "linear-gradient(94.04deg, #FEB240 0%, #FE9040 100%)",
+    darkGradient:
+      "linear-gradient(0.51deg, #000000 0.5%, rgba(0, 0, 0, 0.5) 99.63%)",
   },
 };
