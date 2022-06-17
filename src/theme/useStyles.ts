@@ -6,7 +6,7 @@ export const useStyles = createStyles((theme) => ({
     "& ul": {},
     "& .slick-dots": {
       "&.outside": {
-        bottom: "-45px",
+        bottom: "-60px",
       },
       "&.inside": {
         bottom: "8px",

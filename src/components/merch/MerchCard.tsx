@@ -1,4 +1,4 @@
-import { Card, Box, Title, Text } from "@mantine/core";
+import { Card, Box, Title, Text, Group } from "@mantine/core";
 import { GradientButton } from "components/common";
 import { Merch } from "generated/mockGraphql";
 import Image from "next/image";
@@ -11,46 +11,39 @@ export function MerchCard({ data }: MerchCardProps) {
   const { id, name, price, image } = data;
   return (
     <Card
-      mx="auto"
       sx={(theme) => ({
-        width: 264,
-        background: theme.white,
-        border: `1px solid #EAEAEA`,
-        height: 442,
+        //width: 264,
+        height: 414,
         display: "flex",
         flexDirection: "column",
       })}
-      withBorder
+      mx={6}
     >
-      <Box
-        sx={(theme) => ({
-          position: "relative",
-          height: 224,
-          borderRadius: theme.radius.md,
-          padding: 20,
-          overflow: "hidden",
-          marginBottom: 15,
-        })}
+      <Card.Section>
+        <Box sx={{ position: "relative", height: 263 }}>
+          <Image
+            alt=""
+            src={image}
+            layout="fill"
+            objectFit="cover"
+            objectPosition="center"
+          />
+        </Box>
+      </Card.Section>
+      <Group
+        mt={22}
+        direction="column"
+        position="apart"
+        pb={16}
+        sx={{ height: "100%" }}
       >
-        <Image
-          alt=""
-          src={image}
-          layout="fill"
-          objectFit="cover"
-          objectPosition="center"
-        />
-      </Box>
-      <Title order={6} sx={(theme) => ({ color: theme.colors.dark })}>
-        {name}
-      </Title>
-      <Box sx={{ marginTop: "auto" }}>
-        <Text mb={20} color="gray" weight="bold">
+        <Text weight={600} sx={{ lineHeight: "28.8px" }} lineClamp={2}>
+          {name}
+        </Text>
+        <Text color="dimmed" weight="bold" mt="auto">
           {price}
         </Text>
-        <GradientButton fullWidth href={`/merchandise/${id}`}>
-          Lihat Detail
-        </GradientButton>
-      </Box>
+      </Group>
     </Card>
   );
 }

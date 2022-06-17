@@ -2,7 +2,7 @@ import { AlumniLandingPage } from "components/alumni";
 import { ArticleLandingPage } from "components/article";
 import { AdBanner, HeroImage } from "components/common";
 import { MainLayout } from "components/layouts";
-import { MerchCarousel } from "components/merch";
+import { MerchLandingPage } from "components/merch";
 import { VacancyLandingPage } from "components/vacancy";
 import { ActivityLandingPage } from "components/activity";
 import { NewsLandingPage } from "components/news";
@@ -11,7 +11,7 @@ import { GetServerSideProps } from "next";
 import { wrapper } from "redux/store";
 
 export default function Home() {
-  //return <AlumniLandingPage />;
+  return <MerchLandingPage />;
 
   return (
     <MainLayout>
@@ -22,8 +22,8 @@ export default function Home() {
       <ArticleLandingPage />
       <VacancyLandingPage />
       <AlumniLandingPage />
-      {/*
       <AdBanner src="/banner2.png" />
+      {/*
       <MerchCarousel /> */}
     </MainLayout>
   );
@@ -71,7 +71,13 @@ export const getServerSideProps: GetServerSideProps =
 
     await store.dispatch(
       api.endpoints.GetAlumniBusinesses.initiate({
-        limit: 0,
+        limit: 4,
+      })
+    );
+
+    await store.dispatch(
+      api.endpoints.GetMerchList.initiate({
+        limit: 5,
       })
     );
 
