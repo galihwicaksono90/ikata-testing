@@ -1,23 +1,58 @@
-import React from "react";
-import { Box, Overlay, Title, Text } from "@mantine/core";
-import Image from "next/image";
+import { Box, Overlay, Text } from "@mantine/core";
 import { Carousel, Container } from "components/common";
 import { useGetHeroImagesQuery } from "generated/mockGraphql";
+import Image from "next/image";
+import React from "react";
 
 export function HeroImage() {
-  const { data: images, isLoading } = useGetHeroImagesQuery({ limit: 4 });
+  const { data: images, isLoading } = useGetHeroImagesQuery({ limit: 5 });
 
   if (isLoading) {
-    return <span>Loading...</span>;
+    return <div>Loading...</div>;
   }
 
   return (
-    <Box sx={{ height: "679px" }}>
-      <Carousel dotsPosition="inside" dots slidesToShow={1}>
+    <Box sx={{ maxWidth: "100vw", position: "relative" }}>
+      <Carousel dotsPosition="inside" dots slidesToShow={1} autoplay>
         {images?.getHeroImages.map((image) => (
           <Content src={image.image} key={image.id} />
         ))}
       </Carousel>
+      <Container
+        sx={{
+          position: "absolute",
+          zIndex: 1000,
+          width: "100%",
+          top: 0,
+          bottom: 0,
+          left: 0,
+          right: 0,
+          display: "flex",
+          alignItems: "center",
+          pointerEvents: "none",
+        }}
+      >
+        <Box
+          sx={{
+            textAlign: "left",
+            width: "fit-content",
+          }}
+        >
+          <Text sx={{ fontSize: "2.5rem", fontWeight: 500 }}>VIVA TAMBANG</Text>
+          <Text sx={{ fontSize: "2.5rem", fontWeight: 500 }}>
+            MANTAP SKALEEE
+          </Text>
+          <Text
+            sx={(theme) => ({
+              fontSize: "3.875em",
+              color: theme.colors.orange[0],
+              fontWeight: 700,
+            })}
+          >
+            IKATA TANGGUH
+          </Text>
+        </Box>
+      </Container>
     </Box>
   );
 }
@@ -26,64 +61,11 @@ function Content({ src }: { src: string }) {
   return (
     <Box
       sx={{
-        height: "679px",
-        width: "100vw",
+        height: "747px",
         position: "relative",
       }}
     >
-      <Image alt="" src={src} layout="fill" objectFit="cover" priority />
-      <Box
-        sx={{
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-          height: "100%",
-          width: "1440px",
-          zIndex: 1000,
-          transform: "translate(-50%,-50%)",
-        }}
-      >
-        <Container
-          sx={{
-            height: "100%",
-            position: "relative",
-          }}
-        >
-          <Box
-            sx={(theme) => ({
-              position: "absolute",
-              top: "70%",
-              left: "75%",
-              textAlign: "center",
-              transform: "translate(-50%,-50%)",
-              width: "fit-content",
-              [`@media (max-width: ${theme.breakpoints.md}px)`]: {
-                fontSize: "12px",
-                left: "60%",
-              },
-              [`@media (max-width: ${theme.breakpoints.sm}px)`]: {
-                left: "50%",
-              },
-            })}
-          >
-            <Text sx={{ fontSize: "2em" }} weight="bold">
-              VIVA TAMBANG
-            </Text>
-            <Text sx={{ fontSize: "2em" }} weight="bold">
-              MANTAP SKALEEE
-            </Text>
-            <Text
-              sx={(theme) => ({
-                fontSize: "3.4375em",
-                color: theme.primaryColor,
-              })}
-              weight="bold"
-            >
-              IKATA TANGGUH
-            </Text>
-          </Box>
-        </Container>
-      </Box>
+      <Image src={src} alt="" priority layout="fill" objectFit="cover" />
       <Overlay opacity={0.5} color="black" zIndex={999} />
     </Box>
   );

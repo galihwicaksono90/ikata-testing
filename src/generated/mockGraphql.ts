@@ -27,6 +27,15 @@ export enum AboutType {
   Organisasi = 'organisasi'
 }
 
+export type Activity = {
+  __typename?: 'Activity';
+  description: Scalars['String'];
+  id: Scalars['Int'];
+  image: Scalars['String'];
+  postedAt: Scalars['DateTime'];
+  title: Scalars['String'];
+};
+
 export type Area = {
   __typename?: 'Area';
   id: Scalars['Int'];
@@ -159,6 +168,8 @@ export type News = {
 export type Query = {
   __typename?: 'Query';
   getAbout?: Maybe<About>;
+  getActivities: Array<Activity>;
+  getActivity?: Maybe<Activity>;
   getAreas: Array<Area>;
   getArticle?: Maybe<Article>;
   getArticles: Array<Article>;
@@ -175,6 +186,16 @@ export type Query = {
 
 export type QueryGetAboutArgs = {
   type: AboutType;
+};
+
+
+export type QueryGetActivitiesArgs = {
+  limit: Scalars['Int'];
+};
+
+
+export type QueryGetActivityArgs = {
+  id: Scalars['Int'];
 };
 
 
@@ -297,6 +318,13 @@ export type GetAboutQueryVariables = Exact<{
 
 export type GetAboutQuery = { __typename?: 'Query', jurusan?: { __typename?: 'About', description: string, image: string, type: string } | null, organisasi?: { __typename?: 'About', description: string, image: string, type: string } | null, getTestimonies: Array<{ __typename?: 'Testimony', id: number, name: string, startYear: number, endYear: number, description: string, image: string }> };
 
+export type GetActivitiesQueryVariables = Exact<{
+  limit: Scalars['Int'];
+}>;
+
+
+export type GetActivitiesQuery = { __typename?: 'Query', getActivities: Array<{ __typename?: 'Activity', id: number, title: string, postedAt: any, description: string, image: string }> };
+
 export type GetAreasQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -328,6 +356,17 @@ export type GetHeroImagesQueryVariables = Exact<{
 
 
 export type GetHeroImagesQuery = { __typename?: 'Query', getHeroImages: Array<{ __typename?: 'HeroImage', id: number, image: string } | null> };
+
+export type LandingPageQueryVariables = Exact<{
+  getScientificArticlesLimit: Scalars['Int'];
+  getNonScientificArticlesLimit: Scalars['Int'];
+  getNewsItemsLimit: Scalars['Int'];
+  getHeroImageslimit: Scalars['Int'];
+  getActivitieslimit: Scalars['Int'];
+}>;
+
+
+export type LandingPageQuery = { __typename?: 'Query', scientificArticles: Array<{ __typename?: 'Article', id: number, title: string, postedAt: any, description: string, image: string }>, nonScientificArticles: Array<{ __typename?: 'Article', id: number, title: string, postedAt: any, description: string, image: string }>, getNewsItems: Array<{ __typename?: 'News', id: number, title: string, description: string, content: string, image: string, createdAt: any }>, getHeroImages: Array<{ __typename?: 'HeroImage', id: number, image: string } | null>, getActivities: Array<{ __typename?: 'Activity', id: number, title: string, postedAt: any, description: string, image: string }> };
 
 export type GetMembersQueryVariables = Exact<{
   limit: Scalars['Int'];
@@ -422,6 +461,17 @@ export const GetAboutDocument = `
   }
 }
     `;
+export const GetActivitiesDocument = `
+    query GetActivities($limit: Int!) {
+  getActivities(limit: $limit) {
+    id
+    title
+    postedAt
+    description
+    image
+  }
+}
+    `;
 export const GetAreasDocument = `
     query GetAreas {
   getAreas {
@@ -476,6 +526,49 @@ export const GetHeroImagesDocument = `
     query GetHeroImages($limit: Int!) {
   getHeroImages(limit: $limit) {
     id
+    image
+  }
+}
+    `;
+export const LandingPageDocument = `
+    query LandingPage($getScientificArticlesLimit: Int!, $getNonScientificArticlesLimit: Int!, $getNewsItemsLimit: Int!, $getHeroImageslimit: Int!, $getActivitieslimit: Int!) {
+  scientificArticles: getArticles(
+    limit: $getScientificArticlesLimit
+    type: scientific
+  ) {
+    id
+    title
+    postedAt
+    description
+    image
+  }
+  nonScientificArticles: getArticles(
+    limit: $getNonScientificArticlesLimit
+    type: nonScientific
+  ) {
+    id
+    title
+    postedAt
+    description
+    image
+  }
+  getNewsItems(limit: $getNewsItemsLimit) {
+    id
+    title
+    description
+    content
+    image
+    createdAt
+  }
+  getHeroImages(limit: $getHeroImageslimit) {
+    id
+    image
+  }
+  getActivities(limit: $getActivitieslimit) {
+    id
+    title
+    postedAt
+    description
     image
   }
 }
@@ -561,6 +654,9 @@ const injectedRtkApi = api.injectEndpoints({
     GetAbout: build.query<GetAboutQuery, GetAboutQueryVariables>({
       query: (variables) => ({ document: GetAboutDocument, variables })
     }),
+    GetActivities: build.query<GetActivitiesQuery, GetActivitiesQueryVariables>({
+      query: (variables) => ({ document: GetActivitiesDocument, variables })
+    }),
     GetAreas: build.query<GetAreasQuery, GetAreasQueryVariables | void>({
       query: (variables) => ({ document: GetAreasDocument, variables })
     }),
@@ -575,6 +671,9 @@ const injectedRtkApi = api.injectEndpoints({
     }),
     GetHeroImages: build.query<GetHeroImagesQuery, GetHeroImagesQueryVariables>({
       query: (variables) => ({ document: GetHeroImagesDocument, variables })
+    }),
+    LandingPage: build.query<LandingPageQuery, LandingPageQueryVariables>({
+      query: (variables) => ({ document: LandingPageDocument, variables })
     }),
     GetMembers: build.query<GetMembersQuery, GetMembersQueryVariables>({
       query: (variables) => ({ document: GetMembersDocument, variables })
@@ -598,5 +697,5 @@ const injectedRtkApi = api.injectEndpoints({
 });
 
 export { injectedRtkApi as api };
-export const { useValidateResetTokenMutation, useRegisterMutation, useGetAboutQuery, useLazyGetAboutQuery, useGetAreasQuery, useLazyGetAreasQuery, useGetArticleQuery, useLazyGetArticleQuery, useGetArticlesQuery, useLazyGetArticlesQuery, useGetCompanyJobsQuery, useLazyGetCompanyJobsQuery, useGetHeroImagesQuery, useLazyGetHeroImagesQuery, useGetMembersQuery, useLazyGetMembersQuery, useGetMerchListQuery, useLazyGetMerchListQuery, useGetNewsItemsQuery, useLazyGetNewsItemsQuery, useGetNewsQuery, useLazyGetNewsQuery, useGetTestimoniesQuery, useLazyGetTestimoniesQuery, useGetVacanciesQuery, useLazyGetVacanciesQuery } = injectedRtkApi;
+export const { useValidateResetTokenMutation, useRegisterMutation, useGetAboutQuery, useLazyGetAboutQuery, useGetActivitiesQuery, useLazyGetActivitiesQuery, useGetAreasQuery, useLazyGetAreasQuery, useGetArticleQuery, useLazyGetArticleQuery, useGetArticlesQuery, useLazyGetArticlesQuery, useGetCompanyJobsQuery, useLazyGetCompanyJobsQuery, useGetHeroImagesQuery, useLazyGetHeroImagesQuery, useLandingPageQuery, useLazyLandingPageQuery, useGetMembersQuery, useLazyGetMembersQuery, useGetMerchListQuery, useLazyGetMerchListQuery, useGetNewsItemsQuery, useLazyGetNewsItemsQuery, useGetNewsQuery, useLazyGetNewsQuery, useGetTestimoniesQuery, useLazyGetTestimoniesQuery, useGetVacanciesQuery, useLazyGetVacanciesQuery } = injectedRtkApi;
 

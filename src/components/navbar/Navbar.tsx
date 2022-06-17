@@ -25,6 +25,7 @@ export function Navbar({ opened, setOpened }: MainLayoutProps) {
             bottom: 0,
             top: 0,
             padding: "0px 16px",
+            zIndex: 9999,
           }}
           fixed
         >

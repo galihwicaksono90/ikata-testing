@@ -1,0 +1,47 @@
+query LandingPage(
+  $getScientificArticlesLimit: Int!
+  $getNonScientificArticlesLimit: Int!
+  $getNewsItemsLimit: Int!
+  $getHeroImageslimit: Int!
+  $getActivitieslimit: Int!
+) {
+  scientificArticles: getArticles(
+    limit: $getScientificArticlesLimit
+    type: scientific
+  ) {
+    id
+    title
+    postedAt
+    description
+    image
+  }
+  nonScientificArticles: getArticles(
+    limit: $getNonScientificArticlesLimit
+    type: nonScientific
+  ) {
+    id
+    title
+    postedAt
+    description
+    image
+  }
+  getNewsItems(limit: $getNewsItemsLimit) {
+    id
+    title
+    description
+    content
+    image
+    createdAt
+  }
+  getHeroImages(limit: $getHeroImageslimit) {
+    id
+    image
+  }
+  getActivities(limit: $getActivitieslimit) {
+    id
+    title
+    postedAt
+    description
+    image
+  }
+}

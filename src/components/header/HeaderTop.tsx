@@ -27,7 +27,7 @@ export function HeaderTop({ opened, setOpened }: MainLayoutProps) {
         noPadding
       >
         <Group position="apart" align="center" style={{ height: "100%" }}>
-          <Group spacing="xl" align="center">
+          <Group align="center" spacing={45}>
             <AspectRatio
               ratio={1}
               sx={(theme) => ({

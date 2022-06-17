@@ -67,24 +67,15 @@ export function Carousel({
   const { classes } = useStyles();
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        justifyContent: "center",
-        padding: arrows ? "0px 30px" : "0px",
-      }}
+    <Slider
+      className={classes.slickCarousel}
+      dotsClass={`slick-dots ${dotType} ${dotsPosition}`}
+      speed={speed}
+      autoplaySpeed={autoplaySpeed}
+      {...settings}
     >
-      <Slider
-        className={classes.slickCarousel}
-        style={{ width: "100%" }}
-        dotsClass={`slick-dots ${dotType} ${dotsPosition}`}
-        speed={speed}
-        autoplaySpeed={autoplaySpeed}
-        {...settings}
-      >
-        {children}
-      </Slider>
-    </Box>
+      {children}
+    </Slider>
   );
 }
 
