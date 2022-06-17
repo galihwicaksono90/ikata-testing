@@ -2,18 +2,18 @@
 overwrite: true
 generates:
   # main endpoints
-  src/generated/graphql.ts:
-    schema:
-      - "${NEXT_PUBLIC_GRAPHQL_SERVER:https://graph-dev.ikataupn.or.id/graphql}":
-          headers:
-            Authorization: "Bearer ${NEXT_PUBLIC_GRAPHQL_API_TOKEN}"
-    documents: "src/graphql/**/*.graphql"
-    plugins:
-      - "typescript"
-      - "typescript-operations"
-      - "typescript-rtk-query":
-          importBaseApiFrom: "redux/api/apiSlice"
-          exportHooks: true
+  # src/generated/graphql.ts:
+  #   schema:
+  #     - "${NEXT_PUBLIC_GRAPHQL_SERVER:https://graph-dev.ikataupn.or.id/graphql}":
+  #         headers:
+  #           Authorization: "Bearer ${NEXT_PUBLIC_GRAPHQL_API_TOKEN}"
+  #   documents: "src/graphql/**/*.graphql"
+  #   plugins:
+  #     - "typescript"
+  #     - "typescript-operations"
+  #     - "typescript-rtk-query":
+  #         importBaseApiFrom: "redux/api/apiSlice"
+  #         exportHooks: true
 
   # generate mock endpoints
   src/generated/mockGraphql.ts:

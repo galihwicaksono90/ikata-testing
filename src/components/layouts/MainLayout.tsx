@@ -22,6 +22,11 @@ export const MainLayout = ({ children }: Props) => {
       navbar={<Navbar opened={opened} setOpened={setOpened} />}
       footer={<Footer />}
       padding={0}
+      styles={{
+        main: {
+          maxWidth: "100%",
+        },
+      }}
     >
       {children}
     </AppShell>

@@ -242,7 +242,6 @@ export type QueryGetTestimoniesArgs = {
 
 
 export type QueryGetVacanciesArgs = {
-  limit?: InputMaybe<Scalars['Int']>;
   type: VacancyType;
 };
 
@@ -279,11 +278,13 @@ export type Vacancy = {
   __typename?: 'Vacancy';
   company: Scalars['String'];
   id: Scalars['Int'];
+  image: Scalars['String'];
   title: Scalars['String'];
   type: Scalars['String'];
 };
 
 export enum VacancyType {
+  FinalProject = 'finalProject',
   Job = 'job',
   Scholarship = 'scholarship'
 }
@@ -405,12 +406,11 @@ export type GetTestimoniesQueryVariables = Exact<{
 export type GetTestimoniesQuery = { __typename?: 'Query', getTestimonies: Array<{ __typename?: 'Testimony', id: number, name: string, startYear: number, endYear: number, description: string, image: string }> };
 
 export type GetVacanciesQueryVariables = Exact<{
-  limit?: InputMaybe<Scalars['Int']>;
   type: VacancyType;
 }>;
 
 
-export type GetVacanciesQuery = { __typename?: 'Query', getVacancies: Array<{ __typename?: 'Vacancy', id: number, title: string, company: string, type: string } | null> };
+export type GetVacanciesQuery = { __typename?: 'Query', getVacancies: Array<{ __typename?: 'Vacancy', id: number, title: string, company: string, type: string, image: string } | null> };
 
 
 export const ValidateResetTokenDocument = `
@@ -633,12 +633,13 @@ export const GetTestimoniesDocument = `
 }
     `;
 export const GetVacanciesDocument = `
-    query GetVacancies($limit: Int, $type: VacancyType!) {
-  getVacancies(type: $type, limit: $limit) {
+    query GetVacancies($type: VacancyType!) {
+  getVacancies(type: $type) {
     id
     title
     company
     type
+    image
   }
 }
     `;

@@ -1,6 +1,6 @@
 import { MantineThemeOverride } from "@mantine/core";
 
-const CONTAINER_SIZE = 1128;
+const CONTAINER_SIZE = 1224;
 
 export const theme: MantineThemeOverride = {
   colorScheme: "dark",

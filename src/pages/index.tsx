@@ -3,6 +3,7 @@ import { ArticleLandingPage } from "components/article";
 import { AdBanner, HeroImage } from "components/common";
 import { MainLayout } from "components/layouts";
 import { MerchCarousel } from "components/merch";
+import { VacancyLandingPage } from "components/vacancy";
 import { ActivityLandingPage } from "components/activity";
 import { NewsLandingPage } from "components/news";
 import { api, ArticleType, VacancyType } from "generated/mockGraphql";
@@ -10,7 +11,8 @@ import { GetServerSideProps } from "next";
 import { wrapper } from "redux/store";
 
 export default function Home() {
-  //return <ArticleLandingPage />;
+  return <AlumniLandingPage />;
+
   return (
     <MainLayout>
       <HeroImage />
@@ -18,8 +20,8 @@ export default function Home() {
       <ActivityLandingPage />
       <AdBanner src="/banner1.png" />
       <ArticleLandingPage />
-      {/*
-      <AlumniLandingPage />
+      <VacancyLandingPage />
+      {/* <AlumniLandingPage />
       <AdBanner src="/banner2.png" />
       <MerchCarousel /> */}
     </MainLayout>
@@ -59,6 +61,14 @@ export const getServerSideProps: GetServerSideProps =
         type: ArticleType.NonScientific,
       })
     );
+
+    await store.dispatch(
+      api.endpoints.GetVacancies.initiate({
+        type: VacancyType.Job,
+      })
+    );
+
+    await store.dispatch(api.endpoints.GetCompanyJobs.initiate({}));
 
     Promise.all(api.util.getRunningOperationPromises());
 
