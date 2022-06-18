@@ -11,7 +11,7 @@ import { GetServerSideProps } from "next";
 import { wrapper } from "redux/store";
 
 export default function Home() {
-  //return <MerchLandingPage />;
+  //return <HeroImage />;
 
   return (
     <MainLayout>

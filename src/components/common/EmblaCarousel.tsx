@@ -1,15 +1,18 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { createStyles, UnstyledButton, ActionIcon } from "@mantine/core";
+import { createStyles, UnstyledButton, ActionIcon, Box } from "@mantine/core";
 import useEmblaCarousel from "embla-carousel-react";
 import { IconArrowLeft, IconArrowRight } from "@tabler/icons";
+import Autoplay from "embla-carousel-autoplay";
 
 interface EmblaCarouselProps {
+  autoplay?: boolean;
   loop?: boolean;
   children: React.ReactNode[];
   withArrows?: boolean;
   withDots?: boolean;
   slidesPerView?: number;
   marginsBetween?: number;
+  dotsPosition?: "inside" | "outside";
   breakpoints?: {
     /** in px */
     smallerThan: number;
@@ -25,11 +28,16 @@ export const EmblaCarousel = ({
   slidesPerView = 1,
   marginsBetween = 5,
   breakpoints,
+  dotsPosition = "outside",
+  autoplay,
 }: EmblaCarouselProps) => {
-  const [emblaRef, embla] = useEmblaCarousel({
-    loop,
-    align: "start",
-  });
+  const [emblaRef, embla] = useEmblaCarousel(
+    {
+      loop,
+      align: "start",
+    },
+    autoplay ? [Autoplay()] : []
+  );
 
   const { classes } = useStyles({
     loop,
@@ -59,7 +67,7 @@ export const EmblaCarousel = ({
   }, [embla, setScrollSnaps, onSelect]);
 
   return (
-    <div>
+    <Box sx={{ position: "relative" }}>
       <div className={classes.emblaCarousel}>
         {withArrows ? (
           <Arrow type="prev" onClick={() => embla.scrollPrev()} />
@@ -78,7 +86,13 @@ export const EmblaCarousel = ({
         ) : null}
       </div>
       {withDots ? (
-        <div className={classes.emblaDots}>
+        <Box
+          className={classes.emblaDots}
+          sx={(theme) => ({
+            position: dotsPosition === "inside" ? "absolute" : "initial",
+            bottom: 65,
+          })}
+        >
           {scrollSnaps.map((_, index) => (
             <Dots
               onClick={() => scrollTo(index)}
@@ -86,9 +100,9 @@ export const EmblaCarousel = ({
               key={index}
             />
           ))}
-        </div>
+        </Box>
       ) : null}
-    </div>
+    </Box>
   );
 };
 

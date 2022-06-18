@@ -2321,6 +2321,11 @@ elegant-spinner@^1.0.1:
   resolved "https://registry.npmjs.org/elegant-spinner/-/elegant-spinner-1.0.1.tgz#db043521c95d7e303fd8f345bedc3349cfb0729e"
   integrity sha1-2wQ1IcldfjA/2PNFvtwzSc+wcp4=
 
+embla-carousel-autoplay@^6.2.0:
+  version "6.2.0"
+  resolved "https://registry.npmjs.org/embla-carousel-autoplay/-/embla-carousel-autoplay-6.2.0.tgz#0fe9c1fb0b2e0f8196f686f21cf3a8c47a008ba6"
+  integrity sha512-3AxzeRwzgDR5aPcPXwdcrpm25A9yVB1ZE/0mQJJsOyfIfKrXu3wgSkI/cxQkCOxM54UjTVhiuhoJb8enpRa7FQ==
+
 embla-carousel-react@^6.2.0:
   version "6.2.0"
   resolved "https://registry.npmjs.org/embla-carousel-react/-/embla-carousel-react-6.2.0.tgz#25fbba759b294b54d6241a04ff56dca83bd3c511"
