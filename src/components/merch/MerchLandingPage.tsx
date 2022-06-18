@@ -1,9 +1,10 @@
 import { SectionContainer, Carousel, Container } from "components/common";
 import { useGetMerchListQuery } from "generated/mockGraphql";
-import { MerchCard } from "components/merch";
+import { MerchCard, MerchCarousel } from "components/merch";
 
 export const MerchLandingPage = () => {
   const { data, isLoading } = useGetMerchListQuery({ limit: 5 });
+
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -12,12 +13,9 @@ export const MerchLandingPage = () => {
       title="MERCHANDISE"
       noData={!data?.getMerchList.length}
       lightBackground
+      containerSize={1315}
     >
-      <Carousel slidesToShow={4} arrows autoplay>
-        {data?.getMerchList.map((merch, index) => (
-          <MerchCard data={merch} />
-        ))}
-      </Carousel>
+      <MerchCarousel data={data?.getMerchList} />
     </SectionContainer>
   );
 };

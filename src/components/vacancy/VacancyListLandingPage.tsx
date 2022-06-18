@@ -16,7 +16,7 @@ export function VacancyListLandingPage({
   href,
   ...rest
 }: VacancyListLandingPageProps) {
-  const { data: vacancies, isLoading } = useGetVacanciesQuery({ type, limit });
+  const { data: vacancies, isLoading } = useGetVacanciesQuery({ type });
 
   if (isLoading) {
     return <div>Loadingg....</div>;

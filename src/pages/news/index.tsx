@@ -18,19 +18,19 @@ export default function News() {
           <Grid.Col lg={8} md={12}>
             <Stack spacing={60}>
               <NewsCarousel limit={4} />
-              <SimpleGrid cols={2} breakpoints={[{ maxWidth: "sm", cols: 1 }]}>
+              {/* <SimpleGrid cols={2} breakpoints={[{ maxWidth: "sm", cols: 1 }]}>
                 {news.getNewsItems.map((item) => {
                   return (
                     <NewsCard
                       title={item.title}
-                      image={item.image}
-                      href="/"
-                      align="center"
+                      //image={item.image}
+                      //href="/"
+                      //align="center"
                       key={item.id}
                     />
                   );
                 })}
-              </SimpleGrid>
+              </SimpleGrid> */}
             </Stack>
           </Grid.Col>
           <Grid.Col lg={4} md={12}>

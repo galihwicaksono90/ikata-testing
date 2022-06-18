@@ -17,7 +17,7 @@ export function MerchCard({ data }: MerchCardProps) {
         display: "flex",
         flexDirection: "column",
       })}
-      mx={6}
+      //mx={6}
     >
       <Card.Section>
         <Box sx={{ position: "relative", height: 263 }}>

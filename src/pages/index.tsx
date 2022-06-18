@@ -11,7 +11,7 @@ import { GetServerSideProps } from "next";
 import { wrapper } from "redux/store";
 
 export default function Home() {
-  return <MerchLandingPage />;
+  //return <MerchLandingPage />;
 
   return (
     <MainLayout>
@@ -22,9 +22,8 @@ export default function Home() {
       <ArticleLandingPage />
       <VacancyLandingPage />
       <AlumniLandingPage />
+      <MerchLandingPage />
       <AdBanner src="/banner2.png" />
-      {/*
-      <MerchCarousel /> */}
     </MainLayout>
   );
 }

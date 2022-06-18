@@ -38,7 +38,7 @@ export function NewsLandingPage() {
             <NewsCard
               data={item as News}
               key={item.id}
-              sx={{ gridArea: gridDictionary[index] }}
+              style={{ gridArea: gridDictionary[index] }}
               tagAlign={[0, 3, 4].includes(index) ? "left" : "right"}
               withTags
             />

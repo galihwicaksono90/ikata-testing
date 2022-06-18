@@ -13,7 +13,6 @@ interface NewsCardProps extends BoxProps<"div"> {
 export function NewsCard({
   height = "392px",
   data,
-  sx,
   withTags,
   tagAlign,
   ...rest
@@ -29,7 +28,6 @@ export function NewsCard({
         [`@media (max-width: ${theme.breakpoints.sm}px)`]: {
           height: 200,
         },
-        ...sx,
       })}
       {...rest}
     >

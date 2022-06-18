@@ -1,5 +1,5 @@
 import { Box, Overlay, Text } from "@mantine/core";
-import { Carousel, Container } from "components/common";
+import { Carousel, Container, EmblaCarousel } from "components/common";
 import { useGetHeroImagesQuery } from "generated/mockGraphql";
 import Image from "next/image";
 import React from "react";
@@ -13,11 +13,16 @@ export function HeroImage() {
 
   return (
     <Box sx={{ maxWidth: "100vw", position: "relative" }}>
-      <Carousel dotsPosition="inside" dots slidesToShow={1} autoplay>
+      {/* <Carousel dotsPosition="inside" dots slidesToShow={1} autoplay>
         {images?.getHeroImages.map((image) => (
           <Content src={image.image} key={image.id} />
         ))}
-      </Carousel>
+      </Carousel> */}
+      <EmblaCarousel>
+        {images?.getHeroImages.map((image) => (
+          <Content src={image.image} key={image.id} />
+        ))}
+      </EmblaCarousel>
       <Container
         sx={{
           position: "absolute",
@@ -65,7 +70,7 @@ function Content({ src }: { src: string }) {
         position: "relative",
       }}
     >
-      <Image src={src} alt="" priority layout="fill" objectFit="cover" />
+      <Image src={src} alt="Ikata" priority layout="fill" objectFit="cover" />
       <Overlay opacity={0.5} color="black" zIndex={999} />
     </Box>
   );

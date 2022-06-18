@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 import { Container, TextLink } from "components/common";
 import { Group, Box, Text, AspectRatio } from "@mantine/core";
 import Image from "next/image";
+import { useMantineTheme } from "@mantine/core";
 
 interface SectionContainerProps {
   title: string;
@@ -10,6 +11,7 @@ interface SectionContainerProps {
   noData?: boolean;
   seeAllHref?: string;
   lightBackground?: boolean;
+  containerSize?: number;
 }
 
 export const SectionContainer = ({
@@ -19,7 +21,9 @@ export const SectionContainer = ({
   noData,
   seeAllHref,
   lightBackground,
+  containerSize,
 }: SectionContainerProps) => {
+  const theme = useMantineTheme();
   return (
     <Box
       component="section"
@@ -28,8 +32,8 @@ export const SectionContainer = ({
         backgroundColor: lightBackground ? "initial" : theme.colors.dark[8],
       })}
     >
-      <Container>
-        <Group position="apart" align="baseline" mb={50}>
+      <Container pb={0}>
+        <Group position="apart" align="baseline">
           <Group
             spacing={17}
             align="baseline"
@@ -61,6 +65,8 @@ export const SectionContainer = ({
           </Group>
           {rightItem}
         </Group>
+      </Container>
+      <Container size={containerSize ?? theme.other.containerSize}>
         {noData ? (
           <NoData />
         ) : (
@@ -100,7 +106,7 @@ const NoData = () => {
         }}
         mx="auto"
       >
-        <Image src="/noData.svg" layout="fill" />
+        <Image src="/noData.svg" layout="fill" alt="" />
       </AspectRatio>
       <Text mt={80} align="center" size="xl" weight={500}>
         Belum ada data ditampilkan

@@ -45,6 +45,7 @@ export function AlumniLandingPage() {
           Lihat Semua
         </TextLink>
       }
+      lightBackground
     >
       <Box
         sx={(theme) => ({
@@ -130,6 +131,7 @@ const Card = ({
           layout="fill"
           objectFit="cover"
           objectPosition="center"
+          alt=""
         />
       </Box>
     </Box>

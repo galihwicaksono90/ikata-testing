@@ -35,7 +35,7 @@ export function ArticleItem({ data }: ArticleItemProps) {
           },
         })}
       >
-        <Image src={data.image} layout="fill" objectFit="cover" />
+        <Image src={data.image} layout="fill" objectFit="cover" alt="" />
       </Box>
       <Stack spacing={10}>
         <Text size="xl" weight={600} lineClamp={1} transform="capitalize">

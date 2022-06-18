@@ -17,3 +17,4 @@ export * from "./TextInput";
 export * from "./TextLink";
 export * from "./UserAvatar";
 export * from "./SectionContainer";
+export * from "./EmblaCarousel";
