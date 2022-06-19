@@ -37,13 +37,13 @@ export function TestimonyCard({ data }: Props) {
         })}
       >
         <Stack>
-          <Text size="xl" mb={0} weight="500">
+          <Text size="xl" mb={0} weight={500}>
             {name}
           </Text>
-          <Text mb={30} size="sm" weight="400">
+          <Text mb={30} size="sm" weight={400}>
             {startYear} - {endYear}
           </Text>
-          <Text size="sm" sx={{ lineHeight: "25.2px" }} weight="400">
+          <Text size="sm" sx={{ lineHeight: "25.2px" }} weight={400}>
             {description}
           </Text>
         </Stack>
