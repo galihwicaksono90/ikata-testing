@@ -13,7 +13,7 @@ export function HeroImage() {
 
   return (
     <Box sx={{ maxWidth: "100vw", position: "relative" }}>
-      <EmblaCarousel withDots dotsPosition="inside" autoplay>
+      <EmblaCarousel withDots dotsPosition="inside" autoplay loop>
         {images?.getHeroImages.map((image) => (
           <Content src={image.image} key={image.id} />
         ))}
@@ -21,7 +21,7 @@ export function HeroImage() {
       <Container
         sx={{
           position: "absolute",
-          zIndex: 1000,
+          zIndex: 11,
           width: "100%",
           top: 0,
           bottom: 0,
@@ -66,7 +66,7 @@ function Content({ src }: { src: string }) {
       }}
     >
       <Image src={src} alt="" priority layout="fill" objectFit="cover" />
-      <Overlay opacity={0.5} color="black" zIndex={999} />
+      <Overlay opacity={0.5} color="black" zIndex={99} />
     </Box>
   );
 }

@@ -30,6 +30,7 @@ export function MerchCarousel({ data }: MerchCarouselProps) {
       marginsBetween={4}
       breakpoints={breakpoints}
       withDots
+      autoplay
     >
       {data?.map((item) => (
         <MerchCard key={item.id} data={item} />

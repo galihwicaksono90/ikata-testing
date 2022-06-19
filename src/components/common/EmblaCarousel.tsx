@@ -1,10 +1,13 @@
-import React, { useEffect, useState, useCallback } from "react";
-import { createStyles, UnstyledButton, ActionIcon, Box } from "@mantine/core";
-import useEmblaCarousel from "embla-carousel-react";
+import { ActionIcon, Box, UnstyledButton } from "@mantine/core";
 import { IconArrowLeft, IconArrowRight } from "@tabler/icons";
 import Autoplay from "embla-carousel-autoplay";
+import useEmblaCarousel from "embla-carousel-react";
+import React, { useCallback, useEffect, useState } from "react";
+import { useCarouselStyles } from "theme";
+import { divideArrayIntoChunks } from "utils";
 
-interface EmblaCarouselProps {
+export interface EmblaCarouselProps {
+  rows?: number;
   autoplay?: boolean;
   loop?: boolean;
   children: React.ReactNode[];
@@ -21,6 +24,7 @@ interface EmblaCarouselProps {
 }
 
 export const EmblaCarousel = ({
+  rows = 1,
   children,
   loop = false,
   withArrows = false,
@@ -36,10 +40,10 @@ export const EmblaCarousel = ({
       loop,
       align: "start",
     },
-    autoplay ? [Autoplay()] : []
+    autoplay ? [Autoplay({ stopOnInteraction: false })] : []
   );
 
-  const { classes } = useStyles({
+  const { classes } = useCarouselStyles({
     loop,
     withArrows,
     slidesPerView,
@@ -48,7 +52,7 @@ export const EmblaCarousel = ({
   });
 
   const scrollTo = useCallback(
-    (index) => embla && embla.scrollTo(index),
+    (index: number) => embla && embla.scrollTo(index),
     [embla]
   );
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -66,6 +70,30 @@ export const EmblaCarousel = ({
     embla.on("select", onSelect);
   }, [embla, setScrollSnaps, onSelect]);
 
+  const renderChildren = () => {
+    if (rows === 1)
+      return children?.map((child, index) => (
+        <div className="embla__slide" key={index}>
+          {child}
+        </div>
+      ));
+
+    const dividedChildren = divideArrayIntoChunks(children, rows);
+    return dividedChildren?.map((dividedChild, index) => (
+      <div className="embla__slide" key={index}>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <>{dividedChild.map((child) => child)}</>
+        </Box>
+      </div>
+    ));
+  };
+
   return (
     <Box sx={{ position: "relative" }}>
       <div className={classes.emblaCarousel}>
@@ -73,13 +101,7 @@ export const EmblaCarousel = ({
           <Arrow type="prev" onClick={() => embla.scrollPrev()} />
         ) : null}
         <div className="embla" ref={emblaRef}>
-          <div className="embla__container">
-            {children?.map((child, index) => (
-              <div className="embla__slide" key={index}>
-                {child}
-              </div>
-            ))}
-          </div>
+          <div className="embla__container">{renderChildren()}</div>
         </div>
         {withArrows ? (
           <Arrow type="next" onClick={() => embla.scrollNext()} />
@@ -88,10 +110,10 @@ export const EmblaCarousel = ({
       {withDots ? (
         <Box
           className={classes.emblaDots}
-          sx={(theme) => ({
-            position: dotsPosition === "inside" ? "absolute" : "initial",
+          sx={{
+            position: dotsPosition === "inside" ? "absolute" : null,
             bottom: 65,
-          })}
+          }}
         >
           {scrollSnaps.map((_, index) => (
             <Dots
@@ -105,70 +127,6 @@ export const EmblaCarousel = ({
     </Box>
   );
 };
-
-const useStyles = createStyles(
-  (
-    theme,
-    {
-      breakpoints,
-      withArrows,
-      slidesPerView,
-      marginsBetween,
-    }: Omit<EmblaCarouselProps, "children">
-  ) => {
-    const pasedBreakpoints = {};
-    if (!!breakpoints?.length) {
-      breakpoints?.forEach((b) => {
-        pasedBreakpoints[`@media (max-width: ${b.smallerThan}px)`] = {
-          flexBasis: `calc(100% / ${b.slidesPerView} )`,
-        };
-      });
-    }
-
-    return {
-      emblaCarousel: {
-        width: "100%",
-        display: "flex",
-        alignItems: "center",
-        ...(withArrows ? { "& > * + *": { marginLeft: 10 } } : null),
-        "& .embla": {
-          width: "100%",
-          overflow: "hidden",
-          "& .embla__container": {
-            display: "flex",
-          },
-          "& .embla__slide": {
-            position: "relative",
-            flexGrow: 0,
-            flexShrink: 0,
-            flexBasis:
-              slidesPerView === 1
-                ? `calc(100% / ${slidesPerView} )`
-                : `calc(100% / ${slidesPerView} - 7px)`,
-            maxWidth: "100%",
-            marginRight: slidesPerView === 1 ? 0 : marginsBetween,
-            marginLeft: slidesPerView === 1 ? 0 : marginsBetween,
-            ...pasedBreakpoints,
-          },
-        },
-      },
-      emblaDots: {
-        display: "flex",
-        width: "100%",
-        justifyContent: "center",
-        gap: 10,
-        marginTop: 40,
-      },
-      emblaDot: {
-        height: 7,
-        width: 16,
-        backgroundColor: theme.colors.white[0],
-        opacity: 0.5,
-        borderRadius: "50px",
-      },
-    };
-  }
-);
 
 interface ArrowProps {
   type: "next" | "prev";

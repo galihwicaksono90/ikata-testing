@@ -1,5 +1,5 @@
-import { Card, Box, Title, Text, Group } from "@mantine/core";
-import { GradientButton } from "components/common";
+import { Box, Card, Group, Text } from "@mantine/core";
+import { NextLink } from "@mantine/next";
 import { Merch } from "generated/mockGraphql";
 import Image from "next/image";
 
@@ -12,12 +12,15 @@ export function MerchCard({ data }: MerchCardProps) {
   return (
     <Card
       sx={(theme) => ({
-        //width: 264,
         height: 414,
         display: "flex",
         flexDirection: "column",
+        "&:hover": {
+          backgroundColor: theme.fn.lighten(theme.colors.dark[8], 0.1),
+        },
       })}
-      //mx={6}
+      component={NextLink}
+      href={`/merchandise/${id}`}
     >
       <Card.Section>
         <Box sx={{ position: "relative", height: 263 }}>

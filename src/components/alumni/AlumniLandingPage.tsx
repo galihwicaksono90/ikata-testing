@@ -94,7 +94,7 @@ const Card = ({
         sx={(theme) => ({
           //height: 126,
           background: theme.other.darkGradient,
-          zIndex: 2000,
+          zIndex: 41,
           position: "absolute",
           bottom: 0,
           left: 0,

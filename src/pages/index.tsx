@@ -1,6 +1,11 @@
 import { AlumniLandingPage } from "components/alumni";
 import { ArticleLandingPage } from "components/article";
-import { AdBanner, HeroImage } from "components/common";
+import {
+  AdBanner,
+  HeroImage,
+  BackToTop,
+  PriceListAffix,
+} from "components/common";
 import { MainLayout } from "components/layouts";
 import { MerchLandingPage } from "components/merch";
 import { VacancyLandingPage } from "components/vacancy";
@@ -12,7 +17,6 @@ import { wrapper } from "redux/store";
 
 export default function Home() {
   //return <HeroImage />;
-
   return (
     <MainLayout>
       <HeroImage />
@@ -24,6 +28,8 @@ export default function Home() {
       <AlumniLandingPage />
       <MerchLandingPage />
       <AdBanner src="/banner2.png" />
+      <PriceListAffix />
+      <BackToTop />
     </MainLayout>
   );
 }

@@ -35,7 +35,7 @@ export function NewsCard({
         sx={(theme) => ({
           height: 129,
           background: theme.other.darkGradient,
-          zIndex: 2000,
+          zIndex: 40,
           position: "absolute",
           bottom: 0,
           left: 0,

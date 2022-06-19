@@ -10,6 +10,7 @@ import {
 import { Container, UserAvatar } from "components/common";
 import { MainLayoutProps } from "components/layouts";
 import Image from "next/image";
+import { NextLink } from "@mantine/next";
 
 export function HeaderTop({ opened, setOpened }: MainLayoutProps) {
   return (
@@ -28,19 +29,21 @@ export function HeaderTop({ opened, setOpened }: MainLayoutProps) {
       >
         <Group position="apart" align="center" style={{ height: "100%" }}>
           <Group align="center" spacing={45}>
-            <AspectRatio
-              ratio={1}
-              sx={(theme) => ({
-                maxWidth: 72,
-                position: "relative",
-                width: 72,
-                [`@media (max-width: ${theme.breakpoints.sm}px)`]: {
-                  width: 50,
-                },
-              })}
-            >
-              <Image alt="" src="/ikataLogo.png" layout="fill" />
-            </AspectRatio>
+            <NextLink href="/">
+              <AspectRatio
+                ratio={1}
+                sx={(theme) => ({
+                  maxWidth: 72,
+                  position: "relative",
+                  width: 72,
+                  [`@media (max-width: ${theme.breakpoints.sm}px)`]: {
+                    width: 50,
+                  },
+                })}
+              >
+                <Image alt="" src="/ikataLogo.png" layout="fill" />
+              </AspectRatio>
+            </NextLink>
             <MediaQuery smallerThan="xs" styles={{ display: "none" }}>
               <Stack spacing={5}>
                 <Text
