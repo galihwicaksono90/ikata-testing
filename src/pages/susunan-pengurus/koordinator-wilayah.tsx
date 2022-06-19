@@ -154,12 +154,12 @@ export default function KoordinatorWilayah({ initialArea, areas }: Props) {
             slidesToShow={3}
             responsive={[
               {
-                breakpoint: 555,
-                settings: { slidesToShow: 2, slidesToScroll: 2 },
+                smallerThan: 909,
+                slidesPerView: 2,
               },
               {
-                breakpoint: 400,
-                settings: { slidesToShow: 1, slidesToScroll: 1 },
+                smallerThan: 520,
+                slidesPerView: 1,
               },
             ]}
             withClassYear

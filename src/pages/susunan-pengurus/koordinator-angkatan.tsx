@@ -60,16 +60,16 @@ export default function KoordinatorAngkatan() {
           slidesToShow={4}
           responsive={[
             {
-              breakpoint: 800,
-              settings: { slidesToShow: 3, slidesToScroll: 3 },
+              smallerThan: 1114,
+              slidesPerView: 3,
             },
             {
-              breakpoint: 600,
-              settings: { slidesToShow: 2, slidesToScroll: 2 },
+              smallerThan: 909,
+              slidesPerView: 2,
             },
             {
-              breakpoint: 400,
-              settings: { slidesToShow: 1, slidesToScroll: 1 },
+              smallerThan: 520,
+              slidesPerView: 1,
             },
           ]}
           withClassYear
