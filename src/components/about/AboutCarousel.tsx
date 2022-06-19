@@ -1,5 +1,5 @@
 import React from "react";
-import { Carousel, EmblaCarousel } from "components/common";
+import { EmblaCarousel } from "components/common";
 import { Stack, Title, Text, Box } from "@mantine/core";
 import { TestimonyCard } from "components/about";
 import { Testimony } from "generated/mockGraphql";

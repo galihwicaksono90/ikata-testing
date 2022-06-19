@@ -1,9 +1,7 @@
-import { Box } from "@mantine/core";
 import {
-  Carousel,
-  MemberAvatar,
-  EmblaCarousel,
   EmblaBreakpointsProps,
+  EmblaCarousel,
+  MemberAvatar,
 } from "components/common";
 import { Member } from "generated/mockGraphql";
 
@@ -50,31 +48,5 @@ export const AvatarCarousel = ({
             />
           ))}
     </EmblaCarousel>
-  );
-
-  return (
-    <Box>
-      <Carousel
-        dotType="numbers"
-        rows={rows}
-        slidesToShow={slidesToShow}
-        dots
-        infinite={false}
-        responsive={responsive}
-      >
-        {loading
-          ? [...Array(10).fill(0)].map((item, index) => (
-              <MemberAvatar loading={loading} key={index} />
-            ))
-          : data.map((item) => (
-              <MemberAvatar
-                data={item}
-                key={item.id}
-                withTitle={withTitle}
-                withClassYear={withClassYear}
-              />
-            ))}
-      </Carousel>
-    </Box>
   );
 };
