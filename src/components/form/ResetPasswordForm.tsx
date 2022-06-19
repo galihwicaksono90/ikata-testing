@@ -33,18 +33,20 @@ export const ResetPasswordForm = () => {
   const onSubmit = useCallback(
     async (values: ResetPasswordFormProps) => {
       if (!validateResetPasswordForm(values, setError, setFocus)) return;
+
       try {
         const token = router.query.token;
-        await updatePassword({
+        const response = await updatePassword({
           user: {
             password: values.password,
             token: token as string,
           },
-        });
+        }).unwrap();
+        if (!response.updatePassword.isValid) throw Error;
         setShowModal(true);
       } catch (error) {
         showNotification({
-          message: error.message,
+          message: "Mohon maaf sedang terjadi gangguan mohon coba lagi",
           id: "reset-password",
         });
       }
@@ -60,12 +62,14 @@ export const ResetPasswordForm = () => {
           error={errors.password}
           label="Password"
           placeholder="Masukkan Password"
+          id="reset-password"
         />
         <PasswordInput
           register={register("confirmPassword", { required: true })}
           error={errors.confirmPassword}
           label="Konfirmasi Password"
           placeholder="Konfirmasi Password"
+          id="confirm-reset-password"
         />
         <Text sx={{ lineHeight: "28.8px" }}>
           Password harus merupakan gabungan huruf kecil, besar, dan angka dengan

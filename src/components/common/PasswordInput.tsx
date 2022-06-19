@@ -33,7 +33,6 @@ export const PasswordInput = ({ ...rest }: PasswordInputProps) => {
           fontWeight: 600,
         },
       }}
-      sx={{}}
     ></TextInput>
   );
 };
