@@ -98,16 +98,6 @@ export const useStyles = createStyles((theme) => ({
     background: theme.colors.dark[8],
     color: theme.white,
   },
-  copyright: {
-    width: "100vw",
-    height: "46px",
-    background: "#272727",
-    textAlign: "center",
-    marginTop: "auto",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
   mediaSocialButton: {
     width: "80px",
     height: "80px",
