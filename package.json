@@ -10,6 +10,7 @@
     "gen": "graphql-codegen -r dotenv/config --config codegen.yml"
   },
   "dependencies": {
+    "@fontsource/montserrat": "^4.5.11",
     "@graphql-codegen/cli": "^2.6.2",
     "@graphql-codegen/typescript": "^2.4.11",
     "@graphql-codegen/typescript-operations": "^2.4.0",
