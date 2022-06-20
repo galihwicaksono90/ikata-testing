@@ -1,8 +1,8 @@
-import React from "react";
-import { Carousel, EmblaCarousel } from "components/common";
-import { Stack, Title, Text, Box } from "@mantine/core";
+import { Box, Stack, Text, Title } from "@mantine/core";
 import { TestimonyCard } from "components/about";
+import { EmblaCarousel } from "components/common";
 import { Testimony } from "generated/mockGraphql";
+import React from "react";
 
 interface Props {
   data: Testimony[];
