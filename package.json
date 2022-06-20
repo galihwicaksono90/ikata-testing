@@ -10,6 +10,7 @@
     "gen": "graphql-codegen -r dotenv/config --config codegen.yml"
   },
   "dependencies": {
+    "@fontsource/montserrat": "^4.5.11",
     "@graphql-codegen/cli": "^2.6.2",
     "@graphql-codegen/typescript": "^2.4.11",
     "@graphql-codegen/typescript-operations": "^2.4.0",
@@ -31,8 +32,6 @@
     "react-dom": "18.0.0",
     "react-hook-form": "^7.31.1",
     "react-redux": "^8.0.1",
-    "react-slick": "^0.29.0",
-    "react-slick-carousel": "^0.14.9",
     "sharp": "^0.30.6"
   },
   "devDependencies": {

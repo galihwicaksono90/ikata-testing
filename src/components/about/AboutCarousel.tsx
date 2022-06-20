@@ -1,4 +1,6 @@
-import { Box, Stack, Text, Title } from "@mantine/core";
+import React from "react";
+import { EmblaCarousel } from "components/common";
+import { Stack, Title, Text, Box } from "@mantine/core";
 import { TestimonyCard } from "components/about";
 import { EmblaCarousel } from "components/common";
 import { Testimony } from "generated/mockGraphql";

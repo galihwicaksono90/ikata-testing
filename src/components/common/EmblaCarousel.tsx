@@ -16,11 +16,13 @@ export interface EmblaCarouselProps {
   slidesPerView?: number;
   marginsBetween?: number;
   dotsPosition?: "inside" | "outside";
-  breakpoints?: {
-    /** in px */
-    smallerThan: number;
-    slidesPerView: number;
-  }[];
+  breakpoints?: EmblaBreakpointsProps[];
+  dotType?: "bullets" | "numbers";
+}
+
+export interface EmblaBreakpointsProps {
+  smallerThan: number;
+  slidesPerView: number;
 }
 
 export const EmblaCarousel = ({
@@ -33,6 +35,7 @@ export const EmblaCarousel = ({
   marginsBetween = 5,
   breakpoints,
   dotsPosition = "outside",
+  dotType = "bullets",
   autoplay,
 }: EmblaCarouselProps) => {
   const [emblaRef, embla] = useEmblaCarousel(
@@ -120,6 +123,8 @@ export const EmblaCarousel = ({
               onClick={() => scrollTo(index)}
               selected={index === selectedIndex}
               key={index}
+              index={index}
+              dotType={dotType}
             />
           ))}
         </Box>
@@ -155,9 +160,13 @@ const Arrow = ({ type, onClick }: ArrowProps) => {
 const Dots = ({
   onClick,
   selected,
+  index,
+  dotType,
 }: {
   selected: boolean;
   onClick: () => void;
+  index: number;
+  dotType?: "bullets" | "numbers";
 }) => {
   return (
     <UnstyledButton
@@ -165,12 +174,22 @@ const Dots = ({
       sx={(theme) => ({
         backgroundColor: selected
           ? theme.colors.orange[0]
-          : theme.colors.white[0],
-        opacity: selected ? 1 : 0.5,
-        height: 7,
-        width: 16,
+          : dotType === "numbers"
+          ? "rgba(0,0,0,0.6)"
+          : "rgba(255,255,255,0.5)",
+        height: dotType === "numbers" ? 27 : 7,
+        width: dotType === "numbers" ? 27 : 16,
         borderRadius: "50px",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        fontSize: 13,
+        fontWeight: 700,
+        lineHeight: 1,
+        color: selected ? "#000" : "#898989",
       })}
-    />
+    >
+      {dotType === "numbers" ? index + 1 : null}
+    </UnstyledButton>
   );
 };

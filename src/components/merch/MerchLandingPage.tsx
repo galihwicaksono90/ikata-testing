@@ -1,6 +1,6 @@
-import { SectionContainer, Carousel, Container } from "components/common";
+import { SectionContainer } from "components/common";
+import { MerchCarousel } from "components/merch";
 import { useGetMerchListQuery } from "generated/mockGraphql";
-import { MerchCard, MerchCarousel } from "components/merch";
 
 export const MerchLandingPage = () => {
   const { data, isLoading } = useGetMerchListQuery({ limit: 5 });
