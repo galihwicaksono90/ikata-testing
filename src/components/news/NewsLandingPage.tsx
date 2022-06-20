@@ -1,99 +1,50 @@
-import { Box, Grid, SimpleGrid, Stack } from "@mantine/core";
-import {
-  ActivityItemList,
-  Container,
-  PriceList,
-  SectionTitleWithLink,
-} from "components/common";
-import { NewsCard, NewsCarousel } from "components/news";
-import { useGetNewsItemsQuery } from "generated/mockGraphql";
+import { Box } from "@mantine/core";
+import { SectionContainer, TextLink } from "components/common";
+import { NewsCard } from "components/news";
+import { News, useGetNewsItemsQuery } from "generated/mockGraphql";
 
-const data = [
-  {
-    image: "/news1.jpg",
-    title: "Bakti Sosial",
-  },
-  {
-    image: "/news2.jpg",
-    title: "Ikata Golf",
-  },
-  {
-    image: "/news3.jpg",
-    title: "Munas Ikata",
-  },
-  {
-    image: "/news5.jpg",
-    title: "Ikata Games",
-  },
-  {
-    image: "/news1.jpg",
-    title: "Bakti Sosial",
-  },
-  {
-    image: "/news2.jpg",
-    title: "Ikata Golf",
-  },
-  {
-    image: "/news3.jpg",
-    title: "Munas Ikata",
-  },
-  {
-    image: "/news5.jpg",
-    title: "Ikata Games",
-  },
-];
+const gridDictionary = ["one", "two", "three", "four", "five", "six"];
 
 export function NewsLandingPage() {
-  const { data: news, isLoading } = useGetNewsItemsQuery({ limit: 4 });
+  const { data: newsItems, isLoading } = useGetNewsItemsQuery({ limit: 6 });
+
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <div>isLoading</div>;
   }
+
   return (
-    <Container>
-      <Grid gutter={30}>
-        <Grid.Col lg={8} md={12}>
-          <SectionTitleWithLink title="Berita Usaha Alumni" />
-          <Stack>
-            <Box sx={{ marginBottom: 50 }}>
-              <NewsCarousel limit={4} />
-            </Box>
-            <SectionTitleWithLink
-              title="Berita Pengembangan Alumni"
-              href="/news"
+    <SectionContainer
+      title="BERITA"
+      rightItem={
+        <TextLink href="/" weight={600}>
+          Lihat Semua
+        </TextLink>
+      }
+      noData={!newsItems?.getNewsItems.length}
+      lightBackground
+    >
+      <Box
+        sx={(theme) => ({
+          display: "grid",
+          gridTemplateAreas: '"one two two" "three three four" "five six six"',
+          gap: 24,
+          [`@media (max-width: ${theme.breakpoints.sm}px)`]: {
+            gridTemplateAreas: '"one" "two" "three" "four" "five" "six"',
+          },
+        })}
+      >
+        {newsItems?.getNewsItems.map((item, index) => {
+          return (
+            <NewsCard
+              data={item as News}
+              key={item.id}
+              style={{ gridArea: gridDictionary[index] }}
+              tagAlign={[0, 3, 4].includes(index) ? "left" : "right"}
+              withTags
             />
-            <SimpleGrid cols={2} breakpoints={[{ maxWidth: "sm", cols: 1 }]}>
-              {news?.getNewsItems.map((item) => {
-                return (
-                  <NewsCard
-                    key={item.id}
-                    title={item.title}
-                    image={item.image}
-                    href="/"
-                    align="center"
-                  />
-                );
-              })}
-            </SimpleGrid>
-          </Stack>
-        </Grid.Col>
-        <Grid.Col lg={4} md={12}>
-          <Stack spacing={30}>
-            <div>
-              <SectionTitleWithLink title="Harga Acuan Batubara Mineral" />
-              <PriceList />
-            </div>
-            <Grid gutter={30}>
-              <Grid.Col lg={12} md={6} sm={6} xs={12}>
-                <ActivityItemList
-                  data={data}
-                  title="Kegiatan IKATA"
-                  href="news"
-                />
-              </Grid.Col>
-            </Grid>
-          </Stack>
-        </Grid.Col>
-      </Grid>
-    </Container>
+          );
+        })}
+      </Box>
+    </SectionContainer>
   );
 }

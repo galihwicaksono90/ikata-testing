@@ -11,6 +11,7 @@ export const TextLink = ({
   href,
   sx,
   type = "primary",
+  weight = 600,
   ...rest
 }: TextLinkProps) => {
   return (
@@ -25,7 +26,7 @@ export const TextLink = ({
           color: theme.colors.orange[0],
         },
       })}
-      weight="bold"
+      weight={weight}
     >
       {children}
     </Text>

@@ -6,7 +6,7 @@ export const useStyles = createStyles((theme) => ({
     "& ul": {},
     "& .slick-dots": {
       "&.outside": {
-        bottom: "-45px",
+        bottom: "-60px",
       },
       "&.inside": {
         bottom: "8px",
@@ -16,6 +16,8 @@ export const useStyles = createStyles((theme) => ({
           width: 16,
           height: 7,
           borderRadius: theme.radius.md,
+          backgroundColor: theme.white,
+          opacity: 0.5,
         },
       },
       "&.numbers": {
@@ -39,6 +41,7 @@ export const useStyles = createStyles((theme) => ({
       },
       "& li.slick-active div": {
         background: theme.colors.orange[0],
+        opacity: 1,
         color: theme.colors.dark[8],
       },
     },
@@ -241,5 +244,9 @@ export const useStyles = createStyles((theme) => ({
         background: theme.colors.orange[0],
       },
     },
+  },
+  pillButton: {
+    height: 48,
+    borderRadius: "50px",
   },
 }));

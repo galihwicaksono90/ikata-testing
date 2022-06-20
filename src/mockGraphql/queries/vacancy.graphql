@@ -1,8 +1,9 @@
-query GetVacancies($limit: Int, $type: VacancyType!) {
-  getVacancies(type: $type, limit: $limit) {
+query GetVacancies($type: VacancyType!) {
+  getVacancies(type: $type) {
     id
     title
     company
     type
+    image
   }
 }

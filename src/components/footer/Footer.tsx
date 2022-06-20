@@ -104,7 +104,7 @@ export function Footer() {
           </Group>
         </Group>
       </Container>
-      <Text className={classes.copyright}>&copy; 2022 Copyright</Text>
+      {/* <Text className={classes.copyright}>&copy; 2022 Copyright</Text> */}
     </BaseFooter>
   );
 }

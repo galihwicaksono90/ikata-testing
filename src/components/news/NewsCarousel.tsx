@@ -14,20 +14,5 @@ export function NewsCarousel({ limit }: NewsCarousel) {
     return <span>Loading...</span>;
   }
 
-  return (
-    <Carousel>
-      {news?.getNewsItems.map((item) => {
-        return (
-          <NewsCard
-            key={item.id}
-            title={item.title}
-            tags={["Berita Umum"]}
-            image={item.image}
-            href="/about"
-            bold
-          />
-        );
-      })}
-    </Carousel>
-  );
+  return <div></div>;
 }

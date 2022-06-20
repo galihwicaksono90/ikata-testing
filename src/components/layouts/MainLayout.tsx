@@ -1,5 +1,5 @@
 import { useState, Dispatch, SetStateAction } from "react";
-import { AppShell } from "@mantine/core";
+import { AppShell, Box } from "@mantine/core";
 import { Header } from "components/header";
 import { Footer } from "components/footer";
 import { Navbar } from "components/navbar";

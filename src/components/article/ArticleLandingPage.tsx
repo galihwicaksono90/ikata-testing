@@ -1,80 +1,85 @@
-import { Grid, Stack, Tabs, Text } from "@mantine/core";
-import { NextLink } from "@mantine/next";
-import { ArticleList } from "components/article";
-import { Container } from "components/common";
-import { VacancyListLandingPage } from "components/vacancy";
-import { ArticleType, VacancyType } from "generated/mockGraphql";
-import { setArticleMenuPosition } from "redux/general/generalSlice";
-import { useAppDispatch, useAppSelector } from "redux/hooks";
+import { Button, Group, Stack } from "@mantine/core";
+import { ArticleItem } from "components/article";
+import { SectionContainer } from "components/common";
+import { ArticleType, useGetArticlesQuery } from "generated/mockGraphql";
+import { useState } from "react";
 import { useStyles } from "theme";
 
-export function ArticleLandingPage() {
+export const ArticleLandingPage = () => {
   const { classes } = useStyles();
-  const activeTab = useAppSelector(
-    (state) => state.general.articleMenuPosition
+  const [currentType, setCurrentType] = useState<ArticleType>(
+    ArticleType.Scientific
   );
-  const dispatch = useAppDispatch();
+
+  const { data: scientificArticles, isLoading: scientificArticlesLoading } =
+    useGetArticlesQuery({
+      limit: 4,
+      type: ArticleType.Scientific,
+    });
+
+  const {
+    data: nonScientificArticles,
+    isLoading: nonScientificArticlesLoading,
+  } = useGetArticlesQuery({
+    limit: 0,
+    type: ArticleType.NonScientific,
+  });
+
+  if (scientificArticlesLoading || nonScientificArticlesLoading)
+    <div>Loading</div>;
 
   return (
-    <Container>
-      <Grid columns={24} gutter={40}>
-        <Grid.Col lg={17} md={24}>
-          <Stack>
-            <Tabs
-              mb={40}
-              active={activeTab}
-              onTabChange={(index) => dispatch(setArticleMenuPosition(index))}
-              styles={{
-                tabsListWrapper: {
-                  borderBottom: "0px !important",
-                },
-              }}
-            >
-              <Tabs.Tab label="Artikel Ilmiah" className={classes.tabLabel}>
-                <ArticleList type={ArticleType.Scientific} limit={5} />
-              </Tabs.Tab>
-              <Tabs.Tab label="Artikel Non-Ilmiah" className={classes.tabLabel}>
-                <ArticleList type={ArticleType.NonScientific} limit={5} />
-              </Tabs.Tab>
-            </Tabs>
-            <Text
-              component={NextLink}
-              href="/articles"
-              variant="link"
-              weight="bold"
-            >
-              Lihat Semua
-            </Text>
-          </Stack>
-        </Grid.Col>
-        <Grid.Col
-          lg={7}
-          md={24}
-          pt={75}
-          sx={(theme) => ({
-            [`@media (max-width: ${theme.breakpoints.md}px)`]: {
-              paddingTop: 25,
-            },
-          })}
-        >
-          <Grid gutter={24}>
-            <Grid.Col lg={12} md={6} sm={6} xs={12}>
-              <VacancyListLandingPage
-                type={VacancyType.Job}
-                title="Lowongan"
-                href="/lowongan/pekerjaan"
-              />
-            </Grid.Col>
-            <Grid.Col lg={12} md={6} sm={6} xs={12}>
-              <VacancyListLandingPage
-                type={VacancyType.Scholarship}
-                title="Beasiswa"
-                href="/lowongan/beasiswa"
-              />
-            </Grid.Col>
-          </Grid>
-        </Grid.Col>
-      </Grid>
-    </Container>
+    <SectionContainer
+      title="ARTIKEL"
+      seeAllHref={
+        currentType === ArticleType.Scientific
+          ? "/articles/scientific"
+          : "/articles/nonscientific"
+      }
+      noData={
+        (currentType === ArticleType.Scientific &&
+          !scientificArticles?.getArticles.length) ||
+        (currentType === ArticleType.NonScientific &&
+          !nonScientificArticles?.getArticles.length)
+      }
+      rightItem={
+        <Group spacing={20}>
+          <Button
+            variant={
+              currentType === ArticleType.Scientific ? "filled" : "outline"
+            }
+            onClick={() => setCurrentType(ArticleType.Scientific)}
+            className={classes.pillButton}
+          >
+            ILMIAH
+          </Button>
+          <Button
+            variant={
+              currentType === ArticleType.NonScientific ? "filled" : "outline"
+            }
+            onClick={() => setCurrentType(ArticleType.NonScientific)}
+            className={classes.pillButton}
+          >
+            NON ILMIAH
+          </Button>
+        </Group>
+      }
+    >
+      <Stack spacing={24}>
+        {(currentType === ArticleType.Scientific
+          ? scientificArticles
+          : nonScientificArticles
+        )?.getArticles.map((article) => {
+          const newData = {
+            title: article.title,
+            date: article.postedAt,
+            description: article.description,
+            href: article.id.toString(),
+            image: article.image,
+          };
+          return <ArticleItem data={newData} key={article.id} />;
+        })}
+      </Stack>
+    </SectionContainer>
   );
-}
+};

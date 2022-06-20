@@ -24,7 +24,7 @@ export function Header({ opened, setOpened }: MainLayoutProps) {
             zIndex: 1000,
           })}
         >
-          <Divider />
+          <Divider sx={{ borderTopColor: "#474545" }} />
           <Container
             style={{
               height: "76px",

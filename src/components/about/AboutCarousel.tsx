@@ -1,5 +1,5 @@
 import React from "react";
-import { Carousel } from "components/common";
+import { Carousel, EmblaCarousel } from "components/common";
 import { Stack, Title, Text, Box } from "@mantine/core";
 import { TestimonyCard } from "components/about";
 import { Testimony } from "generated/mockGraphql";
@@ -22,11 +22,11 @@ export const AboutCarousel = ({ data }: Props) => {
           eiusmod tempor
         </Text>
       </Box>
-      <Carousel arrows dots={false}>
+      <EmblaCarousel withArrows loop>
         {data.map((testimony) => (
           <TestimonyCard data={testimony} key={testimony.id} />
         ))}
-      </Carousel>
+      </EmblaCarousel>
     </Stack>
   );
 };

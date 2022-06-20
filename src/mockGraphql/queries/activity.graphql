@@ -1,0 +1,9 @@
+query GetActivities($limit: Int!) {
+  getActivities(limit: $limit) {
+    id
+    title
+    postedAt
+    description
+    image
+  }
+}

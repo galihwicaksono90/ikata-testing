@@ -1,70 +1,89 @@
+import { Box, BoxProps, Text } from "@mantine/core";
+import { TextLink } from "components/common";
+import { News } from "generated/mockGraphql";
 import Image from "next/image";
-import { Text, Badge, Group, Card, AspectRatio } from "@mantine/core";
-import { NextLink } from "@mantine/next";
 
-interface Props {
-  title: string;
-  image: string;
-  tags?: string[];
-  href?: string;
-  bold?: boolean;
-  align?: "left" | "right" | "center" | "justify";
+interface NewsCardProps extends BoxProps<"div"> {
+  height?: number | string;
+  withTags?: boolean;
+  tagAlign?: "center" | "right" | "left";
+  data: News;
 }
 
-export function NewsCard({ title, image, tags, href, bold, align }: Props) {
+export function NewsCard({
+  height = "392px",
+  data,
+  withTags,
+  tagAlign,
+  ...rest
+}: NewsCardProps) {
   return (
-    <Card
-      radius="md"
-      p={20}
-      shadow="md"
+    <Box
       sx={(theme) => ({
-        background: theme.colors.dark[5],
-        "& a ": {
-          color: theme.white,
+        height: 392,
+        position: "relative",
+        [`@media (max-width: ${theme.breakpoints.md}px)`]: {
+          height: 280,
+        },
+        [`@media (max-width: ${theme.breakpoints.sm}px)`]: {
+          height: 200,
         },
       })}
+      {...rest}
     >
-      <Card.Section mb={20}>
-        <AspectRatio ratio={744 / 433} sx={{ position: "relative" }}>
-          <Image
-            alt=""
-            src={image}
-            layout="fill"
-            objectFit="cover"
-            objectPosition="top"
-          />
-        </AspectRatio>
-      </Card.Section>
-      {tags ? (
-        <Group mb={20}>
-          {tags.map((tag, index) => (
-            <Badge
-              key={index}
-              size="lg"
-              radius="md"
-              variant="gradient"
-              gradient={{
-                from: "#feb240",
-                to: "#fe9040",
-                deg: 94,
-              }}
-            >
-              {tag}
-            </Badge>
-          ))}
-        </Group>
-      ) : null}
-      <Text
-        weight={bold ? "bold" : null}
-        size={bold ? "lg" : "md"}
-        align={align}
-        lineClamp={2}
-        component={NextLink}
-        href={href}
-        variant="link"
+      <Box
+        sx={(theme) => ({
+          height: 129,
+          background: theme.other.darkGradient,
+          zIndex: 40,
+          position: "absolute",
+          bottom: 0,
+          left: 0,
+          right: 0,
+          padding: "16px 16px 13px 16px",
+          display: "flex",
+          justifyContent: "space-between",
+          flexDirection: "column",
+          [`@media (max-width: ${theme.breakpoints.sm}px)`]: {
+            height: 100,
+          },
+        })}
       >
-        {title}
-      </Text>
-    </Card>
+        <TextLink
+          size="lg"
+          sx={{ lineHeight: "32.4px" }}
+          weight={600}
+          lineClamp={2}
+          href="/"
+          type="white"
+        >
+          {data.title}
+        </TextLink>
+        {withTags ? (
+          <Text
+            sx={{ fontSize: "0.625rem", width: "100%" }}
+            color="orange"
+            weight={500}
+            align={tagAlign}
+          >
+            &#9679; Berita Umum
+          </Text>
+        ) : null}
+      </Box>
+      <Box
+        sx={(theme) => ({
+          position: "relative",
+          ...theme.fn.cover(),
+        })}
+      >
+        <Image
+          alt=""
+          src={data.image}
+          layout="fill"
+          objectFit="cover"
+          objectPosition="center"
+        />
+      </Box>
+    </Box>
   );
 }
