@@ -1,25 +1,14 @@
-import {
-  Box,
-  Button,
-  Center,
-  Footer as BaseFooter,
-  Group,
-  Stack,
-  Text,
-  UnstyledButton,
-  UnstyledButtonProps,
-} from "@mantine/core";
+import { Box, Button, Footer as BaseFooter, Group, Text } from "@mantine/core";
 import { NextLink } from "@mantine/next";
-import { Container } from "components/common";
-import Image from "next/image";
-import React from "react";
-import { useStyles } from "theme";
 import {
-  IconBrandYoutube,
   IconBrandInstagram,
+  IconBrandYoutube,
   IconMail,
   IconPhone,
 } from "@tabler/icons";
+import { Container } from "components/common";
+import Image from "next/image";
+import React from "react";
 
 export function Footer() {
   return (
@@ -117,8 +106,8 @@ export function Footer() {
                 example@mail.com
               </Text>
             </Group>
-            <Group spacing={17.5}>
-              <IconMail />
+            <Group spacing={17.5} mb={30}>
+              <IconPhone />
               <Text size="sm" weight={400}>
                 08123456890
               </Text>
@@ -145,33 +134,5 @@ export function Footer() {
         &copy; 2022 Copyright
       </Text>
     </BaseFooter>
-  );
-}
-
-interface SocialMediaButtonProps extends UnstyledButtonProps<"a"> {
-  image: string;
-  alt?: string;
-}
-
-function SocialMediaButton({ href, image, mr, alt }: SocialMediaButtonProps) {
-  const { classes } = useStyles();
-  return (
-    <UnstyledButton
-      className={classes.mediaSocialButton}
-      component={NextLink}
-      href={href}
-      mr={mr}
-    >
-      <Center style={{ height: "100%" }}>
-        <Image
-          alt={alt}
-          src={image}
-          layout="fixed"
-          objectFit="contain"
-          width={40}
-          height={40}
-        />
-      </Center>
-    </UnstyledButton>
   );
 }
