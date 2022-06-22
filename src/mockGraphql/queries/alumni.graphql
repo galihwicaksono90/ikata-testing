@@ -1,0 +1,7 @@
+query GetAlumniBusinesses($limit: Int!) {
+  getAlumniBusinesses(limit: $limit) {
+    id
+    name
+    image
+  }
+}

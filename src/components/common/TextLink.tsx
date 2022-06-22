@@ -11,6 +11,7 @@ export const TextLink = ({
   href,
   sx,
   type = "primary",
+  weight = 600,
   ...rest
 }: TextLinkProps) => {
   return (
@@ -19,13 +20,13 @@ export const TextLink = ({
       {...rest}
       href={href}
       sx={(theme) => ({
-        color: type === "primary" ? theme.primaryColor : theme.white,
+        color: type === "primary" ? theme.colors.orange[0] : theme.white,
         "&:hover": {
           textDecoration: type === "primary" ? "underline" : "none",
-          color: theme.primaryColor,
+          color: theme.colors.orange[0],
         },
       })}
-      weight="bold"
+      weight={weight}
     >
       {children}
     </Text>

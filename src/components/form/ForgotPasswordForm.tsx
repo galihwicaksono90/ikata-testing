@@ -56,6 +56,11 @@ export const ForgotPasswordForm = () => {
     router.back();
   };
 
+  const onCloseModal = () => {
+    reset();
+    router.push("/login");
+  };
+
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)} className={classes.form}>
@@ -100,9 +105,11 @@ export const ForgotPasswordForm = () => {
       </form>
       <Modal
         opened={showModal}
-        onClose={() => setShowModal(false)}
+        onClose={onCloseModal}
         centered
         size={552}
+        closeOnClickOutside={false}
+        closeOnEscape={false}
       >
         <Stack align="center" spacing={0}>
           <Box
@@ -120,7 +127,7 @@ export const ForgotPasswordForm = () => {
             mb={20}
             mt={0}
             component="h3"
-            weight="600"
+            weight={600}
             sx={{ fontSize: "1.5rem" }}
           >
             Periksa Email Anda!
@@ -153,7 +160,7 @@ export const ForgotPasswordForm = () => {
             ikata@email.com
           </Text>
           <GradientButton
-            onClick={() => setShowModal((o) => !o)}
+            onClick={onCloseModal}
             sx={{ maxWidth: 360 }}
             fullWidth
           >

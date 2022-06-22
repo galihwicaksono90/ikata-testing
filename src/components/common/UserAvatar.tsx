@@ -22,10 +22,11 @@ export const UserAvatar = ({ hidden }: Props) => {
       try {
         await me().unwrap();
       } catch (e) {
-        showNotification({
-          title: e.name,
-          message: e.message,
-        });
+        console.error({ e });
+        /* showNotification({
+         *   title: e.name,
+         *   message: e.message,
+         * }); */
       }
     };
     if (!user) init();
@@ -52,7 +53,7 @@ export const UserAvatar = ({ hidden }: Props) => {
             </TextLink>
             <Divider
               orientation="vertical"
-              color="orange"
+              color="primary"
               sx={{
                 height: "17px",
                 alignSelf: "center",

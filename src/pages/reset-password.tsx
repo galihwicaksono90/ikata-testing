@@ -68,6 +68,7 @@ export const getServerSideProps: GetServerSideProps =
           user: { token: token as string },
         })
       );
+      console.log({ isValid });
       return {
         props: {
           tokenValid: isValid.data.tokenForgotPassword.isValid,

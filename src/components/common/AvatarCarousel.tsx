@@ -1,17 +1,19 @@
-import { Box } from "@mantine/core";
 import {
-  Carousel,
-  CarouselBreakpoint,
+  EmblaBreakpointsProps,
+  EmblaCarousel,
   MemberAvatar,
-  MemberAvatarProps,
 } from "components/common";
-import { useEffect, useState } from "react";
+import { Member } from "generated/mockGraphql";
 
 interface Props {
-  data: MemberAvatarProps[];
+  data: Member[];
   rows?: number;
   slidesToShow?: number;
-  responsive?: CarouselBreakpoint[];
+  responsive?: EmblaBreakpointsProps[];
+  loading?: boolean;
+  withTitle?: boolean;
+  withClassYear?: boolean;
+  loop?: boolean;
 }
 
 export const AvatarCarousel = ({
@@ -19,35 +21,32 @@ export const AvatarCarousel = ({
   rows = 2,
   slidesToShow = 4,
   responsive,
+  loading,
+  withClassYear,
+  withTitle,
+  loop = true,
 }: Props) => {
-  const [avatars, setAvatars] = useState([]);
-
-  useEffect(() => {
-    if (data) {
-      setAvatars(data);
-      return;
-    }
-    setAvatars([]);
-  }, [data]);
-
-  if (!avatars) {
-    return null;
-  }
-
   return (
-    <Box>
-      <Carousel
-        dotType="numbers"
-        rows={rows}
-        slidesToShow={slidesToShow}
-        dots
-        infinite={false}
-        responsive={responsive}
-      >
-        {data.map((item) => (
-          <MemberAvatar {...item} key={item.id} />
-        ))}
-      </Carousel>
-    </Box>
+    <EmblaCarousel
+      loop={loop}
+      withDots
+      rows={rows}
+      slidesPerView={slidesToShow}
+      breakpoints={responsive}
+      dotType="numbers"
+    >
+      {loading
+        ? [...Array(10).fill(0)].map((item, index) => (
+            <MemberAvatar loading={loading} key={index} />
+          ))
+        : data.map((item) => (
+            <MemberAvatar
+              data={item}
+              key={item.id}
+              withTitle={withTitle}
+              withClassYear={withClassYear}
+            />
+          ))}
+    </EmblaCarousel>
   );
 };

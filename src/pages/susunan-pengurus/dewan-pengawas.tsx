@@ -1,8 +1,7 @@
-import { AvatarCarousel } from "components/common";
+import { Grid } from "@mantine/core";
+import { MemberAvatar } from "components/common";
 import { ManagementLayout } from "components/layouts";
 import { api, useGetMembersQuery } from "generated/mockGraphql";
-import { MemberAvatar } from "components/common";
-import { Grid } from "@mantine/core";
 import { GetServerSideProps } from "next";
 import { wrapper } from "redux/store";
 
@@ -11,9 +10,11 @@ export default function DewanPengawas() {
     limit: 5,
     field: "Dewan Pengawas",
   });
-  if (isLoading && !members) {
+
+  if (isLoading) {
     return <div>Loading...</div>;
   }
+
   if (!members) {
     return <div>No members</div>;
   }
@@ -22,11 +23,11 @@ export default function DewanPengawas() {
     <ManagementLayout title="Dewan Pengawas">
       <Grid>
         <Grid.Col sm={12} span={6}>
-          <MemberAvatar {...members.getMembers[0]} />
+          <MemberAvatar data={members.getMembers[0]} withClassYear withTitle />
         </Grid.Col>
         {members.getMembers.slice(-4).map((member, index) => (
           <Grid.Col sm={3} span={6} key={index}>
-            <MemberAvatar {...member} />
+            <MemberAvatar data={member} withClassYear withTitle />
           </Grid.Col>
         ))}
       </Grid>

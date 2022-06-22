@@ -1,28 +1,21 @@
-import { useState } from "react";
-import { Select, Text, Group, Stack, Grid } from "@mantine/core";
+import { Group, Select, Stack, Text, MediaQuery } from "@mantine/core";
+import { AvatarCarousel } from "components/common";
 import { ManagementLayout } from "components/layouts";
-import { api, ArticleType, useGetMembersQuery } from "generated/mockGraphql";
-import { AvatarCarousel, MemberAvatar } from "components/common";
+import { useGetMembersQuery, api } from "generated/mockGraphql";
+import { useState } from "react";
+import { generateEightYears } from "utils";
+import { wrapper } from "redux/store";
 import { GetServerSideProps } from "next";
-import { generateEightYears } from "utils/generateEightYears";
-import { nanoid } from "@reduxjs/toolkit";
 
 const years = generateEightYears();
 
 export default function KoordinatorAngkatan() {
   const [value, setValue] = useState(years[0].value);
 
-  const {
-    data: members,
-    isFetching,
-    isLoading,
-  } = useGetMembersQuery({
+  const { data: members, isFetching } = useGetMembersQuery({
     limit: years.find((year) => year.value === value).data.length,
     field: value,
   });
-
-  if (isLoading) <div>Loading...</div>;
-  if (!members) <div>No data</div>;
 
   return (
     <ManagementLayout
@@ -31,28 +24,79 @@ export default function KoordinatorAngkatan() {
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
             ad minim veniam, quis "
     >
-      {isFetching ? (
-        <div>Loading...</div>
-      ) : (
-        <Stack>
-          <Group position="center" mb={40}>
-            <Text weight="bold">List Angkatan: </Text>
-            <Select
-              data={years}
-              value={value}
-              onChange={setValue}
-              sx={{ width: 128 }}
-            />
-          </Group>
-          <Grid>
-            {members?.getMembers.map((member) => (
-              <Grid.Col sm={3} span={6} key={nanoid()}>
-                <MemberAvatar {...member} />
-              </Grid.Col>
-            ))}
-          </Grid>
-        </Stack>
-      )}
+      <Stack>
+        <Group position="center" mb={40}>
+          <MediaQuery smallerThan="sm" styles={{ display: "none" }}>
+            <Text weight={600}>List Angkatan: </Text>
+          </MediaQuery>
+          <Select
+            size="lg"
+            data={years}
+            value={value}
+            onChange={setValue}
+            styles={(theme) => ({
+              item: {
+                fontSize: 12,
+              },
+            })}
+            sx={(theme) => ({
+              width: 140,
+              "& input": {
+                color: theme.colors.orange[0],
+                fontWeight: 700,
+                fontSize: 12,
+              },
+              [`@media (max-width: ${theme.breakpoints.sm}px)`]: {
+                width: "100%",
+                fontSize: 14,
+              },
+            })}
+          />
+        </Group>
+        <AvatarCarousel
+          loading={isFetching}
+          data={members?.getMembers}
+          rows={2}
+          slidesToShow={4}
+          responsive={[
+            {
+              smallerThan: 1114,
+              slidesPerView: 3,
+            },
+            {
+              smallerThan: 909,
+              slidesPerView: 2,
+            },
+            {
+              smallerThan: 520,
+              slidesPerView: 1,
+            },
+          ]}
+          withClassYear
+        />
+      </Stack>
     </ManagementLayout>
   );
 }
+
+export const getServerSideProps: GetServerSideProps =
+  wrapper.getServerSideProps((store) => async () => {
+    try {
+      await store.dispatch(
+        api.endpoints.GetMembers.initiate({
+          limit: years[0].data.length,
+          field: years[0].value,
+        })
+      );
+
+      Promise.all(api.util.getRunningOperationPromises());
+
+      return {
+        props: {},
+      };
+    } catch (e) {
+      return {
+        props: {},
+      };
+    }
+  });

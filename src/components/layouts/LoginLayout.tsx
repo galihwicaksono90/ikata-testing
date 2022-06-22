@@ -6,6 +6,7 @@ import {
   UnstyledButton,
   BoxProps,
 } from "@mantine/core";
+import { NextLink } from "@mantine/next";
 import { useRouter } from "next/router";
 import { IconArrowLeft } from "@tabler/icons";
 import Image from "next/image";
@@ -33,6 +34,7 @@ export function LoginLayout({
         display: "flex",
         alignItems: center ? "center" : null,
         //overflow: "hidden",
+        paddingBottom: 40,
       }}
     >
       <Box
@@ -66,22 +68,34 @@ export function LoginLayout({
         />
       </Box>
 
-      <Container style={{ zIndex: 2, width: "100%" }} size={containerSize}>
+      <Container
+        style={{ zIndex: 2, width: "100%", height: "min-content" }}
+        size={containerSize}
+        py={40}
+      >
         <Paper
           sx={{
             background: "rgba(0,0,0,0.45)",
             padding: "29px 24px 41px 24px",
             width: "100%",
           }}
-          my={40}
         >
           <Box sx={{ marginBottom: 60, position: "relative", width: "100%" }}>
-            <UnstyledButton
-              sx={{ position: "absolute", left: 0, top: 0, bottom: 0 }}
-              onClick={() => router.back()}
-            >
-              <IconArrowLeft />
-            </UnstyledButton>
+            <NextLink href="/">
+              <UnstyledButton
+                sx={(theme) => ({
+                  position: "absolute",
+                  left: 0,
+                  top: 0,
+                  bottom: 0,
+                  "&:hover": {
+                    color: theme.colors.orange[0],
+                  },
+                })}
+              >
+                <IconArrowLeft />
+              </UnstyledButton>
+            </NextLink>
             <Text align="center" sx={{ fontSize: "1.375rem", fontWeight: 600 }}>
               {headerTitle}
             </Text>

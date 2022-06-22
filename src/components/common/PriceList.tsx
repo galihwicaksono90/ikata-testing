@@ -7,17 +7,11 @@ export function PriceList(props: PaperProps<"div">) {
   const date = useMemo(() => getCurrentDate(), []);
 
   return (
-    <Paper
-      sx={(theme) => ({
-        padding: 20,
-        background: theme.colors.dark[5],
-        boxShadow: theme.shadows.md,
-        color: theme.white,
-      })}
-      radius="lg"
-      {...props}
-    >
-      <Text size="lg" mb={28} weight={600}>
+    <Paper radius="lg" {...props}>
+      <Text size="lg" mb={20} weight={700}>
+        Harga Acual Batubara Mineral
+      </Text>
+      <Text size="lg" mb={28} weight={600} color="orange">
         {date}
       </Text>
       <PriceItem title="Batubara" price="900.000" />

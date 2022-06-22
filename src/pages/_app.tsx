@@ -4,6 +4,10 @@ import { AppProps } from "next/app";
 import Head from "next/head";
 import { wrapper } from "redux/store";
 import { theme } from "theme";
+import "@fontsource/montserrat/400.css";
+import "@fontsource/montserrat/500.css";
+import "@fontsource/montserrat/600.css";
+import "@fontsource/montserrat/700.css";
 
 function App(props: AppProps) {
   const { Component, pageProps } = props;
@@ -33,7 +37,7 @@ function App(props: AppProps) {
         })}
       />
       <MantineProvider withGlobalStyles withNormalizeCSS theme={theme}>
-        <NotificationsProvider position="top-right">
+        <NotificationsProvider position="bottom-center">
           <Component {...pageProps} />
         </NotificationsProvider>
       </MantineProvider>

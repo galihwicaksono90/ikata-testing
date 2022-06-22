@@ -163,7 +163,7 @@ export const RegisterForm = () => {
           placeholder="Konfirmasi Password"
           error={errors.confirmPassword}
         />
-        <Text weight="500">
+        <Text weight={500}>
           Password harus merupakan gabungan huruf kecil, besar, dan angka dengan
           panjang minimal 6 karakter
         </Text>

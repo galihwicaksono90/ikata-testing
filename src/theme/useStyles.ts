@@ -6,7 +6,7 @@ export const useStyles = createStyles((theme) => ({
     "& ul": {},
     "& .slick-dots": {
       "&.outside": {
-        bottom: "-45px",
+        bottom: "-60px",
       },
       "&.inside": {
         bottom: "8px",
@@ -16,6 +16,8 @@ export const useStyles = createStyles((theme) => ({
           width: 16,
           height: 7,
           borderRadius: theme.radius.md,
+          backgroundColor: theme.white,
+          opacity: 0.5,
         },
       },
       "&.numbers": {
@@ -33,10 +35,14 @@ export const useStyles = createStyles((theme) => ({
         color: theme.colors.gray[6],
         fontWeight: "bold",
         lineHeight: "30px",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
       },
       "& li.slick-active div": {
-        background: theme.primaryColor,
-        color: theme.colors.dark,
+        background: theme.colors.orange[0],
+        opacity: 1,
+        color: theme.colors.dark[8],
       },
     },
     "& .carousel-arrow-next": {
@@ -60,7 +66,7 @@ export const useStyles = createStyles((theme) => ({
     cursor: "pointer",
     fontWeight: 500,
     "& .active a": {
-      color: theme.primaryColor,
+      color: theme.colors.orange[0],
     },
     "& a": {
       color: theme.colors.white,
@@ -92,16 +98,6 @@ export const useStyles = createStyles((theme) => ({
     background: theme.colors.dark[8],
     color: theme.white,
   },
-  copyright: {
-    width: "100vw",
-    height: "46px",
-    background: "#272727",
-    textAlign: "center",
-    marginTop: "auto",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
   mediaSocialButton: {
     width: "80px",
     height: "80px",
@@ -125,7 +121,7 @@ export const useStyles = createStyles((theme) => ({
     },
     "& input": {
       background: "rgba(255,255,255,0.25)",
-      color: theme.colors.white,
+      color: theme.white,
       "&::placeholder": {
         fontStyle: "italic",
         fontSize: theme.fontSizes.sm,
@@ -143,9 +139,6 @@ export const useStyles = createStyles((theme) => ({
         marginBottom: "15px",
       },
     },
-    "& .mantine-RadioGroup-label": {
-      fontSize: theme.fontSizes.md,
-    },
     "& .mantine-TextInput-invalid": {
       color: theme.white,
       borderColor: theme.other.errorRed,
@@ -158,14 +151,16 @@ export const useStyles = createStyles((theme) => ({
     },
     "& input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus, textarea:-webkit-autofill, textarea:-webkit-autofill:hover, textarea:-webkit-autofill:focus, select:-webkit-autofill, select:-webkit-autofill:hover, select:-webkit-autofill:focus":
       {
-        // WebkitTextFillColor: theme.colors.dark,
-        // WebkitBoxShadow: "0 0 0px 1px rgba(255, 255, 255, 0.01) inset",
+        WebkitTextFillColor: theme.white,
+        // WebkitBoxShadow: "0 0 0px 30px blue inset !important",
+        transition: "background-color 9999s ease-in-out 0s",
       },
 
     "& .mantine-RadioGroup-root": {
       "& > .mantine-RadioGroup-label": {
         marginBottom: "15px",
         fontWeight: 600,
+        fontSize: theme.fontSizes.md,
       },
       "& .mantine-Group-root": {
         gap: 40,
@@ -207,6 +202,12 @@ export const useStyles = createStyles((theme) => ({
       "& .mantine-RadioGroup-root .mantine-Group-root": {
         gap: 20,
       },
+      "& .mantine-RadioGroup-root": {
+        "& .mantine-RadioGroup-radio": {
+          height: "25px",
+          width: "25px",
+        },
+      },
     },
     // "@media screen and (-webkit-min-device-pixel-ratio: 0) and (min-resolution: 0.001dpcm)":
     //   {
@@ -220,5 +221,22 @@ export const useStyles = createStyles((theme) => ({
     //       color: "red",
     //     },
     //   },
+  },
+  tab: {
+    "& .mantine-Tabs-tabControl.mantine-Tabs-pills": {
+      height: 48,
+      fontWeight: 600,
+      borderRadius: 50,
+      color: theme.colors.orange[0],
+      border: `1px solid ${theme.colors.orange[1]}`,
+      "&.mantine-Tabs-tabActive": {
+        color: theme.colors.white[1],
+        background: theme.colors.orange[0],
+      },
+    },
+  },
+  pillButton: {
+    height: 48,
+    borderRadius: "50px",
   },
 }));

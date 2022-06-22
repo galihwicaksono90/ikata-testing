@@ -1,7 +1,6 @@
-import React from "react";
-import { Carousel } from "components/common";
 import { Stack, Title, Text, Box } from "@mantine/core";
 import { TestimonyCard } from "components/about";
+import { EmblaCarousel } from "components/common";
 import { Testimony } from "generated/mockGraphql";
 
 interface Props {
@@ -22,11 +21,11 @@ export const AboutCarousel = ({ data }: Props) => {
           eiusmod tempor
         </Text>
       </Box>
-      <Carousel arrows dots={false}>
+      <EmblaCarousel withArrows loop>
         {data.map((testimony) => (
           <TestimonyCard data={testimony} key={testimony.id} />
         ))}
-      </Carousel>
+      </EmblaCarousel>
     </Stack>
   );
 };
