@@ -127,7 +127,7 @@ export const ForgotPasswordForm = () => {
             mb={20}
             mt={0}
             component="h3"
-            weight="600"
+            weight={600}
             sx={{ fontSize: "1.5rem" }}
           >
             Periksa Email Anda!

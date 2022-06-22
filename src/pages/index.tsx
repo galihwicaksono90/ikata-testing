@@ -28,6 +28,8 @@ export default function Home() {
       <MerchLandingPage />
       <AdBanner src="/banner2.png" />
       <MerchLandingPage />
+      <BackToTop />
+      <PriceListAffix />
     </MainLayout>
   );
 }
