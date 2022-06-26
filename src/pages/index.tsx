@@ -27,7 +27,6 @@ export default function Home() {
       <AlumniLandingPage />
       <MerchLandingPage />
       <AdBanner src="/banner2.png" />
-      <MerchLandingPage />
       <BackToTop />
       <PriceListAffix />
     </MainLayout>

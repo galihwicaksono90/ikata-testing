@@ -2,6 +2,7 @@ import { Box, BoxProps, Text } from "@mantine/core";
 import { SectionContainer, TextLink } from "components/common";
 import { Alumni, useGetAlumniBusinessesQuery } from "generated/mockGraphql";
 import Image from "next/image";
+import { NextLink } from "@mantine/next";
 
 const gridDictionary = ["one", "two", "three", "four"];
 const gridTemplates = {
@@ -89,51 +90,68 @@ const Card = ({
   href,
 }: BoxProps<"div"> & { data: Alumni; href?: string }) => {
   return (
-    <Box sx={{ position: "relative", height: "100%", width: "100%", ...sx }}>
-      <Box
-        sx={(theme) => ({
-          //height: 126,
-          background: theme.other.darkGradient,
-          zIndex: 41,
-          position: "absolute",
-          bottom: 0,
-          left: 0,
-          right: 0,
-          padding: "30px 20px",
-          display: "flex",
-          justifyContent: "space-between",
-          flexDirection: "column",
-        })}
-      >
-        <Text
-          size="lg"
-          sx={{ lineHeight: "32.4px" }}
-          weight={600}
-          lineClamp={2}
-          color="primary"
+    <Box
+      sx={{
+        position: "relative",
+        height: "100%",
+        width: "100%",
+        "& img": {
+          transition: "transform ease 300ms",
+        },
+        "&:hover": {
+          "& img": {
+            transform: "scale(1.08)",
+          },
+        },
+        ...sx,
+      }}
+    >
+      <NextLink href={`/bisnis-alumni/${data.id}"`}>
+        <Box
+          sx={(theme) => ({
+            //height: 126,
+            background: theme.other.darkGradient,
+            zIndex: 41,
+            position: "absolute",
+            bottom: 0,
+            left: 0,
+            right: 0,
+            padding: "30px 20px",
+            display: "flex",
+            justifyContent: "space-between",
+            flexDirection: "column",
+          })}
         >
-          {data.name}
-        </Text>
-        {!!href ? (
-          <TextLink sx={{ width: "100%" }} weight={600} href={href}>
-            Lihat Profil
-          </TextLink>
-        ) : null}
-      </Box>
-      <Box
-        sx={(theme) => ({
-          position: "relative",
-          ...theme.fn.cover(),
-        })}
-      >
-        <Image
-          src={data.image}
-          layout="fill"
-          objectFit="cover"
-          objectPosition="center"
-          alt=""
-        />
-      </Box>
+          <Text
+            size="lg"
+            sx={{ lineHeight: "32.4px" }}
+            weight={600}
+            lineClamp={2}
+            color="white"
+          >
+            {data.name}
+          </Text>
+          {!!href ? (
+            <Text sx={{ width: "100%" }} weight={600} color="orange" mt={5}>
+              Lihat Profil
+            </Text>
+          ) : null}
+        </Box>
+        <Box
+          sx={(theme) => ({
+            position: "relative",
+            ...theme.fn.cover(),
+          })}
+        >
+          <Image
+            src={data.image}
+            layout="fill"
+            objectFit="cover"
+            objectPosition="center"
+            alt=""
+          />
+        </Box>
+      </NextLink>
     </Box>
   );
 };

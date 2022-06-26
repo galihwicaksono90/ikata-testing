@@ -7,10 +7,6 @@ import React from "react";
 export function HeroImage() {
   const { data: images, isLoading } = useGetHeroImagesQuery({ limit: 5 });
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
   return (
     <Box sx={{ maxWidth: "100vw", position: "relative" }}>
       <EmblaCarousel withDots dotsPosition="inside" autoplay loop>
