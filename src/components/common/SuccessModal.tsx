@@ -5,11 +5,13 @@ import Image from "next/image";
 interface Props extends ModalProps {
   title: string;
   message: string;
-  href: string;
+  href?: string;
+  onClick?: () => void;
   buttonLabel: string;
 }
 
 export const SuccessModal = ({
+  onClick,
   href,
   buttonLabel,
   message,
@@ -51,7 +53,12 @@ export const SuccessModal = ({
         >
           {message}
         </Text>
-        <GradientButton href={href} sx={{ maxWidth: 360 }} fullWidth>
+        <GradientButton
+          href={href ?? null}
+          sx={{ maxWidth: 360 }}
+          fullWidth
+          onClick={onClick}
+        >
           {buttonLabel}
         </GradientButton>
       </Stack>
