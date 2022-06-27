@@ -43,6 +43,19 @@ export default function AboutPage({ data, initialTab }: AboutProps) {
           variant="pills"
           tabPadding={40}
           className={classes.tab}
+          styles={(theme) => ({
+            tabsList: {
+              [`@media (max-width: ${theme.breakpoints.sm}px)`]: {
+                flexDirection: "column",
+                alignItems: "stretch",
+              },
+            },
+            tabControl: {
+              [`@media (max-width: ${theme.breakpoints.sm}px)`]: {
+                maxHeight: 40,
+              },
+            },
+          })}
         >
           <Tabs.Tab label="Tentang IKATA" tabKey="ikata">
             <AboutDescription title="Tentang IKATA" data={data.jurusan} />

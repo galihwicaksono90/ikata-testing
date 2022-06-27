@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { Group } from "@mantine/core";
 import {
   GradientButton,
@@ -5,6 +6,7 @@ import {
   showNotification,
   TextInput,
   TextLink,
+  SuccessModal,
 } from "components/common";
 import { useLoginMutation } from "generated/graphql";
 import { useRouter } from "next/router";
@@ -15,6 +17,7 @@ import { validateLoginForm } from "./formResolver";
 import { UserInputTypeLogi } from "generated/graphql";
 
 export function LoginForm() {
+  const [showModal, setShowModal] = useState(false);
   const { classes } = useStyles();
   const router = useRouter();
   const [login, { isLoading }] = useLoginMutation();
@@ -24,6 +27,13 @@ export function LoginForm() {
     });
 
   const { errors, isValid } = formState;
+
+  useEffect(() => {
+    //show modal if before 30th of November 2022
+    if (new Date().getTime() < new Date(2022, 11, 30).getTime()) {
+      setShowModal(true);
+    }
+  }, []);
 
   const onSubmit = useCallback(
     async (values: UserInputTypeLogi) => {
@@ -74,6 +84,14 @@ export function LoginForm() {
       <Group position="center">
         <TextLink href="/register">Daftar Baru</TextLink>
       </Group>
+      <SuccessModal
+        opened={showModal}
+        onClose={() => setShowModal(false)}
+        title="Perhatian!"
+        message="Bagi anda yang sudah mendaftar dan terverifikasi pada saat MUNAS IKATA UPN 2021 silahkan menuju lupa password untuk me-reset akun anda, gunakan alamat email anda yang terdaftar pada saat MUNAS IKATA UPN 2021"
+        buttonLabel="Lanjutkan Login"
+        onClick={() => setShowModal(false)}
+      />
     </form>
   );
 }

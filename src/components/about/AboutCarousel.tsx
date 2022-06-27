@@ -21,7 +21,7 @@ export const AboutCarousel = ({ data }: Props) => {
           eiusmod tempor
         </Text>
       </Box>
-      <EmblaCarousel withArrows loop>
+      <EmblaCarousel withArrows>
         {data.map((testimony) => (
           <TestimonyCard data={testimony} key={testimony.id} />
         ))}
