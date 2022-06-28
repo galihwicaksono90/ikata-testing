@@ -99,7 +99,7 @@ export function LoginForm() {
                 },
               })}
             >
-              Lupa Password
+              <b>Lupa Password</b>
             </Anchor>{" "}
             untuk me-reset akun anda, gunakan alamat <b>Email</b> anda yang{" "}
             <b>Terdaftar</b> pada saat <b>MUNAS IKATA UPN 2021</b>
