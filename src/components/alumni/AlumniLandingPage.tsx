@@ -1,8 +1,12 @@
 import { Box, BoxProps, Text } from "@mantine/core";
 import { SectionContainer, TextLink } from "components/common";
-import { Alumni, useGetAlumniBusinessesQuery } from "generated/mockGraphql";
+import {
+  useGetAlumniBusinessesQuery,
+  AlumniBusinessesType,
+} from "generated/graphql";
 import Image from "next/image";
 import { NextLink } from "@mantine/next";
+import { getAlumniBusinessesDefaultParams } from "utils/defaultParams";
 
 const gridDictionary = ["one", "two", "three", "four"];
 const gridTemplates = {
@@ -33,9 +37,9 @@ const gridTemplates = {
 };
 
 export function AlumniLandingPage() {
-  const { data, isLoading } = useGetAlumniBusinessesQuery({ limit: 4 });
-
-  if (isLoading) <div>Loading...</div>;
+  const { data } = useGetAlumniBusinessesQuery({
+    params: getAlumniBusinessesDefaultParams,
+  });
 
   return (
     <SectionContainer
@@ -76,7 +80,7 @@ export function AlumniLandingPage() {
             sx={{
               gridArea: gridDictionary[index],
             }}
-            href={index === 0 ? `/alumni/${alumni.id}` : null}
+            href={`/bisnis-alumni/${alumni.id}`}
           />
         ))}
       </Box>
@@ -88,7 +92,7 @@ const Card = ({
   data,
   sx,
   href,
-}: BoxProps<"div"> & { data: Alumni; href?: string }) => {
+}: BoxProps<"div"> & { data: AlumniBusinessesType; href?: string }) => {
   return (
     <Box
       sx={{
@@ -129,7 +133,7 @@ const Card = ({
             lineClamp={2}
             color="white"
           >
-            {data.name}
+            {data.title}
           </Text>
           {!!href ? (
             <Text sx={{ width: "100%" }} weight={600} color="orange" mt={5}>
@@ -144,7 +148,7 @@ const Card = ({
           })}
         >
           <Image
-            src={data.image}
+            src={data.thumbnailPath}
             layout="fill"
             objectFit="cover"
             objectPosition="center"

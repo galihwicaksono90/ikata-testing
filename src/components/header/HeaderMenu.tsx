@@ -30,13 +30,13 @@ export function HeaderMenu() {
           Lowongan Beasiswa
         </MenuItemChild>
       </MenuItem>
-      {/* <MenuItem title="News" href="/news">
-        <MenuItemChild href="/news/pekerjaan"Berit></MenuItemChild>
-        <MenuItemChild href="/news/beasiswa">Lowongan Pekerjaan</MenuItemChild>
-      </MenuItem> */}
       <MenuItem title="Berita" href="/berita" />
-      <MenuItem title="Artikel" href="/artikel" />
+      <MenuItem title="Artikel" href="/artikel">
+        <MenuItemChild href="/artikel/ilmiah">Ilmiah</MenuItemChild>
+        <MenuItemChild href="/artikel/non-ilmiah">non-ilmiah</MenuItemChild>
+      </MenuItem>
       <MenuItem title="Merchandise" href="/merchandise" />
+      <MenuItem title="Kegiatan" href="/merchandise" />
       <MenuItem title="Koperasi IKATA" href="/koperasi" />
     </>
   );

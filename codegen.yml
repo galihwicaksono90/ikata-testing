@@ -1,28 +1,28 @@
-# watch: true
+watch: true
 overwrite: true
 generates:
   # main endpoints
-  # src/generated/graphql.ts:
-  #   schema:
-  #     - "${NEXT_PUBLIC_GRAPHQL_SERVER:https://graph-dev.ikataupn.or.id/graphql}":
-  #         headers:
-  #           Authorization: "Bearer ${NEXT_PUBLIC_GRAPHQL_API_TOKEN}"
-  #   documents: "src/graphql/**/*.graphql"
-  #   plugins:
-  #     - "typescript"
-  #     - "typescript-operations"
-  #     - "typescript-rtk-query":
-  #         importBaseApiFrom: "redux/api/apiSlice"
-  #         exportHooks: true
-
-  # generate mock endpoints
-  src/generated/mockGraphql.ts:
+  src/generated/graphql.ts:
     schema:
-      - "${NEXT_PUBLIC_GRAPHQL_MOCK_SERVER:https://mock-graphql.herokuapp.com/graphql}"
-    documents: "src/mockGraphql/**/*.graphql"
+      - "${NEXT_PUBLIC_GRAPHQL_SERVER:https://graph-dev.ikataupn.or.id/graphql}":
+          headers:
+            Authorization: "Bearer ${NEXT_PUBLIC_GRAPHQL_API_TOKEN}"
+    documents: "src/graphql/**/*.graphql"
     plugins:
       - "typescript"
       - "typescript-operations"
       - "typescript-rtk-query":
-          importBaseApiFrom: "redux/mockApi/mockApiSlice"
+          importBaseApiFrom: "redux/api/apiSlice"
           exportHooks: true
+
+  # generate mock endpoints
+  # src/generated/mockGraphql.ts:
+  #   schema:
+  #     - "${NEXT_PUBLIC_GRAPHQL_MOCK_SERVER:https://mock-graphql.herokuapp.com/graphql}"
+  #   documents: "src/mockGraphql/**/*.graphql"
+  #   plugins:
+  #     - "typescript"
+  #     - "typescript-operations"
+  #     - "typescript-rtk-query":
+  #         importBaseApiFrom: "redux/mockApi/mockApiSlice"
+  #         exportHooks: true

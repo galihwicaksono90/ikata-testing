@@ -1,15 +1,13 @@
-import { Box, BoxProps, Text, UnstyledButton } from "@mantine/core";
-import { TextLink } from "components/common";
-import { News } from "generated/mockGraphql";
-import Image from "next/image";
+import { Box, BoxProps, Text } from "@mantine/core";
 import { NextLink } from "@mantine/next";
-import Link from "next/link";
+import { NewsType } from "generated/graphql";
+import Image from "next/image";
 
 interface NewsCardProps extends BoxProps<"div"> {
   height?: number | string;
   withTags?: boolean;
   tagAlign?: "center" | "right" | "left";
-  data: News;
+  data: NewsType;
 }
 
 export function NewsCard({
@@ -17,11 +15,13 @@ export function NewsCard({
   data,
   withTags,
   tagAlign,
+  sx,
   ...rest
 }: NewsCardProps) {
   return (
     <Box
       sx={(theme) => ({
+        ...sx,
         height: 392,
         position: "relative",
         "& img": {
@@ -100,7 +100,7 @@ export function NewsCard({
         >
           <Image
             alt=""
-            src={data.image}
+            src={data.thumbnailPath}
             layout="fill"
             objectFit="cover"
             objectPosition="center"
