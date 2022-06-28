@@ -1,7 +1,6 @@
 import { ReactNode } from "react";
-import { Container, TextLink } from "components/common";
+import { Container, TextLink, NoData } from "components/common";
 import { Group, Box, Text, AspectRatio } from "@mantine/core";
-import Image from "next/image";
 import { useMantineTheme } from "@mantine/core";
 
 interface SectionContainerProps {
@@ -12,9 +11,11 @@ interface SectionContainerProps {
   seeAllHref?: string;
   lightBackground?: boolean;
   containerSize?: number;
+  loading?: boolean;
 }
 
 export const SectionContainer = ({
+  loading,
   title,
   children,
   rightItem,
@@ -72,7 +73,7 @@ export const SectionContainer = ({
         ) : (
           <>
             {children}
-            {seeAllHref ? (
+            {seeAllHref && !loading ? (
               <Box
                 sx={(theme) => ({
                   borderTop: `1px solid ${theme.colors.dark[5]}`,
@@ -90,27 +91,6 @@ export const SectionContainer = ({
           </>
         )}
       </Container>
-    </Box>
-  );
-};
-
-const NoData = () => {
-  return (
-    <Box sx={{ width: "100%" }} py={40}>
-      <AspectRatio
-        ratio={467 / 456}
-        sx={{
-          position: "relative",
-          maxWidth: 467,
-          display: "flex",
-        }}
-        mx="auto"
-      >
-        <Image src="/noData.svg" layout="fill" alt="" />
-      </AspectRatio>
-      <Text mt={80} align="center" size="xl" weight={500}>
-        Belum ada data ditampilkan
-      </Text>
     </Box>
   );
 };

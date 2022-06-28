@@ -1,9 +1,11 @@
 query GetArticles($params: ParamsInputType) {
   getArticles(params: $params) {
-    id
-    title
-    description
-    thumbnailPath
-    publishedDate
+    data {
+      id
+      title
+      description
+      thumbnailPath
+      publishedDate
+    }
   }
 }

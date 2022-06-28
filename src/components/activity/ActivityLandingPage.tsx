@@ -12,11 +12,11 @@ export const ActivityLandingPage = () => {
   return (
     <SectionContainer
       title="KEGIATAN IKATA"
-      noData={!data?.getActivities.length}
+      noData={!data?.getActivities.data.length}
       seeAllHref="/aktifitas"
     >
       <Stack spacing={24}>
-        {data?.getActivities.map((activity) => {
+        {data?.getActivities.data.map((activity) => {
           return (
             <ArticleItem
               data={activity}

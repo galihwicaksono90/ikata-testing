@@ -9,6 +9,11 @@ import {
   getScientificArticlesDefaultParams,
 } from "utils/defaultParams";
 
+const hrefs: { [key in Category]: string } = {
+  Ilmiah: "/artikel/ilmiah",
+  NonIlmiah: "/artikel/non-ilmiah",
+};
+
 export const ArticleLandingPage = () => {
   const { classes } = useStyles();
   const [currentType, setCurrentType] = useState(Category.Ilmiah);
@@ -24,16 +29,12 @@ export const ArticleLandingPage = () => {
   return (
     <SectionContainer
       title="ARTIKEL"
-      seeAllHref={
-        currentType === Category.Ilmiah
-          ? "/artikel/ilmiah"
-          : "/articles/non-ilmiah"
-      }
+      seeAllHref={hrefs[currentType]}
       noData={
         (currentType === Category.Ilmiah &&
-          !scientificArticles?.getArticles.length) ||
+          !scientificArticles?.getArticles.data.length) ||
         (currentType === Category.NonIlmiah &&
-          !nonScientificArticles?.getArticles.length)
+          !nonScientificArticles?.getArticles.data.length)
       }
       rightItem={
         <Group spacing={20}>
@@ -58,14 +59,12 @@ export const ArticleLandingPage = () => {
         {(currentType === Category.Ilmiah
           ? scientificArticles
           : nonScientificArticles
-        )?.getArticles.map((article) => {
+        )?.getArticles.data.map((article) => {
           return (
             <ArticleItem
               data={article}
               key={article.id}
-              href={`/artikel/${
-                currentType === Category.Ilmiah ? "ilmiah" : "non-ilmiah"
-              }/${article.id}`}
+              href={`${hrefs[currentType]}/${article.id}`}
             />
           );
         })}

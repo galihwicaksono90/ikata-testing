@@ -1,9 +1,11 @@
 query GetNews($params: ParamsInputType) {
   getNews(params: $params) {
-    id
-    title
-    tags
-    thumbnailPath
-    publishedDate
+    data {
+      id
+      title
+      tags
+      thumbnailPath
+      publishedDate
+    }
   }
 }
