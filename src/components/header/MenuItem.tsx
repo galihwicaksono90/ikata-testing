@@ -26,9 +26,6 @@ export function MenuItem({
         pl={withPadding ? 10 : 0}
         sx={(theme) => ({
           width: withPadding ? "100%" : "initial",
-          "&:hover": {
-            backgroundColor: withPadding ? theme.colors.dark[5] : null,
-          },
         })}
       >
         <Box
@@ -43,7 +40,17 @@ export function MenuItem({
             },
           })}
         >
-          <Text component={NextLink} href={href} size="md">
+          <Text
+            component={NextLink}
+            href={href}
+            size="sm"
+            sx={(theme) => ({
+              "&:hover": {
+                backgroundColor: withPadding ? theme.colors.dark[5] : null,
+                color: theme.colors.orange[0],
+              },
+            })}
+          >
             {title}
           </Text>
         </Box>
@@ -73,6 +80,19 @@ export function MenuItem({
           },
           itemHovered: {
             background: theme.colors.dark[5],
+          },
+          itemLabel: {
+            "& .mantine-Text-root": {
+              fontSize: theme.fontSizes.sm,
+            },
+          },
+        })}
+        sx={(theme) => ({
+          "& .mantine-Text-root": {
+            fontSize: theme.fontSizes.sm,
+            "&:hover": {
+              color: theme.colors.orange[0],
+            },
           },
         })}
       >
