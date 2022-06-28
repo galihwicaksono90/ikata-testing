@@ -1,4 +1,11 @@
-import { Box, Button, Footer as BaseFooter, Group, Text } from "@mantine/core";
+import {
+  Box,
+  Button,
+  Footer as BaseFooter,
+  Group,
+  Text,
+  Stack,
+} from "@mantine/core";
 import { NextLink } from "@mantine/next";
 import {
   IconBrandInstagram,
@@ -98,20 +105,35 @@ export function Footer() {
               Prpt, Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta 12730
             </Text>
           </div>
-          <Group direction="column">
-            <Text weight={700}>KONTAK</Text>
-            <Group spacing={17.5}>
-              <IconMail />
-              <Text size="sm" weight={400}>
-                example@mail.com
-              </Text>
-            </Group>
-            <Group spacing={17.5} mb={30}>
-              <IconPhone />
-              <Text size="sm" weight={400}>
-                08123456890
-              </Text>
-            </Group>
+          <Group
+            direction="column"
+            sx={(theme) => ({
+              [`@media (max-width: ${theme.breakpoints.sm}px)`]: {
+                width: "100%",
+                flexDirection: "row",
+                justifyContent: "space-between",
+              },
+              [`@media (max-width: 432px)`]: {
+                flexDirection: "column",
+                alignItems: "center",
+              },
+            })}
+          >
+            <Stack>
+              <Text weight={700}>KONTAK</Text>
+              <Group spacing={17.5}>
+                <IconMail />
+                <Text size="sm" weight={400}>
+                  example@mail.com
+                </Text>
+              </Group>
+              <Group spacing={17.5} mb={30}>
+                <IconPhone />
+                <Text size="sm" weight={400}>
+                  08123456890
+                </Text>
+              </Group>
+            </Stack>
             <Button variant="outline" size="lg" sx={{ width: 215 }}>
               Kontak kami
             </Button>

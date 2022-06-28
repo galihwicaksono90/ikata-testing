@@ -54,16 +54,23 @@ export const EmblaCarousel = ({
     breakpoints,
   });
 
+  const scrollPrev = useCallback(() => embla && embla.scrollPrev(), [embla]);
+  const scrollNext = useCallback(() => embla && embla.scrollNext(), [embla]);
   const scrollTo = useCallback(
     (index: number) => embla && embla.scrollTo(index),
     [embla]
   );
+
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [scrollSnaps, setScrollSnaps] = useState([]);
+  const [prevBtnEnabled, setPrevButtonEnabled] = useState(false);
+  const [nextBtnEnabled, setNextButtonEnabled] = useState(false);
 
   const onSelect = useCallback(() => {
     if (!embla) return;
     setSelectedIndex(embla.selectedScrollSnap());
+    setPrevButtonEnabled(embla.canScrollPrev);
+    setNextButtonEnabled(embla.canScrollNext);
   }, [embla, setSelectedIndex]);
 
   useEffect(() => {
@@ -101,13 +108,21 @@ export const EmblaCarousel = ({
     <Box sx={{ position: "relative" }}>
       <div className={classes.emblaCarousel}>
         {withArrows ? (
-          <Arrow type="prev" onClick={() => embla.scrollPrev()} />
+          <Arrow
+            type="prev"
+            onClick={scrollPrev}
+            disabled={loop ? false : !prevBtnEnabled}
+          />
         ) : null}
         <div className="embla" ref={emblaRef}>
           <div className="embla__container">{renderChildren()}</div>
         </div>
         {withArrows ? (
-          <Arrow type="next" onClick={() => embla.scrollNext()} />
+          <Arrow
+            type="next"
+            onClick={scrollNext}
+            disabled={loop ? false : !nextBtnEnabled}
+          />
         ) : null}
       </div>
       {withDots ? (
@@ -136,9 +151,10 @@ export const EmblaCarousel = ({
 interface ArrowProps {
   type: "next" | "prev";
   onClick?: () => void;
+  disabled?: boolean;
 }
 
-const Arrow = ({ type, onClick }: ArrowProps) => {
+const Arrow = ({ type, onClick, disabled }: ArrowProps) => {
   return (
     <ActionIcon
       onClick={onClick}
@@ -150,7 +166,11 @@ const Arrow = ({ type, onClick }: ArrowProps) => {
         "&:hover": {
           color: theme.colors.orange[0],
         },
+        "&:disabled": {
+          color: theme.colors.dark[5],
+        },
       })}
+      disabled={disabled}
     >
       {type === "next" ? <IconArrowRight /> : <IconArrowLeft />}
     </ActionIcon>
