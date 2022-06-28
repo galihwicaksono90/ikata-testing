@@ -1,0 +1,9 @@
+query GetActivities($params: ParamsInputType) {
+  getActivities(params: $params) {
+    id
+    title
+    publishedDate
+    description
+    thumbnailPath
+  }
+}

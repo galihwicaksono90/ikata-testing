@@ -1,63 +1,52 @@
 import { Button, Group, Stack } from "@mantine/core";
 import { ArticleItem } from "components/article";
 import { SectionContainer } from "components/common";
-import { ArticleType, useGetArticlesQuery } from "generated/mockGraphql";
+import { useGetArticlesQuery, Category } from "generated/graphql";
 import { useState } from "react";
 import { useStyles } from "theme";
+import {
+  getNonScientificArticlesDefaultParams,
+  getScientificArticlesDefaultParams,
+} from "utils/defaultParams";
 
 export const ArticleLandingPage = () => {
   const { classes } = useStyles();
-  const [currentType, setCurrentType] = useState<ArticleType>(
-    ArticleType.Scientific
-  );
+  const [currentType, setCurrentType] = useState(Category.Ilmiah);
 
-  const { data: scientificArticles, isLoading: scientificArticlesLoading } =
-    useGetArticlesQuery({
-      limit: 4,
-      type: ArticleType.Scientific,
-    });
-
-  const {
-    data: nonScientificArticles,
-    isLoading: nonScientificArticlesLoading,
-  } = useGetArticlesQuery({
-    limit: 0,
-    type: ArticleType.NonScientific,
+  const { data: scientificArticles } = useGetArticlesQuery({
+    params: getScientificArticlesDefaultParams,
   });
 
-  if (scientificArticlesLoading || nonScientificArticlesLoading)
-    <div>Loading</div>;
+  const { data: nonScientificArticles } = useGetArticlesQuery({
+    params: getNonScientificArticlesDefaultParams,
+  });
 
   return (
     <SectionContainer
       title="ARTIKEL"
       seeAllHref={
-        currentType === ArticleType.Scientific
-          ? "/articles/scientific"
-          : "/articles/nonscientific"
+        currentType === Category.Ilmiah
+          ? "/artikel/ilmiah"
+          : "/articles/non-ilmiah"
       }
       noData={
-        (currentType === ArticleType.Scientific &&
+        (currentType === Category.Ilmiah &&
           !scientificArticles?.getArticles.length) ||
-        (currentType === ArticleType.NonScientific &&
+        (currentType === Category.NonIlmiah &&
           !nonScientificArticles?.getArticles.length)
       }
       rightItem={
         <Group spacing={20}>
           <Button
-            variant={
-              currentType === ArticleType.Scientific ? "filled" : "outline"
-            }
-            onClick={() => setCurrentType(ArticleType.Scientific)}
+            variant={currentType === Category.Ilmiah ? "filled" : "outline"}
+            onClick={() => setCurrentType(Category.Ilmiah)}
             className={classes.pillButton}
           >
             ILMIAH
           </Button>
           <Button
-            variant={
-              currentType === ArticleType.NonScientific ? "filled" : "outline"
-            }
-            onClick={() => setCurrentType(ArticleType.NonScientific)}
+            variant={currentType === Category.NonIlmiah ? "filled" : "outline"}
+            onClick={() => setCurrentType(Category.NonIlmiah)}
             className={classes.pillButton}
           >
             NON ILMIAH
@@ -66,18 +55,19 @@ export const ArticleLandingPage = () => {
       }
     >
       <Stack spacing={24}>
-        {(currentType === ArticleType.Scientific
+        {(currentType === Category.Ilmiah
           ? scientificArticles
           : nonScientificArticles
         )?.getArticles.map((article) => {
-          const newData = {
-            title: article.title,
-            date: article.postedAt,
-            description: article.description,
-            href: article.id.toString(),
-            image: article.image,
-          };
-          return <ArticleItem data={newData} key={article.id} />;
+          return (
+            <ArticleItem
+              data={article}
+              key={article.id}
+              href={`/artikel/${
+                currentType === Category.Ilmiah ? "ilmiah" : "non-ilmiah"
+              }/${article.id}`}
+            />
+          );
         })}
       </Stack>
     </SectionContainer>

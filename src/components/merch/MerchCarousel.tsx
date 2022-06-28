@@ -1,6 +1,6 @@
 import { EmblaCarousel } from "components/common";
 import { MerchCard } from "components/merch";
-import { Merch } from "generated/mockGraphql";
+import { MerchandisesType } from "generated/graphql";
 
 const breakpoints = [
   {
@@ -18,7 +18,7 @@ const breakpoints = [
 ];
 
 interface MerchCarouselProps {
-  data: Merch[];
+  data: MerchandisesType[];
 }
 
 export function MerchCarousel({ data }: MerchCarouselProps) {

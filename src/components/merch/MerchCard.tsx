@@ -1,14 +1,13 @@
 import { Box, Card, Group, Text } from "@mantine/core";
 import { NextLink } from "@mantine/next";
-import { Merch } from "generated/mockGraphql";
+import { MerchandisesType } from "generated/graphql";
 import Image from "next/image";
 
 export interface MerchCardProps {
-  data: Merch;
+  data: MerchandisesType;
 }
 
 export function MerchCard({ data }: MerchCardProps) {
-  const { id, name, price, image } = data;
   return (
     <Card
       sx={(theme) => ({
@@ -20,13 +19,13 @@ export function MerchCard({ data }: MerchCardProps) {
         },
       })}
       component={NextLink}
-      href={`/merchandise/${id}`}
+      href={`/merchandise/${data.id}`}
     >
       <Card.Section>
         <Box sx={{ position: "relative", height: 263 }}>
           <Image
             alt=""
-            src={image}
+            src={data.thumbnailPath}
             layout="fill"
             objectFit="cover"
             objectPosition="center"
@@ -41,10 +40,10 @@ export function MerchCard({ data }: MerchCardProps) {
         sx={{ height: "100%" }}
       >
         <Text weight={600} sx={{ lineHeight: "28.8px" }} lineClamp={2}>
-          {name}
+          {data.name}
         </Text>
         <Text color="dimmed" weight="bold" mt="auto">
-          {price}
+          {data.price}
         </Text>
       </Group>
     </Card>

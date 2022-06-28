@@ -20,3 +20,4 @@ export * from "./UserAvatar";
 export * from "./SectionContainer";
 export * from "./EmblaCarousel";
 export * from "./BackToTop";
+export * from "./ComingSoon";

@@ -1,0 +1,7 @@
+query GetAlumniBusinesses($params: ParamsInputType) {
+  getAlumniBusinesses(params: $params) {
+    id
+    title
+    thumbnailPath
+  }
+}

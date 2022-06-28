@@ -1,0 +1,10 @@
+query GetVacancies($params: ParamsInputType) {
+  getVacancies(params: $params) {
+    id
+    status
+    companyLogoPath
+    companyName
+    jobTitle
+    status
+  }
+}

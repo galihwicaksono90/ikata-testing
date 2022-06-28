@@ -29,3 +29,31 @@ export const formatTime = (timeString: string) => {
   const year = time.getFullYear();
   return `${date} ${month} ${year}`;
 };
+
+export class Time {
+  public static monthNames = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
+  private static formatTimeToString(time: Date) {
+    const date = time.getDate();
+    const month = this.monthNames[time.getMonth()];
+    const year = time.getFullYear();
+    return `${date} ${month} ${year}`;
+  }
+
+  public static formatTime(time: string) {
+    return this.formatTimeToString(new Date(time));
+  }
+}
