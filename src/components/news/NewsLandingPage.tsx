@@ -1,16 +1,13 @@
 import { Box } from "@mantine/core";
 import { SectionContainer, TextLink } from "components/common";
 import { NewsCard } from "components/news";
-import { News, useGetNewsItemsQuery } from "generated/mockGraphql";
+import { useGetNewsQuery } from "generated/graphql";
+import { getNewsDefaultParams } from "utils/defaultParams";
 
 const gridDictionary = ["one", "two", "three", "four", "five", "six"];
 
 export function NewsLandingPage() {
-  const { data: newsItems, isLoading } = useGetNewsItemsQuery({ limit: 6 });
-
-  if (isLoading) {
-    return <div>isLoading</div>;
-  }
+  const { data } = useGetNewsQuery({ params: getNewsDefaultParams });
 
   return (
     <SectionContainer
@@ -20,7 +17,7 @@ export function NewsLandingPage() {
           Lihat Semua
         </TextLink>
       }
-      noData={!newsItems?.getNewsItems.length}
+      noData={!data?.getNews.length}
       lightBackground
     >
       <Box
@@ -33,14 +30,23 @@ export function NewsLandingPage() {
           },
         })}
       >
-        {newsItems?.getNewsItems.map((item, index) => {
+        {data?.getNews.map((item, index) => {
           return (
             <NewsCard
-              data={item as News}
+              data={item}
               key={item.id}
-              style={{ gridArea: gridDictionary[index] }}
+              //style={{ gridArea: gridDictionary[index] }}
               tagAlign={[0, 3, 4].includes(index) ? "left" : "right"}
               withTags
+              sx={{
+                gridArea:
+                  data?.getNews.length % 2 !== 0 &&
+                  data?.getNews.length === index + 1
+                    ? data?.getNews.length > 4
+                      ? "five / five / six / six"
+                      : "three / three / four / four"
+                    : gridDictionary[index],
+              }}
             />
           );
         })}

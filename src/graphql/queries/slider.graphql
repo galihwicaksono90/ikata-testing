@@ -1,0 +1,6 @@
+query GetSliders($params: ParamsInputType) {
+  getSliders(params: $params) {
+    id
+    photoPath
+  }
+}

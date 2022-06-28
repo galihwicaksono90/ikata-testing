@@ -1,29 +1,29 @@
 import { Stack } from "@mantine/core";
 import { ArticleItem } from "components/article";
 import { SectionContainer } from "components/common";
-import { useGetActivitiesQuery } from "generated/mockGraphql";
+import { useGetActivitiesQuery } from "generated/graphql";
+import { getActivitiesDefaultParams } from "utils/defaultParams";
 
 export const ActivityLandingPage = () => {
-  const { data: activities, isLoading } = useGetActivitiesQuery({ limit: 4 });
-
-  if (isLoading) <div>Loading</div>;
+  const { data } = useGetActivitiesQuery({
+    params: getActivitiesDefaultParams,
+  });
 
   return (
     <SectionContainer
       title="KEGIATAN IKATA"
-      noData={!activities?.getActivities.length}
-      seeAllHref="/activities"
+      noData={!data?.getActivities.length}
+      seeAllHref="/aktifitas"
     >
       <Stack spacing={24}>
-        {activities?.getActivities.map((activity) => {
-          const newData = {
-            title: activity.title,
-            date: activity.postedAt,
-            description: activity.description,
-            href: activity.id.toString(),
-            image: activity.image,
-          };
-          return <ArticleItem data={newData} key={activity.id} />;
+        {data?.getActivities.map((activity) => {
+          return (
+            <ArticleItem
+              data={activity}
+              key={activity.id}
+              href={`/aktifitas/${activity.id}`}
+            />
+          );
         })}
       </Stack>
     </SectionContainer>

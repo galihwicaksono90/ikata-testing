@@ -22,22 +22,6 @@ export const authSlice = createSlice({
       return { ...initialState };
     },
   },
-  extraReducers: (builder) => {
-    builder.addMatcher(
-      api.endpoints.Login.matchFulfilled,
-      (state, { payload }) => {
-        const user = payload.login;
-        state.user = user;
-      }
-    );
-    builder.addMatcher(
-      api.endpoints.Me.matchFulfilled,
-      (state, { payload }) => {
-        const user = payload.user;
-        state.user = user[0];
-      }
-    );
-  },
 });
 
 export const { setUser, resetUser } = authSlice.actions;
@@ -45,3 +29,20 @@ export const { setUser, resetUser } = authSlice.actions;
 export const user = (state: RootState) => state.auth.user;
 
 export default authSlice.reducer;
+
+// extraReducers: (builder) => {
+//   builder.addMatcher(
+//     api.endpoints.Login.matchFulfilled,
+//     (state, { payload }) => {
+//       const user = payload.login;
+//       state.user = user;
+//     }
+//   );
+//   builder.addMatcher(
+//     api.endpoints.Me.matchFulfilled,
+//     (state, { payload }) => {
+//       const user = payload.user;
+//       state.user = user[0];
+//     }
+//   );
+// },

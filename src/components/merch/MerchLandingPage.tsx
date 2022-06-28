@@ -1,21 +1,21 @@
 import { SectionContainer } from "components/common";
 import { MerchCarousel } from "components/merch";
-import { useGetMerchListQuery } from "generated/mockGraphql";
+import { useGetMerchandisesQuery } from "generated/graphql";
+import { getMerchandisesDefaultParams } from "utils/defaultParams";
 
 export const MerchLandingPage = () => {
-  const { data, isLoading } = useGetMerchListQuery({ limit: 5 });
+  const { data, isLoading } = useGetMerchandisesQuery({
+    params: getMerchandisesDefaultParams,
+  });
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
   return (
     <SectionContainer
       title="MERCHANDISE"
-      noData={!data?.getMerchList.length}
+      noData={!data?.getMerchandises.length}
       lightBackground
       containerSize={1315}
     >
-      <MerchCarousel data={data?.getMerchList} />
+      <MerchCarousel data={data?.getMerchandises} />
     </SectionContainer>
   );
 };

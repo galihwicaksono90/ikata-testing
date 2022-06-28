@@ -1,20 +1,16 @@
 import { Group, Box, Stack, Text } from "@mantine/core";
 import Image from "next/image";
 import { TextLink } from "components/common";
-import { formatTime } from "utils";
+import { Time } from "utils";
 import { NextLink } from "@mantine/next";
+import { ActivitiesType, ArticlesType } from "generated/graphql";
 
 export interface ArticleItemProps {
-  data: {
-    title: string;
-    date: string;
-    description: string;
-    href: string;
-    image: string;
-  };
+  data: Partial<ActivitiesType> | Partial<ArticlesType>;
+  href: string;
 }
 
-export function ArticleItem({ data }: ArticleItemProps) {
+export function ArticleItem({ data, href }: ArticleItemProps) {
   return (
     <Group
       align="flex-start"
@@ -36,9 +32,14 @@ export function ArticleItem({ data }: ArticleItemProps) {
           },
         })}
         component={NextLink}
-        href={data.href}
+        href={href}
       >
-        <Image src={data.image} layout="fill" objectFit="cover" alt="" />
+        <Image
+          src={data.thumbnailPath}
+          layout="fill"
+          objectFit="cover"
+          alt=""
+        />
       </Box>
       <Stack spacing={10}>
         <TextLink
@@ -46,13 +47,13 @@ export function ArticleItem({ data }: ArticleItemProps) {
           weight={600}
           lineClamp={1}
           transform="capitalize"
-          href={data.href}
+          href={href}
           type="white"
         >
           {data.title}
         </TextLink>
         <Text size="sm" weight={500} color="dimmed">
-          {formatTime(data.date)}
+          {Time.formatTime(data.publishedDate)}
         </Text>
         <Box>
           <Text>
@@ -64,7 +65,7 @@ export function ArticleItem({ data }: ArticleItemProps) {
             >
               {data.description}
             </Text>
-            <TextLink href={data.href}>Selengkapnya</TextLink>
+            <TextLink href={href}>Selengkapnya</TextLink>
           </Text>
         </Box>
       </Stack>

@@ -1,0 +1,8 @@
+query GetMerchandises($params: ParamsInputType) {
+  getMerchandises(params: $params) {
+    id
+    name
+    price
+    thumbnailPath
+  }
+}

@@ -1,17 +1,17 @@
 import { Box, Overlay, Text } from "@mantine/core";
 import { Container, EmblaCarousel } from "components/common";
-import { useGetHeroImagesQuery } from "generated/mockGraphql";
+import { useGetSlidersQuery } from "generated/graphql";
+import { getSlidersDefaultParams } from "utils/defaultParams";
 import Image from "next/image";
-import React from "react";
 
 export function HeroImage() {
-  const { data: images, isLoading } = useGetHeroImagesQuery({ limit: 5 });
+  const { data } = useGetSlidersQuery({ params: getSlidersDefaultParams });
 
   return (
     <Box sx={{ maxWidth: "100vw", position: "relative" }}>
       <EmblaCarousel withDots dotsPosition="inside" autoplay loop>
-        {images?.getHeroImages.map((image) => (
-          <Content src={image.image} key={image.id} />
+        {data?.getSliders.map((image) => (
+          <Content src={image.photoPath} key={image.id} />
         ))}
       </EmblaCarousel>
       <Container
