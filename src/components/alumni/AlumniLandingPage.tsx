@@ -44,7 +44,7 @@ export function AlumniLandingPage() {
   return (
     <SectionContainer
       title="BISNIS ALUMNI TAMBANG"
-      noData={!data?.getAlumniBusinesses.length}
+      noData={!data?.getAlumniBusinesses.data.length}
       rightItem={
         <TextLink href="/alumni-business" weight={600}>
           Lihat Semua
@@ -56,24 +56,24 @@ export function AlumniLandingPage() {
         sx={(theme) => ({
           display: "grid",
           gridTemplateAreas:
-            gridTemplates["lg"][data?.getAlumniBusinesses.length - 1],
+            gridTemplates["lg"][data?.getAlumniBusinesses.data.length - 1],
           height: "612px",
           [`@media (max-width: ${theme.breakpoints.md}px)`]: {
             gridTemplateAreas:
-              gridTemplates["md"][data?.getAlumniBusinesses.length - 1],
+              gridTemplates["md"][data?.getAlumniBusinesses.data.length - 1],
           },
           [`@media (max-width: ${theme.breakpoints.sm}px)`]: {
             gridTemplateAreas:
-              gridTemplates["sm"][data?.getAlumniBusinesses.length - 1],
+              gridTemplates["sm"][data?.getAlumniBusinesses.data.length - 1],
             height: "850px",
           },
           [`@media (max-width: ${theme.breakpoints.xs}px)`]: {
             gridTemplateAreas:
-              gridTemplates["xs"][data?.getAlumniBusinesses.length - 1],
+              gridTemplates["xs"][data?.getAlumniBusinesses.data.length - 1],
           },
         })}
       >
-        {data?.getAlumniBusinesses.map((alumni, index) => (
+        {data?.getAlumniBusinesses.data.map((alumni, index) => (
           <Card
             data={alumni}
             key={alumni.id}

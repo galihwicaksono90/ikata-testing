@@ -17,7 +17,7 @@ export function NewsLandingPage() {
           Lihat Semua
         </TextLink>
       }
-      noData={!data?.getNews.length}
+      noData={!data?.getNews.data.length}
       lightBackground
     >
       <Box
@@ -30,7 +30,7 @@ export function NewsLandingPage() {
           },
         })}
       >
-        {data?.getNews.map((item, index) => {
+        {data?.getNews.data.map((item, index) => {
           return (
             <NewsCard
               data={item}
@@ -40,9 +40,9 @@ export function NewsLandingPage() {
               withTags
               sx={{
                 gridArea:
-                  data?.getNews.length % 2 !== 0 &&
-                  data?.getNews.length === index + 1
-                    ? data?.getNews.length > 4
+                  data?.getNews.data.length % 2 !== 0 &&
+                  data?.getNews.data.length === index + 1
+                    ? data?.getNews.data.length > 4
                       ? "five / five / six / six"
                       : "three / three / four / four"
                     : gridDictionary[index],

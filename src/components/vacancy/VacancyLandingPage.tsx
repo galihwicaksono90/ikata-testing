@@ -18,35 +18,25 @@ import { NextLink } from "@mantine/next";
 import { useState } from "react";
 import { useStyles } from "theme";
 
+const hrefs: { [key in VacancyType] } = {
+  finalProject: "/lowongan/tugas-akhir",
+  job: "/lowongan/pekerjaan",
+  scholarship: "/lowongan/beasiswa",
+};
+
 export function VacancyLandingPage() {
   const { classes } = useStyles();
   const [currentType, setCurrentType] = useState(VacancyType.Job);
-  const { data, isLoading, isFetching } = useGetVacanciesQuery({
+  const { data, isFetching } = useGetVacanciesQuery({
     type: currentType,
   });
-
-  if (isLoading) <div>Loading...</div>;
-
-  const getHref = () => {
-    switch (currentType) {
-      case VacancyType.Job:
-        return "/vacancy/pekerjaan";
-    }
-    switch (currentType) {
-      case VacancyType.FinalProject:
-        return "/vacancy/tugas-akhir";
-    }
-    switch (currentType) {
-      case VacancyType.Scholarship:
-        return "/vacancy/beasiswa";
-    }
-  };
 
   return (
     <SectionContainer
       title="LOWONGAN"
       noData={!data?.getVacancies.length}
-      seeAllHref={getHref()}
+      seeAllHref={hrefs[currentType]}
+      loading={isFetching}
       rightItem={
         <Group spacing={20}>
           <Button
@@ -88,7 +78,7 @@ export function VacancyLandingPage() {
               <Grid.Col span={12} md={4} sm={6} key={vacancy.id}>
                 <VacancyBox
                   data={vacancy}
-                  href={`/lowongan/${currentType}/${vacancy.id}`}
+                  href={`${hrefs[currentType]}/${vacancy.id}`}
                 />
               </Grid.Col>
             ))}
@@ -117,7 +107,11 @@ function VacancyBox({
         noWrap
         spacing={20}
       >
-        <Skeleton circle height={60} />
+        <Skeleton circle height={60} width={60} />
+        <Box sx={{ width: "80%" }}>
+          <Skeleton height={14} width="70%" mb={10} />
+          <Skeleton height={14} width="30%" />
+        </Box>
       </Group>
     );
   }

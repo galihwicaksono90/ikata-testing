@@ -11,11 +11,11 @@ export const MerchLandingPage = () => {
   return (
     <SectionContainer
       title="MERCHANDISE"
-      noData={!data?.getMerchandises.length}
+      noData={!data?.getMerchandises.data.length}
       lightBackground
       containerSize={1315}
     >
-      <MerchCarousel data={data?.getMerchandises} />
+      <MerchCarousel data={data?.getMerchandises.data} />
     </SectionContainer>
   );
 };

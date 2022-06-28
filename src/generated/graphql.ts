@@ -106,6 +106,13 @@ export type MerchandisesType = {
   weight?: Maybe<Scalars['String']>;
 };
 
+/** This represents metadata */
+export type MetadataType = {
+  __typename?: 'MetadataType';
+  count?: Maybe<Scalars['Int']>;
+  totalCount?: Maybe<Scalars['Int']>;
+};
+
 /** This represents news entity */
 export type NewsType = {
   __typename?: 'NewsType';
@@ -140,6 +147,55 @@ export type ParamsInputType = {
   pagination?: InputMaybe<PaginationInputType>;
   sort?: InputMaybe<SortInputType>;
   where?: InputMaybe<Array<InputMaybe<WhereInputType>>>;
+};
+
+/** This represents a ReturnDataType */
+export type ReturnDataActivitiesType = {
+  __typename?: 'ReturnDataActivitiesType';
+  data?: Maybe<Array<Maybe<ActivitiesType>>>;
+  meta?: Maybe<MetadataType>;
+};
+
+/** This represents a ReturnDataType */
+export type ReturnDataAlumniBusinessesType = {
+  __typename?: 'ReturnDataAlumniBusinessesType';
+  data?: Maybe<Array<Maybe<AlumniBusinessesType>>>;
+  meta?: Maybe<MetadataType>;
+};
+
+/** This represents a ReturnDataType */
+export type ReturnDataArticlesType = {
+  __typename?: 'ReturnDataArticlesType';
+  data?: Maybe<Array<Maybe<ArticlesType>>>;
+  meta?: Maybe<MetadataType>;
+};
+
+/** This represents a ReturnDataType */
+export type ReturnDataMerchandisesType = {
+  __typename?: 'ReturnDataMerchandisesType';
+  data?: Maybe<Array<Maybe<MerchandisesType>>>;
+  meta?: Maybe<MetadataType>;
+};
+
+/** This represents a ReturnDataType */
+export type ReturnDataNewsType = {
+  __typename?: 'ReturnDataNewsType';
+  data?: Maybe<Array<Maybe<NewsType>>>;
+  meta?: Maybe<MetadataType>;
+};
+
+/** This represents a ReturnDataSlidersType */
+export type ReturnDataSlidersType = {
+  __typename?: 'ReturnDataSlidersType';
+  data?: Maybe<Array<Maybe<SliderType>>>;
+  meta?: Maybe<MetadataType>;
+};
+
+/** This represents a ReturnDataType */
+export type ReturnDataVacanciesType = {
+  __typename?: 'ReturnDataVacanciesType';
+  data?: Maybe<Array<Maybe<VacanciesType>>>;
+  meta?: Maybe<MetadataType>;
 };
 
 /** This represents slider entity */
@@ -324,14 +380,14 @@ export type RootMutationUpdatePasswordArgs = {
 /** This is the root query which holds all possible READ entrypoints for the GraphQL API */
 export type RootQuery = {
   __typename?: 'rootQuery';
-  getActivities?: Maybe<Array<Maybe<ActivitiesType>>>;
-  getAlumniBusinesses?: Maybe<Array<Maybe<AlumniBusinessesType>>>;
-  getArticles?: Maybe<Array<Maybe<ArticlesType>>>;
+  getActivities?: Maybe<ReturnDataActivitiesType>;
+  getAlumniBusinesses?: Maybe<ReturnDataAlumniBusinessesType>;
+  getArticles?: Maybe<ReturnDataArticlesType>;
   getForgotPasswordToken?: Maybe<TokenForgotPassword>;
-  getMerchandises?: Maybe<Array<Maybe<MerchandisesType>>>;
-  getNews?: Maybe<Array<Maybe<NewsType>>>;
-  getSliders?: Maybe<Array<Maybe<SliderType>>>;
-  getVacancies?: Maybe<Array<Maybe<VacanciesType>>>;
+  getMerchandises?: Maybe<ReturnDataMerchandisesType>;
+  getNews?: Maybe<ReturnDataNewsType>;
+  getSliders?: Maybe<ReturnDataSlidersType>;
+  getVacancies?: Maybe<ReturnDataVacanciesType>;
 };
 
 
@@ -458,42 +514,42 @@ export type GetActivitiesQueryVariables = Exact<{
 }>;
 
 
-export type GetActivitiesQuery = { __typename?: 'rootQuery', getActivities?: Array<{ __typename?: 'ActivitiesType', id?: string | null, title?: string | null, publishedDate?: string | null, description?: string | null, thumbnailPath?: string | null } | null> | null };
+export type GetActivitiesQuery = { __typename?: 'rootQuery', getActivities?: { __typename?: 'ReturnDataActivitiesType', data?: Array<{ __typename?: 'ActivitiesType', id?: string | null, title?: string | null, publishedDate?: string | null, description?: string | null, thumbnailPath?: string | null } | null> | null } | null };
 
 export type GetAlumniBusinessesQueryVariables = Exact<{
   params?: InputMaybe<ParamsInputType>;
 }>;
 
 
-export type GetAlumniBusinessesQuery = { __typename?: 'rootQuery', getAlumniBusinesses?: Array<{ __typename?: 'AlumniBusinessesType', id?: string | null, title?: string | null, thumbnailPath?: string | null } | null> | null };
+export type GetAlumniBusinessesQuery = { __typename?: 'rootQuery', getAlumniBusinesses?: { __typename?: 'ReturnDataAlumniBusinessesType', data?: Array<{ __typename?: 'AlumniBusinessesType', id?: string | null, title?: string | null, thumbnailPath?: string | null } | null> | null } | null };
 
 export type GetArticlesQueryVariables = Exact<{
   params?: InputMaybe<ParamsInputType>;
 }>;
 
 
-export type GetArticlesQuery = { __typename?: 'rootQuery', getArticles?: Array<{ __typename?: 'ArticlesType', id?: string | null, title?: string | null, description?: string | null, thumbnailPath?: string | null, publishedDate?: string | null } | null> | null };
+export type GetArticlesQuery = { __typename?: 'rootQuery', getArticles?: { __typename?: 'ReturnDataArticlesType', data?: Array<{ __typename?: 'ArticlesType', id?: string | null, title?: string | null, description?: string | null, thumbnailPath?: string | null, publishedDate?: string | null } | null> | null } | null };
 
 export type GetMerchandisesQueryVariables = Exact<{
   params?: InputMaybe<ParamsInputType>;
 }>;
 
 
-export type GetMerchandisesQuery = { __typename?: 'rootQuery', getMerchandises?: Array<{ __typename?: 'MerchandisesType', id?: string | null, name?: string | null, price?: number | null, thumbnailPath?: string | null } | null> | null };
+export type GetMerchandisesQuery = { __typename?: 'rootQuery', getMerchandises?: { __typename?: 'ReturnDataMerchandisesType', data?: Array<{ __typename?: 'MerchandisesType', id?: string | null, name?: string | null, price?: number | null, thumbnailPath?: string | null } | null> | null } | null };
 
 export type GetNewsQueryVariables = Exact<{
   params?: InputMaybe<ParamsInputType>;
 }>;
 
 
-export type GetNewsQuery = { __typename?: 'rootQuery', getNews?: Array<{ __typename?: 'NewsType', id?: string | null, title?: string | null, tags?: string | null, thumbnailPath?: string | null, publishedDate?: string | null } | null> | null };
+export type GetNewsQuery = { __typename?: 'rootQuery', getNews?: { __typename?: 'ReturnDataNewsType', data?: Array<{ __typename?: 'NewsType', id?: string | null, title?: string | null, tags?: string | null, thumbnailPath?: string | null, publishedDate?: string | null } | null> | null } | null };
 
 export type GetSlidersQueryVariables = Exact<{
   params?: InputMaybe<ParamsInputType>;
 }>;
 
 
-export type GetSlidersQuery = { __typename?: 'rootQuery', getSliders?: Array<{ __typename?: 'SliderType', id?: string | null, photoPath?: string | null } | null> | null };
+export type GetSlidersQuery = { __typename?: 'rootQuery', getSliders?: { __typename?: 'ReturnDataSlidersType', data?: Array<{ __typename?: 'SliderType', id?: string | null, photoPath?: string | null } | null> | null } | null };
 
 export type GetForgotPasswordTokenQueryVariables = Exact<{
   user?: InputMaybe<UserInputCheckToken>;
@@ -507,7 +563,7 @@ export type GetVacanciesQueryVariables = Exact<{
 }>;
 
 
-export type GetVacanciesQuery = { __typename?: 'rootQuery', getVacancies?: Array<{ __typename?: 'VacanciesType', id?: string | null, status?: StatusVacancies | null, companyLogoPath?: string | null, companyName?: string | null, jobTitle?: string | null } | null> | null };
+export type GetVacanciesQuery = { __typename?: 'rootQuery', getVacancies?: { __typename?: 'ReturnDataVacanciesType', data?: Array<{ __typename?: 'VacanciesType', id?: string | null, status?: StatusVacancies | null, companyLogoPath?: string | null, companyName?: string | null, jobTitle?: string | null } | null> | null } | null };
 
 export const BasicAuthUserFragmentDoc = `
     fragment BasicAuthUser on User {
@@ -554,60 +610,72 @@ export const UpdatePasswordDocument = `
 export const GetActivitiesDocument = `
     query GetActivities($params: ParamsInputType) {
   getActivities(params: $params) {
-    id
-    title
-    publishedDate
-    description
-    thumbnailPath
+    data {
+      id
+      title
+      publishedDate
+      description
+      thumbnailPath
+    }
   }
 }
     `;
 export const GetAlumniBusinessesDocument = `
     query GetAlumniBusinesses($params: ParamsInputType) {
   getAlumniBusinesses(params: $params) {
-    id
-    title
-    thumbnailPath
+    data {
+      id
+      title
+      thumbnailPath
+    }
   }
 }
     `;
 export const GetArticlesDocument = `
     query GetArticles($params: ParamsInputType) {
   getArticles(params: $params) {
-    id
-    title
-    description
-    thumbnailPath
-    publishedDate
+    data {
+      id
+      title
+      description
+      thumbnailPath
+      publishedDate
+    }
   }
 }
     `;
 export const GetMerchandisesDocument = `
     query GetMerchandises($params: ParamsInputType) {
   getMerchandises(params: $params) {
-    id
-    name
-    price
-    thumbnailPath
+    data {
+      id
+      name
+      price
+      thumbnailPath
+    }
   }
 }
     `;
 export const GetNewsDocument = `
     query GetNews($params: ParamsInputType) {
   getNews(params: $params) {
-    id
-    title
-    tags
-    thumbnailPath
-    publishedDate
+    data {
+      id
+      title
+      tags
+      thumbnailPath
+      publishedDate
+    }
   }
 }
     `;
 export const GetSlidersDocument = `
     query GetSliders($params: ParamsInputType) {
   getSliders(params: $params) {
-    id
-    photoPath
+    data {
+      id
+      photoPath
+    }
   }
 }
     `;
@@ -623,12 +691,13 @@ export const GetForgotPasswordTokenDocument = `
 export const GetVacanciesDocument = `
     query GetVacancies($params: ParamsInputType) {
   getVacancies(params: $params) {
-    id
-    status
-    companyLogoPath
-    companyName
-    jobTitle
-    status
+    data {
+      id
+      status
+      companyLogoPath
+      companyName
+      jobTitle
+    }
   }
 }
     `;

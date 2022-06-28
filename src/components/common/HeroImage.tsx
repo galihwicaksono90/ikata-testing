@@ -10,7 +10,7 @@ export function HeroImage() {
   return (
     <Box sx={{ maxWidth: "100vw", position: "relative" }}>
       <EmblaCarousel withDots dotsPosition="inside" autoplay loop>
-        {data?.getSliders.map((image) => (
+        {data?.getSliders.data.map((image) => (
           <Content src={image.photoPath} key={image.id} />
         ))}
       </EmblaCarousel>
