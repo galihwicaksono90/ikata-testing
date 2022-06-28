@@ -1,20 +1,18 @@
-import { useState, useEffect } from "react";
-import { Group } from "@mantine/core";
+import { Anchor, Group, Text } from "@mantine/core";
 import {
   GradientButton,
   PasswordInput,
   showNotification,
+  SuccessModal,
   TextInput,
   TextLink,
-  SuccessModal,
 } from "components/common";
-import { useLoginMutation } from "generated/graphql";
+import { useLoginMutation, UserInputTypeLogi } from "generated/graphql";
 import { useRouter } from "next/router";
-import { useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useStyles } from "theme";
 import { validateLoginForm } from "./formResolver";
-import { UserInputTypeLogi } from "generated/graphql";
 
 export function LoginForm() {
   const [showModal, setShowModal] = useState(false);
@@ -88,7 +86,25 @@ export function LoginForm() {
         opened={showModal}
         onClose={() => setShowModal(false)}
         title="Perhatian!"
-        message="Bagi anda yang sudah mendaftar dan terverifikasi pada saat MUNAS IKATA UPN 2021 silahkan menuju lupa password untuk me-reset akun anda, gunakan alamat email anda yang terdaftar pada saat MUNAS IKATA UPN 2021"
+        message={
+          <Text>
+            Bagi anda yang sudah mendaftar dan terverifikasi pada saat{" "}
+            <b>MUNAS IKATA UPN 2021</b>, silahkan menggunakan{" "}
+            <Anchor
+              href="/forgot-password"
+              sx={(theme) => ({
+                color: theme.colors.orange[0],
+                "&:hover": {
+                  textDecoration: "underline",
+                },
+              })}
+            >
+              Lupa Password
+            </Anchor>{" "}
+            untuk me-reset akun anda, gunakan alamat <b>email</b> anda yang{" "}
+            <b>Terdaftar</b> pada saat <b>MUNAS IKATA UPN 2021</b>
+          </Text>
+        }
         buttonLabel="Lanjutkan Login"
         onClick={() => setShowModal(false)}
       />

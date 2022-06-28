@@ -4,7 +4,7 @@ import Image from "next/image";
 
 interface Props extends ModalProps {
   title: string;
-  message: string;
+  message: React.ReactNode;
   href?: string;
   onClick?: () => void;
   buttonLabel: string;
