@@ -1,5 +1,5 @@
-import { Group, Select, Stack, Text, MediaQuery } from "@mantine/core";
-import { AvatarCarousel } from "components/common";
+import { Group, Select, Stack, Text, MediaQuery, Grid } from "@mantine/core";
+import { AvatarCarousel, MemberAvatar } from "components/common";
 import { ManagementLayout } from "components/layouts";
 import { useGetMembersQuery, api } from "generated/mockGraphql";
 import { useState } from "react";
@@ -34,11 +34,11 @@ export default function KoordinatorAngkatan() {
             data={years}
             value={value}
             onChange={setValue}
-            styles={(theme) => ({
+            styles={{
               item: {
                 fontSize: 12,
               },
-            })}
+            }}
             sx={(theme) => ({
               width: 140,
               "& input": {
@@ -53,7 +53,20 @@ export default function KoordinatorAngkatan() {
             })}
           />
         </Group>
-        <AvatarCarousel
+        <Grid gutter={10}>
+          {isFetching
+            ? [...Array(9).fill(0)].map((item, index) => (
+                <Grid.Col span={12} md={3} sm={4} xs={6}>
+                  <MemberAvatar key={index} loading />
+                </Grid.Col>
+              ))
+            : members?.getMembers.map((member) => (
+                <Grid.Col span={12} md={3} sm={4} xs={6}>
+                  <MemberAvatar key={member.id} data={member} />
+                </Grid.Col>
+              ))}
+        </Grid>
+        {/* <AvatarCarousel
           loading={isFetching}
           data={members?.getMembers}
           rows={2}
@@ -73,7 +86,7 @@ export default function KoordinatorAngkatan() {
             },
           ]}
           withClassYear
-        />
+        /> */}
       </Stack>
     </ManagementLayout>
   );
