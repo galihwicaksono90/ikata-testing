@@ -18,7 +18,7 @@ export const NavbarMenu = () => {
             border: "0px",
           },
           label: {
-            fontSize: theme.fontSizes.md,
+            fontSize: theme.fontSizes.sm,
             fontWeight: 500,
             paddingLeft: 10,
           },
@@ -87,23 +87,45 @@ export const NavbarMenu = () => {
             withPadding
           />
         </Accordion.Item>
+      </Accordion>
+      <MenuItem title="Berita" href="/berita" withPadding />
+      <Accordion
+        sx={{
+          padding: 0,
+          width: "100%",
+        }}
+        styles={(theme) => ({
+          item: {
+            border: "0px",
+          },
+          label: {
+            fontSize: theme.fontSizes.sm,
+            fontWeight: 500,
+            paddingLeft: 10,
+          },
+          control: {
+            paddingLeft: 0,
+            paddingRight: 0,
+          },
+        })}
+      >
         <Accordion.Item
-          label="Berita"
+          label="Artikel"
           iconPosition="right"
           sx={(theme) => ({
             "& .mantine-Accordion-label": {
-              color: asPath.startsWith("/berita")
+              color: asPath.startsWith("/artikel")
                 ? theme.primaryColor
                 : theme.colors.white,
             },
           })}
         >
-          <MenuItem title="Berita Umum" href="/berita/umum" withPadding />
-          <MenuItem title="Bertia IKATA" href="/berita/ikata" withPadding />
+          <MenuItem title="Ilmiah" href="/artikel/ilmiah" withPadding />
+          <MenuItem title="Non Ilmiah" href="/artikel/non-ilmiah" withPadding />
         </Accordion.Item>
       </Accordion>
-      <MenuItem title="Articles" href="/articles" withPadding />
       <MenuItem title="Merchandise" href="/merchandise" withPadding />
+      <MenuItem title="Kegiatan" href="/kegiatan" withPadding />
       <MenuItem title="Koperasi IKATA" href="/koperasi" withPadding />
     </>
   );
