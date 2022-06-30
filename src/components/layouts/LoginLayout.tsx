@@ -35,6 +35,7 @@ export function LoginLayout({
         alignItems: center ? "center" : null,
         //overflow: "hidden",
         paddingBottom: 40,
+        paddingTop: 30,
       }}
     >
       <Box

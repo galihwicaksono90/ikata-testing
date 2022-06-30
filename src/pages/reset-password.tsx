@@ -57,9 +57,6 @@ export default ResetPassword;
 
 export const getServerSideProps: GetServerSideProps =
   wrapper.getServerSideProps((store) => async ({ query }) => {
-    /* if (!token) {
-     *   return { props: { tokenValid: false } };
-     * } */
     try {
       const token = query?.token;
       if (!token) throw Error;
