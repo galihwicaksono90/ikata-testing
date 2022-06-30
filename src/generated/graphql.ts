@@ -381,13 +381,20 @@ export type RootMutationUpdatePasswordArgs = {
 export type RootQuery = {
   __typename?: 'rootQuery';
   getActivities?: Maybe<ReturnDataActivitiesType>;
+  getActivityDetail?: Maybe<ActivitiesType>;
+  getAlumniBusinessDetail?: Maybe<AlumniBusinessesType>;
   getAlumniBusinesses?: Maybe<ReturnDataAlumniBusinessesType>;
+  getArticleDetail?: Maybe<ArticlesType>;
   getArticles?: Maybe<ReturnDataArticlesType>;
   getForgotPasswordToken?: Maybe<TokenForgotPassword>;
+  getMerchandiseDetail?: Maybe<MerchandisesType>;
   getMerchandises?: Maybe<ReturnDataMerchandisesType>;
   getNews?: Maybe<ReturnDataNewsType>;
+  getNewsDetail?: Maybe<NewsType>;
+  getProfile?: Maybe<User>;
   getSliders?: Maybe<ReturnDataSlidersType>;
   getVacancies?: Maybe<ReturnDataVacanciesType>;
+  getVacancyDetail?: Maybe<VacanciesType>;
 };
 
 
@@ -398,8 +405,26 @@ export type RootQueryGetActivitiesArgs = {
 
 
 /** This is the root query which holds all possible READ entrypoints for the GraphQL API */
+export type RootQueryGetActivityDetailArgs = {
+  id: Scalars['String'];
+};
+
+
+/** This is the root query which holds all possible READ entrypoints for the GraphQL API */
+export type RootQueryGetAlumniBusinessDetailArgs = {
+  id: Scalars['String'];
+};
+
+
+/** This is the root query which holds all possible READ entrypoints for the GraphQL API */
 export type RootQueryGetAlumniBusinessesArgs = {
   params?: InputMaybe<ParamsInputType>;
+};
+
+
+/** This is the root query which holds all possible READ entrypoints for the GraphQL API */
+export type RootQueryGetArticleDetailArgs = {
+  id: Scalars['String'];
 };
 
 
@@ -416,6 +441,12 @@ export type RootQueryGetForgotPasswordTokenArgs = {
 
 
 /** This is the root query which holds all possible READ entrypoints for the GraphQL API */
+export type RootQueryGetMerchandiseDetailArgs = {
+  id: Scalars['String'];
+};
+
+
+/** This is the root query which holds all possible READ entrypoints for the GraphQL API */
 export type RootQueryGetMerchandisesArgs = {
   params?: InputMaybe<ParamsInputType>;
 };
@@ -428,6 +459,12 @@ export type RootQueryGetNewsArgs = {
 
 
 /** This is the root query which holds all possible READ entrypoints for the GraphQL API */
+export type RootQueryGetNewsDetailArgs = {
+  id: Scalars['String'];
+};
+
+
+/** This is the root query which holds all possible READ entrypoints for the GraphQL API */
 export type RootQueryGetSlidersArgs = {
   params?: InputMaybe<ParamsInputType>;
 };
@@ -436,6 +473,12 @@ export type RootQueryGetSlidersArgs = {
 /** This is the root query which holds all possible READ entrypoints for the GraphQL API */
 export type RootQueryGetVacanciesArgs = {
   params?: InputMaybe<ParamsInputType>;
+};
+
+
+/** This is the root query which holds all possible READ entrypoints for the GraphQL API */
+export type RootQueryGetVacancyDetailArgs = {
+  id: Scalars['String'];
 };
 
 export enum StatusActivities {
@@ -543,6 +586,11 @@ export type GetNewsQueryVariables = Exact<{
 
 
 export type GetNewsQuery = { __typename?: 'rootQuery', getNews?: { __typename?: 'ReturnDataNewsType', data?: Array<{ __typename?: 'NewsType', id?: string | null, title?: string | null, tags?: string | null, thumbnailPath?: string | null, publishedDate?: string | null } | null> | null } | null };
+
+export type GetProfileQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetProfileQuery = { __typename?: 'rootQuery', getProfile?: { __typename?: 'User', id?: string | null, nickName?: string | null } | null };
 
 export type GetSlidersQueryVariables = Exact<{
   params?: InputMaybe<ParamsInputType>;
@@ -669,6 +717,14 @@ export const GetNewsDocument = `
   }
 }
     `;
+export const GetProfileDocument = `
+    query GetProfile {
+  getProfile {
+    id
+    nickName
+  }
+}
+    `;
 export const GetSlidersDocument = `
     query GetSliders($params: ParamsInputType) {
   getSliders(params: $params) {
@@ -731,6 +787,9 @@ const injectedRtkApi = api.injectEndpoints({
     GetNews: build.query<GetNewsQuery, GetNewsQueryVariables | void>({
       query: (variables) => ({ document: GetNewsDocument, variables })
     }),
+    GetProfile: build.query<GetProfileQuery, GetProfileQueryVariables | void>({
+      query: (variables) => ({ document: GetProfileDocument, variables })
+    }),
     GetSliders: build.query<GetSlidersQuery, GetSlidersQueryVariables | void>({
       query: (variables) => ({ document: GetSlidersDocument, variables })
     }),
@@ -744,5 +803,5 @@ const injectedRtkApi = api.injectEndpoints({
 });
 
 export { injectedRtkApi as api };
-export const { useForgotPasswordMutation, useLoginMutation, useRegisterMutation, useUpdatePasswordMutation, useGetActivitiesQuery, useLazyGetActivitiesQuery, useGetAlumniBusinessesQuery, useLazyGetAlumniBusinessesQuery, useGetArticlesQuery, useLazyGetArticlesQuery, useGetMerchandisesQuery, useLazyGetMerchandisesQuery, useGetNewsQuery, useLazyGetNewsQuery, useGetSlidersQuery, useLazyGetSlidersQuery, useGetForgotPasswordTokenQuery, useLazyGetForgotPasswordTokenQuery, useGetVacanciesQuery, useLazyGetVacanciesQuery } = injectedRtkApi;
+export const { useForgotPasswordMutation, useLoginMutation, useRegisterMutation, useUpdatePasswordMutation, useGetActivitiesQuery, useLazyGetActivitiesQuery, useGetAlumniBusinessesQuery, useLazyGetAlumniBusinessesQuery, useGetArticlesQuery, useLazyGetArticlesQuery, useGetMerchandisesQuery, useLazyGetMerchandisesQuery, useGetNewsQuery, useLazyGetNewsQuery, useGetProfileQuery, useLazyGetProfileQuery, useGetSlidersQuery, useLazyGetSlidersQuery, useGetForgotPasswordTokenQuery, useLazyGetForgotPasswordTokenQuery, useGetVacanciesQuery, useLazyGetVacanciesQuery } = injectedRtkApi;
 
